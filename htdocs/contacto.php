@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Proyecto en InfinityFree</title>
     
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="static/static.css">
     
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 </head>
