@@ -5,42 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Proyecto en InfinityFree</title>
     
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="static/static.css">
     
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="static/img/logoATC.ico" type="image/x-icon">
 </head>
 <body>
 
     <header>
-        <h1>Bienvenido a Astech Computer</h1>
+      
         <nav>
             <ul>
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="contacto.php">Contacto</a></li>
+                <li class="nav-link"><a href="servicios.php" >Servicios</a></li>
+                <li class="nav-link"><a href="contacto.php" >Contacto</a></li>
+                <li class="nav-link-P"><a href="cita.php" >Agendar cita</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section>
-            <h2>Estado del Servidor</h2>
-            <p>
-                <?php 
-                    // Ejemplo sencillo de PHP: Mostrar fecha y hora actual
-                    date_default_timezone_set('America/Mexico_City');
-                    echo "Hoy es: " . date("d/m/Y") . "<br>";
-                    echo "La hora del servidor es: " . date("H:i:s");
-                ?>
-            </p>
-        </section>
+   
+           <div class="fondo">
+    <img src="static/img/logoATC.PNG" alt="" style="width:30%; margin-left:5%;">
+</div>
 
-        <section>
-            <p>Este es el contenido principal de tu sitio alojado en htdocs.</p>
-        </section>
+<!--<div class="contenedor">
+    <div class="caja">Caja 1</div>
+    <div class="caja">Caja 2</div>
+</div>-->
+      
+
+        
+           <div class="info">
+                <h2></h2>
+                <p></p>
+                <p></p>
+           </div>
+<div class="info">
+                <h2></h2>
+                <p></p>
+                <p></p>
+           </div><div class="info">
+                <h2></h2>
+                <p></p>
+                <p></p>
+           </div>
+     
     </main>
 
     <footer>
-        <p>&copy; <?php echo date("Y"); ?> Astech Computer - Todos los derechos reservados.</p>
+        
     </footer>
 
     <script src="js/scripts.js"></script>
