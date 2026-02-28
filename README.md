@@ -43,4 +43,4 @@ NECESITAN INSTALAR XAMPP Y ACTIVAR EL APACHE (START)
 https://www.apachefriends.org/es/index.html
 
 ESTE COMANDO EJECUTA EL PHP SIN NECESIDAD DE SUBIRLO A EL INFINITYFREE
-php -S localhost:8000 -t htdocs/public 
+php -S localhost:8000 -t htdocs
