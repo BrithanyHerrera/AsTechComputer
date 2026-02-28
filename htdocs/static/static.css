@@ -2,7 +2,8 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
+        font-family: 'Lato', sans-serif;
+ 
     }
 
     body {
@@ -94,20 +95,116 @@ nav a{
     height:60vh;
     padding: 20px;
     }
-
-    .caja {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        flex: 1 1 calc(33.333% - 20px); 
-        min-width: 300px; 
+    .infoAbUs{
+        margin: 20px auto;
+    background: rgba(255, 255, 255, 0.425);
+    width:100%;
+    height:60vh;
+    padding: 20px;
+    display: flex;
     }
+    .imagen{
+        margin-top:-10%;
 
+    }
+    .texto,.imagen{
+
+margin:20px;
+width:100%;
+height:100%;
+padding:20px;
+    }
+.titulo{
+    font-size: 2.5rem;
+    color:#e06c00;
+
+}
+.wrapperm{
+    padding:15%;
+   z-index:10; 
+ width:100%;
+ margin-top:-60%;
+
+}
+.wrapperv{
+    padding:15%;
+   z-index:10; 
+ width:100%;
+ margin-top:-60%;
+}
+.mision,.vision{
+    position:relative;
+
+}
+h1{
+    font-size: 2.5rem;
+    color:#ffffff;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.infoMV{
+    color:#ffffff;
+   font-weight: bold;
+    display: flex;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.425);
+    width:100%;
+    height:60vh;
+    
+    
+    display: flex;
+    top:0;
+    position: relative;
+    z-index: 5;
+   
+     
+}
+    
+    .Iprincipal{
+        z-index: 2;
+        width: 100%;
+        height:100%;
+        /* Tu forma irregular */
+    border-radius:57% 43% 89% 11% / 48% 33% 67% 52% ;
+            /* Mantiene una buena proporción */
+    object-fit: cover;       /* Evita que la foto se estire feo */
+    border: 2px solid white;
+    }
+    /* Contenedor relativo para que el fondo no se escape */
+.wrapper-irregular {
+    position: relative;
+    width: 100%;  /* Ajusta según el tamaño que desees */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* El elemento que sobresale por detrás */
+.wrapper-irregular::before {
+    content: "";
+    position: absolute;
+    top: 5px;    /* Desplazamiento hacia abajo */
+    left: 15px;   /* Desplazamiento hacia la derecha */
+    width: 100%;
+    height: 100%;
+    background-color: #e06c00cb; /* O un color que contraste con el naranja */
+    border-radius:36% 64% 57% 43% / 22% 75% 25% 78%;  /* Misma forma */
+    z-index: 1;   /* Va detrás */
+    
+}
+
+    
     @media (max-width: 768px) {
         header {
             flex-direction: column;
             text-align: center;
             height: auto;
+        }
+        img{
+            width: 90%;
+            
         }
 
         nav ul {
