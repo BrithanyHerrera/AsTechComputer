@@ -1,219 +1,259 @@
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Lato', sans-serif;
- 
-    }
-
-body {
-  line-height: 1.6;
-  background-color: #f4f4f4;
+/* --- RESET GENERAL --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
 }
 
+body {
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+}
+
+/* --- HEADER & NAV --- */
 header {
-  background: #f3f0fcbb;
-  color: #030303;
-  padding: 1rem;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: absolute;
-  width: 100%;
-  height: 70px;
-  top: 0;
-  right: 0;
-  z-index: 1000;
+    background: #f3f0fcbb;
+    color: #030303;
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 70px;
+    top: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 nav ul {
-  display: flex;
-  list-style: none;
+    display: flex;
+    list-style: none;
 }
 
-/* Quita el espacio entre el 'a' y el '.' */
 nav a {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
-.fondo {
-  width: 100%;
-  height: calc(100vh - 70px);
-  margin-top: 70px;
-  background-image: url("img/fondoIndex.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.contenedor {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 20px;
-  width: 50%;
-  margin: 40px auto;
-}
-
-/* Sin espacios antes de los dos puntos */
-.nav-link:hover,
-.nav-link-P:hover {
-  transform: scale(0.95);
-  /* Ejemplo: se encoge un poco al hacer clic */
-}
-    .nav-link {
-        background-color: #ffffff00;
-        border: 1px solid #c77100;
-        color:#e06c00;
-        margin-left: 30px;
-        text-decoration: none;
-        font-weight: bold;
-        padding: 5px 10px;
-        transition: background-color 0.3s ease;
-        border-radius: 15px;
-    }
-     .nav-link-P {
-        background-color: #e06c00;
-       color: #f4f4f4;
-        margin-left: 30px;
-        text-decoration: none;
-        font-weight: bold;
-        padding: 5px 10px;
-        transition: background-color 0.3s ease;
-        border-radius: 15px;
-    }
-    .info{
-    margin: 20px auto;
-    background: rgba(255, 255, 255, 0.425);
-    width:100%;
-    height:60vh;
-    padding: 20px;
-    }
-    .infoAbUs{
-        margin: 20px auto;
-    background: rgba(255, 255, 255, 0.425);
-    width:100%;
-    height:60vh;
-    padding: 20px;
-    display: flex;
-    }
-    .imagen{
-        margin-top:-10%;
-
-    }
-    .texto,.imagen{
-
-margin:20px;
-width:100%;
-height:100%;
-padding:20px;
-    }
-.titulo{
-    font-size: 2.5rem;
-    color:#e06c00;
-
-}
-.wrapperm{
-    padding:15%;
-   z-index:10; 
- width:100%;
- margin-top:-60%;
-
-}
-.wrapperv{
-    padding:15%;
-   z-index:10; 
- width:100%;
- margin-top:-60%;
-}
-.mision,.vision{
-    position:relative;
-
-}
-h1{
-    font-size: 2.5rem;
-    color:#ffffff;
+.nav-link, .nav-link-P {
+    margin-left: 30px;
+    text-decoration: none;
     font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
+    padding: 5px 15px;
+    transition: all 0.3s ease;
+    border-radius: 15px;
+    display: inline-block;
 }
-.infoMV{
-    color:#ffffff;
-   font-weight: bold;
-    display: flex;
-    margin: 0;
-    background: rgba(255, 255, 255, 0.425);
-    width:100%;
-    height:60vh;
-    
-    
-    display: flex;
-    top:0;
-    position: relative;
-    z-index: 5;
-   
-     
+
+.nav-link {
+    border: 1px solid #c77100;
+    color: #e06c00;
 }
-    
-    .Iprincipal{
-        z-index: 2;
-        width: 100%;
-        height:100%;
-        /* Tu forma irregular */
-    border-radius:57% 43% 89% 11% / 48% 33% 67% 52% ;
-            /* Mantiene una buena proporción */
-    object-fit: cover;       /* Evita que la foto se estire feo */
-    border: 2px solid white;
-    }
-    /* Contenedor relativo para que el fondo no se escape */
-.wrapper-irregular {
-    position: relative;
-    width: 100%;  /* Ajusta según el tamaño que desees */
-    height: 100%;
+
+.nav-link-P {
+    background-color: #e06c00;
+    color: #f4f4f4;
+}
+
+.nav-link:hover, .nav-link-P:hover {
+    transform: scale(0.95);
+    opacity: 0.9;
+}
+
+/* --- SECCIONES PRINCIPALES --- */
+.fondo {
+    width: 100%;
+    height: calc(100vh - 70px);
+    margin-top: 70px;
+    background: url("../img/fondoIndex.png") no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* El elemento que sobresale por detrás */
+.infoAbUs, .infoMV {
+    width: 100%;
+    min-height: 60vh;
+    padding: 40px 20px;
+    display: flex;
+    background: rgba(255, 255, 255, 0.425);
+    align-items: center;
+}
+
+.texto, .imagen {
+    flex: 1;
+    padding: 20px;
+}
+
+.titulo {
+    font-size: 2.5rem;
+    color: #e06c00;
+    margin-bottom: 20px;
+}
+
+/* --- MISION Y VISION --- */
+.infoMV {
+    color: #ffffff;
+    font-weight: bold;
+    padding: 0;
+}
+
+.mision, .vision {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    height: 60vh;
+}
+
+.mision img, .vision img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wrapperm, .wrapperv {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    z-index: 10;
+    text-align: center;
+}
+
+.infoMV h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* --- IMAGEN IRREGULAR --- */
+.wrapper-irregular {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Iprincipal {
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    border-radius: 57% 43% 89% 11% / 48% 33% 67% 52%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
 .wrapper-irregular::before {
     content: "";
     position: absolute;
-    top: 5px;    /* Desplazamiento hacia abajo */
-    left: 15px;   /* Desplazamiento hacia la derecha */
+    top: 15px;
+    left: 15px;
     width: 100%;
     height: 100%;
-    background-color: #e06c00cb; /* O un color que contraste con el naranja */
-    border-radius:36% 64% 57% 43% / 22% 75% 25% 78%;  /* Misma forma */
-    z-index: 1;   /* Va detrás */
-    
+    background-color: #e06c00cb;
+    border-radius: 36% 64% 57% 43% / 22% 75% 25% 78%;
+    z-index: 1;
 }
 
+/* --- SECCIÓN SERVICIOS--- */
+.seccion-servicios {
+    padding: 80px 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.servicios-titulo {
+    color: #d35400;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+.servicios-contenedor {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.servicio-tarjeta {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    width: 320px;
+    border: 1px solid #eee;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    opacity: 0; 
+    transform: translateY(50px);
+    cursor: pointer;
+}
+
+.servicio-tarjeta.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.servicio-tarjeta:hover {
+    background: #2c2c2c;
+    border-color: #444;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.servicio-tarjeta:hover .btn-servicio {
+    background: #e0e0e0;
+    color: #333;
+}
+
+/* CONTENIDO INTERNO CARD */
+.contenido-tarjeta img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.btn-servicio {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* --- RESPONSIVO --- */
+@media (max-width: 768px) {
+    header {
+        position: relative;
+        flex-direction: column;
+        height: auto;
+    }
     
-    @media (max-width: 768px) {
-        header {
-            flex-direction: column;
-            text-align: center;
-            height: auto;
-        }
-        img{
-            width: 90%;
-            
-        }
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 0;
+    }
 
-  nav ul {
-    margin-top: 15px;
-  }
+    .nav-link, .nav-link-P {
+        margin: 0;
+    }
 
-  nav ul li {
-    margin: 0 10px;
-  }
-
-  .caja {
-    flex: 1 1 100%;
-  }
+    .infoAbUs, .infoMV {
+        flex-direction: column;
+        height: auto;
+    }
 }
