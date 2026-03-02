@@ -66,8 +66,8 @@ nav a {
 /* --- SECCIONES PRINCIPALES --- */
 .fondo {
     width: 100%;
-    height: calc(100vh - 70px);
-    margin-top: 70px;
+    height: calc(110vh - 70px);
+    margin-top: 0px;
     background: url("../img/fondoIndex.png") no-repeat center center/cover;
     display: flex;
     align-items: center;
