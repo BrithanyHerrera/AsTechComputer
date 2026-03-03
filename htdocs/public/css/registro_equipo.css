@@ -1,0 +1,156 @@
+:root {
+    --naranja-principal: #e17203; 
+    --purpura-oscuro: #52073a;    
+    --blanco-puro: #FFFFFF;      
+    --negro-texto: #000000;       
+    --gris-suave: #656464;        
+    --fondo-minimalista: #f7f7f7; 
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: var(--fondo-minimalista);
+    color: var(--negro-texto);
+    margin: 0;
+    padding-top: 20px; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.contenedor-registro {
+    background-color: var(--blanco-puro);
+    width: 100%;
+    max-width: 650px; 
+    padding: 40px;
+    border-radius: 2px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    margin: 20px auto;
+}
+
+/* --- ENCABEZADO --- */
+.encabezado-logo {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.titulo-pagina {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--negro-texto);
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.separador {
+    height: 3px;
+    background-color: var(--naranja-principal);
+    width: 60px;
+    margin: 10px auto;
+}
+
+/* --- SECCIONES DEL FORMULARIO --- */
+.seccion-titulo {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--purpura-oscuro); 
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 8px;
+    margin: 35px 0 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+.seccion-titulo::before {
+    content: "▲"; 
+    font-size: 10px;
+    margin-right: 10px;
+    color: var(--naranja-principal);
+}
+
+/* --- DISEÑO DE CAMPOS --- */
+.fila-doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.grupo-entrada {
+    margin-bottom: 22px;
+}
+
+.etiqueta-formulario {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gris-suave);
+    margin-bottom: 8px;
+    text-transform: none;
+}
+
+.campo-texto {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    font-size: 15px;
+    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.campo-texto:focus {
+    outline: none;
+    border-color: var(--naranja-principal);
+    background-color: var(--blanco-puro);
+    box-shadow: 0 0 0 3px rgba(225, 114, 3, 0.1);
+}
+
+textarea.campo-texto {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* --- BOTÓN Y FOOTER --- */
+.boton-enviar {
+    width: 100%;
+    background-color: var(--naranja-principal);
+    color: var(--blanco-puro);
+    padding: 18px;
+    border: none;
+    font-size: 15px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.boton-enviar:hover {
+    background-color: var(--purpura-oscuro);
+    transform: translateY(-2px);
+}
+
+.pie-formulario {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--gris-suave);
+    line-height: 1.5;
+}
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 600px) {
+    .fila-doble {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .contenedor-registro {
+        padding: 25px;
+    }
+}
