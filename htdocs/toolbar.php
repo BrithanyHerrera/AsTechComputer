@@ -1,7 +1,7 @@
 <header class="barra-herramientas">
     <div class="contenedor-logo">
         <a href="index.php">
-            <img src="public/img/logoATC.png" class="logo-superior">
+            <img src="../../public/img/Iso.png" class="logo-superior">
         </div>
     </a>
     <nav class="navegacion-principal">

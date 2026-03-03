@@ -3,9 +3,88 @@
     --purpura-oscuro: #52073a;    
     --blanco-puro: #FFFFFF;      
     --negro-texto: #000000;       
-    --gris-suave: #656464;        
+    --gris-suave: #656464b2;        
     --fondo-minimalista: #f7f7f7; 
 }
+
+.stepper-container {
+  margin-top:2%;
+  width: 100%;
+  padding: 40px 0;
+  background-color: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* El círculo con el número */
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid var(--gris-suave);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: var(--gris-suave);
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+/* El texto debajo del círculo */
+.step-label {
+  font-size: 13px;
+  color: var(--negro-texto);
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Línea conectora entre pasos */
+.step-line {
+  flex: 1;
+  height: 2px;
+  background-color: var(--gris-suave);
+  margin: 0 10px;
+  transform: translateY(-15px); /* Ajuste para alinear con el círculo */
+}
+
+/* ESTADOS ACTIVOS (Naranja) */
+.step.active .step-icon {
+  border-color: var(--naranja-principal);
+  color: var(--naranja-principal);
+  background-color: #fff5eb; /* Un toque de naranja muy suave al fondo */
+  box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
+}
+
+.step.active .step-label {
+  color: var(--negro-texto);
+  font-weight: 700;
+}
+
+/* Para pasos ya completados (puedes añadir la clase .completed vía JS) */
+.step.completed .step-icon {
+  background-color: var(--naranja-principal);
+  border-color: var(--naranja-principal);
+  color: white;
+}
+
 
 body {
     font-family: 'Lato', sans-serif;
@@ -27,6 +106,7 @@ body {
     border-radius: 2px; 
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     margin: 20px auto;
+    margin-top:
 }
 
 /* --- ENCABEZADO --- */
