@@ -15,77 +15,77 @@
 <body>
   <?php include '../../toolbar.php'; ?>
   <?php
-  $step = isset($_POST['step']) ? (int) $_POST['step'] : 1;
+  $paso= isset($_POST['step']) ? (int) $_POST['step'] : 1;
 
-  if ($step < 1)
-    $step = 1;
-  if ($step > 5)
-    $step = 5;
+  if ($paso< 1)
+    $paso= 1;
+  if ($paso> 5)
+    $paso= 5;
   ?>
 
-  <div class="stepper-container">
-    <div class="stepper">
+  <div class="contenedorPorPasos">
+    <div class="pasos">
 
-      <div class="step <?php if ($step == 1)
+      <div class="paso  <?php if ($paso== 1)
         echo 'active'; ?>">
-        <div class="step-icon">1</div>
-        <div class="step-label">Datos del Cliente</div>
+        <div class="icono-paso">1</div>
+        <div class="etiqueta-paso">Datos del Cliente</div>
       </div>
 
       <div class="step-line"></div>
 
-      <div class="step <?php if ($step == 2)
+      <div class="paso <?php if ($paso== 2)
         echo 'active'; ?>">
-        <div class="step-icon">2</div>
-        <div class="step-label">Revisión</div>
+        <div class="icono-paso">2</div>
+        <div class="etiqueta-paso">Revisión</div>
       </div>
 
       <div class="step-line"></div>
 
-      <div class="step <?php if ($step == 3)
+      <div class="paso <?php if ($paso== 3)
         echo 'active'; ?>">
-        <div class="step-icon">3</div>
-        <div class="step-label">Condiciones y preguntas</div>
+        <div class="icono-paso">3</div>
+        <div class="etiqueta-paso">Condiciones y preguntas</div>
       </div>
 
       <div class="step-line"></div>
 
-      <div class="step <?php if ($step == 4)
+      <div class="paso <?php if ($paso== 4)
         echo 'active'; ?>">
-        <div class="step-icon">4</div>
-        <div class="step-label">Análisis de mercado</div>
+        <div class="icono-paso">4</div>
+        <div class="etiqueta-paso">Análisis de mercado</div>
       </div>
 
       <div class="step-line"></div>
 
-      <div class="step <?php if ($step == 5)
+      <div class="paso <?php if ($paso== 5)
         echo 'active'; ?>">
-        <div class="step-icon">5</div>
-        <div class="step-label">Información esencial del equipo</div>
+        <div class="icono-paso">5</div>
+        <div class="etiqueta-paso">Información esencial del equipo</div>
       </div>
 
     </div>
   </div>
   </div>
-  <div class="form">
+  <div class="formulario">
     <form method="POST">
-      <?php if ($step == 1): ?>
+      <?php if ($paso== 1): ?>
         <h1>Datos del cliente</h1>
         <div class="fila-doble">
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Nombre</label>
-            <input type="text" name="nombre_cliente" class="campo-texto">
+            <input type="texto" name="nombre_cliente" class="campo-texto">
           </div>
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Apellido</label>
-            <input type="text" name="apellido_cliente" class="campo-texto">
+            <input type="texto" name="apellido_cliente" class="campo-texto">
           </div>
 
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Número de telefono</label>
             <div class="input-icon-wrapper">
               <i class="fas fa-phone"></i>
-              <input type="text" name="nombre_cliente" class="campo-texto">
+              <input type="texto" name="nombre_cliente" class="campo-texto">
             </div>
           </div>
           <div class="grupo-entrada">
@@ -93,7 +93,7 @@
             <div class="input-icon-wrapper">
               <i class="fas fa-envelope"></i>
 
-              <input type="text" name="nombre_cliente" class="campo-texto">
+              <input type="texto" name="nombre_cliente" class="campo-texto">
             </div>
           </div>
 
@@ -103,7 +103,7 @@
 
     </div>
 
-  <?php elseif ($step == 2): ?>
+  <?php elseif ($paso== 2): ?>
     <h1>Revisión física y control interno</h1>
 
     <div class="fila-doble">
@@ -116,7 +116,7 @@
         <label class="etiqueta-formulario">Folio</label>
         <p class="nota-formulario">Fecha de hoy en formato: DDMMAA + Numero de equipo recibido en el día: Ej. "250720254"
         </p>
-        <input type="text" name="folio" class="campo-texto" required>
+        <input type="texto" name="folio" class="campo-texto" required>
       </div>
     </div>
 
@@ -152,7 +152,7 @@
     <div class="grupo-entrada">
       <label class="etiqueta-formulario">Descripción del problema o motivo de ingreso</label>
       <p class="nota-formulario">Que problemas son los que presenta su equipo</p>
-      <textarea name="motivo_ingreso" class="campo-texto" rows="3" required></textarea>
+      <textoarea name="motivo_ingreso" class="campo-texto" rows="3" required></textoarea>
     </div>
 
     <div class="grupo-entrada">
@@ -177,7 +177,7 @@
       <button type="submit" name="step" value="3" class="boton-sig">Siguiente</button>
     </div>
 
-  <?php elseif ($step == 3): ?>
+  <?php elseif ($paso== 3): ?>
     <h1>Condiciones generales y preguntas</h1>
     <div class="grupo-entrada">
       <label class="etiqueta-formulario">¿Se autoriza revisión técnica con posible costo? *</label>
@@ -217,7 +217,7 @@
       <button type="submit" name="step" value="4" class="boton-sig">Siguiente</button>
     </div>
 
-  <?php elseif ($step == 4): ?>
+  <?php elseif ($paso== 4): ?>
     <h1>Información para análisis de mercado</h1>
 
     <div class="grupo-entrada">
@@ -286,7 +286,7 @@
       <button type="submit" name="step" value="5" class="boton-sig">Siguiente</button>
     </div>
 
-  <?php elseif ($step == 5): ?>
+  <?php elseif ($paso== 5): ?>
     <h1>Información esencial del equipo</h1>
     <p class="nota-formulario" style="text-align: center;">Esta sección se puede llenar en ausencia del cliente</p>
 

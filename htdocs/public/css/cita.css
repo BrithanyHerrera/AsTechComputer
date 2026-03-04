@@ -14,7 +14,7 @@
   --fondo-minimalista: #f7f7f7;
 }
 
-.stepper-container {
+.contenedorPorPasos {
   margin-top: 5%;
   width: 100%;
   padding: 20px 0;
@@ -24,7 +24,7 @@
   box-shadow: 0 8px 10px -10px rgba(0, 0, 0, 0.267);
 }
 
-.stepper {
+.pasos {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +32,7 @@
   margin: 0 auto;
 }
 
-.step {
+.paso {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +41,7 @@
 }
 
 /* El círculo con el número */
-.step-icon {
+.icono-paso {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -57,7 +57,7 @@
 }
 
 /* El texto debajo del círculo */
-.step-label {
+.etiqueta-paso {
   font-size: 13px;
   color: var(--negro-texto);
   font-weight: 500;
@@ -76,7 +76,7 @@
 }
 
 /* ESTADOS ACTIVOS (Naranja) */
-.step.active .step-icon {
+.paso.active .icono-paso {
   border-color: var(--naranja-principal);
   color: var(--naranja-principal);
   background-color: #fff5eb;
@@ -84,19 +84,19 @@
   box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
 }
 
-.step.active .step-label {
+.paso.active .etiqueta-paso {
   color: var(--negro-texto);
   font-weight: 700;
 }
 
 /* Para pasos ya completados (puedes añadir la clase .completed vía JS) */
-.step.completed .step-icon {
+.paso.completed .icono-paso {
   background-color: var(--naranja-principal);
   border-color: var(--naranja-principal);
   color: white;
 }
 
-.form {
+.formulario {
   width: 100%;
   background-color: var(--blanco-puro);
   height: auto;
