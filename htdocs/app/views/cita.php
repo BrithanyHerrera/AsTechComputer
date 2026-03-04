@@ -19,8 +19,8 @@
 
   if ($step < 1)
     $step = 1;
-  if ($step > 4)
-    $step = 4;
+  if ($step > 5)
+    $step = 5;
   ?>
 
   <div class="stepper-container">
@@ -37,7 +37,7 @@
       <div class="step <?php if ($step == 2)
         echo 'active'; ?>">
         <div class="step-icon">2</div>
-        <div class="step-label">Revisión física y control interno </div>
+        <div class="step-label">Revisión</div>
       </div>
 
       <div class="step-line"></div>
@@ -45,7 +45,7 @@
       <div class="step <?php if ($step == 3)
         echo 'active'; ?>">
         <div class="step-icon">3</div>
-        <div class="step-label">Condiciones generales y preguntas</div>
+        <div class="step-label">Condiciones y preguntas</div>
       </div>
 
       <div class="step-line"></div>
@@ -53,7 +53,15 @@
       <div class="step <?php if ($step == 4)
         echo 'active'; ?>">
         <div class="step-icon">4</div>
-        <div class="step-label">Información para análisis de mercado</div>
+        <div class="step-label">Análisis de mercado</div>
+      </div>
+
+      <div class="step-line"></div>
+
+      <div class="step <?php if ($step == 5)
+        echo 'active'; ?>">
+        <div class="step-icon">5</div>
+        <div class="step-label">Información esencial del equipo</div>
       </div>
 
     </div>
@@ -106,7 +114,8 @@
       </div>
       <div class="grupo-entrada">
         <label class="etiqueta-formulario">Folio</label>
-        <p class="nota-formulario">Fecha de hoy en formato: DDMMAA + Numero de equipo recibido en el día: Ej. "250720254"</p>
+        <p class="nota-formulario">Fecha de hoy en formato: DDMMAA + Numero de equipo recibido en el día: Ej. "250720254"
+        </p>
         <input type="text" name="folio" class="campo-texto" required>
       </div>
     </div>
@@ -158,7 +167,8 @@
 
     <div class="grupo-entrada">
       <label class="etiqueta-formulario">Observaciones del equipo</label>
-      <p class="nota-formulario">Observaciones del dispositivo de parte del equipo de recepción: fallas de algún tipo, golpes, detalles de funcionamiento, características únicas del equipo.</p>
+      <p class="nota-formulario">Observaciones del dispositivo de parte del equipo de recepción: fallas de algún tipo,
+        golpes, detalles de funcionamiento, características únicas del equipo.</p>
       <textarea name="observaciones_equipo" class="campo-texto" rows="3" required></textarea>
     </div>
 
@@ -188,7 +198,8 @@
 
     <div class="grupo-entrada">
       <label class="etiqueta-formulario">Recordatorio de Anticipo / Pago</label>
-      <p class="nota-formulario">Recordarle al cliente que el pago de nuestros servicios es contra entrega del servicio proporcionado y solo requerimos anticipó total de las refacciones (en caso de requerirlas).</p>
+      <p class="nota-formulario">Recordarle al cliente que el pago de nuestros servicios es contra entrega del servicio
+        proporcionado y solo requerimos anticipó total de las refacciones (en caso de requerirlas).</p>
       <div class="plano-checkboxs">
         <label class="check-item"><input type="checkbox" name="claro_pago" required> Se informó al cliente sobre el pago
           de refacciones</label>
@@ -210,59 +221,113 @@
     <h1>Información para análisis de mercado</h1>
 
     <div class="grupo-entrada">
-        <label class="etiqueta-formulario">¿Cómo se enteró de nosotros?</label>
-        <p class="nota-formulario">Pregunta dirigida al cliente</p>
-        <div class="plano-checkboxs">
-            <label class="check-item"><input type="radio" name="origen" value="recomendacion" required> Recomendación</label>
-            <label class="check-item"><input type="radio" name="origen" value="redes_sociales"> Redes sociales (FB, IG, etc.)</label>
-            <label class="check-item"><input type="radio" name="origen" value="google_web"> Google / Sitio web</label>
-            <label class="check-item"><input type="radio" name="origen" value="cartel"> Cartel afuera del local</label>
-            <label class="check-item"><input type="radio" name="origen" value="cucosta"> Universidad CUCOSTA</label> <label class="check-item"><input type="radio" name="origen" value="recurrente"> Cliente recurrente</label>
-        </div>
+      <label class="etiqueta-formulario">¿Cómo se enteró de nosotros?</label>
+      <p class="nota-formulario">Pregunta dirigida al cliente</p>
+      <div class="plano-checkboxs">
+        <label class="check-item"><input type="radio" name="origen" value="recomendacion" required> Recomendación</label>
+        <label class="check-item"><input type="radio" name="origen" value="redes_sociales"> Redes sociales (FB, IG,
+          etc.)</label>
+        <label class="check-item"><input type="radio" name="origen" value="google_web"> Google / Sitio web</label>
+        <label class="check-item"><input type="radio" name="origen" value="cartel"> Cartel afuera del local</label>
+        <label class="check-item"><input type="radio" name="origen" value="cucosta"> Universidad CUCOSTA</label> <label
+          class="check-item"><input type="radio" name="origen" value="recurrente"> Cliente recurrente</label>
+      </div>
     </div>
 
     <div class="grupo-entrada">
-        <label class="etiqueta-formulario">¿Es su primera vez con nosotros?</label>
-        <p class="nota-formulario">Pregunta dirigida al cliente</p>
-        <div class="plano-checkboxs">
-            <label class="check-item"><input type="radio" name="primera_vez" value="si" required> Sí</label>
-            <label class="check-item"><input type="radio" name="primera_vez" value="no"> No</label>
-        </div>
+      <label class="etiqueta-formulario">¿Es su primera vez con nosotros?</label>
+      <p class="nota-formulario">Pregunta dirigida al cliente</p>
+      <div class="plano-checkboxs">
+        <label class="check-item"><input type="radio" name="primera_vez" value="si" required> Sí</label>
+        <label class="check-item"><input type="radio" name="primera_vez" value="no"> No</label>
+      </div>
     </div>
 
     <div class="grupo-entrada">
-        <label class="etiqueta-formulario">¿Con qué frecuencia solicita servicios técnicos?</label>
-        <p class="nota-formulario">Frecuencia con la que da mantenimiento a su equipo o solicita reparaciones</p>
-        <div class="plano-checkboxs">
-            <label class="check-item"><input type="radio" name="frecuencia" value="1_vez_anio" required> 1 vez al año o menos</label>
-            <label class="check-item"><input type="radio" name="frecuencia" value="2-3_veces_anio"> 2–3 veces al año</label>
-            <label class="check-item"><input type="radio" name="frecuencia" value="mas_3_anio"> Más de 3 veces al año</label>
-            <label class="check-item"><input type="radio" name="frecuencia" value="descompone"> Cuando se descompone mi equipo</label> </div>
+      <label class="etiqueta-formulario">¿Con qué frecuencia solicita servicios técnicos?</label>
+      <p class="nota-formulario">Frecuencia con la que da mantenimiento a su equipo o solicita reparaciones</p>
+      <div class="plano-checkboxs">
+        <label class="check-item"><input type="radio" name="frecuencia" value="1_vez_anio" required> 1 vez al año o
+          menos</label>
+        <label class="check-item"><input type="radio" name="frecuencia" value="2-3_veces_anio"> 2–3 veces al año</label>
+        <label class="check-item"><input type="radio" name="frecuencia" value="mas_3_anio"> Más de 3 veces al año</label>
+        <label class="check-item"><input type="radio" name="frecuencia" value="descompone"> Cuando se descompone mi
+          equipo</label>
+      </div>
     </div>
 
     <div class="grupo-entrada">
-        <label class="etiqueta-formulario">¿Qué tipo de uso le da al equipo?</label>
-        <p class="nota-formulario">Pregunta dirigida al cliente</p>
-        <div class="plano-checkboxs">
-            <label class="check-item"><input type="radio" name="uso_equipo" value="estudio" required> Estudio</label>
-            <label class="check-item"><input type="radio" name="uso_equipo" value="oficina"> Trabajo de oficina</label>
-            <label class="check-item"><input type="radio" name="uso_equipo" value="disenio_edicion"> Diseño / Arquitectura / Edición</label>
-            <label class="check-item"><input type="radio" name="uso_equipo" value="gaming"> Gaming</label> </div>
+      <label class="etiqueta-formulario">¿Qué tipo de uso le da al equipo?</label>
+      <p class="nota-formulario">Pregunta dirigida al cliente</p>
+      <div class="plano-checkboxs">
+        <label class="check-item"><input type="radio" name="uso_equipo" value="estudio" required> Estudio</label>
+        <label class="check-item"><input type="radio" name="uso_equipo" value="oficina"> Trabajo de oficina</label>
+        <label class="check-item"><input type="radio" name="uso_equipo" value="disenio_edicion"> Diseño / Arquitectura /
+          Edición</label>
+        <label class="check-item"><input type="radio" name="uso_equipo" value="gaming"> Gaming</label>
+      </div>
     </div>
 
     <div class="grupo-entrada">
-        <label class="etiqueta-formulario">¿Desea recibir promociones, recordatorios y novedades?</label>
-        <p class="nota-formulario">Pregunta dirigida al cliente</p>
-        <div class="plano-checkboxs">
-            <label class="check-item"><input type="radio" name="promociones" value="whatsapp" required> Sí, por WhatsApp</label>
-            <label class="check-item"><input type="radio" name="promociones" value="correo"> Sí, por correo electrónico</label>
-            <label class="check-item"><input type="radio" name="promociones" value="ambos"> Ambos</label>
-            <label class="check-item"><input type="radio" name="promociones" value="no"> No</label> </div>
+      <label class="etiqueta-formulario">¿Desea recibir promociones, recordatorios y novedades?</label>
+      <p class="nota-formulario">Pregunta dirigida al cliente</p>
+      <div class="plano-checkboxs">
+        <label class="check-item"><input type="radio" name="promociones" value="whatsapp" required> Sí, por
+          WhatsApp</label>
+        <label class="check-item"><input type="radio" name="promociones" value="correo"> Sí, por correo
+          electrónico</label>
+        <label class="check-item"><input type="radio" name="promociones" value="ambos"> Ambos</label>
+        <label class="check-item"><input type="radio" name="promociones" value="no"> No</label>
+      </div>
     </div>
 
     <div class="form-acciones">
-        <button type="submit" name="step" value="3" class="boton-anterior">Anterior</button>
-        <button type="submit" name="step" value="5" class="boton-sig">Siguiente</button> 
+      <button type="submit" name="step" value="3" class="boton-anterior">Anterior</button>
+      <button type="submit" name="step" value="5" class="boton-sig">Siguiente</button>
+    </div>
+
+  <?php elseif ($step == 5): ?>
+    <h1>Información esencial del equipo</h1>
+    <p class="nota-formulario" style="text-align: center;">Esta sección se puede llenar en ausencia del cliente</p>
+
+    <div class="grupo-entrada">
+      <label class="etiqueta-formulario">Tipo de equipo</label>
+      <p class="nota-formulario">¿Su equipo es un(a)...?</p>
+      <div class="plano-checkboxs">
+        <label class="check-item"><input type="radio" name="tipo_equipo" value="laptop" required> Laptop</label>
+        <label class="check-item"><input type="radio" name="tipo_equipo" value="pc_escritorio"> PC de escritorio</label>
+        <label class="check-item"><input type="radio" name="tipo_equipo" value="all_in_one"> All-in-One</label>
+        <label class="check-item"><input type="radio" name="tipo_equipo" value="minipc"> MiniPC</label>
+        <label class="check-item"><input type="radio" name="tipo_equipo" value="consola"> Consola de video juegos</label>
+        <label class="check-item"><input type="radio" name="tipo_equipo" value="control"> Control de videojuegos</label>
+      </div>
+    </div>
+
+    <div class="fila-doble">
+      <div class="grupo-entrada">
+        <label class="etiqueta-formulario">Marca</label>
+        <p class="nota-formulario">Si no es visible escribir: "NV"</p>
+        <input type="text" name="marca" class="campo-texto"  required>
+      </div>
+      <div class="grupo-entrada">
+        <label class="etiqueta-formulario">Modelo</label>
+        <p class="nota-formulario">Suele estar en la parte inferior</p>
+        <input type="text" name="modelo" class="campo-texto" required>
+      </div>
+    </div>
+
+    <div class="grupo-entrada">
+      <label class="etiqueta-formulario">Número de Serie (SN) o Service Tag (ST)</label>
+      <p class="nota-formulario">Identificador único del fabricante</p>
+      <div class="input-icon-wrapper">
+        <i class="fas fa-barcode"></i>
+        <input type="text" name="numero_serie" class="campo-texto" style="padding-left: 35px;" required>
+      </div>
+    </div>
+
+    <div class="form-acciones">
+      <button type="submit" name="step" value="4" class="boton-anterior">Anterior</button>
+      <button type="submit" name="finalizar_registro" class="boton-sig" style="width: 200px;">Finalizar Registro</button>
     </div>
   <?php endif; ?>
   </form>
