@@ -18,10 +18,10 @@
     <header>
         <nav>
             <ul>
-                <li class="nav-link"><a href="servicios.php">Servicios</a></li>
-                <li class="nav-link"><a href="contacto.php">Contacto</a></li>
-                <li class="nav-link-P"><a href="./app/views/cita.php">Agendar cita</a></li>
-                <li class="nav-link"><a href="./app/views/registro_equipo.php">Registro Equipos</a></li>   
+                <li class="nav-link"><a href="app/views/servicios.php">Servicios</a></li>
+                <li class="nav-link"><a href="app/views/contacto.php">Contacto</a></li>
+                <li class="nav-link-P"><a href="app/views/cita.php">Agendar cita</a></li>
+  
             </ul>
         </nav>
     </header>

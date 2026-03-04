@@ -58,9 +58,17 @@ nav a {
     color: #f4f4f4;
 }
 
-.nav-link:hover, .nav-link-P:hover {
-    transform: scale(0.95);
+.nav-link:hover{
     opacity: 0.9;
+    background-color: #e07006;
+    color: #f4f4f4;
+    transform: scale(1.1);
+}
+.nav-link-P:hover{
+    background-color: #f4f4f4;
+    color: #e07006;
+     border: 1px solid #c77100;
+ transform: scale(1.1);
 }
 
 /* --- SECCIONES PRINCIPALES --- */

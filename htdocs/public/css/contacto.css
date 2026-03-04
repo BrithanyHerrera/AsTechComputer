@@ -1,0 +1,121 @@
+:root {
+  --naranja-principal: #e17203; 
+    --purpura-oscuro: #52073a;    
+    --blanco-puro: #FFFFFF;      
+    --negro-texto: #000000;       
+    --gris-suave: #656464b2;        
+    --fondo-minimalista: #f7f7f7; 
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--fondo-minimalista);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    background: #fff;
+    width: 90%;
+    max-width: 1100px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+    padding: 40px;
+}
+
+.logo-box {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-box img {
+    max-width: 180px;
+    height: auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--dark);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: var(--accent);
+}
+
+.info-section {
+    background: var(--naranja-principal);
+    color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.map-container {
+    width: 100%;
+    height: 250px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.8rem;
+    transition: transform 0.3s;
+}
+
+.social-icons a:hover {
+    transform: scale(1.2);
+}
+
+.fa-facebook:hover { color: #1877F2; }
+.fa-instagram:hover { color: #E4405F; }
+.fa-whatsapp:hover { color: #25D366; }
+
+@media (max-width: 768px) {
+    .main-container { grid-template-columns: 1fr; }
+}

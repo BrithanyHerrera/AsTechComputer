@@ -8,7 +8,7 @@
         <ul class="lista-opciones">
             <li><a href="/AsTechComputer/app/views/registro_equipo.php" class="enlace-opcion">Registrar Equipo</a></li>
             <li><a href="/AsTechComputer/app/views/administrar.php" class="enlace-opcion">Administrar</a></li>
-            <li><a href="index.php" class="enlace-opcion boton-inicio">Inicio</a></li>
+            <li><a href="../../index.php" class="enlace-opcion boton-inicio">Inicio</a></li>
         </ul>
     </nav>
 </header>
