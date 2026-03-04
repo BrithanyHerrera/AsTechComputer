@@ -105,6 +105,8 @@
   padding-top: 1%;
   padding-left: 15%;
   padding-right: 15%;
+  padding-bottom: 20px; 
+  overflow: visible;
 }
 
 .grupo-entrada {
@@ -286,4 +288,60 @@ textarea.campo-texto {
 .check-item input {
     margin-right: 10px;
     accent-color: var(--naranja-principal);
+}
+
+.form-acciones {
+    margin-top: 40px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.nota-formulario {
+    font-size: 13px;
+    color: var(--gris-suave);
+    margin-bottom: 12px;
+    text-align: left;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+.alerta-minimalista {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #f0f4f8;
+    border-left: 4px solid var(--purpura-oscuro);
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: left;
+    border-radius: 4px;
+}
+
+.alerta-minimalista i {
+    color: var(--purpura-oscuro);
+    font-size: 18px;
+}
+
+.alerta-minimalista span {
+    font-size: 13px;
+    color: var(--negro-texto);
+    font-weight: 400;
+}
+
+.check-item input[type="radio"] {
+    accent-color: var(--naranja-principal);
+}
+
+@media (max-width: 600px) {
+    .form-acciones {
+        flex-direction: column;
+        align-items: center;
+    }
+    .boton-anterior, .boton-sig, .boton-siguiente {
+        width: 100%;
+        margin-left: 0 !important;
+    }
 }
