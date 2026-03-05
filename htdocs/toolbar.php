@@ -1,6 +1,6 @@
 <header class="barra-herramientas">
     <div class="contenedor-logo">
-        <a href="index.php">
+        <a href="../../index.php">
             <img src="../../public/img/Iso.png" class="logo-superior">
         </div>
     </a>
