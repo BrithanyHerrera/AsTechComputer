@@ -241,6 +241,169 @@ nav a {
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease;
 }
+.seccion-ceo {
+  background-color: #f9f9f9;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.contenedor-ceo {
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.contenido-texto {
+  flex: 1;
+  min-width: 300px;
+}
+
+.logo-empresa {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+.frase-ceo {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #333;
+  line-height: 1.4;
+  border-left: 5px solid #e67e22;
+  padding-left: 20px;
+  margin: 0 0 20px 0;
+}
+
+.nombre-ceo {
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+}
+
+.puesto-ceo {
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.imagen-ceo {
+  flex: 1;
+  min-width: 300px;
+  text-align: center;
+}
+
+.imagen-ceo img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .contenedor-ceo {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .frase-ceo {
+    border-left: none;
+    border-top: 3px solid #e67e22;
+    padding-left: 0;
+    padding-top: 20px;
+  }
+}
+/* --- FOOTER --- */
+.pie-pagina {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 50px 20px 20px;
+  font-family: sans-serif;
+}
+
+.contenedor-pie {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.seccion-logo {
+  flex: 1;
+  min-width: 200px;
+}
+
+.logo-footer {
+  max-width: 150px;
+  height: auto;
+  filter: brightness(0) invert(1); /* Opcional: hace el logo blanco si es oscuro */
+}
+
+.filas-enlaces {
+  display: flex;
+  gap: 80px;
+  flex: 2;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.fila-links h4 {
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.fila-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fila-links li {
+  margin-bottom: 12px;
+}
+
+.fila-links a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.fila-links a:hover {
+  color: #e67e22; /* Naranja de tu marca */
+}
+
+.barra-derechos {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #333;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+@media (max-width: 768px) {
+  .contenedor-pie {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .filas-enlaces {
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+  }
+  
+  .seccion-logo {
+    width: 100%;
+  }
+}
 
 /* --- RESPONSIVO --- */
 @media (max-width: 768px) {

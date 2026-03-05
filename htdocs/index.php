@@ -42,7 +42,8 @@
             </div>
             <div class="imagen">
                 <div class="wrapper-irregular">
-                    <img src="public/img/revisandoCompu.jpg" alt="" class="Iprincipal">
+                    <img src="public/img/trabajado.JPG
+                    " alt="" class="Iprincipal">
                 </div>
             </div>
         </div>
@@ -76,26 +77,81 @@
             <div class="servicios-contenedor">
                 <div class="servicio-tarjeta">
                     <div class="contenido-tarjeta">
-                        <img src="public/img/revisandoCompu.jpg" alt="Diagnóstico">
+                        <img src="public/img/diagnostico.jpg" alt="Diagnóstico">
                         <button class="btn-servicio">Diagnostico</button>
                     </div>
                 </div>
 
                 <div class="servicio-tarjeta">
                     <div class="contenido-tarjeta">
-                        <img src="public/img/mantenimiento.jpg" alt="Mantenimiento">
+                        <img src="public/img/manten.jpg" alt="Mantenimiento">
                         <button class="btn-servicio">Mantenimiento</button>
                     </div>
                 </div>
 
                 <div class="servicio-tarjeta">
                     <div class="contenido-tarjeta">
-                        <img src="public/img/reparando.jpg" alt="Reparación">
+                        <img src="public/img/reparacion.jpg" alt="Reparación">
                         <button class="btn-servicio">Reparación</button>
                     </div>
                 </div>
             </div>
         </section>
+ 
+            <section class="seccion-ceo">
+  <div class="contenedor-ceo">
+    <div class="contenido-texto">
+      <img src="public/img/Iso.png" alt="Logo" class="logo-empresa">
+      <blockquote class="frase-ceo">
+    “En nuestra empresa tratamos cada equipo como si fuera propio, porque sabemos que ahí está tu trabajo, tus recuerdos y tu información."
+      </blockquote>
+      <p class="nombre-ceo"><strong>Ferdán Garrigos</strong></p>
+      <p class="puesto-ceo">Fundador & CEO</p>
+    </div>
+    <div class="imagen-ceo">
+      <img src="public/img/ceoo.png" alt="CEO de Astech Computer" >
+    </div>
+  </div>
+</section>
+
+        <footer class="pie-pagina">
+  <div class="contenedor-pie">
+    
+    <div class="seccion-logo">
+      <img src="public/img/logoATC.png" alt="AS TECH Logo" class="logo-footer">
+    </div>
+
+    <div class="filas-enlaces">
+      <div class="fila-links">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#">Reparacion y remplazo</a></li>
+          <li><a href="#">Mantenimiento preventivo</a></li>
+          <li><a href="#">Instalación de software</a></li>
+          <li><a href="#">Servicios especializados</a></li>
+         <li><a href="#">Servicios a domicilio</a></li>
+        
+        </ul>
+      </div>
+
+      <div class="fila-links">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre Nosotros</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="#">Ubicación</a></li>
+          <li><a href="#">Políticas</a></li>
+          <li><a href="#">Operaciones</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="barra-derechos">
+    <p>&copy; 2026 AS TECH COMPUTER. Todos los derechos reservados.</p>
+  </div>
+</footer>
     </main>
 
 
