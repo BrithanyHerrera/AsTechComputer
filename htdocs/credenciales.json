@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "advance-replica-489322-i8",
+  "private_key_id": "2cce324369e5fa2e5baa2ccc2800c7483527a770",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDVmCkLKWKv6mmh\nspTT8xTUc4FA5cfeXAC7GhxEb9CdgfEl7+WKKOi5jzY4gShFSbtTb00pqOiqB+JJ\nO4lAVOj38cvLWELtLjjPM5PEGoTNPu6ofRm92/iNoi3xDpfVevXnDj5jkaQKy4Sx\n4zY3Xnk5FrusPBn5cA5q/ITBVX/2J1AUNJG/rWFGLAytYLrDwX+dicjrm/Wvar3U\nA32GBe4j0U3TdtfshXK1AzRGJft1SGlqd5BK/gDnH5xzru717U/9Yw1s5rXXZ2iM\nqUz75Ehq0JHOh159tYkATZhCJwafuTd39SAhNwqFtigL/vv4U+bQoiDx1OAyKqJt\n4XFa4+SjAgMBAAECggEATQKggbq5Ly34SemGSWjSMMs4Zfqy9lP7m3oNiQs7jx6D\noKb+/rJDPmwJI5RFvb2YwbtWedfBk1RmXPsPQFec65CNZtJ6xuMsbmBtPX5GNW4k\nRDFer5p44jAAGnKlgb3knRsAmYuwNogsXqrKKGpykIfGwJGm1810FVTYVJCMI2Ze\nkuF0c2ARVDqFA7Lf8uQWfeppraka48TeMk8m3buELyiNytSFq9UcyimxbnO8O3hd\nKJeB89Z0NO8ZXicZEBCAJL1s7Ci8/pmPXb2qtSRNC7Z9hKsKZo+hjBLLHT6v+Kv5\n668fMrZ9ZXMcmwipAoQNCcRRhkHImSqpYU9yStzb8QKBgQDsPclTpHTxRefEXJ9y\nxd4GP5q9pnNXpfgVk9pLG3Zx0yWLhsst57byHMD12rFy5YMyrgDMQsDAu/OQZQBg\n+wUrWTFgR0ggRfZQe+bWu2cIKIiy2Li4+0qrr4mCF4q6+dNZXGbuSjZlhhuV4HTq\nGpt1RdrDG4b7TgWo1LTyQ8dzOwKBgQDndXmEttuwiW27NY06GtvSL2m5M2HWWqnK\n5XQlSVmFids8F8DRWozn2h1CrQ3clsjQlN5mNzCmasaobIAgwmPKfOR3Dns92eqL\njd84wmbB3hz/auWHCY0nRcbFe/HRYX3gBKQJoBOoQpuDUJxjzYXUy7FvYdg/aTeo\ncKfvJPztuQKBgQCbCcmQrQNaPGhoQ+kYp6aYLzHceNqFkRSJBKlkVTecZ9fiA6pg\nDAvSRPCV6No/70P1BKDdbImXc0HbZ42iF9tCoZx39Q/urjuCgm3ySrbJceCUjwpb\ny/8rQV5bFBwlrUL5CF080VN1uVdtOws/gAq6Igf5t50UXBX2wPGndLf2dQKBgF3/\nOD1sYWWdOiH4CoWZWMJQHPhoZIg/w4qximyGEEQKCy2pW9XplyWlT5K/Ysy9s4n5\nmyQZr7k1zb2iappjN1GJTOMIz4X71KOeFxQe5so+oLoduF8RwvA7BxE2V6s3k34B\nhHigOLtxaWR3vTtOwNX9bu6T5tVBrqfKMHkPJWSJAoGBALwhQxgWW+ukIHhqFx/+\nQv9NGHWHllXctmexCBWyPNAjvQ1dg5uHGk0S/1g71Hz263Ac9ZSy54YGxq+Ab0xn\nMqOt3eA0Qa9ZI9InSBr6iBogzhdodPDnepBvG53s76rqUxmqscz5wBH8EoCDsL/S\nYq0WTlOdSx0TSrVxIQRttbKR\n-----END PRIVATE KEY-----\n",
+  "client_email": "pruebaastechcomputer@advance-replica-489322-i8.iam.gserviceaccount.com",
+  "client_id": "113482311556439514735",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pruebaastechcomputer%40advance-replica-489322-i8.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
