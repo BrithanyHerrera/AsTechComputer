@@ -12,13 +12,12 @@ function toggleOtro(select, idContenedor) {
     } else {
         contenedor.style.display = "none";
         inputInterno.required = false;
-        inputInterno.value = ""; // Limpia el campo si el usuario cambia de opinión
+        inputInterno.value = ""; 
     }
 }
 
 /* --- VALIDACIÓN DE MARCA RESTRINGIDA (APPLE) --- */
 
-// Prevenir que escriban marcas no permitidas en el campo de texto libre
 const inputOtraMarca = document.querySelector('input[name="otra_marca_texto"]');
 if (inputOtraMarca) {
     inputOtraMarca.addEventListener('input', function (e) {
@@ -37,14 +36,13 @@ const modal = document.getElementById('modalConfirmacion');
 
 if (formulario && modal) {
     formulario.addEventListener('submit', function(e) {
+        // Solo interceptamos si el modal NO está visible
         if (modal.style.display !== 'flex') {
             e.preventDefault(); 
 
             // CAPTURA DE NOMBRE Y APELLIDO POR SEPARADO
             const nombre = document.querySelector('input[name="nombre_cliente"]').value;
             const apellido = document.querySelector('input[name="apellido_cliente"]').value;
-            
-            // CONCATENACIÓN PARA EL RESUMEN
             const nombreCompleto = `${nombre} ${apellido}`;
 
             const marcaSelect = document.querySelector('select[name="marca"]');
@@ -66,12 +64,18 @@ if (formulario && modal) {
 
 // Función que se ejecuta al presionar "Entendido" en el modal
 function cerrarYEnviar() {
-    modal.style.display = 'none';
-    formulario.submit(); // Envío físico hacia procesar_cita.php para agendar en Google
+    const botonModal = document.querySelector('.modal-contenido .boton-agendar');
+    
+    // 1. Desactivar el botón para evitar múltiples citas duplicadas
+    botonModal.disabled = true;
+    botonModal.innerText = "Procesando...";
+    botonModal.style.backgroundColor = "#ccc"; 
+
+    // 2. Enviar el formulario directamente al servidor
+    formulario.submit(); 
 }
 
-/* --- MEJORA DE ACCESIBILIDAD PARA EL TOOLTIP (?) --- */
-// Permite que en móviles se pueda cerrar el tooltip al tocar fuera
+/* --- MEJORA DE ACCESIBILIDAD --- */
 document.addEventListener('click', function(e) {
     const ayudaSerie = document.querySelector('.ayuda-serie');
     if (ayudaSerie && !ayudaSerie.contains(e.target)) {
