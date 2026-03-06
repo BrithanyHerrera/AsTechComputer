@@ -1,4 +1,4 @@
 #/vendor/
-#/htdocs/credenciales.json
+/htdocs/credenciales.json
 .env
 *.log
