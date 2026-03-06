@@ -30,13 +30,19 @@
 
         <form action="procesar_cita.php" method="POST">
 
-            <div class="grupo-campo">
-                <label>Nombre</label>
-                <input type="text" name="nombre_cliente" class="control" required placeholder="Nombre y apellido">
+            <div class="fila-doble">
+                <div class="grupo-campo">
+                    <label>Nombre(s)</label>
+                    <input type="text" name="nombre_cliente" class="control" required>
+                </div>
+                <div class="grupo-campo">
+                    <label>Apellido(s)</label>
+                    <input type="text" name="apellido_cliente" class="control" required>
+                </div>
             </div>
 
             <div class="grupo-campo">
-                <label>WhatsApp de Contacto</label>
+                <label>WhatsApp de Contacto (Número de Teléfono)</label>
                 <input type="tel" name="whatsapp" class="control" required>
             </div>
 

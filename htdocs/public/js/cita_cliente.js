@@ -35,15 +35,18 @@ if (inputOtraMarca) {
 const formulario = document.querySelector('form');
 const modal = document.getElementById('modalConfirmacion');
 
-// Interceptar el envío del formulario para mostrar el resumen
 if (formulario && modal) {
     formulario.addEventListener('submit', function(e) {
-        // Si el modal está oculto, detenemos el envío y lo mostramos
         if (modal.style.display !== 'flex') {
             e.preventDefault(); 
 
-            // Extraer datos para el resumen visual
+            // CAPTURA DE NOMBRE Y APELLIDO POR SEPARADO
             const nombre = document.querySelector('input[name="nombre_cliente"]').value;
+            const apellido = document.querySelector('input[name="apellido_cliente"]').value;
+            
+            // CONCATENACIÓN PARA EL RESUMEN
+            const nombreCompleto = `${nombre} ${apellido}`;
+
             const marcaSelect = document.querySelector('select[name="marca"]');
             const marca = (marcaSelect.value === "Otro") ? inputOtraMarca.value : marcaSelect.value;
             const modelo = document.querySelector('input[name="modelo"]').value;
@@ -51,12 +54,11 @@ if (formulario && modal) {
             const hora = document.querySelector('input[name="hora_cita"]').value;
 
             // Inyectar datos en el Modal
-            document.getElementById('res-nombre').innerText = nombre;
+            document.getElementById('res-nombre').innerText = nombreCompleto;
             document.getElementById('res-equipo').innerText = marca + " " + modelo;
             document.getElementById('res-fecha').innerText = fecha;
             document.getElementById('res-hora').innerText = hora;
 
-            // Mostrar el modal con efecto flex
             modal.style.display = 'flex';
         }
     });
