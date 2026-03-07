@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: sql113.infinityfree.com
--- Tiempo de generación: 03-03-2026 a las 01:58:35
+-- Tiempo de generación: 06-03-2026 a las 21:45:11
 -- Versión del servidor: 11.4.10-MariaDB
 -- Versión de PHP: 7.2.22
 
@@ -45,6 +45,30 @@ INSERT INTO `bitacora_logins` (`id_login`, `id_empleado`, `fecha_hora`, `direcci
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `citas_web`
+--
+
+CREATE TABLE `citas_web` (
+  `id_cita` int(11) NOT NULL,
+  `nombre_cliente` varchar(50) NOT NULL,
+  `apellido_cliente` varchar(50) NOT NULL,
+  `whatsapp` varchar(20) NOT NULL,
+  `id_tipo_equipo` int(11) NOT NULL,
+  `tipo_equipo_otro` varchar(50) DEFAULT NULL,
+  `id_marca` int(11) NOT NULL,
+  `marca_otro` varchar(50) DEFAULT NULL,
+  `modelo` varchar(50) NOT NULL,
+  `numero_serie` varchar(100) DEFAULT NULL,
+  `problema_reportado` text NOT NULL,
+  `fecha_cita` date NOT NULL,
+  `hora_cita` time NOT NULL,
+  `fecha_registro` datetime DEFAULT current_timestamp(),
+  `estado` enum('pendiente','atendida','cancelada') DEFAULT 'pendiente'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `clientes`
 --
 
@@ -66,6 +90,28 @@ INSERT INTO `clientes` (`id_cliente`, `nombre`, `apellido`, `telefono`, `correo`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `condiciones_servicio`
+--
+
+CREATE TABLE `condiciones_servicio` (
+  `id_condicion` int(11) NOT NULL,
+  `folio_orden` varchar(20) NOT NULL,
+  `autoriza_revision_costo` enum('si','no') NOT NULL,
+  `tiempo_estimado` varchar(100) NOT NULL,
+  `recordatorio_anticipo` enum('si','no') NOT NULL,
+  `dudas_cliente` text DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `condiciones_servicio`
+--
+
+INSERT INTO `condiciones_servicio` (`id_condicion`, `folio_orden`, `autoriza_revision_costo`, `tiempo_estimado`, `recordatorio_anticipo`, `dudas_cliente`) VALUES
+(1, '0603261', 'si', '3 a 5 días', 'si', '¿Se pierden mis archivos si la formatean?');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `empleados`
 --
 
@@ -75,6 +121,7 @@ CREATE TABLE `empleados` (
   `apellido` varchar(50) NOT NULL,
   `telefono` varchar(20) NOT NULL,
   `correo` varchar(100) NOT NULL,
+  `nombre_usuario` varchar(50) NOT NULL,
   `contrasena` varchar(255) NOT NULL,
   `id_puesto` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -83,8 +130,8 @@ CREATE TABLE `empleados` (
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`id_empleado`, `nombre`, `apellido`, `telefono`, `correo`, `contrasena`, `id_puesto`) VALUES
-(1, 'Carlos', 'López', '3312345678', 'carlos@astech.com', '', 1);
+INSERT INTO `empleados` (`id_empleado`, `nombre`, `apellido`, `telefono`, `correo`, `nombre_usuario`, `contrasena`, `id_puesto`) VALUES
+(1, 'Carlos', 'López', '3312345678', 'carlos@astech.com', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -132,6 +179,30 @@ INSERT INTO `frecuencias_servicio` (`id_frecuencia`, `frecuencia`) VALUES
 (4, 'Cuando se descompone'),
 (5, 'Nunca'),
 (6, 'Otro');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `gabinetes`
+--
+
+CREATE TABLE `gabinetes` (
+  `id_gabinete` varchar(10) NOT NULL,
+  `tipo_espacio` enum('laptop','computadora_escritorio','otro') NOT NULL,
+  `estado` enum('disponible','ocupado','clausurado') DEFAULT 'disponible'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `gabinetes`
+--
+
+INSERT INTO `gabinetes` (`id_gabinete`, `tipo_espacio`, `estado`) VALUES
+('10', 'laptop', 'disponible'),
+('11', 'laptop', 'disponible'),
+('12', 'laptop', 'disponible'),
+('A', 'computadora_escritorio', 'disponible'),
+('B', 'computadora_escritorio', 'disponible'),
+('C', 'computadora_escritorio', 'disponible');
 
 -- --------------------------------------------------------
 
@@ -186,7 +257,8 @@ CREATE TABLE `marketing` (
 --
 
 INSERT INTO `marketing` (`id_encuesta`, `folio_orden`, `id_medio_contacto`, `medio_contacto_otro`, `recibir_promociones`, `id_tipo_uso`, `tipo_uso_otro`, `es_primera_vez`, `id_frecuencia_servicio`, `frecuencia_servicio_otro`) VALUES
-(1, '0303261', 2, NULL, 'si por whatsapp', 2, NULL, 'si', 4, NULL);
+(1, '0303261', 2, NULL, 'si por whatsapp', 2, NULL, 'si', 4, NULL),
+(2, '0603261', 2, NULL, 'si por whatsapp', 2, NULL, 'si', 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -219,23 +291,22 @@ CREATE TABLE `ordenes_ingreso` (
   `folio` varchar(20) NOT NULL,
   `id_equipo` int(11) NOT NULL,
   `id_tecnico` int(11) NOT NULL,
+  `id_gabinete` varchar(10) NOT NULL,
   `fecha_ingreso` datetime DEFAULT current_timestamp(),
   `revision_fisica_control` text DEFAULT NULL,
   `condicion_fisica` varchar(255) NOT NULL,
   `accesorios_entregados` varchar(255) NOT NULL,
   `descripcion_problema` text NOT NULL,
-  `observaciones_recepcion` text NOT NULL,
-  `autoriza_revision_costo` enum('si','no') NOT NULL,
-  `tiempo_estimado` varchar(100) NOT NULL,
-  `dudas_cliente` text DEFAULT NULL
+  `observaciones_recepcion` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `ordenes_ingreso`
 --
 
-INSERT INTO `ordenes_ingreso` (`folio`, `id_equipo`, `id_tecnico`, `fecha_ingreso`, `revision_fisica_control`, `condicion_fisica`, `accesorios_entregados`, `descripcion_problema`, `observaciones_recepcion`, `autoriza_revision_costo`, `tiempo_estimado`, `dudas_cliente`) VALUES
-('0303261', 1, 1, '2026-03-02 22:46:13', NULL, 'Rayones', 'Cargador', 'La pantalla parpadea', 'El cliente indica que se le cayó', 'si', '3 a 5 días', NULL);
+INSERT INTO `ordenes_ingreso` (`folio`, `id_equipo`, `id_tecnico`, `id_gabinete`, `fecha_ingreso`, `revision_fisica_control`, `condicion_fisica`, `accesorios_entregados`, `descripcion_problema`, `observaciones_recepcion`) VALUES
+('0303261', 1, 1, '', '2026-03-02 22:46:13', NULL, 'Rayones', 'Cargador', 'La pantalla parpadea', 'El cliente indica que se le cayó'),
+('0603261', 1, 1, '', '2026-03-06 18:15:45', NULL, 'Rayones', 'Cargador', 'No enciende', 'Golpe en la esquina');
 
 -- --------------------------------------------------------
 
@@ -336,6 +407,30 @@ INSERT INTO `relacion_equipo_marca` (`id_marca`, `id_tipo_equipo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `servicios`
+--
+
+CREATE TABLE `servicios` (
+  `id_servicio` int(11) NOT NULL,
+  `tipo_servicio` varchar(100) NOT NULL,
+  `descripcion` text NOT NULL,
+  `imagen_url` varchar(255) DEFAULT NULL,
+  `tiempo_estimado` varchar(100) NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `estado` enum('activo','inactivo') DEFAULT 'activo'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `servicios`
+--
+
+INSERT INTO `servicios` (`id_servicio`, `tipo_servicio`, `descripcion`, `imagen_url`, `tiempo_estimado`, `precio`, `estado`) VALUES
+(1, 'Mantenimiento Preventivo', 'Limpieza profunda de componentes internos, cambio de pasta térmica y optimización del sistema operativo.', 'imagenes/servicios/mantenimiento_preventivo.jpg', '1 a 2 horas', '450.00', 'activo'),
+(2, 'Formateo y Respaldo', 'Instalación de Windows desde cero con paquetería Office. Incluye respaldo de hasta 50GB de información del cliente.', 'imagenes/servicios/formateo_windows.png', '1 día hábil', '600.00', 'activo');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipos_equipo`
 --
 
@@ -391,16 +486,32 @@ ALTER TABLE `bitacora_logins`
   ADD KEY `id_empleado` (`id_empleado`);
 
 --
+-- Indices de la tabla `citas_web`
+--
+ALTER TABLE `citas_web`
+  ADD PRIMARY KEY (`id_cita`),
+  ADD KEY `id_tipo_equipo` (`id_tipo_equipo`),
+  ADD KEY `id_marca` (`id_marca`);
+
+--
 -- Indices de la tabla `clientes`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id_cliente`);
 
 --
+-- Indices de la tabla `condiciones_servicio`
+--
+ALTER TABLE `condiciones_servicio`
+  ADD PRIMARY KEY (`id_condicion`),
+  ADD KEY `folio_orden` (`folio_orden`);
+
+--
 -- Indices de la tabla `empleados`
 --
 ALTER TABLE `empleados`
   ADD PRIMARY KEY (`id_empleado`),
+  ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
   ADD KEY `id_puesto` (`id_puesto`);
 
 --
@@ -416,6 +527,12 @@ ALTER TABLE `equipos`
 --
 ALTER TABLE `frecuencias_servicio`
   ADD PRIMARY KEY (`id_frecuencia`);
+
+--
+-- Indices de la tabla `gabinetes`
+--
+ALTER TABLE `gabinetes`
+  ADD PRIMARY KEY (`id_gabinete`);
 
 --
 -- Indices de la tabla `marcas`
@@ -445,7 +562,8 @@ ALTER TABLE `medios_contacto`
 ALTER TABLE `ordenes_ingreso`
   ADD PRIMARY KEY (`folio`),
   ADD KEY `id_equipo` (`id_equipo`),
-  ADD KEY `id_tecnico` (`id_tecnico`);
+  ADD KEY `id_tecnico` (`id_tecnico`),
+  ADD KEY `id_gabinete` (`id_gabinete`);
 
 --
 -- Indices de la tabla `puestos`
@@ -459,6 +577,12 @@ ALTER TABLE `puestos`
 ALTER TABLE `relacion_equipo_marca`
   ADD PRIMARY KEY (`id_marca`,`id_tipo_equipo`),
   ADD KEY `id_tipo_equipo` (`id_tipo_equipo`);
+
+--
+-- Indices de la tabla `servicios`
+--
+ALTER TABLE `servicios`
+  ADD PRIMARY KEY (`id_servicio`);
 
 --
 -- Indices de la tabla `tipos_equipo`
@@ -483,10 +607,22 @@ ALTER TABLE `bitacora_logins`
   MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `citas_web`
+--
+ALTER TABLE `citas_web`
+  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
   MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `condiciones_servicio`
+--
+ALTER TABLE `condiciones_servicio`
+  MODIFY `id_condicion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
@@ -516,7 +652,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `marketing`
 --
 ALTER TABLE `marketing`
-  MODIFY `id_encuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_encuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `medios_contacto`
@@ -529,6 +665,12 @@ ALTER TABLE `medios_contacto`
 --
 ALTER TABLE `puestos`
   MODIFY `id_puesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `servicios`
+--
+ALTER TABLE `servicios`
+  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_equipo`
