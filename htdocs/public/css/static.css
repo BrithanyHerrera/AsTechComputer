@@ -337,7 +337,7 @@ nav a {
 }
 
 .logo-footer {
-  max-width: 150px;
+  max-width: 200px;
   height: auto;
   filter: brightness(0) invert(1); /* Opcional: hace el logo blanco si es oscuro */
 }
@@ -386,6 +386,57 @@ nav a {
   border-top: 1px solid #333;
   font-size: 0.8rem;
   color: #777;
+}
+/*iconos footer*/
+
+/* Contenedor principal */
+.redes-sociales {
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+.redes-sociales h4 {
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Estilo de la lista */
+.redes-sociales ul {
+    list-style: none;
+    padding: 0;
+    display: flex; /* Alinea los iconos en fila */
+    gap: 15px;     /* Espacio entre cada icono */
+}
+
+/* Estilo base para todos los botones de redes */
+.redes-sociales button {
+    background: transparent; /* Quita el fondo gris/blanco del botón */
+    border: none;            /* Quita el borde */
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Estilo de los iconos de Font Awesome */
+.redes-sociales i {
+    color: white;            /* Color blanco para los iconos */
+    font-size: 30px;         /* Tamaño de los iconos */
+}
+
+/* Efecto Hover (al pasar el mouse) */
+.redes-sociales button:hover {
+    transform: translateY(-5px); /* Pequeño salto hacia arriba */
+}
+
+/* Colores específicos opcionales al pasar el mouse */
+.btn-Whatsapp:hover i { color: #25D366; }
+.btn-ig:hover i { color: #E1306C; }
+.btn-facebook:hover i { color: #1877F2; }
+.btn-youtube:hover i { color: red; }
+hr{
+  margin: 10px;
+  border:1px solid #ffffffb0;
 }
 
 @media (max-width: 768px) {

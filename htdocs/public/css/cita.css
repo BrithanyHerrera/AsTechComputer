@@ -15,7 +15,7 @@
 }
 
 .contenedorPorPasos {
-  margin-top: 5%;
+
   width: 100%;
   padding: 20px 0;
   background-color: #f9f9f9;
@@ -77,11 +77,11 @@
 
 /* ESTADOS ACTIVOS (Naranja) */
 .paso.active .icono-paso {
-  border-color: var(--naranja-principal);
-  color: var(--naranja-principal);
-  background-color: #fff5eb;
+  border-color: var(--purpura-oscuro);
+  color: var( --purpura-oscuro);
+  background-color: #f7cff8;
   /* Un toque de naranja muy suave al fondo */
-  box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
+  box-shadow: 0 0 10px rgba(27, 0, 21, 0.411);
 }
 
 .paso.active .etiqueta-paso {
@@ -91,8 +91,8 @@
 
 /* Para pasos ya completados (puedes añadir la clase .completed vía JS) */
 .paso.completed .icono-paso {
-  background-color: var(--naranja-principal);
-  border-color: var(--naranja-principal);
+  background-color: var(--purpura-oscuro);
+  border-color: var(--purpura-oscuro);
   color: white;
 }
 
@@ -141,9 +141,9 @@
 
 .campo-texto:focus {
   outline: none;
-  border-color: var(--naranja-principal);
+  border-color: var( --purpura-oscuro);
   background-color: var(--blanco-puro);
-  box-shadow: 0 0 0 3px rgba(225, 114, 3, 0.1);
+  box-shadow: 0 0 0 3px rgba(50, 0, 73, 0.1);
 }
 
 textarea.campo-texto {
@@ -170,7 +170,7 @@ textarea.campo-texto {
 .boton-siguiente {
   margin-top: 20px;
   width: 200px;
-  background-color: var(--naranja-principal);
+  background-color: var( --purpura-oscuro);
   color: var(--blanco-puro);
   padding: 3px 4px;
   height: 40px;
@@ -182,11 +182,11 @@ textarea.campo-texto {
 .boton-sig {
   margin-top: 20px;
   width: 100px;
-  background-color: var(--naranja-principal);
+  background-color: var( --purpura-oscuro);
   color: var(--blanco-puro);
   padding: 3px 4px;
   height: 40px;
-  border: 1px solid #834b0293;
+  border: 1px solid #78028393;
   border-radius: 10px;
   margin-left: 20px;
 
@@ -195,10 +195,10 @@ textarea.campo-texto {
 .boton-sig:hover {
   width: 100px;
   background-color: var(--blanco-puro);
-  color: var(--naranja-principal);
+  color: var(--purpura-oscuro);
   padding: 3px 4px;
   height: 40px;
-  border: 1px solid var(--naranja-principal);
+  border: 1px solid var( --purpura-oscuro);
   border-radius: 10px;
   transform: scale(1.1);
   margin-left: 20px;
@@ -239,7 +239,7 @@ textarea.campo-texto {
   color: var(--naranja-principal);
   padding: 3px 4px;
   height: 40px;
-  border: 1px solid var(--naranja-principal);
+  border: 1px solid var( --purpura-oscuro);
   border-radius: 10px;
   transform: scale(1.1);
   width: 200px;
@@ -287,7 +287,7 @@ textarea.campo-texto {
 
 .check-item input {
     margin-right: 10px;
-    accent-color: var(--naranja-principal);
+    accent-color: var( --purpura-oscuro);
 }
 
 .form-acciones {
@@ -332,7 +332,7 @@ textarea.campo-texto {
 }
 
 .check-item input[type="radio"] {
-    accent-color: var(--naranja-principal);
+    accent-color: var( --purpura-oscuro);
 }
 
 @media (max-width: 600px) {

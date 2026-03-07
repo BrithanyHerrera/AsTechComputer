@@ -4,7 +4,10 @@
     --blanco-puro: #FFFFFF;      
     --negro-texto: #000000;       
     --gris-suave: #656464b2;        
-    --fondo-minimalista: #f7f7f7; 
+    --fondo-minimalista: rgba(224, 224, 224, 0.562); 
+}
+h1{
+    color: var(--naranja-principal);
 }
 
 body {
@@ -21,11 +24,13 @@ body {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     background: #fff;
-    width: 90%;
-    max-width: 1100px;
+    margin-top:60px;
+    width: 80%;
+    max-width: 1200px;
+    height:500px;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.288);
 }
 
 .form-section {
@@ -38,7 +43,7 @@ body {
 }
 
 .logo-box img {
-    max-width: 180px;
+    max-width: 100px;
     height: auto;
 }
 
@@ -50,8 +55,9 @@ label {
     display: block;
     font-weight: 600;
     margin-bottom: 8px;
-    color: var(--dark);
+    color: var(--purpura-oscuro);
 }
+
 
 input, textarea {
     width: 100%;
@@ -95,26 +101,56 @@ button:hover {
     margin: 20px 0;
 }
 
+
+.info-section {
+    position: relative; 
+    padding-bottom: 60px; 
+}
+
 .social-icons {
+    position: absolute;
+    top: 420px; 
+  right:100px;
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-top: auto;
+    gap: 15px;
+    background: white; 
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    z-index: 10; 
 }
 
 .social-icons a {
-    color: white;
-    font-size: 1.8rem;
-    transition: transform 0.3s;
+    text-decoration: none;
+    transition: transform 0.3s ease;
 }
+
+.social-icons i {
+    font-size: 28px;
+    color: #52073a; 
+    display: block;
+}
+
 
 .social-icons a:hover {
-    transform: scale(1.2);
+    transform: translateY(-5px);
 }
 
-.fa-facebook:hover { color: #1877F2; }
-.fa-instagram:hover { color: #E4405F; }
-.fa-whatsapp:hover { color: #25D366; }
+.fa-square-whatsapp:hover { color: #25D366; }
+.fa-square-instagram:hover { color: #E1306C; }
+.fa-square-facebook:hover { color: #1877F2; }
+.fa-tiktok:hover { color: #000000; }
+.fa-square-youtube:hover { color: #FF0000; }
+
+
+@media (max-width: 768px) {
+    .social-icons {
+        position: static; 
+        margin: 20px auto;
+        justify-content: center;
+        box-shadow: none;
+    }
+}
 
 @media (max-width: 768px) {
     .main-container { grid-template-columns: 1fr; }

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="public/css/static.css">
     <link rel="icon" href="public/img/logoATC.ico" type="image/x-icon">
 </head>
@@ -20,8 +20,7 @@
             <ul>
                 <li class="nav-link"><a href="app/views/servicios.php">Servicios</a></li>
                 <li class="nav-link"><a href="app/views/contacto.php">Contacto</a></li>
-                <li class="nav-link-P"><a href="app/views/cita.php">Ingreso</a></li>
-                <li class="nav-link"><a href="app/views/cita_cliente.php">Cita</a></li>
+                <li class="nav-link-P"><a href="app/views/cita_cliente.php">Agendar Cita</a></li>
             </ul>
         </nav>
     </header>
@@ -119,6 +118,7 @@
     
     <div class="seccion-logo">
       <img src="public/img/logoATC.png" alt="AS TECH Logo" class="logo-footer">
+
     </div>
 
     <div class="filas-enlaces">
@@ -140,10 +140,35 @@
           <li><a href="#">Sobre Nosotros</a></li>
           <li><a href="#">Contacto</a></li>
           <li><a href="#">Ubicación</a></li>
-          <li><a href="#">Políticas</a></li>
-          <li><a href="#">Operaciones</a></li>
+          <li><a href="app/views/login.php">Operaciones</a></li>
         </ul>
       </div>
+    </div>
+    <div class="fila-links">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Politica de privacidad</a></li>
+          <li><a href="#">Aviso de privacidad</a></li>
+          <li><a href="#">Preferencias</a></li>
+
+        </ul>
+      </div>
+     <div class="redes-sociales">
+  <h4>Siguenos en</h4>
+  <ul>
+    <li><button class="btn-Whatsapp"><i class="fa-brands fa-square-whatsapp"></i></button></li>
+    <li><button class="btn-ig"><i class="fa-brands fa-square-instagram"></i></button></li>
+    <li><button class="btn-facebook"><i class="fa-brands fa-square-facebook"></i></button></li>
+    <li><button class="btn-tiktok"><i class="fa-brands fa-tiktok"></i></button></li>
+    <li><button class="btn-yo"><i class="fa-brands fa-square-youtube"></i></button></li>
+    
+  </ul>
+  <hr></hr>
+
+  </ul>
+    
+
+</div>
     </div>
 
   </div>

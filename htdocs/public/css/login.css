@@ -1,0 +1,155 @@
+.pantalla-login {
+  background-color: #f0f2f5;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.tarjeta-login {
+  background-color: #fff;
+  width: 1300px;
+  height: 550px;
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+/* Lado Izquierdo - Imagen */
+.lado-imagen {
+  flex: 1;
+  position: relative;
+  background-color: #000;
+}
+
+.lado-imagen img {
+  width: 700px;
+  height: 550px;
+  object-fit: cover;
+
+}
+
+.capa-texto {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  color: white;
+}
+
+.capa-texto h3 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* Lado Derecho - Formulario */
+.lado-formulario {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-admin {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+.lado-formulario h2 {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.0rem;
+}
+
+form {
+  width: 100%;
+}
+
+.grupo-entrada {
+  margin-bottom: 20px;
+}
+
+.grupo-entrada label {
+  display: block;
+  margin-bottom: 8px;
+  color: #444444;
+  font-size: 1.1rem;
+}
+
+.grupo-entrada input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.grupo-entrada input:focus {
+  border-color: #52073a;
+}
+
+.boton-ingresar {
+  width: 100%;
+  padding: 14px;
+  background-color: #52073a; /* Tu color secundario */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 1.1rem;
+}
+
+.boton-ingresar:hover {
+  background-color: #220118;
+  color:#ff891b; 
+  transform:scale(1.1);
+  transition : all 0.3s ease;
+}
+.boton-regresar{
+    position: absolute;
+    margin: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: large;
+    color:#ddd;
+    cursor: pointer;
+    width:100px;
+}
+.boton-regresar:hover{
+      font-size: larger;
+      color:#ff891b;
+}
+
+.link-olvido {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #52073a;
+  text-decoration: none;
+  font-size: 0.85rem;
+  border:none;
+}
+.link-olvido:hover {
+  text-decoration: underline;
+  color:#ff891b;
+  transform:scale(1.1)
+}
+
+/* Responsivo básico */
+@media (max-width: 850px) {
+  .tarjeta-login {
+    width: 90%;
+    flex-direction: column;
+    height: auto;
+  }
+  .lado-imagen {
+    display: none; /* Ocultamos imagen en móviles para ahorrar espacio */
+
+  }
+}
