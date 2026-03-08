@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <?php include '../../toolbar.php'; ?>
+<?php $ruta_prefijo = "../../"; include "../../toolbar.php"; ?>
 
     <div class="contenedor-cita">
         <div class="encabezado">

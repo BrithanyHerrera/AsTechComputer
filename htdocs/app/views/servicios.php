@@ -12,7 +12,7 @@
     
 </head>
 <body>
-    <?php include '../../toolbarServicios.php'; ?>
+<?php $ruta_prefijo = "../../"; include "../../toolbar.php"; ?>
 <div class="imagen-principal">
     <img src="../../public/img/principalAdv.png" alt="Imagen de servicios" class="img-p">
 

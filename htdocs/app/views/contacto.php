@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    
 </head>
 <body>
-<?php include '../../toolbar.php'; ?>
+<?php $ruta_prefijo = "../../"; include "../../toolbar.php"; ?>
 
 <div class="main-container">
     <section class="form-section">
