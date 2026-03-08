@@ -57,6 +57,11 @@
         </a>
       </li>
       <li>
+        <a href="?seccion=empleado" class="<?= $seccion_actual == 'ingreso' ? 'activo' : '' ?>">
+          <i class="fa-solid fa-user"></i>Agregar empleado
+        </a>
+      </li>
+      <li>
 
 
       </li>
@@ -121,6 +126,14 @@
 
         if (file_exists("secciones/ingreso.php")) {
           include "secciones/ingreso.php";
+        } else {
+          echo "<p>Error: No se encontró el archivo de contacto.</p>";
+        }
+        break;
+        case 'empleado':
+
+        if (file_exists("secciones/empleado.php")) {
+          include "secciones/empleado.php";
         } else {
           echo "<p>Error: No se encontró el archivo de contacto.</p>";
         }
