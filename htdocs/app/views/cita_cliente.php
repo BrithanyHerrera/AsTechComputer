@@ -1,3 +1,26 @@
+<?php
+// 1. CONEXIÓN A LA BASE DE DATOS
+// Ruta corregida apuntando a la carpeta config
+require_once '../config/conexion.db.php'; 
+
+// 2. CONSULTAS PARA LLENAR LOS CATÁLOGOS AUTOMÁTICAMENTE
+// Traemos todos los equipos excepto el ID 7 (Otro), ordenados alfabéticamente
+$query_tipos = $conexion->query("SELECT id_tipo_equipo, tipo FROM tipos_equipo WHERE id_tipo_equipo != 7 ORDER BY tipo ASC");
+
+// Traemos todas las marcas excepto el ID 12 (Otro), ordenadas alfabéticamente
+$query_marcas = $conexion->query("SELECT id_marca, marca FROM marcas WHERE id_marca != 12 ORDER BY marca ASC");
+
+// 3. TRAER LAS RELACIONES PARA LOS SELECTS ANIDADOS
+$query_relaciones = $conexion->query("SELECT id_tipo_equipo, id_marca FROM relacion_equipo_marca");
+$relaciones = [];
+if ($query_relaciones) {
+    while ($row = $query_relaciones->fetch_assoc()) {
+        // Agrupamos las marcas permitidas por cada tipo de equipo
+        $relaciones[$row['id_tipo_equipo']][] = $row['id_marca'];
+    }
+}
+$json_relaciones = json_encode($relaciones);
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -11,10 +34,13 @@
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/cita_cliente.css">
 
+    <script>
+        const relacionesEquipoMarca = <?php echo $json_relaciones; ?>;
+    </script>
 </head>
 
 <body>
-<?php $ruta_prefijo = "../../"; include "../../toolbar.php"; ?>
+    <?php $ruta_prefijo = "../../"; include "../../toolbar.php"; ?>
 
     <div class="contenedor-cita">
         <div class="encabezado">
@@ -49,13 +75,17 @@
             <div class="fila-doble">
                 <div class="grupo-campo">
                     <label>Tipo de Dispositivo</label>
-                    <select name="tipo_dispositivo" class="control" onchange="toggleOtro(this, 'otro_tipo_box')"
-                        required>
+                    <select name="tipo_dispositivo" class="control" id="selector_tipo" onchange="toggleOtro(this, 'otro_tipo_box')" required>
                         <option value="">Selecciona...</option>
-                        <option value="Laptop">Laptop</option>
-                        <option value="PC">PC de Escritorio</option>
-                        <option value="Consola">Consola de Videojuegos</option>
-                        <option value="Otro">Otro...</option>
+                        <?php
+                        // CICLO PARA DIBUJAR LOS EQUIPOS DESDE LA BASE DE DATOS
+                        if ($query_tipos && $query_tipos->num_rows > 0) {
+                            while ($fila = $query_tipos->fetch_assoc()) {
+                                echo '<option value="' . $fila['id_tipo_equipo'] . '">' . htmlspecialchars($fila['tipo']) . '</option>';
+                            }
+                        }
+                        ?>
+                        <option value="7">Otro...</option>
                     </select>
                     <div id="otro_tipo_box" class="campo-otro">
                         <input type="text" name="otro_tipo_texto" class="control" placeholder="¿Qué equipo es?">
@@ -64,15 +94,17 @@
 
                 <div class="grupo-campo">
                     <label>Marca (No Apple)</label>
-                    <select name="marca" class="control" id="selector_marca"
-                        onchange="toggleOtro(this, 'otra_marca_box')" required>
+                    <select name="marca" class="control" id="selector_marca" onchange="toggleOtro(this, 'otra_marca_box')" required>
                         <option value="">Selecciona...</option>
-                        <option value="Dell">Dell</option>
-                        <option value="HP">HP</option>
-                        <option value="Lenovo">Lenovo</option>
-                        <option value="Acer">Acer</option>
-                        <option value="Asus">Asus</option>
-                        <option value="Otro">Otra marca...</option>
+                        <?php
+                        // CICLO PARA DIBUJAR LAS MARCAS DESDE LA BASE DE DATOS
+                        if ($query_marcas && $query_marcas->num_rows > 0) {
+                            while ($fila = $query_marcas->fetch_assoc()) {
+                                echo '<option value="' . $fila['id_marca'] . '">' . htmlspecialchars($fila['marca']) . '</option>';
+                            }
+                        }
+                        ?>
+                        <option value="12">Otra marca...</option>
                     </select>
                     <div id="otra_marca_box" class="campo-otro">
                         <input type="text" name="otra_marca_texto" class="control" placeholder="Escribe la marca">
@@ -139,7 +171,7 @@
 
                     <p class="nota-espera">En breve recibirás un mensaje de confirmación por WhatsApp.</p>
 
-                    <button onclick="cerrarYEnviar()" class="boton-agendar">Entendido</button>
+                    <button type="button" onclick="cerrarYEnviar()" class="boton-agendar">Entendido</button>
                 </div>
             </div>
 
