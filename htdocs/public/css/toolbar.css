@@ -67,7 +67,6 @@
     color: var(--negro-texto);
     font-size: 17px;
     font-weight: 500;
-   
     transition: 0.3s;
 }
 
@@ -76,7 +75,7 @@
     text-decoration: underline;
 }
 
-.boton-inicio {
+.boton-subrayado {
     color: var(--purpura-oscuro);
     border-bottom: 2px solid var(--naranja-principal);
 }

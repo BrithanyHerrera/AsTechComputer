@@ -8,22 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="public/css/static.css">
     <link rel="icon" href="public/img/logoATC.ico" type="image/x-icon">
+    <link rel="stylesheet" href="public/css/toolbar.css">
 </head>
 
 <body>
-
-    <header>
-        <nav>
-            <ul>
-                <li class="nav-link"><a href="app/views/servicios.php">Servicios</a></li>
-                <li class="nav-link"><a href="app/views/contacto.php">Contacto</a></li>
-                <li class="nav-link-P"><a href="app/views/cita_cliente.php">Agendar Cita</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include 'toolbar.php'; ?>
 
     <main>
         <div class="fondo">
