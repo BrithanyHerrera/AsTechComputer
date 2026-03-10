@@ -1,6 +1,6 @@
 <?php
 // Usamos la ruta correcta para incluir la conexión desde controllers
-include __DIR__ . "/../config/conexion.db.php";
+include __DIR__ . "/../../config/conexion.db.php";
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
     // 3. Ejecutamos
     if ($stmt->execute()) {
         // Redirigimos para que la tabla se actualice y no se reenvíe el formulario
-        header("Location: ../views/administración.php?seccion=empleado");
+        header("Location: ../../views/administración.php?seccion=empleado");
         exit();
     } else {
         echo "Error al eliminar: " . $conexion->error;

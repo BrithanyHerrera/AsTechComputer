@@ -300,6 +300,49 @@ h3{
 
 .btn-guardar { background: #28a745; color: white; border: none; padding: 10px; cursor: pointer; }
 .btn-cancelar { background: #dc3545; color: white; border: none; padding: 10px; cursor: pointer; }
+/*editar empleado*/
+:root {
+    --purpura-oscuro: #52073a;
+    --purpura-claro: #7a0b56;
+}
+
+.modal-purpura {
+    border-top: 5px solid var(--purpura-oscuro);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-purpura h3 {
+    color: var(--purpura-oscuro);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-actualizar {
+    background-color: var(--purpura-oscuro);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-actualizar:hover {
+    background-color: var(--purpura-claro);
+}
+
+/* Mejora para el diseño pop-up */
+.modal-formulario {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 /* Responsive: si la pantalla es pequeña, la fila se vuelve columna */
 @media (max-width: 600px) {
     .fila-input {

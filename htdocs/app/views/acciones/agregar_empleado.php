@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . "/../config/conexion.db.php";
+include __DIR__ . "/../../config/conexion.db.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -65,7 +65,7 @@ Swal.fire({
     text: 'El empleado se guardó correctamente',
     confirmButtonText: 'Aceptar'
 }).then(() => {
-    window.location.href = "../views/administración.php?seccion=empleado";
+    window.location.href = "../../views/administración.php?seccion=empleado";
 });
 
 </script>
