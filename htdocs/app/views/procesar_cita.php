@@ -1,14 +1,18 @@
 <?php
-// Carga de librerías y dependencias de Google
+// Carga de librerías y dependencias (Google y Twilio)
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
+// Cargar las variables de entorno
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../../');
+$dotenv->load();
+
 // 1. INCLUIR TU CONEXIÓN A LA BASE DE DATOS
-// Ajusta esta ruta si tu archivo conexion.db.php está en otra carpeta
 require_once '../config/conexion.db.php';
 
 use Google\Client;
 use Google\Service\Calendar;
 use Google\Service\Calendar\Event;
+use Twilio\Rest\Client as TwilioClient; // Librería de Twilio
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // ====================================================================
@@ -41,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conexion->prepare($sql);
-        // "sssisissssss" indica: string, string, string, int, string, int, string, string, string, string, string, string
         $stmt->bind_param("sssisissssss", $nombre, $apellido, $whatsapp, $id_tipo_equipo, $tipo_equipo_otro, $id_marca, $marca_otro, $modelo, $numero_serie, $problema, $fecha, $hora);
         
         if (!$stmt->execute()) {
@@ -50,13 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->close();
 
         // ====================================================================
-        // FASE 2: TRADUCIR LOS IDs A TEXTO PARA EL CALENDARIO DE GOOGLE
+        // FASE 2: TRADUCIR LOS IDs A TEXTO PARA EL CALENDARIO Y WHATSAPP
         // ====================================================================
-        // Obtenemos el nombre real de la marca para el calendario
         $query_marca = $conexion->query("SELECT marca FROM marcas WHERE id_marca = '$id_marca'");
         $nombre_marca_cal = ($query_marca->num_rows > 0) ? $query_marca->fetch_assoc()['marca'] : $marca_otro;
 
-        // Obtenemos el nombre real del tipo de equipo para el calendario
         $query_tipo = $conexion->query("SELECT tipo FROM tipos_equipo WHERE id_tipo_equipo = '$id_tipo_equipo'");
         $nombre_tipo_cal = ($query_tipo->num_rows > 0) ? $query_tipo->fetch_assoc()['tipo'] : $tipo_equipo_otro;
 
@@ -83,11 +84,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $service->events->insert($calendarId, $event);
 
-        // Si todo sale bien, mostramos alerta y redirigimos
+       // ====================================================================
+        // FASE 4: ENVIAR MENSAJE DE WHATSAPP (Twilio)
+        // ====================================================================
+        try {
+    // Ahora usamos $_ENV para obtener las llaves de forma segura
+            $twilio_sid    = $_ENV['TWILIO_SID'];
+            $twilio_token  = $_ENV['TWILIO_TOKEN'];
+            $twilio_number = $_ENV['TWILIO_NUMBER'];
+
+            $twilio = new TwilioClient($twilio_sid, $twilio_token);
+
+            // Armamos el número agregando el +52 al número de 10 dígitos que puso el cliente
+            // (Si falla en las pruebas, intenta con '+521' en lugar de '+52')
+            $numero_destino = 'whatsapp:+521' . $whatsapp; 
+
+            // Construir el mensaje de texto libre
+            $mensaje_texto = "¡Hola $nombre!\n\n"
+                           . "Tu solicitud de servicio en As Tech Computer ha sido recibida y agendada.\n"
+                           . "📅 Fecha: $fecha\n"
+                           . "⏰ Hora: $hora\n"
+                           . "💻 Equipo: $nombre_marca_cal $modelo\n\n"
+                           . "¡Te esperamos!";
+
+            $twilio->messages->create(
+                $numero_destino,
+                [
+                    "from" => $twilio_number,
+                    "body" => $mensaje_texto
+                ]
+            );
+        } catch (Exception $e) {
+            // 🚨 CAMBIO TEMPORAL: Detiene la página y te muestra el error exacto en pantalla
+            die("<h3 style='color:red;'>Error de Twilio: " . $e->getMessage() . "</h3>");
+        }
+
+        // ====================================================================
+        // REDIRECCIÓN FINAL
+        // ====================================================================
         echo "<script>alert('Cita agendada correctamente.'); window.location.href='cita_cliente.php';</script>";
 
     } catch (Exception $e) {
-        // En caso de error, muestra qué falló para poder arreglarlo
         echo "Error del sistema: " . $e->getMessage();
     }
 }

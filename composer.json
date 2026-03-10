@@ -1,5 +1,7 @@
 {
     "require": {
-        "google/apiclient": "^2.19"
+        "google/apiclient": "^2.19",
+        "twilio/sdk": "^8.11",
+        "vlucas/phpdotenv": "^5.6"
     }
 }

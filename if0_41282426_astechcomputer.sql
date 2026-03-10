@@ -1,9 +1,9 @@
-astech_local-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: sql113.infinityfree.com
--- Tiempo de generación: 06-03-2026 a las 21:45:11
+-- Tiempo de generación: 10-03-2026 a las 19:53:50
 -- Versión del servidor: 11.4.10-MariaDB
 -- Versión de PHP: 7.2.22
 
@@ -223,7 +223,7 @@ INSERT INTO `marcas` (`id_marca`, `marca`) VALUES
 (1, 'Lenovo'),
 (2, 'HP'),
 (3, 'Dell'),
-(4, 'Apple'),
+(4, ' Huawei'),
 (5, 'Asus'),
 (6, 'Acer'),
 (7, 'MSI'),
@@ -360,10 +360,6 @@ INSERT INTO `relacion_equipo_marca` (`id_marca`, `id_tipo_equipo`) VALUES
 (3, 4),
 (3, 7),
 (4, 1),
-(4, 2),
-(4, 3),
-(4, 4),
-(4, 7),
 (5, 1),
 (5, 2),
 (5, 3),
@@ -412,21 +408,42 @@ INSERT INTO `relacion_equipo_marca` (`id_marca`, `id_tipo_equipo`) VALUES
 
 CREATE TABLE `servicios` (
   `id_servicio` int(11) NOT NULL,
+  `id_tipo_servicio` int(11) DEFAULT NULL,
+  `imagen_servicio` longtext DEFAULT NULL,
   `tipo_servicio` varchar(100) NOT NULL,
-  `descripcion` text NOT NULL,
-  `imagen_url` varchar(255) DEFAULT NULL,
+  `descripcion` mediumtext NOT NULL,
   `tiempo_estimado` varchar(100) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
   `estado` enum('activo','inactivo') DEFAULT 'activo'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `servicios`
 --
 
-INSERT INTO `servicios` (`id_servicio`, `tipo_servicio`, `descripcion`, `imagen_url`, `tiempo_estimado`, `precio`, `estado`) VALUES
-(1, 'Mantenimiento Preventivo', 'Limpieza profunda de componentes internos, cambio de pasta térmica y optimización del sistema operativo.', 'imagenes/servicios/mantenimiento_preventivo.jpg', '1 a 2 horas', '450.00', 'activo'),
-(2, 'Formateo y Respaldo', 'Instalación de Windows desde cero con paquetería Office. Incluye respaldo de hasta 50GB de información del cliente.', 'imagenes/servicios/formateo_windows.png', '1 día hábil', '600.00', 'activo');
+INSERT INTO `servicios` (`id_servicio`, `id_tipo_servicio`, `imagen_servicio`, `tipo_servicio`, `descripcion`, `tiempo_estimado`, `precio`, `estado`) VALUES
+(1, 1, NULL, 'Mantenimiento preventivo para equipos portátiles de alto rendimiento', 'Mantén tu laptop gamer y de trabajo en optima condición. El mantenimiento preventivo es clave para prolongar la vida útil de tu equipo, prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel con insumos de alto rendimiento de la marca THERMAL GRIZZLY.', '1 día hábil', '1450.00', 'activo'),
+(2, 1, NULL, 'Mantenimiento preventivo para equipos portátiles de oficina', 'Mantén tu laptop en optima condición. Nuestro servicio de mantenimiento preventivo completo ayuda a prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel sin interrupciones.', '1 día hábil', '690.00', 'activo'),
+(3, 1, NULL, 'Mantenimiento preventivo para gabinetes mid tower', 'Tu PC merece un cuidado completo. Este servicio esta diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo.', '1 día hábil', '920.00', 'activo'),
+(4, 1, NULL, 'Mantenimiento preventivo para gabinetes de oficina', 'Tu PC de oficina merece un cuidado completo. Este servicio está diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo. Realizamos una limpieza profunda y optimizamos el flujo de aire para asegurar que tu gabinete funcione al 100%.', '1 día hábil', '680.00', 'activo'),
+(5, 1, NULL, 'Mantenimiento preventivo para gabinetes full tower', 'Tu PC merece un cuidado completo. Este servicio está diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo. Realizamos una limpieza profunda y optimizamos el flujo de aire para asegurar que tu gabinete funcione al 100% y que tus componentes se mantengan a la temperatura ideal.', '1 día hábil.', '1490.00', 'activo'),
+(6, 1, NULL, 'Mantenimiento preventivo de alto rendimiento para equipos portátiles con metal liquido', 'Mantén tu laptop de alto rendimiento en óptimas condiciones. El mantenimiento preventivo es clave para prolongar la vida útil de tu equipo, prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel.', '1 día hábil.', '2180.00', 'activo'),
+(7, 2, NULL, 'Reparación de sistema de bisagras (Laptops de alto rendimiento)', 'Las bisagras de tu laptop, con el uso constante, suelen aflojarse o romperse, dañando los anclajes internos, la carcasa y poniendo en riesgo la pantalla. Nuestro servicio busca devolverle estabilidad al equipo y prevenir que el daño avance. ', '1 día hábil. Sujeto a disponibilidad de refacciones. ', '570.00', 'activo'),
+(8, 2, NULL, 'Instalación de unidad de almacenamiento', 'Realizamos el reemplazo seguro de discos duros (HDD) o unidades de estado sólido (SSD) para mejorar la capacidad y velocidad de tu equipo', '1 día hábil. Sujeto a disponibilidad de refacciones.', '450.00', 'activo'),
+(9, 2, NULL, 'Reemplazo de teclado para portátiles de oficina', 'Los teclados pueden presentar fallas en las teclas, pérdida de sensibilidad o desgaste estético. Nuestro servicio de reemplazo devuelve la funcionalidad', '1 día hábil. Sujeto a disponibilidad de refacciones.', '890.00', 'activo'),
+(10, 2, NULL, 'Reemplazo de ventiladores', 'Con el tiempo y uso, los ventiladores de enfriamiento pueden desgastarse o llenarse de polvo hasta terminar de averiarse o fallar lo que reduce la circulación de aire y provoca sobrecalentamiento.', '1 día hábil. Sujeto a disponibilidad de refacciones.', '260.00', 'activo'),
+(11, 2, NULL, 'Reemplazo de Memoria RAM DDR2/3/4', 'La memoria RAM puede quedarse corta o presentar fallas que vuelven lento el equipo. Nuestro servicio de reemplazo o ampliación mejora el rendimiento y la capacidad de respuesta de tu computadora.', '1 día hábil. Sujeto a disponibilidad de refacciones.', '330.00', 'activo'),
+(12, 3, NULL, 'Instalación de Microsoft Office 2016 con clave de producto original', '¿Necesitas activar, instalar o reinstalar Microsoft Office 2016 en tu equipo? Nosotros nos encargamos del proceso, asegurando que tu suite de productividad quede perfectamente configurada y lista para usar.? Este servicio es ideal para garantizar un funcionamiento óptimo y evitar problemas de compatibilidad.', '1 día hábil.', '699.00', 'activo'),
+(13, 3, NULL, 'Clave de producto Windows 10 Professional', 'Obtén tu clave de producto original de Windows 10 para activar tu sistema operativo de forma legal y permanente.Una clave original es tu garantía para recibir todas las actualizaciones de seguridad y acceder a las funcionalidades completas que ofrece Microsoft.', '1 día hábil.', '499.00', 'activo'),
+(14, 3, NULL, 'Instalación de Microsoft Office 2019 con clave de producto', '¿Necesitas activar, instalar o reinstalar Microsoft Office 2019 en tu equipo? Nosotros nos encargamos del proceso, asegurando que tu suite de productividad quede perfectamente configurada y lista para usar.? Este servicio es ideal para garantizar un funcionamiento óptimo y evitar problemas de compatibilidad.', '1 día hábil.', '930.00', 'activo'),
+(15, 3, NULL, 'Clave de producto Windows 11 Professional', 'Obtén tu clave de producto original de Windows 11 para activar tu sistema operativo de forma legal y permanente.🫱🏽‍🫲🏼 Una clave original es tu garantía para recibir todas las actualizaciones de seguridad y acceder a las funcionalidades completas que ofrece Microsoft.', '1 día hábil.', '699.00', 'activo'),
+(16, 3, NULL, 'Reinstalación de sistema operativo con respaldo de información', 'Realizamos la instalación del sistema operativo de tu computadora, asegurando que tus archivos importantes se respalden y se restauren correctamente.', '1 día hábil.', '520.00', 'activo'),
+(17, 4, NULL, 'Servicio de recolección y entrega a domicilio (1 traslado)', 'Ofrecemos un servicio seguro y rápido para recoger y entregar tu equipo portátil (Laptop) directamente en tu domicilio o negocio mediante transporte en motocicleta.', '1 dia', '75.00', 'activo'),
+(18, 4, NULL, 'Servicio de recolección y entrega a domicilio Automovil (1 traslado)', 'Ofrecemos un servicio seguro y confiable para recoger y entregar tu equipo de cómputo directamente en tu domicilio o negocio mediante transporte en automóvil, ideal para uno o varios equipos de mayor tamaño o volumen. ', '1 dia ', '150.00', 'activo'),
+(19, 5, NULL, 'Servicio de asistencia remota', '¿Tienes un problema de software y necesitas una solución rápida sin salir de casa? 🏠 Nuestro servicio de asistencia remota te conecta con un técnico experto que puede resolver fallas comunes de forma segura y eficiente a través de internet.', '1 día hábil.', '460.00', 'activo'),
+(20, 5, NULL, 'Servicio de recuperación de información con software especializado', 'Cuando tu información corre riesgo por fallas en la unidad de almacenamiento, realizamos la recuperación de datos de HDD, SSD, USB o tarjetas de memoria, utilizando herramientas y software profesional para proteger y rescatar tu información importante.', '1 día hábil.', '750.00', 'activo'),
+(21, 5, NULL, 'Diagnóstico básico de computo', '¿Tu equipo no enciende, está lento o presenta un problema general y no sabes por qué? Nuestro diagnóstico básico es el primer paso para identificar la causa de la falla. Realizamos una revisión completa para determinar si el origen del problema es de software, de hardware o dar seguimiento a un problema para así poder ofrecerte la solución adecuada.🛠️\r\n', '1 día hábil.', '560.00', 'activo'),
+(22, 5, NULL, 'Asesoría de ensamble de equipo de computo', 'Nos encargamos de guiarte en la elección de los componentes y de ensamblar tu computadora de forma profesional, asegurando compatibilidad, rendimiento y una instalación limpia y ordenada. Ideal para equipos de oficina, diseño, programación, gaming o uso profesional intensivo.', '1 día hábil.', '100.00', 'activo');
 
 -- --------------------------------------------------------
 
@@ -451,6 +468,28 @@ INSERT INTO `tipos_equipo` (`id_tipo_equipo`, `tipo`) VALUES
 (5, 'Consola de videojuegos'),
 (6, 'Control gaming'),
 (7, 'Otro');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipos_servicios`
+--
+
+CREATE TABLE `tipos_servicios` (
+  `id_tipo_servicio` int(11) NOT NULL,
+  `nombre_tipo` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `tipos_servicios`
+--
+
+INSERT INTO `tipos_servicios` (`id_tipo_servicio`, `nombre_tipo`) VALUES
+(1, 'Mantenimiento preventivo'),
+(2, 'Reparación y Reemplazo'),
+(3, 'Instalación de Software'),
+(4, 'Servicios de entrega'),
+(5, 'Servicios Especializados');
 
 -- --------------------------------------------------------
 
@@ -582,13 +621,20 @@ ALTER TABLE `relacion_equipo_marca`
 -- Indices de la tabla `servicios`
 --
 ALTER TABLE `servicios`
-  ADD PRIMARY KEY (`id_servicio`);
+  ADD PRIMARY KEY (`id_servicio`),
+  ADD KEY `id_tipo_servicio` (`id_tipo_servicio`);
 
 --
 -- Indices de la tabla `tipos_equipo`
 --
 ALTER TABLE `tipos_equipo`
   ADD PRIMARY KEY (`id_tipo_equipo`);
+
+--
+-- Indices de la tabla `tipos_servicios`
+--
+ALTER TABLE `tipos_servicios`
+  ADD PRIMARY KEY (`id_tipo_servicio`);
 
 --
 -- Indices de la tabla `tipos_uso`
@@ -670,13 +716,19 @@ ALTER TABLE `puestos`
 -- AUTO_INCREMENT de la tabla `servicios`
 --
 ALTER TABLE `servicios`
-  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_equipo`
 --
 ALTER TABLE `tipos_equipo`
   MODIFY `id_tipo_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `tipos_servicios`
+--
+ALTER TABLE `tipos_servicios`
+  MODIFY `id_tipo_servicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_uso`
