@@ -25,5 +25,34 @@
     </div>
 </div>
 <h1 class="titulo-servicios"></h1>
+<?php
+// Incluir la conexión
+require_once('../../app/config/conexion.db.php');
+
+// Consulta a la base de datos
+$query = "SELECT tipo_servicio, descripcion, precio, imagen_url
+          FROM servicios 
+          WHERE estado = 'activo'";
+
+$resultado = mysqli_query($conexion, $query);
+?>
+
+<div class="contenedor-servicios">
+    <?php while($row = mysqli_fetch_assoc($resultado)): ?>
+        <div class="card-servicio">
+            <img src="<?php echo $row['imagen_url']; ?>" alt="Servicio" class="imagen-url">
+            
+            <div class="info-basica">
+                <h3><?php echo $row['tipo_servicio']; ?></h3>
+                <span class="precio">$<?php echo number_format($row['precio'], 2); ?></span>
+            </div>
+
+            <div class="overlay-descripcion">
+                <h3><?php echo $row['tipo_servicio']; ?></h3>
+                <p><?php echo $row['descripcion']; ?></p>
+            </div>
+        </div>
+    <?php endwhile; ?>
+</div>
 </body>
 </html>

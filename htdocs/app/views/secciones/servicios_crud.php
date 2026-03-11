@@ -2,7 +2,6 @@
 // Subimos dos niveles para salir de 'secciones' y 'views', luego entramos a 'config'
 include __DIR__ . "/../../config/conexion.db.php";
 
-// Verificación de seguridad (opcional pero recomendada)
 if (!isset($conexion)) {
     die("Error: No se pudo cargar la variable de conexión \$pdo. Verifica el archivo conexion.db.php");
 }
@@ -28,9 +27,12 @@ if (!isset($conexion)) {
                 <label>Descripción:</label>
                 <textarea name="descripcion" required></textarea>
             </div>
+        
             <div class="grupo-input">
                 <label>URL de Imagen:</label>
-                <input type="file" name="imagen_url" placeholder="http://ruta-de-la-imagen.jpg">
+                <input type="file" id="seleccionador" accept="image/*" onchange="convertirABase64()">
+                    <input type="hidden" name="imagen_url" id="imagen_url">
+               
             </div>
             <div class="grupo-input">
                 <label>Precio:</label>
@@ -165,6 +167,21 @@ if (!$resultado) {
 </div>
 
 <script>
+// MUEVE ESTO FUERA DE CUALQUIER OTRA FUNCIÓN
+function convertirABase64() {
+    const archivo = document.getElementById('seleccionador').files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = function() {
+        // Asignamos el resultado al input hidden
+        document.getElementById('imagen_url').value = reader.result;
+        console.log("Imagen lista en el campo oculto");
+    };
+
+    if (archivo) {
+        reader.readAsDataURL(archivo);
+    }
+}
 function abrirFormulario() {
     document.getElementById('formulario-servicio').style.display = 'block';
 }
@@ -228,6 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
             confirmButtonColor: '#52073a'
         });
     }
+    
 
     // Limpiar la URL para que no repita la alerta al recargar
     window.history.replaceState({}, document.title, window.location.pathname);

@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tiempo_estimado = $_POST['tiempo_estimado'] ?? '';
     $precio = $_POST['precio'] ?? 0;
     $estado = $_POST['estado'] ?? 'activo';
+// Escapar caracteres especiales por seguridad
 
     // Validación básica corregida
     if(empty($descripcion) || empty($tipo_servicio) || empty($precio)){
