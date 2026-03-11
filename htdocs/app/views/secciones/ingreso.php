@@ -4,29 +4,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <title>As Tech Computer - Registro de Ingreso</title>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../public/css/cita.css">
+  <link rel="stylesheet" href="../../public/css/ingreso.css">
   <link rel="stylesheet" href="../../public/css/toolbar.css">
   <link rel="icon" href="../../public/img/logoATC.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
-  
-  <?php
-  $paso= isset($_POST['step']) ? (int) $_POST['step'] : 1;
 
-  if ($paso< 1)
-    $paso= 1;
-  if ($paso> 5)
-    $paso= 5;
+  <?php
+  $paso = isset($_POST['step']) ? (int) $_POST['step'] : 1;
+
+  if ($paso < 1)
+    $paso = 1;
+  if ($paso > 5)
+    $paso = 5;
   ?>
 
   <div class="contenedorPorPasos">
     <div class="pasos">
 
-      <div class="paso  <?php if ($paso== 1)
+      <div class="paso  <?php if ($paso == 1)
         echo 'active'; ?>">
         <div class="icono-paso">1</div>
         <div class="etiqueta-paso">Datos del Cliente</div>
@@ -34,7 +34,7 @@
 
       <div class="step-line"></div>
 
-      <div class="paso <?php if ($paso== 2)
+      <div class="paso <?php if ($paso == 2)
         echo 'active'; ?>">
         <div class="icono-paso">2</div>
         <div class="etiqueta-paso">Revisión</div>
@@ -42,7 +42,7 @@
 
       <div class="step-line"></div>
 
-      <div class="paso <?php if ($paso== 3)
+      <div class="paso <?php if ($paso == 3)
         echo 'active'; ?>">
         <div class="icono-paso">3</div>
         <div class="etiqueta-paso">Condiciones y preguntas</div>
@@ -50,7 +50,7 @@
 
       <div class="step-line"></div>
 
-      <div class="paso <?php if ($paso== 4)
+      <div class="paso <?php if ($paso == 4)
         echo 'active'; ?>">
         <div class="icono-paso">4</div>
         <div class="etiqueta-paso">Análisis de mercado</div>
@@ -58,7 +58,7 @@
 
       <div class="step-line"></div>
 
-      <div class="paso <?php if ($paso== 5)
+      <div class="paso <?php if ($paso == 5)
         echo 'active'; ?>">
         <div class="icono-paso">5</div>
         <div class="etiqueta-paso">Información esencial del equipo</div>
@@ -69,7 +69,7 @@
   </div>
   <div class="formulario">
     <form method="POST">
-      <?php if ($paso== 1): ?>
+      <?php if ($paso == 1): ?>
         <h1>Datos del cliente</h1>
         <div class="fila-doble">
           <div class="grupo-entrada">
@@ -103,20 +103,40 @@
 
     </div>
 
-  <?php elseif ($paso== 2): ?>
+  <?php elseif ($paso == 2): ?>
     <h1>Revisión física y control interno</h1>
 
-    <div class="fila-doble">
+    <div class="fila-doble" style="max-height: none; grid-template-columns: 1fr 1fr;">
       <div class="grupo-entrada">
         <label class="etiqueta-formulario">Fecha de ingreso</label>
         <p class="nota-formulario">Fecha en la que se entregó el dispositivo</p>
-        <input type="date" name="fecha_ingreso" class="campo-texto" required>
+        <input type="date" name="fecha_ingreso" id="fecha_ingreso" class="campo-texto"
+          value="<?php echo date('Y-m-d'); ?>" required>
       </div>
+
+      <div class="grupo-entrada">
+        <label class="etiqueta-formulario">Tipo para Almacenaje</label>
+        <p class="nota-formulario">Define si usará nomenclatura numérica o de letras</p>
+        <select name="tipo_almacenamiento" id="tipo_almacenamiento" class="campo-texto" required>
+          <option value="">Seleccione tipo...</option>
+          <option value="laptop">Laptop (01-10)</option>
+          <option value="pc">PC de Escritorio (A-E)</option>
+          <option value="consola">Consola (A-E)</option>
+        </select>
+      </div>
+
+      <div class="grupo-entrada">
+        <label class="etiqueta-formulario">Espacio disponible</label>
+        <p class="nota-formulario">Lugar físico donde se guardará el equipo</p>
+        <select name="espacio_almacenamiento" id="espacio_almacenamiento" class="campo-texto" required>
+          <option value="">Primero elija tipo...</option>
+        </select>
+      </div>
+
       <div class="grupo-entrada">
         <label class="etiqueta-formulario">Folio</label>
-        <p class="nota-formulario">Fecha de hoy en formato: DDMMAA + Numero de equipo recibido en el día: Ej. "250720254"
-        </p>
-        <input type="texto" name="folio" class="campo-texto" required>
+        <p class="nota-formulario">Formato: DDMMAA + Lugar de almacenamiento. Ej. "250720-01"</p>
+        <input type="text" name="folio" id="folio_auto" class="campo-texto" readonly required>
       </div>
     </div>
 
@@ -152,7 +172,7 @@
     <div class="grupo-entrada">
       <label class="etiqueta-formulario">Descripción del problema o motivo de ingreso</label>
       <p class="nota-formulario">Que problemas son los que presenta su equipo</p>
-      <textoarea name="motivo_ingreso" class="campo-texto" rows="3" required></textoarea>
+      <textarea name="motivo_ingreso" class="campo-texto" rows="3" required></textarea>
     </div>
 
     <div class="grupo-entrada">
@@ -167,8 +187,8 @@
 
     <div class="grupo-entrada">
       <label class="etiqueta-formulario">Observaciones del equipo</label>
-      <p class="nota-formulario">Observaciones del dispositivo de parte del equipo de recepción: fallas de algún tipo,
-        golpes, detalles de funcionamiento, características únicas del equipo.</p>
+      <p class="nota-formulario">Observaciones de recepción: fallas, detalles de funcionamiento, características únicas.
+      </p>
       <textarea name="observaciones_equipo" class="campo-texto" rows="3" required></textarea>
     </div>
 
@@ -177,7 +197,7 @@
       <button type="submit" name="step" value="3" class="boton-sig">Siguiente</button>
     </div>
 
-  <?php elseif ($paso== 3): ?>
+  <?php elseif ($paso == 3): ?>
     <h1>Condiciones generales y preguntas</h1>
     <div class="grupo-entrada">
       <label class="etiqueta-formulario">¿Se autoriza revisión técnica con posible costo? *</label>
@@ -217,7 +237,7 @@
       <button type="submit" name="step" value="4" class="boton-sig">Siguiente</button>
     </div>
 
-  <?php elseif ($paso== 4): ?>
+  <?php elseif ($paso == 4): ?>
     <h1>Información para análisis de mercado</h1>
 
     <div class="grupo-entrada">
@@ -286,7 +306,7 @@
       <button type="submit" name="step" value="5" class="boton-sig">Siguiente</button>
     </div>
 
-  <?php elseif ($paso== 5): ?>
+  <?php elseif ($paso == 5): ?>
     <h1>Información esencial del equipo</h1>
     <p class="nota-formulario" style="text-align: center;">Esta sección se puede llenar en ausencia del cliente</p>
 
@@ -307,7 +327,7 @@
       <div class="grupo-entrada">
         <label class="etiqueta-formulario">Marca</label>
         <p class="nota-formulario">Si no es visible escribir: "NV"</p>
-        <input type="text" name="marca" class="campo-texto"  required>
+        <input type="text" name="marca" class="campo-texto" required>
       </div>
       <div class="grupo-entrada">
         <label class="etiqueta-formulario">Modelo</label>
@@ -332,6 +352,66 @@
   <?php endif; ?>
   </form>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const inputFecha = document.getElementById('fecha_ingreso');
+      const selectTipo = document.getElementById('tipo_almacenamiento');
+      const selectEspacio = document.getElementById('espacio_almacenamiento');
+      const inputFolio = document.getElementById('folio_auto');
+
+      // Función para convertir fecha YYYY-MM-DD a DDMMAA
+      function formatearFechaFolio(fechaStr) {
+        if(!fechaStr) return "";
+        const partes = fechaStr.split("-"); // [YYYY, MM, DD]
+        const dia = partes[2];
+        const mes = partes[1];
+        const anio = partes[0].slice(-2);
+        return dia + mes + anio;
+      }
+
+      function actualizarFolio() {
+        if (!inputFolio) return;
+        const prefijo = formatearFechaFolio(inputFecha.value);
+        const espacio = selectEspacio.value ? selectEspacio.value : "";
+        inputFolio.value = prefijo + "-" + espacio;
+      }
+
+      // Escuchar cambios en la fecha para actualizar el folio al instante
+      if (inputFecha) {
+        inputFecha.addEventListener("change", actualizarFolio);
+      }
+
+      if (selectTipo) {
+        selectTipo.addEventListener("change", function() {
+          let opciones = [];
+          if (this.value === "laptop") {
+            // Laptops: 01 al 10
+            for (let i = 1; i <= 10; i++) opciones.push(("0" + i).slice(-2));
+          } else if (this.value === "pc" || this.value === "consola") {
+            // PC/Consolas: A a la E
+            opciones = ['A', 'B', 'C', 'D', 'E'];
+          }
+
+          selectEspacio.innerHTML = '<option value="">Seleccione espacio...</option>';
+          opciones.forEach(opt => {
+            let el = document.createElement("option");
+            el.value = opt;
+            el.textContent = "Espacio " + opt;
+            selectEspacio.appendChild(el);
+          });
+          actualizarFolio();
+        });
+      }
+
+      if (selectEspacio) {
+        selectEspacio.addEventListener("change", actualizarFolio);
+      }
+
+      // Inicialización del folio al cargar el Paso 2
+      if (inputFolio) actualizarFolio();
+    });
+  </script>
 </body>
 
 </html>

@@ -275,7 +275,7 @@ while ($f = $res_db->fetch_assoc()) {
         width: 95%;
         max-width: 550px;
         position: relative;
-        border-top: 5px solid #28a745;
+        border-top: 5px solid #52073a;
     }
 
     .cerrar-modal {
