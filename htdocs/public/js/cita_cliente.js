@@ -91,8 +91,7 @@ if (formulario && modal) {
 
             const modelo = document.querySelector('input[name="modelo"]').value;
             const fecha = document.querySelector('input[name="fecha_cita"]').value;
-            const hora = document.querySelector('input[name="hora_cita"]').value;
-
+            const hora = document.querySelector('select[name="hora_cita"]').value;
             // Inyectar datos en el Modal con el texto limpio
             document.getElementById('res-nombre').innerText = nombreCompleto;
             document.getElementById('res-equipo').innerText = `${tipoTexto} ${marcaTexto} - ${modelo}`;
@@ -120,3 +119,44 @@ document.addEventListener('click', function(e) {
         ayudaSerie.blur();
     }
 });
+
+function actualizarHorarios() {
+    const selectorHora = document.getElementById('selector_hora');
+    const fechaSeleccionada = document.getElementById('fecha_cita').value;
+
+    // Limpiamos las opciones actuales
+    selectorHora.innerHTML = '<option value="">Selecciona una hora...</option>';
+
+    if (!fechaSeleccionada) return;
+
+    // Generamos nuestra plantilla base de horarios (10:00 a 16:00)
+    const horariosBase = [
+        "10:00", "10:20", "10:40",
+        "11:00", "11:20", "11:40",
+        "12:00", "12:20", "12:40",
+        "13:00", "13:20", "13:40",
+        "14:00", "14:20", "14:40",
+        "15:00", "15:20", "15:40",
+        "16:00"
+    ];
+
+    // Buscamos si la fecha seleccionada tiene horas ya reservadas en la BD
+    const horasOcupadasHoy = citasOcupadas[fechaSeleccionada] || [];
+
+    // Recorremos la plantilla e insertamos solo las horas que NO estén ocupadas
+    let horasDisponibles = 0;
+    horariosBase.forEach(hora => {
+        if (!horasOcupadasHoy.includes(hora)) {
+            const option = document.createElement('option');
+            option.value = hora;
+            option.textContent = hora;
+            selectorHora.appendChild(option);
+            horasDisponibles++;
+        }
+    });
+
+    // Si todo se llenó, le avisamos al cliente
+    if (horasDisponibles === 0) {
+        selectorHora.innerHTML = '<option value="">No hay disponibilidad este día</option>';
+    }
+}

@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Usamos el operador null coalescing (??) para evitar el error de "Undefined array key"
     $tipo_servicio = $_POST['tipo_servicio'] ?? '';
     $descripcion = $_POST['descripcion'] ?? ''; // Corregido: descripción con 's'
-    $imagen_url = $_POST['imagen_url'] ?? '';
+    $imagen_servicio = $_POST['imagen_servicio'] ?? '';
     $tiempo_estimado = $_POST['tiempo_estimado'] ?? '';
     $precio = $_POST['precio'] ?? 0;
     $estado = $_POST['estado'] ?? 'activo';
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Por favor, completa los campos obligatorios (Tipo, Descripción y Precio).";
     } else {
         $sql = "INSERT INTO servicios 
-                (tipo_servicio, descripcion, imagen_url, tiempo_estimado, precio, estado)
+                (tipo_servicio, descripcion, imagen_servicio, tiempo_estimado, precio, estado)
                 VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $conexion->prepare($sql);
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssssds", 
             $tipo_servicio,
             $descripcion,
-            $imagen_url,
+            $imagen_servicio,
             $tiempo_estimado,
             $precio,
             $estado

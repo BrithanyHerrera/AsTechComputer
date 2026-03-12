@@ -37,7 +37,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fecha = $_POST['fecha_cita'];
     $hora = $_POST['hora_cita'];
 
+    // Iniciamos el bloque de intentos principal
     try {
+        // ====================================================================
+        // FASE 0: VALIDAR QUE EL HORARIO SIGA DISPONIBLE (Antichoque)
+        // ====================================================================
+        $hora_bd = $hora . ":00"; // Agregamos los segundos para buscar exacto en MySQL
+        $check_sql = "SELECT id_cita FROM citas_web WHERE fecha_cita = ? AND hora_cita = ?";
+        $check_stmt = $conexion->prepare($check_sql);
+        $check_stmt->bind_param("ss", $fecha, $hora_bd);
+        $check_stmt->execute();
+        $check_stmt->store_result();
+        
+        if ($check_stmt->num_rows > 0) {
+            $check_stmt->close();
+            // Si el horario ya existe, expulsamos al cliente de vuelta con un mensaje de error
+            die("<script>alert('Lo sentimos, alguien acaba de reservar las $hora. Por favor, elige otro horario.'); window.history.back();</script>");
+        }
+        $check_stmt->close();
+
         // ====================================================================
         // FASE 1: GUARDAR EN LA BASE DE DATOS LOCAL (MySQL) Segurizado
         // ====================================================================
@@ -65,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // FASE 3: ENVIAR A GOOGLE CALENDAR
         // ====================================================================
         $client = new Client();
+        // Cuidado aquí: revisa si esta ruta a tus credenciales.json es la correcta (2 saltos hacia atrás)
         $client->setAuthConfig(__DIR__ . '/../../credenciales.json');
         $client->addScope(Calendar::CALENDAR);
         
@@ -84,22 +103,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $service->events->insert($calendarId, $event);
 
-       // ====================================================================
+        // ====================================================================
         // FASE 4: ENVIAR MENSAJE DE WHATSAPP (Twilio)
         // ====================================================================
         try {
-    // Ahora usamos $_ENV para obtener las llaves de forma segura
+            // Ahora usamos $_ENV para obtener las llaves de forma segura
             $twilio_sid    = $_ENV['TWILIO_SID'];
             $twilio_token  = $_ENV['TWILIO_TOKEN'];
             $twilio_number = $_ENV['TWILIO_NUMBER'];
 
             $twilio = new TwilioClient($twilio_sid, $twilio_token);
 
-            // Armamos el número agregando el +52 al número de 10 dígitos que puso el cliente
-            // (Si falla en las pruebas, intenta con '+521' en lugar de '+52')
             $numero_destino = 'whatsapp:+521' . $whatsapp; 
 
-            // Construir el mensaje de texto libre
             $mensaje_texto = "¡Hola $nombre!\n\n"
                            . "Tu solicitud de servicio en As Tech Computer ha sido recibida y agendada.\n"
                            . "📅 Fecha: $fecha\n"
@@ -115,7 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ]
             );
         } catch (Exception $e) {
-            // 🚨 CAMBIO TEMPORAL: Detiene la página y te muestra el error exacto en pantalla
             die("<h3 style='color:red;'>Error de Twilio: " . $e->getMessage() . "</h3>");
         }
 
@@ -125,6 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('Cita agendada correctamente.'); window.location.href='cita_cliente.php';</script>";
 
     } catch (Exception $e) {
+        // Este catch atrapa los errores de la BD (Fase 1) o de Google Calendar (Fase 3)
         echo "Error del sistema: " . $e->getMessage();
     }
 }

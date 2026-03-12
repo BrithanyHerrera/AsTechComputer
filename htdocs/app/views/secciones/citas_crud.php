@@ -2,9 +2,8 @@
 // ===============================
 // 1. CARGAR AUTOLOAD Y CONEXIÓN
 // ===============================
-$autoload_path = $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
-require_once $autoload_path;
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/config/conexion.db.php';
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+require_once dirname(__DIR__, 2) . '/config/conexion.db.php';
 
 use Google\Client;
 use Google\Service\Calendar;
@@ -15,7 +14,7 @@ date_default_timezone_set('America/Mexico_City');
 // 2. CONFIGURAR CLIENTE GOOGLE
 // ===============================
 $client = new Client();
-$ruta_credenciales = $_SERVER['DOCUMENT_ROOT'] . '/credenciales.json';
+$ruta_credenciales = dirname(__DIR__, 3) . '/credenciales.json';
 $client->setAuthConfig($ruta_credenciales);
 $client->addScope(Calendar::CALENDAR);
 $service = new Calendar($client);
@@ -129,7 +128,7 @@ while ($f = $res_db->fetch_assoc()) {
                     $datos_db = $mapa_db[$nombre_buscar] ?? null;
                     ?>
                     <tr>
-                        <td><strong><?= htmlspecialchars($datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] ?? $summary_clean) ?></strong>
+                        <td><strong><?= htmlspecialchars(isset($datos_db) ? $datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] : $summary_clean) ?></strong></td>
                         </td>
                         <td><?= htmlspecialchars($datos_db['problema_reportado'] ?? 'N/A') ?></td>
                         <td><?= date('d/m/Y', strtotime($start_dt)) ?></td>
@@ -148,7 +147,7 @@ while ($f = $res_db->fetch_assoc()) {
                                 "<?= $datos_db['id_tipo_equipo'] ?? '' ?>",
                                 "<?= addslashes($datos_db['modelo'] ?? '') ?>",
                                 "<?= addslashes($datos_db['numero_serie'] ?? '') ?>",
-                                "<?= addslashes($datos_db['problema_reportado'] ?? '') ?>",
+                                "<?= addslashes(str_replace(["\r", "\n"], ' ', $datos_db['problema_reportado'] ?? '')) ?>",
                                 "<?= $datos_db['whatsapp'] ?? '' ?>",
                                 "<?= date('Y-m-d', strtotime($start_dt)) ?>",
                                 "<?= date('H:i', strtotime($start_dt)) ?>"

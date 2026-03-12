@@ -30,7 +30,7 @@
 require_once('../../app/config/conexion.db.php');
 
 // Consulta a la base de datos
-$query = "SELECT tipo_servicio, descripcion, precio, imagen_url
+$query = "SELECT tipo_servicio, descripcion, precio, imagen_servicio
           FROM servicios 
           WHERE estado = 'activo'";
 
@@ -40,7 +40,7 @@ $resultado = mysqli_query($conexion, $query);
 <div class="contenedor-servicios">
     <?php while($row = mysqli_fetch_assoc($resultado)): ?>
         <div class="card-servicio">
-            <img src="<?php echo $row['imagen_url']; ?>" alt="Servicio" class="imagen-url">
+            <img src="<?php echo $row['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
             
             <div class="info-basica">
                 <h3><?php echo $row['tipo_servicio']; ?></h3>

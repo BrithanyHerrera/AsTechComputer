@@ -15,11 +15,24 @@ $query_relaciones = $conexion->query("SELECT id_tipo_equipo, id_marca FROM relac
 $relaciones = [];
 if ($query_relaciones) {
     while ($row = $query_relaciones->fetch_assoc()) {
-        // Agrupamos las marcas permitidas por cada tipo de equipo
         $relaciones[$row['id_tipo_equipo']][] = $row['id_marca'];
     }
 }
 $json_relaciones = json_encode($relaciones);
+
+// =======================================================
+// 4. NUEVO: TRAER LAS CITAS OCUPADAS PARA BLOQUEAR HORARIOS
+// =======================================================
+$query_ocupadas = $conexion->query("SELECT fecha_cita, hora_cita FROM citas_web WHERE fecha_cita >= CURDATE()");
+$citas_ocupadas = [];
+if ($query_ocupadas) {
+    while ($row = $query_ocupadas->fetch_assoc()) {
+        // Cortamos los segundos (de "10:20:00" a "10:20") para que coincida con JS
+        $hora_corta = substr($row['hora_cita'], 0, 5); 
+        $citas_ocupadas[$row['fecha_cita']][] = $hora_corta;
+    }
+}
+$json_ocupadas = json_encode($citas_ocupadas);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -36,6 +49,7 @@ $json_relaciones = json_encode($relaciones);
 
     <script>
         const relacionesEquipoMarca = <?php echo $json_relaciones; ?>;
+        const citasOcupadas = <?php echo $json_ocupadas; ?>;
     </script>
 </head>
 
@@ -146,11 +160,13 @@ $json_relaciones = json_encode($relaciones);
             <div class="fila-doble">
                 <div class="grupo-campo">
                     <label>Fecha Sugerida</label>
-                    <input type="date" name="fecha_cita" class="control" required min="<?php echo date('Y-m-d'); ?>">
+                    <input type="date" name="fecha_cita" id="fecha_cita" class="control" required min="<?php echo date('Y-m-d'); ?>" onchange="actualizarHorarios()">
                 </div>
                 <div class="grupo-campo">
-                    <label>Hora (Abierto 10:00 - 16:00)</label>
-                    <input type="time" name="hora_cita" class="control" required min="10:00" max="16:00">
+                    <label>Hora (Intervalos 20 min)</label>
+                    <select name="hora_cita" id="selector_hora" class="control" required>
+                        <option value="">Selecciona una fecha primero...</option>
+                    </select>
                 </div>
             </div>
 

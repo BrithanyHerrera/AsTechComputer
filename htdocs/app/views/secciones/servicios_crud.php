@@ -31,7 +31,7 @@ if (!isset($conexion)) {
             <div class="grupo-input">
                 <label>URL de Imagen:</label>
                 <input type="file" id="seleccionador" accept="image/*" onchange="convertirABase64()">
-                    <input type="hidden" name="imagen_url" id="imagen_url">
+                    <input type="hidden" name="imagen_servicio" id="imagen_servicio">
                
             </div>
             <div class="grupo-input">
@@ -76,7 +76,7 @@ if (!isset($conexion)) {
                      <tr>
 <?php
 // Consulta limpia para tu estructura actual
-$query = "SELECT id_servicio, tipo_servicio, descripcion, imagen_url, tiempo_estimado, precio, estado FROM servicios";
+$query = "SELECT id_servicio, tipo_servicio, descripcion, imagen_servicio, tiempo_estimado, precio, estado FROM servicios";
 
 $resultado = $conexion->query($query);
 
@@ -92,7 +92,7 @@ if (!$resultado) {
                 <td>" . htmlspecialchars($row['tipo_servicio']) . "</td>
                 <td><strong>" . htmlspecialchars($row['descripcion']) . "</strong></td>
                 <td>
-                    <img src='" . htmlspecialchars($row['imagen_url'] ?? '../../img/default-servicio.png') . "' 
+                    <img src='" . htmlspecialchars($row['imagen_servicio'] ?? '../../img/default-servicio.png') . "' 
                          alt='Servicio' 
                          style='width:50px; height:50px; object-fit: cover; border-radius: 5px; border: 1px solid #ddd;'>
                 </td>
@@ -174,7 +174,7 @@ function convertirABase64() {
 
     reader.onloadend = function() {
         // Asignamos el resultado al input hidden
-        document.getElementById('imagen_url').value = reader.result;
+        document.getElementById('imagen_servicio').value = reader.result;
         console.log("Imagen lista en el campo oculto");
     };
 
