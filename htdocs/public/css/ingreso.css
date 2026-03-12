@@ -15,12 +15,10 @@
 }
 
 .contenedorPorPasos {
-
   width: 100%;
   padding: 20px 0;
   background-color: #f9f9f9;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
   box-shadow: 0 8px 10px -10px rgba(0, 0, 0, 0.267);
 }
 
@@ -119,7 +117,7 @@
   display: block;
   font-size: 16px;
   font-weight: 700;
-  color: var(--gris-suave);
+  color: var(--purpura-oscuro);
   margin-bottom: 8px;
   text-transform: none;
   justify-self: baseline;
@@ -130,13 +128,11 @@
   padding: 12px 15px;
   border: 1px solid #e0e0e0;
   border-radius: 10PX;
-  ;
   font-size: 15px;
   font-family: 'Lato', sans-serif;
   box-sizing: border-box;
   transition: all 0.3s ease;
   background-color: #fafafa;
-
 }
 
 .campo-texto:focus {
@@ -155,7 +151,6 @@ textarea.campo-texto {
   background-color: #ffffff46;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(3, 3, 3, 0.2);
-
   padding: 30px;
   margin-top: 3%;
   display: grid;
@@ -176,7 +171,6 @@ textarea.campo-texto {
   height: 40px;
   border: 1px solid #834b0293;
   border-radius: 10px;
-
 }
 
 .boton-sig {
@@ -189,7 +183,6 @@ textarea.campo-texto {
   border: 1px solid #78028393;
   border-radius: 10px;
   margin-left: 20px;
-
 }
 
 .boton-sig:hover {
@@ -213,7 +206,6 @@ textarea.campo-texto {
   height: 40px;
   border: 1px solid var(--negro-texto);
   border-radius: 10px;
-
 }
 
 .boton-anterior:hover {
@@ -279,7 +271,7 @@ textarea.campo-texto {
 
 .check-item {
     font-size: 14px;
-    color: var(--gris-suave);
+    color: var(--negro-texto);
     display: flex;
     align-items: center;
     cursor: pointer;

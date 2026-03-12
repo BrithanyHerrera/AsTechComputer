@@ -74,29 +74,27 @@
         <div class="fila-doble">
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Nombre</label>
-            <input type="texto" name="nombre_cliente" class="campo-texto">
+            <input type="texto" name="nombre_cliente" class="campo-texto" required>
           </div>
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Apellido</label>
-            <input type="texto" name="apellido_cliente" class="campo-texto">
+            <input type="texto" name="apellido_cliente" class="campo-texto" required>
           </div>
 
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Número de telefono</label>
             <div class="input-icon-wrapper">
               <i class="fas fa-phone"></i>
-              <input type="texto" name="nombre_cliente" class="campo-texto">
+              <input type="texto" name="nombre_cliente" class="campo-texto" required>
             </div>
           </div>
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Correo</label>
             <div class="input-icon-wrapper">
               <i class="fas fa-envelope"></i>
-
-              <input type="texto" name="nombre_cliente" class="campo-texto">
+              <input type="email" name="correo_cliente" class="campo-texto" required>
             </div>
           </div>
-
         </div>
         <button type="submit" class="boton-siguiente" name="step" value="2">Siguiente <i
             class="fa-solid fa-angle-right"></i></button>
@@ -353,65 +351,7 @@
   </form>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const inputFecha = document.getElementById('fecha_ingreso');
-      const selectTipo = document.getElementById('tipo_almacenamiento');
-      const selectEspacio = document.getElementById('espacio_almacenamiento');
-      const inputFolio = document.getElementById('folio_auto');
-
-      // Función para convertir fecha YYYY-MM-DD a DDMMAA
-      function formatearFechaFolio(fechaStr) {
-        if(!fechaStr) return "";
-        const partes = fechaStr.split("-"); // [YYYY, MM, DD]
-        const dia = partes[2];
-        const mes = partes[1];
-        const anio = partes[0].slice(-2);
-        return dia + mes + anio;
-      }
-
-      function actualizarFolio() {
-        if (!inputFolio) return;
-        const prefijo = formatearFechaFolio(inputFecha.value);
-        const espacio = selectEspacio.value ? selectEspacio.value : "";
-        inputFolio.value = prefijo + "-" + espacio;
-      }
-
-      // Escuchar cambios en la fecha para actualizar el folio al instante
-      if (inputFecha) {
-        inputFecha.addEventListener("change", actualizarFolio);
-      }
-
-      if (selectTipo) {
-        selectTipo.addEventListener("change", function() {
-          let opciones = [];
-          if (this.value === "laptop") {
-            // Laptops: 01 al 10
-            for (let i = 1; i <= 10; i++) opciones.push(("0" + i).slice(-2));
-          } else if (this.value === "pc" || this.value === "consola") {
-            // PC/Consolas: A a la E
-            opciones = ['A', 'B', 'C', 'D', 'E'];
-          }
-
-          selectEspacio.innerHTML = '<option value="">Seleccione espacio...</option>';
-          opciones.forEach(opt => {
-            let el = document.createElement("option");
-            el.value = opt;
-            el.textContent = "Espacio " + opt;
-            selectEspacio.appendChild(el);
-          });
-          actualizarFolio();
-        });
-      }
-
-      if (selectEspacio) {
-        selectEspacio.addEventListener("change", actualizarFolio);
-      }
-
-      // Inicialización del folio al cargar el Paso 2
-      if (inputFolio) actualizarFolio();
-    });
-  </script>
+    <script src="../../public/js/ingreso.js"></script>
 </body>
 
 </html>
