@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../public/css/administracion.css">
   <link rel="stylesheet" href="../../public/css/toolbar.css">
-  <link rel="icon" href="../../public/img/logoATC.ico" type="image/x-icon">
+  <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
@@ -23,7 +23,6 @@
     <div class="contenedor-logo">
       <img src="../../public/img/2.png" alt="Logo AS TECH" class="logo-sidebar">
     </div>
-
     <ul class="menu-navegacion">
       <li>
         <a href="?seccion=dashboard" class="<?= $seccion_actual == 'dashboard' ? 'activo' : '' ?>">
@@ -51,9 +50,13 @@
         </a>
       </li>
       <li>
-      <li>
         <a href="?seccion=ingreso" class="<?= $seccion_actual == 'ingreso' ? 'activo' : '' ?>">
           <i class="fa-solid fa-file"></i>Ingresar servicio
+        </a>
+      </li>
+      <li>
+        <a href="?seccion=registrosCRUD" class="<?= $seccion_actual == 'registrosCRUD' ? 'activo' : '' ?>">
+          <i class="fa-solid fa-save"></i>Registros Ingresados
         </a>
       </li>
       <li>
@@ -106,6 +109,7 @@
           echo "<p>Error: No se encontró el archivo de inicios.</p>";
         }
         break;
+
       case 'citas':
         echo "<h1>Gestión de Citas </h1>";
         if (file_exists("secciones/citas_crud.php")) {
@@ -114,6 +118,7 @@
           echo "<p>Error: No se encontró el archivo de citas.</p>";
         }
         break;
+
       case 'contacto':
         echo "<h1>Gestión de la pagina de contacto </h1>";
         if (file_exists("secciones/contacto_info.php")) {
@@ -122,22 +127,31 @@
           echo "<p>Error: No se encontró el archivo de contacto.</p>";
         }
         break;
-      case 'ingreso':
 
+      case 'ingreso':
         if (file_exists("secciones/ingreso.php")) {
           include "secciones/ingreso.php";
         } else {
           echo "<p>Error: No se encontró el archivo de contacto.</p>";
         }
         break;
-        case 'empleado':
 
+      case 'registrosCRUD':
+        if (file_exists("secciones/registrosCRUD.php")) {
+          include "secciones/registrosCRUD.php";
+        } else {
+          echo "<p>Error: No se encontró el archivo de contacto.</p>";
+        }
+        break;
+
+      case 'empleado':
         if (file_exists("secciones/empleado.php")) {
           include "secciones/empleado.php";
         } else {
           echo "<p>Error: No se encontró el archivo de contacto.</p>";
         }
         break;
+
       default:
         echo "<h1>404</h1><p>Sección no encontrada.</p>";
         break;
