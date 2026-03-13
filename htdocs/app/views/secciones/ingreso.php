@@ -154,6 +154,7 @@
         <label class="check-item"><input type="checkbox" name="condicion[]" value="no_enciende"> No enciende</label>
         <label class="check-item"><input type="checkbox" name="condicion[]" value="desarmado"> Desarmado</label>
       </div>
+      <input type="text" name="condicion_otro" class="campo-texto" placeholder="Otro detalle de condición física..." style="margin-top: 10px;">
     </div>
 
     <div class="grupo-entrada">
@@ -165,11 +166,12 @@
         <label class="check-item"><input type="checkbox" name="accesorios[]" value="cable_poder"> Cable de poder</label>
         <label class="check-item"><input type="checkbox" name="accesorios[]" value="funda"> Funda</label>
       </div>
+      <input type="text" name="accesorios_otro" class="campo-texto" placeholder="Otro accesorio entregado..." style="margin-top: 10px;">
     </div>
 
     <div class="grupo-entrada">
       <label class="etiqueta-formulario">Descripción del problema o motivo de ingreso</label>
-      <p class="nota-formulario">Que problemas son los que presenta su equipo</p>
+      <p class="nota-formulario">Que problemas son los que presenta el equipo</p>
       <textarea name="motivo_ingreso" class="campo-texto" rows="3" required></textarea>
     </div>
 
@@ -242,7 +244,7 @@
       <label class="etiqueta-formulario">¿Cómo se enteró de nosotros?</label>
       <p class="nota-formulario">Pregunta dirigida al cliente</p>
       <div class="plano-checkboxs">
-        <label class="check-item"><input type="radio" name="origen" value="recomendacion" required> Recomendación</label>
+        <label class="check-item"><input type="radio" name="origen" value="recomendacion"> Recomendación</label>
         <label class="check-item"><input type="radio" name="origen" value="redes_sociales"> Redes sociales (FB, IG,
           etc.)</label>
         <label class="check-item"><input type="radio" name="origen" value="google_web"> Google / Sitio web</label>
@@ -256,7 +258,7 @@
       <label class="etiqueta-formulario">¿Es su primera vez con nosotros?</label>
       <p class="nota-formulario">Pregunta dirigida al cliente</p>
       <div class="plano-checkboxs">
-        <label class="check-item"><input type="radio" name="primera_vez" value="si" required> Sí</label>
+        <label class="check-item"><input type="radio" name="primera_vez" value="si"> Sí</label>
         <label class="check-item"><input type="radio" name="primera_vez" value="no"> No</label>
       </div>
     </div>
@@ -265,7 +267,7 @@
       <label class="etiqueta-formulario">¿Con qué frecuencia solicita servicios técnicos?</label>
       <p class="nota-formulario">Frecuencia con la que da mantenimiento a su equipo o solicita reparaciones</p>
       <div class="plano-checkboxs">
-        <label class="check-item"><input type="radio" name="frecuencia" value="1_vez_anio" required> 1 vez al año o
+        <label class="check-item"><input type="radio" name="frecuencia" value="1_vez_anio"> 1 vez al año o
           menos</label>
         <label class="check-item"><input type="radio" name="frecuencia" value="2-3_veces_anio"> 2–3 veces al año</label>
         <label class="check-item"><input type="radio" name="frecuencia" value="mas_3_anio"> Más de 3 veces al año</label>
@@ -278,7 +280,7 @@
       <label class="etiqueta-formulario">¿Qué tipo de uso le da al equipo?</label>
       <p class="nota-formulario">Pregunta dirigida al cliente</p>
       <div class="plano-checkboxs">
-        <label class="check-item"><input type="radio" name="uso_equipo" value="estudio" required> Estudio</label>
+        <label class="check-item"><input type="radio" name="uso_equipo" value="estudio"> Estudio</label>
         <label class="check-item"><input type="radio" name="uso_equipo" value="oficina"> Trabajo de oficina</label>
         <label class="check-item"><input type="radio" name="uso_equipo" value="disenio_edicion"> Diseño / Arquitectura /
           Edición</label>
@@ -290,7 +292,7 @@
       <label class="etiqueta-formulario">¿Desea recibir promociones, recordatorios y novedades?</label>
       <p class="nota-formulario">Pregunta dirigida al cliente</p>
       <div class="plano-checkboxs">
-        <label class="check-item"><input type="radio" name="promociones" value="whatsapp" required> Sí, por
+        <label class="check-item"><input type="radio" name="promociones" value="whatsapp"> Sí, por
           WhatsApp</label>
         <label class="check-item"><input type="radio" name="promociones" value="correo"> Sí, por correo
           electrónico</label>

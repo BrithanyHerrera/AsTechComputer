@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const partes = fechaStr.split("-");
         const dia = partes[2];
         const mes = partes[1];
-        const anio = partes[0].slice(-2);
+        const anio = partes[0];
         return dia + mes + anio;
     }
 
