@@ -1,7 +1,7 @@
 <?php
 // 1. CONEXIÓN A LA BASE DE DATOS
 // Ruta corregida apuntando a la carpeta config
-require_once '../config/conexion.db.php'; 
+require_once '../config/conexion.db.php';
 
 // 2. CONSULTAS PARA LLENAR LOS CATÁLOGOS AUTOMÁTICAMENTE
 // Traemos todos los equipos excepto el ID 7 (Otro), ordenados alfabéticamente
@@ -28,7 +28,7 @@ $citas_ocupadas = [];
 if ($query_ocupadas) {
     while ($row = $query_ocupadas->fetch_assoc()) {
         // Cortamos los segundos (de "10:20:00" a "10:20") para que coincida con JS
-        $hora_corta = substr($row['hora_cita'], 0, 5); 
+        $hora_corta = substr($row['hora_cita'], 0, 5);
         $citas_ocupadas[$row['fecha_cita']][] = $hora_corta;
     }
 }
@@ -44,6 +44,7 @@ $json_ocupadas = json_encode($citas_ocupadas);
 
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/cita_cliente.css">
 
@@ -54,7 +55,8 @@ $json_ocupadas = json_encode($citas_ocupadas);
 </head>
 
 <body>
-    <?php $ruta_prefijo = "../../"; include "../../toolbar.php"; ?>
+    <?php $ruta_prefijo = "../../";
+    include "../../toolbar.php"; ?>
 
     <div class="contenedor-cita">
         <div class="encabezado">
@@ -89,7 +91,8 @@ $json_ocupadas = json_encode($citas_ocupadas);
             <div class="fila-doble">
                 <div class="grupo-campo">
                     <label>Tipo de Dispositivo</label>
-                    <select name="tipo_dispositivo" class="control" id="selector_tipo" onchange="toggleOtro(this, 'otro_tipo_box')" required>
+                    <select name="tipo_dispositivo" class="control" id="selector_tipo"
+                        onchange="toggleOtro(this, 'otro_tipo_box')" required>
                         <option value="">Selecciona...</option>
                         <?php
                         // CICLO PARA DIBUJAR LOS EQUIPOS DESDE LA BASE DE DATOS
@@ -108,7 +111,8 @@ $json_ocupadas = json_encode($citas_ocupadas);
 
                 <div class="grupo-campo">
                     <label>Marca (No Apple)</label>
-                    <select name="marca" class="control" id="selector_marca" onchange="toggleOtro(this, 'otra_marca_box')" required>
+                    <select name="marca" class="control" id="selector_marca"
+                        onchange="toggleOtro(this, 'otra_marca_box')" required>
                         <option value="">Selecciona...</option>
                         <?php
                         // CICLO PARA DIBUJAR LAS MARCAS DESDE LA BASE DE DATOS
@@ -142,25 +146,28 @@ $json_ocupadas = json_encode($citas_ocupadas);
 
             <div class="grupo-campo">
                 <label>Problema o Falla</label>
-                <select name="problema_lista" class="control" onchange="toggleOtro(this, 'otro_problema_box')" required>
-                    <option value="">¿Cuál es el fallo principal?</option>
+                <p class="nota-formulario">Puedes seleccionar una opción rápida y/o detallar el problema abajo.</p>
+
+                <select name="problema_lista" class="control" style="margin-bottom: 10px;">
+                    <option value="">Opciones rápidas...</option>
                     <option value="mantenimiento">Mantenimiento preventivo (Limpieza)</option>
                     <option value="lento">Equipo lento / Se traba</option>
                     <option value="pantalla">Pantalla rota o dañada</option>
                     <option value="virus">Eliminación de Virus / Software</option>
                     <option value="bisagras">Reparación de bisagras</option>
-                    <option value="Otro">Otro problema...</option>
                 </select>
-                <div id="otro_problema_box" class="campo-otro">
-                    <textarea name="problema_detalle" class="control" rows="3"
-                        placeholder="Describe brevemente el fallo que presenta tu equipo"></textarea>
+
+                <div id="detalle_falla_box">
+                    <label> Descripción de detalles: </label>
+                    <input type="text" name="problema_detalle" class="control" rows="3" placeholder="(Marcas, ruidos, errores, etc.)">
                 </div>
             </div>
 
             <div class="fila-doble">
                 <div class="grupo-campo">
                     <label>Fecha Sugerida</label>
-                    <input type="date" name="fecha_cita" id="fecha_cita" class="control" required min="<?php echo date('Y-m-d'); ?>" onchange="actualizarHorarios()">
+                    <input type="date" name="fecha_cita" id="fecha_cita" class="control" required
+                        min="<?php echo date('Y-m-d'); ?>" onchange="actualizarHorarios()">
                 </div>
                 <div class="grupo-campo">
                     <label>Hora (Intervalos 20 min)</label>

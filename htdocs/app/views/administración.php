@@ -60,7 +60,7 @@
         </a>
       </li>
       <li>
-        <a href="?seccion=empleado" class="<?= $seccion_actual == 'ingreso' ? 'activo' : '' ?>">
+        <a href="?seccion=empleado" class="<?= $seccion_actual == 'empleado' ? 'activo' : '' ?>">
           <i class="fa-solid fa-user"></i>Agregar empleado
         </a>
       </li>

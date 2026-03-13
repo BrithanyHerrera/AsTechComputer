@@ -1,18 +1,15 @@
 <?php
-// Carga de librerías y dependencias (Google y Twilio)
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-// Cargar las variables de entorno
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../../');
 $dotenv->load();
 
-// 1. INCLUIR TU CONEXIÓN A LA BASE DE DATOS
 require_once '../config/conexion.db.php';
 
 use Google\Client;
 use Google\Service\Calendar;
 use Google\Service\Calendar\Event;
-use Twilio\Rest\Client as TwilioClient; // Librería de Twilio
+use Twilio\Rest\Client as TwilioClient;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // ====================================================================
@@ -32,12 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $modelo = $_POST['modelo'];
     $numero_serie = !empty($_POST['numero_serie']) ? $_POST['numero_serie'] : null;
-    $problema = ($_POST['problema_lista'] == "Otro") ? $_POST['problema_detalle'] : $_POST['problema_lista'];
+    $falla_lista = $_POST['problema_lista'];
+    $falla_detalle = $_POST['problema_detalle'];
+
+    if (!empty($falla_lista)) {
+        $problema = strtoupper($falla_lista) . ": " . $falla_detalle;
+    } else {
+        $problema = $falla_detalle;
+    }
     
     $fecha = $_POST['fecha_cita'];
     $hora = $_POST['hora_cita'];
 
-    // Iniciamos el bloque de intentos principal
     try {
         // ====================================================================
         // FASE 0: VALIDAR QUE EL HORARIO SIGA DISPONIBLE (Antichoque)
