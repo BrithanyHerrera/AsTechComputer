@@ -5,6 +5,11 @@
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 require_once dirname(__DIR__, 2) . '/config/conexion.db.php';
 
+// =======================================================
+$sql_limpieza = "DELETE FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
+//$sql_limpieza = "DELETE FROM citas_web WHERE fecha_cita < DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
+$conexion->query($sql_limpieza);
+
 use Google\Client;
 use Google\Service\Calendar;
 
@@ -117,6 +122,7 @@ while ($f = $res_db->fetch_assoc()) {
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>No. Serie</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -128,17 +134,20 @@ while ($f = $res_db->fetch_assoc()) {
                     $datos_db = $mapa_db[$nombre_buscar] ?? null;
                     ?>
                     <tr>
-                        <td><strong><?= htmlspecialchars(isset($datos_db) ? $datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] : $summary_clean) ?></strong></td>
-                        </td>
+                        <td><strong><?= htmlspecialchars(isset($datos_db) ? $datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] : $summary_clean) ?></strong></td></td>
                         <td><?= htmlspecialchars($datos_db['problema_reportado'] ?? 'N/A') ?></td>
                         <td><?= date('d/m/Y', strtotime($start_dt)) ?></td>
                         <td><?= date('H:i', strtotime($start_dt)) ?></td>
                         <td><?= htmlspecialchars($datos_db['tipo'] ?? 'N/A') ?></td>
                         <td><?= htmlspecialchars($datos_db['marca'] ?? 'N/A') ?></td>
                         <td><?= htmlspecialchars($datos_db['modelo'] ?? 'N/A') ?></td>
+    
                         <td><small><?= htmlspecialchars($datos_db['numero_serie'] ?? 'N/V') ?></small></td>
+    
+                        <td><strong><?= htmlspecialchars($datos_db['estado'] ?? 'Pendiente') ?></strong></td>
+    
                         <td class="acciones">
-                            <button class="btn-editar" type="button" onclick='abrirModalEditar(
+                        <button class="btn-editar" type="button" onclick='abrirModalEditar(
                                 "<?= $event->getId() ?>", 
                                 "<?= $datos_db['id_cita'] ?? '' ?>", 
                                 "<?= $datos_db['nombre_cliente'] ?? '' ?>", 
