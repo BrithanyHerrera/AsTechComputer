@@ -155,6 +155,7 @@ $json_ocupadas = json_encode($citas_ocupadas);
                     <option value="pantalla">Pantalla rota o dañada</option>
                     <option value="virus">Eliminación de Virus / Software</option>
                     <option value="bisagras">Reparación de bisagras</option>
+                    <option value="otro">Otro</option>
                 </select>
 
                 <div id="detalle_falla_box">
