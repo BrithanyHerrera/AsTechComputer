@@ -1,16 +1,19 @@
 <?php
+//--------------------------------------------
 // 1. CONEXIÓN A LA BASE DE DATOS
-// Ruta corregida apuntando a la carpeta config
+//--------------------------------------------
 require_once '../config/conexion.db.php';
 
+//--------------------------------------------
 // 2. CONSULTAS PARA LLENAR LOS CATÁLOGOS AUTOMÁTICAMENTE
-// Traemos todos los equipos excepto el ID 7 (Otro), ordenados alfabéticamente
+//--------------------------------------------
 $query_tipos = $conexion->query("SELECT id_tipo_equipo, tipo FROM tipos_equipo WHERE id_tipo_equipo != 7 ORDER BY tipo ASC");
 
-// Traemos todas las marcas excepto el ID 12 (Otro), ordenadas alfabéticamente
 $query_marcas = $conexion->query("SELECT id_marca, marca FROM marcas WHERE id_marca != 12 ORDER BY marca ASC");
 
+//--------------------------------------------
 // 3. TRAER LAS RELACIONES PARA LOS SELECTS ANIDADOS
+//--------------------------------------------
 $query_relaciones = $conexion->query("SELECT id_tipo_equipo, id_marca FROM relacion_equipo_marca");
 $relaciones = [];
 if ($query_relaciones) {
@@ -20,14 +23,13 @@ if ($query_relaciones) {
 }
 $json_relaciones = json_encode($relaciones);
 
-// =======================================================
+//--------------------------------------------
 // 4. NUEVO: TRAER LAS CITAS OCUPADAS PARA BLOQUEAR HORARIOS
-// =======================================================
+//--------------------------------------------
 $query_ocupadas = $conexion->query("SELECT fecha_cita, hora_cita FROM citas_web WHERE fecha_cita >= CURDATE()");
 $citas_ocupadas = [];
 if ($query_ocupadas) {
     while ($row = $query_ocupadas->fetch_assoc()) {
-        // Cortamos los segundos (de "10:20:00" a "10:20") para que coincida con JS
         $hora_corta = substr($row['hora_cita'], 0, 5);
         $citas_ocupadas[$row['fecha_cita']][] = $hora_corta;
     }

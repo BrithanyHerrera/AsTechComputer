@@ -7,7 +7,7 @@ require_once dirname(__DIR__, 2) . '/config/conexion.db.php';
 
 // =======================================================
 $sql_limpieza = "DELETE FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
-//$sql_limpieza = "DELETE FROM citas_web WHERE fecha_cita < DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
+
 $conexion->query($sql_limpieza);
 
 use Google\Client;

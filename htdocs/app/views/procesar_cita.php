@@ -1,12 +1,13 @@
 <?php
-// Carga de librerías y dependencias (Google y Twilio)
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-// Cargar las variables de entorno
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../../');
 $dotenv->load();
 
-// 1. INCLUIR TU CONEXIÓN A LA BASE DE DATOS
+//--------------------------------------------
+// CONEXIÓN A LA BASE DE DATOS
+//--------------------------------------------
+
 require_once '../config/conexion.db.php';
 
 use Google\Client;
@@ -29,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $modelo = $_POST['modelo'];
     $numero_serie = !empty($_POST['numero_serie']) ? $_POST['numero_serie'] : null;
     
-    // Lógica de falla combinada
     $falla_lista = $_POST['problema_lista'];
     $falla_detalle = $_POST['problema_detalle'];
     $problema = (!empty($falla_lista)) ? strtoupper($falla_lista) . ": " . $falla_detalle : $falla_detalle;
@@ -38,7 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hora = $_POST['hora_cita'];
 
     try {
+        //--------------------------------------------
         // FASE 0: VALIDAR DISPONIBILIDAD
+        //--------------------------------------------
         $hora_bd = $hora . ":00"; 
         $check_sql = "SELECT id_cita FROM citas_web WHERE fecha_cita = ? AND hora_cita = ?";
         $check_stmt = $conexion->prepare($check_sql);
@@ -62,7 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         $check_stmt->close();
 
+        //--------------------------------------------
         // FASE 1: GUARDAR EN MYSQL
+        //--------------------------------------------
         $sql = "INSERT INTO citas_web (nombre_cliente, apellido_cliente, whatsapp, id_tipo_equipo, tipo_equipo_otro, id_marca, marca_otro, modelo, numero_serie, problema_reportado, fecha_cita, hora_cita) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
@@ -72,13 +76,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$stmt->execute()) { throw new Exception("Error DB: " . $stmt->error); }
         $stmt->close();
 
+        //--------------------------------------------
         // FASE 2: TRADUCCIÓN PARA CALENDARIO
+        //--------------------------------------------
         $query_marca = $conexion->query("SELECT marca FROM marcas WHERE id_marca = '$id_marca'");
         $nombre_marca_cal = ($query_marca->num_rows > 0) ? $query_marca->fetch_assoc()['marca'] : $marca_otro;
         $query_tipo = $conexion->query("SELECT tipo FROM tipos_equipo WHERE id_tipo_equipo = '$id_tipo_equipo'");
         $nombre_tipo_cal = ($query_tipo->num_rows > 0) ? $query_tipo->fetch_assoc()['tipo'] : $tipo_equipo_otro;
 
+        //--------------------------------------------
         // FASE 3: GOOGLE CALENDAR
+        //--------------------------------------------
         $client = new Client();
         $client->setAuthConfig(__DIR__ . '/../../credenciales.json');
         $client->addScope(Calendar::CALENDAR);
@@ -97,7 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ]);
         $service->events->insert($calendarId, $event);
 
+        //--------------------------------------------
         // FASE 4: WHATSAPP (TWILIO)
+        //--------------------------------------------
         try {
             $twilio = new TwilioClient($_ENV['TWILIO_SID'], $_ENV['TWILIO_TOKEN']);
             $twilio->messages->create('whatsapp:+521' . $whatsapp, [
@@ -132,9 +142,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         icon: 'success',
         title: '¡Cita Agendada!',
         html: 'Tu solicitud se registró correctamente.<br>Serás redirigido en <b></b> milisegundos.',
-        timer: 3000, // 10 Segundos
+        timer: 3000,
         timerProgressBar: true,
-        showConfirmButton: false, // Sin botón de aceptar
+        showConfirmButton: false,
         didOpen: () => {
             Swal.showLoading();
             const b = Swal.getHtmlContainer().querySelector('b');
@@ -146,7 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             clearInterval(timerInterval);
         }
     }).then((result) => {
-        // Redirección automática al terminar el tiempo
         window.location.href = 'cita_cliente.php';
     });
 </script>
