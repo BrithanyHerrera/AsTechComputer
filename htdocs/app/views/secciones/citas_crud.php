@@ -5,7 +5,6 @@
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 require_once dirname(__DIR__, 2) . '/config/conexion.db.php';
 
-// =======================================================
 $sql_limpieza = "DELETE FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
 
 $conexion->query($sql_limpieza);
@@ -23,7 +22,7 @@ $ruta_credenciales = dirname(__DIR__, 3) . '/credenciales.json';
 $client->setAuthConfig($ruta_credenciales);
 $client->addScope(Calendar::CALENDAR);
 $service = new Calendar($client);
-$calendarId = '073f18605ef849562a5cefd2c7e615d7a31c89ec5a89903939db694542a6f419@group.calendar.google.com';
+$calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@group.calendar.google.com';
 
 // ===================================
 // 3. LÓGICA ELIMINAR (DB + GOOGLE)

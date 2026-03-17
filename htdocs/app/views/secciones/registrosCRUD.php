@@ -75,7 +75,7 @@ $ingresos_ejemplo = [
         <table class="tabla-admin" id="tablaRegistros">
             <thead>
                 <tr>
-                    <th>Gab.</th>
+                    <th>Con.</th>
                     <th>Folio</th>
                     <th>Cliente</th>
                     <th>Dispositivo</th>
