@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: sql113.infinityfree.com
--- Tiempo de generación: 13-03-2026 a las 16:37:23
+-- Tiempo de generación: 17-03-2026 a las 13:10:15
 -- Versión del servidor: 11.4.10-MariaDB
 -- Versión de PHP: 7.2.22
 
@@ -269,6 +269,22 @@ INSERT INTO `medios_contacto` (`id_medio`, `medio`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `mensajes_contacto`
+--
+
+CREATE TABLE `mensajes_contacto` (
+  `id_mensaje` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `asunto` varchar(150) NOT NULL,
+  `mensaje` text NOT NULL,
+  `fecha_envio` timestamp NULL DEFAULT current_timestamp(),
+  `estado` enum('nuevo','pendiente','respondido','finalizado') DEFAULT 'nuevo'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `ordenes_ingreso`
 --
 
@@ -281,7 +297,9 @@ CREATE TABLE `ordenes_ingreso` (
   `condicion_fisica` varchar(255) NOT NULL,
   `accesorios_entregados` varchar(255) NOT NULL,
   `descripcion_problema` text NOT NULL,
-  `observaciones_recepcion` text NOT NULL
+  `observaciones_recepcion` text NOT NULL,
+  `estado` enum('recibido','entregado') DEFAULT 'recibido',
+  `fecha_entrega` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -580,6 +598,12 @@ ALTER TABLE `medios_contacto`
   ADD PRIMARY KEY (`id_medio`);
 
 --
+-- Indices de la tabla `mensajes_contacto`
+--
+ALTER TABLE `mensajes_contacto`
+  ADD PRIMARY KEY (`id_mensaje`);
+
+--
 -- Indices de la tabla `ordenes_ingreso`
 --
 ALTER TABLE `ordenes_ingreso`
@@ -695,6 +719,12 @@ ALTER TABLE `marketing`
 --
 ALTER TABLE `medios_contacto`
   MODIFY `id_medio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `mensajes_contacto`
+--
+ALTER TABLE `mensajes_contacto`
+  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `puestos`
