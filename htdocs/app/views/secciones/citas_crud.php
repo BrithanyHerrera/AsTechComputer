@@ -96,6 +96,16 @@ $tipos_res = $conexion->query("SELECT * FROM tipos_equipo ORDER BY tipo ASC");
 
 $eventos_google = $service->events->listEvents($calendarId, ['singleEvents' => true, 'orderBy' => 'startTime', 'timeMin' => date('c')])->getItems();
 
+// NUEVO: Crear un mapa de fechas y horas ya ocupadas para el modal
+$citas_ocupadas = [];
+foreach ($eventos_google as $ev) {
+    $dt_start = $ev->start->dateTime ?: $ev->start->date;
+    $fecha_ev = date('Y-m-d', strtotime($dt_start));
+    $hora_ev = date('H:i', strtotime($dt_start));
+    $citas_ocupadas[$fecha_ev][] = $hora_ev;
+}
+$json_ocupadas = json_encode($citas_ocupadas);
+
 $sql_db = "SELECT c.*, m.marca, t.tipo 
            FROM citas_web c
            LEFT JOIN marcas m ON c.id_marca = m.id_marca
@@ -231,9 +241,12 @@ while ($f = $res_db->fetch_assoc()) {
             </div>
 
             <div class="fila-form">
-                <div class="grupo-form"><label>Fecha:</label><input type="date" id="m_fecha" name="fecha" required>
+                <div class="grupo-form"><label>Fecha:</label><input type="date" id="m_fecha" name="fecha" required></div>
+                <div class="grupo-form">
+                    <label>Hora:</label>
+                    <select id="m_hora" name="hora" required>
+                        </select>
                 </div>
-                <div class="grupo-form"><label>Hora:</label><input type="time" id="m_hora" name="hora" required></div>
             </div>
 
             <button type="submit" class="btn-guardar-cambios">Guardar Cambios</button>
@@ -242,6 +255,50 @@ while ($f = $res_db->fetch_assoc()) {
 </div>
 
 <script>
+    // Atrapamos las horas ocupadas desde PHP
+    const horasOcupadas = <?= $json_ocupadas ?>;
+
+    function generarHorarios(fechaElegida, horaPreseleccionada) {
+        const selectorHora = document.getElementById('m_hora');
+        selectorHora.innerHTML = '<option value="">Seleccione una hora...</option>';
+        if (!fechaElegida) return;
+
+        // Horarios de 10 a 4 cada 20 min
+        const todasLasHoras = [
+            "10:00", "10:20", "10:40", "11:00", "11:20", "11:40",
+            "12:00", "12:20", "12:40", "13:00", "13:20", "13:40",
+            "14:00", "14:20", "14:40", "15:00", "15:20", "15:40", "16:00"
+        ];
+
+        const ocupadasHoy = horasOcupadas[fechaElegida] || [];
+
+        todasLasHoras.forEach(hora => {
+            // Mostrar la hora si NO está ocupada, O si es la hora original de esta cita
+            if (!ocupadasHoy.includes(hora) || hora === horaPreseleccionada) {
+                let opt = document.createElement('option');
+                opt.value = hora;
+                opt.textContent = hora;
+                if (hora === horaPreseleccionada) {
+                    opt.selected = true;
+                }
+                selectorHora.appendChild(opt);
+            }
+        });
+    }
+
+    // Si el usuario cambia la fecha en el modal, recalcular las horas
+    document.getElementById('m_fecha').addEventListener('change', function() {
+        const fechaOriginal = this.getAttribute('data-fecha-orig');
+        const horaOriginal = document.getElementById('m_hora').getAttribute('data-hora-orig');
+        
+        // Si regresa a la fecha original, le dejamos su hora original. Si es otra, no.
+        if (this.value === fechaOriginal) {
+            generarHorarios(this.value, horaOriginal);
+        } else {
+            generarHorarios(this.value, null);
+        }
+    });
+
     function abrirModalEditar(gid, dbid, nom, ape, marca, tipo, mod, serie, falla, wa, fecha, hora) {
         document.getElementById('m_google_id').value = gid;
         document.getElementById('m_db_id').value = dbid;
@@ -253,10 +310,20 @@ while ($f = $res_db->fetch_assoc()) {
         document.getElementById('m_serie').value = serie;
         document.getElementById('m_falla').value = falla;
         document.getElementById('m_wa').value = wa;
-        document.getElementById('m_fecha').value = fecha;
-        document.getElementById('m_hora').value = hora;
+        
+        const inFecha = document.getElementById('m_fecha');
+        const selHora = document.getElementById('m_hora');
+
+        // Establecemos valores y guardamos el original por si cambian de fecha
+        inFecha.value = fecha;
+        inFecha.setAttribute('data-fecha-orig', fecha);
+        selHora.setAttribute('data-hora-orig', hora);
+
+        generarHorarios(fecha, hora); // Llena el select con las horas permitidas
+        
         document.getElementById('modalEditar').style.display = 'flex';
     }
+
     function cerrarModal() { document.getElementById('modalEditar').style.display = 'none'; }
     window.onclick = function (e) { if (e.target == document.getElementById('modalEditar')) cerrarModal(); }
 </script>

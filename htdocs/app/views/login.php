@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
                     $stmt_bitacora->close();
                     
                     // Lo enviamos a la pantalla de administración
-                    header("Location: ../../app/views/administracion.php");
+                    header("Location: ../../app/views/administración.php");
                     exit;
                 } else {
                     $mensaje_error = "Tu puesto no tiene los permisos para acceder a esta área.";
