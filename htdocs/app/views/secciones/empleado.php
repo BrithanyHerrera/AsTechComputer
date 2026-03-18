@@ -7,6 +7,7 @@ if (!isset($conexion)) {
     die("Error: No se pudo cargar la variable de conexión \$pdo. Verifica el archivo conexion.db.php");
 }
 ?>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="contenedor-crud">
     <div class="encabezado-seccion">

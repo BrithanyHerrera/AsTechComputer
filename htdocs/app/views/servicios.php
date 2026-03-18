@@ -12,14 +12,59 @@
     
 </head>
 <body>
-<?php $ruta_prefijo = "../../"; include "../../toolbar.php"; ?>
+<?php $ruta_prefijo = "../../"; include "../../toolbarServicios.php"; ?>
+<?php 
+$id_tipo = isset($_GET['id_tipo_servicio']) ? $_GET['id_tipo_servicio'] : null;
+
+// Valores por defecto (cuando no seleccionan nada)
+$titulo = "Nuestros servicios";
+$subtitulo = "Soluciones para tu equipo";
+$precio = "";
+$imagen = "../../public/img/principalAdv.png";
+
+// Cambiar según el tipo
+if ($id_tipo == 1) {
+    $titulo = "Reparación y reemplazo";
+    $subtitulo = "Soluciones rápidas para tu equipo";
+    $precio = "Desde: $800 pesos";
+    $imagen = "../../public/img/ReparacionGranFond.png";
+} elseif ($id_tipo == 2) {
+    $titulo = "Mantenimiento preventivo";
+    $subtitulo = "para equipos portátiles de alto rendimiento";
+    $precio = "Desde: $1350 pesos";
+    $imagen = "../../public/img/principalAdv.png";
+} elseif ($id_tipo == 3) {
+    $titulo = "Instalación de software";
+    $subtitulo = "Optimiza el rendimiento de tu equipo";
+    $precio = "Desde: $300 pesos";
+    $imagen = "../../public/img/SoftwareGranFond.png";
+}
+
+elseif ($id_tipo == 4) {
+    $titulo = "Servicios especializados";
+    $subtitulo = "Optimiza el rendimiento de tu equipo";
+    $precio = "Desde: $300 pesos";
+    $imagen = "../../public/img/EspecialGranFond.png";
+}
+elseif ($id_tipo == 5) {
+    $titulo = "Servicios a domicilio";
+    $subtitulo = "Optimiza el rendimiento de tu equipo";
+    $precio = "Desde: $300 pesos";
+    $imagen = "../../public/img/DomicilioGranFond.png";
+}
+elseif ($id_tipo == "") {
+    $titulo = "Servicios";
+    $subtitulo = "Optimiza el rendimiento de tu equipo";
+    $precio = "Desde: $300 pesos";
+    $imagen = "../../public/img/TodoGranFond.png";
+}?>
 <div class="imagen-principal">
-    <img src="../../public/img/principalAdv.png" alt="Imagen de servicios" class="img-p">
+    <img src="<?php echo $imagen; ?>" alt="Imagen de servicios" class="img-p">
 
     <div class="contenido-imagen">
-        <h1>Mantenimiento preventivo</h1>
-        <h2>para equipos portátiles de alto rendimiento</h2>
-        <p>Desde: $1350* pesos</p>
+          <h1><?php echo $titulo; ?></h1>
+        <h2><?php echo $subtitulo; ?></h2>
+         <p><?php echo $precio; ?></p>
         <button class="boton-servicio">Agendar cita</button>
         <a href="#" class="link-info">Más información     <i class="fa-solid fa-angle-right"></i></a>
     </div>
@@ -28,15 +73,20 @@
 <?php
 // Incluir la conexión
 require_once('../../app/config/conexion.db.php');
+$id_tipo = isset($_GET['id_tipo_servicio']) ? $_GET['id_tipo_servicio'] : null;
 
-// Consulta a la base de datos
-$query = "SELECT tipo_servicio, descripcion, precio, imagen_servicio
-          FROM servicios 
-          WHERE estado = 'activo'";
+if ($id_tipo) {
+    $query = "SELECT tipo_servicio, descripcion, precio, imagen_servicio
+              FROM servicios 
+              WHERE estado = 'activo' AND id_tipo_servicio = '$id_tipo'";
+} else {
+    $query = "SELECT tipo_servicio, descripcion, precio, imagen_servicio
+              FROM servicios 
+              WHERE estado = 'activo'";
+}
 
 $resultado = mysqli_query($conexion, $query);
 ?>
-
 <div class="contenedor-servicios">
     <?php while($row = mysqli_fetch_assoc($resultado)): ?>
         <div class="card-servicio">

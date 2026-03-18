@@ -8,6 +8,7 @@
 }
 h1{
     color: var(--naranja-principal);
+    margin:-10px;
 }
 
 body {
@@ -31,6 +32,18 @@ body {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.288);
+}
+.boton-submit{
+    background-color:#52073a;
+     color: white;
+      cursor: pointer; 
+      margin-top:-50px;
+}
+.boton-submit:hover{
+    background-color:#000000;
+     color: white;
+      cursor: pointer; 
+      margin-top:-50px;
 }
 
 .form-section {

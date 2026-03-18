@@ -30,7 +30,7 @@ if (!isset($conexion)) {
         
             <div class="grupo-input">
                 <label>URL de Imagen:</label>
-                <input type="file" id="seleccionador" accept="image/*" onchange="convertirABase64()">
+                <input type="file" id="seleccionador" accept="image/*" onchange="convertirABase64('imagen_servicio', 'seleccionador')">
                     <input type="hidden" name="imagen_servicio" id="imagen_servicio">
                
             </div>
@@ -119,47 +119,45 @@ if (!$resultado) {
         </table>
     </div>
 </div>
-
 <div id="modal-editar-servicio" class="modal-formulario" style="display: none;">
-
     <div class="contenido-modal modal-purpura">
         <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
-        <h3><i class="fa-solid fa-user-pen"></i> Editar servicio</h3>
+        <h3><i class="fa-solid fa-pen-to-square"></i> Editar Servicio</h3>
         
         <form action="../views/acciones/editar_servicio.php" method="POST" id="form-editar">
             <input type="hidden" name="id_servicio" id="edit-id">
 
             <div class="grupo-input">
-                <label>Nombre:</label>
-                <input type="text" name="nombre" id="edit-nombre" required>
+                <label>Tipo de Servicio:</label>
+                <input type="text" name="tipo_servicio" id="edit-tipo" required>
             </div>
             <div class="grupo-input">
-                <label>Apellido:</label>
-                <input type="text" name="apellido" id="edit-apellido" required>
+                <label>Descripción:</label>
+                <textarea name="descripcion" id="edit-descripcion" required></textarea>
             </div>
             <div class="grupo-input">
-                <label>Teléfono:</label>
-                <input type="text" name="telefono" id="edit-telefono">
+                <label>Actualizar Imagen (Opcional):</label>
+                <input type="file" id="seleccionador-edit" accept="image/*" onchange="convertirABase64('edit-imagen', 'seleccionador-edit')">
+                <input type="hidden" name="imagen_servicio" id="edit-imagen">
             </div>
             <div class="grupo-input">
-                <label>Correo electrónico:</label>
-                <input type="email" name="correo" id="edit-correo" required>
+                <label>Precio:</label>
+                <input type="number" step="0.01" name="precio" id="edit-precio" required>
             </div>
             <div class="grupo-input">
-                <label>Nombre Usuario:</label>
-                <input type="text" name="nombre_usuario" id="edit-usuario" required>
+                <label>Tiempo Estimado:</label>
+                <input type="text" name="tiempo_estimado" id="edit-tiempo">
             </div>
-            <div class="grupo-input">
-                <label>Puesto:</label>
-                <select name="id_puesto" id="edit-puesto" required>
-                    <option value="1">Soporte Técnico</option>
-                    <option value="2">Recepción</option>
-                    <option value="3">Gerente</option>
-                </select>
-            </div>
+           <div class="grupo-input">
+    <label>Estado:</label>
+    <select name="estado" id="edit-estado">
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+    </select>
+</div>
             
             <div class="botones-form">
-                <button type="submit" class="btn-actualizar">Actualizar Cambios</button>
+                <button type="submit" class="btn-actualizar" style="background-color: #52073a; color: white;">Actualizar Cambios</button>
                 <button type="button" class="btn-cancelar" onclick="cerrarModalEditar()">Cancelar</button>
             </div>
         </form>
@@ -167,21 +165,21 @@ if (!$resultado) {
 </div>
 
 <script>
-// MUEVE ESTO FUERA DE CUALQUIER OTRA FUNCIÓN
-function convertirABase64() {
-    const archivo = document.getElementById('seleccionador').files[0];
+    function convertirABase64(idHidden, idInput) {
+    const elementoFile = document.getElementById(idInput);
+    if (!elementoFile || !elementoFile.files[0]) return;
+
+    const archivo = elementoFile.files[0];
     const reader = new FileReader();
 
     reader.onloadend = function() {
-        // Asignamos el resultado al input hidden
-        document.getElementById('imagen_servicio').value = reader.result;
-        console.log("Imagen lista en el campo oculto");
+        document.getElementById(idHidden).value = reader.result;
+        console.log("Imagen cargada en: " + idHidden);
     };
 
-    if (archivo) {
-        reader.readAsDataURL(archivo);
-    }
+    reader.readAsDataURL(archivo);
 }
+
 function abrirFormulario() {
     document.getElementById('formulario-servicio').style.display = 'block';
 }
@@ -195,24 +193,38 @@ window.onclick = function(event) {
     }
 }
 function confirmarEliminacion(id) {
-    if (confirm("¿Estás seguro?")) {
-        
-        window.location.href = "../../app/views/acciones/eliminar_servicio.php?id=" + id;
-    }
-}function abrirEditar(datos) {
-    // Llenar los campos del formulario con los datos del servicio
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Esta acción no se puede deshacer.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#52073a',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "../../app/views/acciones/eliminar_servicio.php?id=" + id;
+        }
+    });
+}
+function abrirEditarServicio(datos) {
+    // Llenar los campos con los datos del servicio (No de empleados)
     document.getElementById('edit-id').value = datos.id_servicio;
-    document.getElementById('edit-nombre').value = datos.nombre;
-    document.getElementById('edit-apellido').value = datos.apellido;
-    document.getElementById('edit-telefono').value = datos.telefono;
-    document.getElementById('edit-correo').value = datos.correo;
-    document.getElementById('edit-usuario').value = datos.nombre_usuario;
-    document.getElementById('edit-puesto').value = datos.id_puesto;
+    document.getElementById('edit-tipo').value = datos.tipo_servicio;
+    document.getElementById('edit-descripcion').value = datos.descripcion;
+    document.getElementById('edit-precio').value = datos.precio;
+    document.getElementById('edit-tiempo').value = datos.tiempo_estimado;
+    document.getElementById('edit-estado').value = datos.estado;
+    // La imagen no se llena por seguridad, solo si el usuario selecciona una nueva
+    document.getElementById('edit-imagen').value = ""; 
 
-    // Mostrar el modal
     document.getElementById('modal-editar-servicio').style.display = 'flex';
 }
 
+function cerrarModalEditar() {
+    document.getElementById('modal-editar-servicio').style.display = 'none';
+}
 function cerrarModalEditar() {
     document.getElementById('modal-editar-servicio').style.display = 'none';
 }

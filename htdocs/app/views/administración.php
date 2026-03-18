@@ -33,7 +33,7 @@
         <a href="?seccion=servicios" class="<?= $seccion_actual == 'servicios' ? 'activo' : '' ?>">
           <i class="fa-solid fa-microchip"></i>Pagina de Servicios
         </a>
-      </li>
+      </li> 
       <li>
         <a href="?seccion=inicio" class="<?= $seccion_actual == 'inicio' ? 'activo' : '' ?>">
           <i class="fa-solid fa-house"></i> Pagina de inicio
@@ -65,9 +65,11 @@
         </a>
       </li>
       <li>
-
-
+        <a href="?seccion=contenedor" class="<?= $seccion_actual == 'contenedor' ? 'activo' : '' ?>">
+          <i class="fa-solid fa-box"></i>Contenedores
+        </a>
       </li>
+  
     </ul>
 
     <div class="seccion-inferior">
@@ -81,6 +83,7 @@
     <?php
     switch ($seccion_actual) {
       case 'dashboard':
+          echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         echo "<h1>Bienvenido al panel principal</h1>";
         echo "<div class='usuario'>";
         echo "<i class='fa-solid fa-user'></i>";
@@ -93,6 +96,7 @@
         break;
 
       case 'servicios':
+     echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         echo "<h1>Gestión de Servicios</h1>";
         if (file_exists("secciones/servicios_crud.php")) {
           include "secciones/servicios_crud.php";
@@ -102,6 +106,7 @@
         break;
 
       case 'inicio':
+         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         echo "<h1>Gestión de la pagina de inicio</h1>";
         if (file_exists("secciones/inicio_crud.php")) {
           include "secciones/inicio_crud.php";
@@ -111,6 +116,7 @@
         break;
 
       case 'citas':
+         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         echo "<h1>Gestión de Citas </h1>";
         if (file_exists("secciones/citas_crud.php")) {
           include "secciones/citas_crud.php";
@@ -120,6 +126,7 @@
         break;
 
       case 'contacto':
+         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         echo "<h1>Gestión de la pagina de contacto </h1>";
         if (file_exists("secciones/contacto_info.php")) {
           include "secciones/contacto_info.php";
@@ -129,6 +136,7 @@
         break;
 
       case 'ingreso':
+         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists("secciones/ingreso.php")) {
           include "secciones/ingreso.php";
         } else {
@@ -137,6 +145,7 @@
         break;
 
       case 'registrosCRUD':
+         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists("secciones/registrosCRUD.php")) {
           include "secciones/registrosCRUD.php";
         } else {
@@ -145,8 +154,17 @@
         break;
 
       case 'empleado':
+         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists("secciones/empleado.php")) {
           include "secciones/empleado.php";
+        } else {
+          echo "<p>Error: No se encontró el archivo de contacto.</p>";
+        }
+        break;
+         case 'contenedor':
+           echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+        if (file_exists("secciones/crud_contenedores.php")) {
+          include "secciones/crud_contenedores.php";
         } else {
           echo "<p>Error: No se encontró el archivo de contacto.</p>";
         }
