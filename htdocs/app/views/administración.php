@@ -86,12 +86,10 @@
           echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         echo "<h1>Bienvenido al panel principal</h1>";
         echo "<div class='usuario'>";
-        echo "<i class='fa-solid fa-user'></i>";
-        echo "<p>Usuario - rol</p>";
         echo "</div>";
         // Verifica que este archivo exista en esa ruta exacta
-        if (file_exists("secciones/dashboard_info.php")) {
-          include "secciones/dashboard_info.php";
+        if (file_exists("secciones/DashboardInfo.php")) {
+          include "secciones/DashboardInfo.php";
         }
         break;
 
