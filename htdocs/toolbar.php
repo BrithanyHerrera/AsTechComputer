@@ -10,7 +10,7 @@
         <ul class="lista-opciones">
             <li><a  href="<?php echo $ruta_prefijo; ?>app/views/contacto.php" class="enlace-opcion">Contacto</a></li>
             <li><a  href="<?php echo $ruta_prefijo; ?>app/views/servicios.php" class="enlace-opcion">Servicios</a></li>
-            <li><a  href="<?php echo $ruta_prefijo; ?>app/views/cita_cliente.php" class="enlace-opcion boton-subrayado">Agendar Cita</a></li>
+            <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/CitasClienteController.php" class="enlace-opcion boton-subrayado">Agendar Cita</a></li>
         </ul>
     </nav>
 </header>
