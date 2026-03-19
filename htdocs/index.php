@@ -134,6 +134,7 @@
           <li><a href="#">Sobre Nosotros</a></li>
           <li><a href="#">Contacto</a></li>
           <li><a href="#">Ubicación</a></li>
+          <li><a href="app/views/Convenios.php">Convenios</a></li>
           <li><a href="app/views/login.php">Operaciones</a></li>
         </ul>
       </div>
