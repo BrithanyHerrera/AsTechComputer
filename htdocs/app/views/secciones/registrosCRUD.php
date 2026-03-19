@@ -45,7 +45,7 @@ $ingresos_ejemplo = [
 
 <div class="contenedor-ingresos">
     <div class="encabezado-crud">
-        <h1><i class="fa-solid fa-microchip"></i> Gestión de Equipos</h1>
+        <h1><i class="fa-solid fa-microchip"></i> Registros Ingresados </h1>
         
         <div class="barra-filtros">
             <div class="filtro-grupo">

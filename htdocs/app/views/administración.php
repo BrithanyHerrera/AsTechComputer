@@ -115,7 +115,6 @@
 
       case 'citas':
          echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
-        echo "<h1>Gestión de Citas </h1>";
         if (file_exists("secciones/citas_crud.php")) {
           include "secciones/citas_crud.php";
         } else {

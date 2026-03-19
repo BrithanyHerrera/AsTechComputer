@@ -6,7 +6,6 @@ require_once __DIR__ . '/../../../../vendor/autoload.php';
 require_once dirname(__DIR__, 2) . '/config/conexion.db.php';
 
 $sql_limpieza = "DELETE FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
-
 $conexion->query($sql_limpieza);
 
 use Google\Client;
@@ -96,7 +95,6 @@ $tipos_res = $conexion->query("SELECT * FROM tipos_equipo ORDER BY tipo ASC");
 
 $eventos_google = $service->events->listEvents($calendarId, ['singleEvents' => true, 'orderBy' => 'startTime', 'timeMin' => date('c')])->getItems();
 
-// NUEVO: Crear un mapa de fechas y horas ya ocupadas para el modal
 $citas_ocupadas = [];
 foreach ($eventos_google as $ev) {
     $dt_start = $ev->start->dateTime ?: $ev->start->date;
@@ -118,9 +116,36 @@ while ($f = $res_db->fetch_assoc()) {
 }
 ?>
 
-<div class="contenedor-crud">
+<div class="contenedor-ingresos">
+    <div class="encabezado-crud">
+        <h1><i class="fa-solid fa-calendar-check"></i> Gestión de Citas</h1>
+        
+        <div class="barra-filtros">
+            <div class="filtro-grupo">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="buscadorGlobal" placeholder="Buscar por Nombre..." onkeyup="filtrarTabla()">
+            </div>
+            
+            <div class="filtro-grupo">
+                <label>Estado:</label>
+                <select id="filtroEstado" onchange="filtrarTabla()">
+                    <option value="todos">Todos los estados</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="en-proceso">En proceso</option>
+                    <option value="listo">Listo</option>
+                </select>
+            </div>
+
+            <div class="filtro-grupo">
+                <label>Fecha:</label>
+                <input type="date" id="filtroFecha" onchange="filtrarTabla()">
+                <button class="btn-limpiar" onclick="limpiarFiltros()" title="Limpiar filtros"><i class="fa-solid fa-rotate-left"></i></button>
+            </div>
+        </div>
+    </div>
+
     <div class="tabla-responsiva">
-        <table class="tabla-admin">
+        <table class="tabla-admin" id="tablaCitas">
             <thead>
                 <tr>
                     <th>Nombre Cliente</th>
@@ -141,22 +166,35 @@ while ($f = $res_db->fetch_assoc()) {
                     $summary_clean = str_replace("SERVICIO: ", "", $event->getSummary());
                     $nombre_buscar = strtoupper(explode(' - ', $summary_clean)[0]);
                     $datos_db = $mapa_db[$nombre_buscar] ?? null;
-                    ?>
-                    <tr>
-                        <td><strong><?= htmlspecialchars(isset($datos_db) ? $datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] : $summary_clean) ?></strong></td></td>
-                        <td><?= htmlspecialchars($datos_db['problema_reportado'] ?? 'N/A') ?></td>
+                    
+                    // Normalizar nombres y estados para los data-attributes y buscador
+                    $nombre_mostrar = isset($datos_db) ? $datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] : $summary_clean;
+                    $estado_actual = strtolower($datos_db['estado'] ?? 'pendiente');
+                    $clase_estado = str_replace(' ', '-', $estado_actual);
+                    $fecha_formato_filtro = date('Y-m-d', strtotime($start_dt));
+                ?>
+                    <tr class="fila-registro" 
+                        data-nombre="<?= strtolower(htmlspecialchars($nombre_mostrar)) ?>" 
+                        data-estado="<?= $clase_estado ?>" 
+                        data-fecha="<?= $fecha_formato_filtro ?>">
+                        
+                        <td><strong><?= htmlspecialchars($nombre_mostrar) ?></strong></td>
+                        <td><span class="falla-txt"><?= htmlspecialchars($datos_db['problema_reportado'] ?? 'N/A') ?></span></td>
                         <td><?= date('d/m/Y', strtotime($start_dt)) ?></td>
                         <td><?= date('H:i', strtotime($start_dt)) ?></td>
                         <td><?= htmlspecialchars($datos_db['tipo'] ?? 'N/A') ?></td>
                         <td><?= htmlspecialchars($datos_db['marca'] ?? 'N/A') ?></td>
                         <td><?= htmlspecialchars($datos_db['modelo'] ?? 'N/A') ?></td>
-    
                         <td><small><?= htmlspecialchars($datos_db['numero_serie'] ?? 'N/V') ?></small></td>
-    
-                        <td><strong><?= htmlspecialchars($datos_db['estado'] ?? 'Pendiente') ?></strong></td>
-    
+                        
+                        <td>
+                            <span class="status-pill <?= $clase_estado ?>">
+                                <?= ucfirst($datos_db['estado'] ?? 'Pendiente') ?>
+                            </span>
+                        </td>
+
                         <td class="acciones">
-                        <button class="btn-editar" type="button" onclick='abrirModalEditar(
+                            <button class="btn-editar" type="button" title="Editar" onclick='abrirModalEditar(
                                 "<?= $event->getId() ?>", 
                                 "<?= $datos_db['id_cita'] ?? '' ?>", 
                                 "<?= $datos_db['nombre_cliente'] ?? '' ?>", 
@@ -167,14 +205,15 @@ while ($f = $res_db->fetch_assoc()) {
                                 "<?= addslashes($datos_db['numero_serie'] ?? '') ?>",
                                 "<?= addslashes(str_replace(["\r", "\n"], ' ', $datos_db['problema_reportado'] ?? '')) ?>",
                                 "<?= $datos_db['whatsapp'] ?? '' ?>",
-                                "<?= date('Y-m-d', strtotime($start_dt)) ?>",
+                                "<?= $fecha_formato_filtro ?>",
                                 "<?= date('H:i', strtotime($start_dt)) ?>"
                             )'>
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
                             <a href="?seccion=citas&delete_id=<?= $event->getId() ?>&db_id=<?= $datos_db['id_cita'] ?? '' ?>"
-                                class="btn-eliminar" onclick="return confirm('¿Eliminar cita?')"><i
-                                    class="fa-solid fa-trash"></i></a>
+                               class="btn-eliminar" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar esta cita?')">
+                               <i class="fa-solid fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -182,8 +221,6 @@ while ($f = $res_db->fetch_assoc()) {
         </table>
     </div>
 </div>
-
-
 
 <div id="modalEditar" class="modal-personalizado">
     <div class="contenido-modal">
@@ -195,15 +232,12 @@ while ($f = $res_db->fetch_assoc()) {
             <input type="hidden" id="m_db_id" name="modal_db_id">
 
             <div class="fila-form">
-                <div class="grupo-form"><label>Nombre(s):</label><input type="text" id="m_nombre" name="nombre"
-                        required></div>
-                <div class="grupo-form"><label>Apellido(s):</label><input type="text" id="m_apellido" name="apellido"
-                        required></div>
+                <div class="grupo-form"><label>Nombre(s):</label><input type="text" id="m_nombre" name="nombre" required></div>
+                <div class="grupo-form"><label>Apellido(s):</label><input type="text" id="m_apellido" name="apellido" required></div>
             </div>
 
             <div class="fila-form">
-                <div class="grupo-form"><label>WhatsApp:</label><input type="text" id="m_wa" name="whatsapp" required>
-                </div>
+                <div class="grupo-form"><label>WhatsApp:</label><input type="text" id="m_wa" name="whatsapp" required></div>
                 <div class="grupo-form"><label>No. Serie:</label><input type="text" id="m_serie" name="n_serie"></div>
             </div>
 
@@ -229,6 +263,7 @@ while ($f = $res_db->fetch_assoc()) {
             </div>
 
             <div class="grupo-form"><label>Modelo:</label><input type="text" id="m_modelo" name="modelo" required></div>
+            
             <div class="grupo-form">
                 <label>Falla:</label>
                 <select id="m_falla" name="falla" required>
@@ -244,8 +279,7 @@ while ($f = $res_db->fetch_assoc()) {
                 <div class="grupo-form"><label>Fecha:</label><input type="date" id="m_fecha" name="fecha" required></div>
                 <div class="grupo-form">
                     <label>Hora:</label>
-                    <select id="m_hora" name="hora" required>
-                        </select>
+                    <select id="m_hora" name="hora" required></select>
                 </div>
             </div>
 
@@ -255,7 +289,42 @@ while ($f = $res_db->fetch_assoc()) {
 </div>
 
 <script>
-    // Atrapamos las horas ocupadas desde PHP
+    // ==========================================
+    // SCRIPTS DE FILTROS DINÁMICOS
+    // ==========================================
+    function filtrarTabla() {
+        const busqueda = document.getElementById('buscadorGlobal').value.toLowerCase();
+        const estado = document.getElementById('filtroEstado').value;
+        const fecha = document.getElementById('filtroFecha').value;
+        const filas = document.querySelectorAll('#tablaCitas .fila-registro');
+
+        filas.forEach(fila => {
+            const txtNombre = fila.getAttribute('data-nombre');
+            const txtEstado = fila.getAttribute('data-estado');
+            const txtFecha = fila.getAttribute('data-fecha');
+
+            const coincideBusqueda = txtNombre.includes(busqueda);
+            const coincideEstado = estado === 'todos' || txtEstado === estado;
+            const coincideFecha = !fecha || txtFecha === fecha;
+
+            if (coincideBusqueda && coincideEstado && coincideFecha) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        });
+    }
+
+    function limpiarFiltros() {
+        document.getElementById('buscadorGlobal').value = '';
+        document.getElementById('filtroEstado').value = 'todos';
+        document.getElementById('filtroFecha').value = '';
+        filtrarTabla();
+    }
+
+    // ==========================================
+    // SCRIPTS DEL MODAL DE EDICIÓN Y HORARIOS
+    // ==========================================
     const horasOcupadas = <?= $json_ocupadas ?>;
 
     function generarHorarios(fechaElegida, horaPreseleccionada) {
@@ -263,7 +332,6 @@ while ($f = $res_db->fetch_assoc()) {
         selectorHora.innerHTML = '<option value="">Seleccione una hora...</option>';
         if (!fechaElegida) return;
 
-        // Horarios de 10 a 4 cada 20 min
         const todasLasHoras = [
             "10:00", "10:20", "10:40", "11:00", "11:20", "11:40",
             "12:00", "12:20", "12:40", "13:00", "13:20", "13:40",
@@ -273,7 +341,6 @@ while ($f = $res_db->fetch_assoc()) {
         const ocupadasHoy = horasOcupadas[fechaElegida] || [];
 
         todasLasHoras.forEach(hora => {
-            // Mostrar la hora si NO está ocupada, O si es la hora original de esta cita
             if (!ocupadasHoy.includes(hora) || hora === horaPreseleccionada) {
                 let opt = document.createElement('option');
                 opt.value = hora;
@@ -286,12 +353,10 @@ while ($f = $res_db->fetch_assoc()) {
         });
     }
 
-    // Si el usuario cambia la fecha en el modal, recalcular las horas
     document.getElementById('m_fecha').addEventListener('change', function() {
         const fechaOriginal = this.getAttribute('data-fecha-orig');
         const horaOriginal = document.getElementById('m_hora').getAttribute('data-hora-orig');
         
-        // Si regresa a la fecha original, le dejamos su hora original. Si es otra, no.
         if (this.value === fechaOriginal) {
             generarHorarios(this.value, horaOriginal);
         } else {
@@ -308,18 +373,22 @@ while ($f = $res_db->fetch_assoc()) {
         document.getElementById('m_tipo').value = tipo;
         document.getElementById('m_modelo').value = mod;
         document.getElementById('m_serie').value = serie;
-        document.getElementById('m_falla').value = falla;
+        
+        // Asignar Falla (selecciona el correspondiente si existe, si no "Otro")
+        let selectFalla = document.getElementById('m_falla');
+        let optionFallaExists = Array.from(selectFalla.options).some(opt => opt.value === falla);
+        selectFalla.value = optionFallaExists ? falla : "Otro";
+
         document.getElementById('m_wa').value = wa;
         
         const inFecha = document.getElementById('m_fecha');
         const selHora = document.getElementById('m_hora');
 
-        // Establecemos valores y guardamos el original por si cambian de fecha
         inFecha.value = fecha;
         inFecha.setAttribute('data-fecha-orig', fecha);
         selHora.setAttribute('data-hora-orig', hora);
 
-        generarHorarios(fecha, hora); // Llena el select con las horas permitidas
+        generarHorarios(fecha, hora);
         
         document.getElementById('modalEditar').style.display = 'flex';
     }
@@ -329,87 +398,126 @@ while ($f = $res_db->fetch_assoc()) {
 </script>
 
 <style>
-    .modal-personalizado {
-        position: fixed;
-        z-index: 99999;
-        left: 0;
-        top: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.8);
-        display: none;
-        align-items: center;
-        justify-content: center;
-    }
+/* =========================================
+   ESTILOS GENERALES, CONTENEDOR Y FILTROS
+   ========================================= */
+.contenedor-ingresos { padding: 25px; background: #fff; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+.encabezado-crud h1 { color: #52073a; margin-bottom: 20px; font-size: 1.6rem; border-left: 5px solid #e17203; padding-left: 15px; }
 
-    .contenido-modal {
-        background: #fff;
-        padding: 25px;
-        border-radius: 12px;
-        width: 95%;
-        max-width: 550px;
-        position: relative;
-        border-top: 5px solid #52073a;
-    }
+.barra-filtros { 
+    display: flex; 
+    gap: 20px; 
+    background: #f9f9f9; 
+    padding: 15px; 
+    border-radius: 10px; 
+    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
-    .cerrar-modal {
-        position: absolute;
-        right: 15px;
-        top: 10px;
-        font-size: 28px;
-        cursor: pointer;
-        color: #999;
-        font-weight: bold;
-    }
+.filtro-grupo { display: flex; align-items: center; gap: 10px; }
+.filtro-grupo label { font-weight: bold; color: #555; font-size: 0.9rem; }
+.filtro-grupo input, .filtro-grupo select { 
+    padding: 8px 12px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    outline: none;
+    font-size: 0.85rem;
+}
 
-    .fila-form {
-        display: flex;
-        gap: 15px;
-    }
+.btn-limpiar { background: #666; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+.btn-limpiar:hover { background: #333; }
 
-    .grupo-form {
-        flex: 1;
-        margin-bottom: 12px;
-    }
+/* =========================================
+   TABLA, BADGES Y BOTONES DE ACCIÓN
+   ========================================= */
+.tabla-responsiva { overflow-x: auto; }
+.tabla-admin { width: 100%; border-collapse: collapse; min-width: 900px; }
+.tabla-admin th { background: #f8f9fa; padding: 15px 12px; text-align: left; font-size: 0.85rem; color: #444; text-transform: uppercase; border-bottom: 2px solid #ddd;}
+.tabla-admin td { padding: 15px 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; vertical-align: middle; }
 
-    .grupo-form label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 4px;
-        color: #555;
-        font-size: 0.85em;
-        text-transform: uppercase;
-    }
+.falla-txt { color: #555; font-style: italic; }
 
-    .grupo-form input,
-    .grupo-form select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        box-sizing: border-box;
-    }
+/* Pills de Estado */
+.status-pill { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; display: inline-block; text-align: center; }
+.pendiente { background: #fff3cd; color: #856404; }
+.en-proceso { background: #cce5ff; color: #004085; }
+.listo { background: #d4edda; color: #155724; }
 
-    .btn-guardar-cambios {
-        background: #28a745;
-        color: #fff;
-        border: none;
-        padding: 14px;
-        border-radius: 8px;
-        cursor: pointer;
-        width: 100%;
-        font-weight: bold;
-        margin-top: 10px;
-    }
+/* Botones Tabla */
+.acciones { display: flex; gap: 8px; }
+.btn-editar { background: #e17203; color: white; border: none; padding: 8px 10px; border-radius: 6px; cursor: pointer; transition: 0.2s;}
+.btn-editar:hover { background: #c66302; }
+.btn-eliminar { background: #dc3545; color: white; border: none; padding: 8px 10px; border-radius: 6px; cursor: pointer; text-decoration: none; transition: 0.2s;}
+.btn-eliminar:hover { background: #c82333; }
 
-    .tabla-admin th {
-        background: #f8f9fa;
-        color: #333;
-        font-size: 0.9em;
-        text-transform: uppercase;
-    }
+/* =========================================
+   ESTILOS DEL MODAL (MANTENIDOS)
+   ========================================= */
+.modal-personalizado {
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
 
-    .tabla-admin td {
-        font-size: 0.9em;
-    }
+.contenido-modal {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 95%;
+    max-width: 550px;
+    position: relative;
+    border-top: 5px solid #52073a;
+}
+
+.cerrar-modal {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    font-weight: bold;
+}
+
+.contenido-modal h2 { color: #52073a; font-size: 1.3rem; margin-bottom: 20px;}
+
+.fila-form { display: flex; gap: 15px; }
+.grupo-form { flex: 1; margin-bottom: 12px; }
+.grupo-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #555;
+    font-size: 0.85em;
+    text-transform: uppercase;
+}
+.grupo-form input, .grupo-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.btn-guardar-cambios {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+.btn-guardar-cambios:hover { background: #218838; }
 </style>
