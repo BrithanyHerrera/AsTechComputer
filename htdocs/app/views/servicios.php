@@ -13,6 +13,10 @@
 </head>
 <body>
 <?php $ruta_prefijo = "../../"; include "../../toolbarServicios.php"; ?>
+<div id="contenedorBuscador" class="buscador-oculto">
+    <input type="text" id="inputBuscador" placeholder="Buscar servicios...">
+    <div id="resultadosBusqueda"></div>
+</div>
 <?php 
 $id_tipo = isset($_GET['id_tipo_servicio']) ? $_GET['id_tipo_servicio'] : null;
 
@@ -22,7 +26,7 @@ $subtitulo = "Soluciones para tu equipo";
 $precio = "";
 $imagen = "../../public/img/principalAdv.png";
 
-// Cambiar según el tipo
+
 if ($id_tipo == 1) {
     $titulo = "Reparación y reemplazo";
     $subtitulo = "Soluciones rápidas para tu equipo";
@@ -42,20 +46,20 @@ if ($id_tipo == 1) {
 
 elseif ($id_tipo == 4) {
     $titulo = "Servicios especializados";
-    $subtitulo = "Optimiza el rendimiento de tu equipo";
+    $subtitulo = "Soluciones avanzadas para casos complejos";
     $precio = "Desde: $300 pesos";
     $imagen = "../../public/img/EspecialGranFond.png";
 }
 elseif ($id_tipo == 5) {
     $titulo = "Servicios a domicilio";
-    $subtitulo = "Optimiza el rendimiento de tu equipo";
-    $precio = "Desde: $300 pesos";
+    $subtitulo = "Atención profesional en la comodidad de tu hogar";
+    $precio = "Desde: $500 pesos";
     $imagen = "../../public/img/DomicilioGranFond.png";
 }
 elseif ($id_tipo == "") {
     $titulo = "Servicios";
-    $subtitulo = "Optimiza el rendimiento de tu equipo";
-    $precio = "Desde: $300 pesos";
+    $subtitulo = "Conoce todas nuestras soluciones tecnológicas";
+    $precio = "Desde: $1000 pesos";
     $imagen = "../../public/img/TodoGranFond.png";
 }?>
 <div class="imagen-principal">
@@ -104,5 +108,68 @@ $resultado = mysqli_query($conexion, $query);
         </div>
     <?php endwhile; ?>
 </div>
+<div id="modalServicio" class="modal">
+    <div class="modal-contenido">
+        <span class="cerrar">&times;</span>
+        <div id="contenidoModal"></div>
+    </div>
+</div>
 </body>
+<script>
+const btn = document.getElementById("btnBuscador");
+const contenedor = document.getElementById("contenedorBuscador");
+const input = document.getElementById("inputBuscador");
+const resultados = document.getElementById("resultadosBusqueda");
+
+function abrirBuscador() {
+    const buscador = document.querySelector('.buscador-oculto');
+    buscador.classList.toggle('active'); // Esto añade o quita la clase que creamos
+}
+
+
+input.addEventListener("keyup", () => {
+    let valor = input.value;
+
+    fetch("acciones/buscar_servicio.php?q=" + valor)
+        .then(res => res.text())
+        .then(data => {
+            resultados.innerHTML = data;
+        });
+});
+resultados.addEventListener("click", (e) => {
+    if(e.target.closest(".resultado-item")){
+        let texto = e.target.innerText;
+        const modal = document.getElementById("modalServicio");
+const contenidoModal = document.getElementById("contenidoModal");
+const cerrar = document.querySelector(".cerrar");
+
+resultados.addEventListener("click", (e) => {
+    const item = e.target.closest(".resultado-item");
+
+    if(item){
+        let id = item.getAttribute("data-id");
+
+        fetch("acciones/obtener_servicio.php?id=" + id)
+            .then(res => res.text())
+            .then(data => {
+                contenidoModal.innerHTML = data;
+                modal.style.display = "block";
+            });
+    }
+});
+
+// cerrar modal
+cerrar.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// cerrar dando click afuera
+window.addEventListener("click", (e) => {
+    if(e.target === modal){
+        modal.style.display = "none";
+    }
+});
+    }
+});
+</script>
 </html>

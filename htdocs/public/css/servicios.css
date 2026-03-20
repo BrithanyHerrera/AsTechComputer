@@ -180,3 +180,99 @@ a{
     .card-servicio:hover .info-basica {
         opacity: 0;
     }
+    /*servicios */
+   .buscador-oculto {
+    display: flex; /* Cambiamos a flex permanentemente */
+    flex-direction: column;
+    align-items: center;
+    
+    background: rgb(236, 235, 235);
+    width: 100%;
+    height: 80%;
+    padding: 20px;
+    position: absolute;
+    top: 70px;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    /* --- ESTADO INICIAL (Oculto arriba) --- */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-80px); /* Empieza 20px más arriba */
+    transition: all 0.3s ease-out; /* Controla la velocidad aquí */
+}
+
+/* --- ESTADO ACTIVO (Cuando se muestra) --- */
+.buscador-oculto.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Baja a su posición original */
+}
+
+#inputBuscador {
+    width: 70%;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid #dfdfdf;
+    outline: none;
+    margin-bottom: 10px;
+}
+#inputBuscador:focus{
+     outline: 3px solid #ff6811;
+
+}
+.resultado-item {
+    padding: 10px;
+    margin-bottom: 15px;
+     color:#616161;
+     font-size: 1.2rem;;
+    border-bottom: 2px solid #7574747a;
+    cursor: pointer;
+    width: 900px;
+   
+
+}
+
+.resultado-item:hover {
+    background: #acacac49;
+    transform: scale(1.1);
+    transition: all 0.3 ease-out;
+     border-radius: 5px;
+      color:#202020;
+     font-size: 1.3rem;;
+    border-bottom: 2px solid #242424f1;
+}
+.resultado-item:active {
+    background: #ff4107ad;
+    transform: scale(1.0);
+    transition: all 0.3 ease-out;
+     border-radius: 5px;
+      color:#ffffff;
+     font-size: 1.3rem;;
+    border-bottom: 2px solid #fffffff1;
+}
+/*Modal*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-contenido {
+    background: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 60%;
+    border-radius: 10px;
+}
+
+.cerrar {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+}
