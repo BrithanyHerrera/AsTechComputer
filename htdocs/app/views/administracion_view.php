@@ -112,8 +112,8 @@
         // Nota: Si usas MVC completo para citas, este case podría sobrar pronto,
         // pero lo dejamos intacto para respetar tu lógica actual.
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
-        if (file_exists($ruta_secciones . "citas_crud.php")) {
-          include $ruta_secciones . "citas_crud.php";
+        if (file_exists($ruta_secciones . "citas_crud_view.php")) {
+          include $ruta_secciones . "citas_crud_view.php";
         } else {
           echo "<p>Error: No se encontró el archivo de citas.</p>";
         }

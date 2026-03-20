@@ -8,6 +8,9 @@
 // Si no hay ninguna sección definida, por defecto cargamos 'dashboard'
 $seccion_actual = isset($_GET['seccion']) ? $_GET['seccion'] : 'dashboard';
 
+if ($seccion_actual === 'citas') {
+    require_once 'citas_crud_controller.php';
+}
 // 2. Aquí a futuro puedes agregar validaciones de sesión 
 // (ej. si el usuario no está logueado, redirigirlo al login)
 
