@@ -88,8 +88,8 @@
         echo "<div class='usuario'>";
         echo "</div>";
         // Verifica que este archivo exista en esa ruta exacta
-        if (file_exists("secciones/DashboardInfo.php")) {
-          include "secciones/DashboardInfo.php";
+        if (file_exists("secciones/panel_info.php")) {
+          include "secciones/panel_info.php";
         }
         break;
 
