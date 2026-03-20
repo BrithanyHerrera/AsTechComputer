@@ -11,7 +11,7 @@
     
     <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
     <link rel="stylesheet" href="../../public/css/toolbar.css">
-    <link rel="stylesheet" href="../../public/css/CitaCliente.css">
+    <link rel="stylesheet" href="../../public/css/citas_cliente.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -224,6 +224,6 @@
     </script>
     <?php endif; ?>
 
-    <script src="../../public/js/CitaCliente.js"></script>
+    <script src="../../public/js/citas_cliente.js"></script>
 </body>
 </html>

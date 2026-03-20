@@ -1,7 +1,7 @@
 <?php
 // Asegúrate de tener la conexión a la BD disponible aquí
 require_once '../config/conexion.db.php';
-require_once '../models/DashboardModel.php';
+require_once '../models/dashboard_model.php';
 
 class DashboardController {
     private $model;
@@ -31,7 +31,7 @@ class DashboardController {
         }
 
         // 4. Cargar la Vista pasándole los datos
-        require_once '../views/secciones/DashboardInfo.php';
+        require_once '../views/secciones/dashboard_info.php';
     }
 }
 

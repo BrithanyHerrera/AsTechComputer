@@ -1,7 +1,7 @@
 <?php
 // 1. INCLUIR CONEXIÓN Y MODELO (Ajusta la ruta si es necesario)
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/config/conexion.db.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/app/models/DashboardModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/models/dashboard_model.php';
 
 // Iniciar sesión para saber quién está conectado (si no está iniciada ya)
 if (session_status() === PHP_SESSION_NONE) {

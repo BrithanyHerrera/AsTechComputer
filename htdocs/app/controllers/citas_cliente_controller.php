@@ -11,7 +11,7 @@ $dotenv->load();
 
 // Subimos 1 nivel (a la carpeta app) y entramos a config y models
 require_once dirname(__DIR__) . '/config/conexion.db.php';
-require_once dirname(__DIR__) . '/models/CitaModel.php';
+require_once dirname(__DIR__) . '/models/citas_model.php';
 
 use Google\Client;
 use Google\Service\Calendar;
@@ -100,6 +100,6 @@ $json_relaciones = json_encode($modeloCita->obtenerRelaciones());
 $json_ocupadas = json_encode($modeloCita->obtenerCitasOcupadas());
 
 // CARGAR LA VISTA DEL CLIENTE
-require_once dirname(__DIR__) . '/views/CitasClienteView.php';
+require_once dirname(__DIR__) . '/views/citas_cliente_view.php';
 ?>
 ?>
