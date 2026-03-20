@@ -65,7 +65,7 @@ Swal.fire({
     text: 'El empleado se guardó correctamente',
     confirmButtonText: 'Aceptar'
 }).then(() => {
-    window.location.href = "../../views/administración.php?seccion=empleado";
+    window.location.href = "../../views/administracion_view.php?seccion=empleado";
 });
 
 </script>

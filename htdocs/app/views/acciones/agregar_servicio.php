@@ -64,7 +64,7 @@ Swal.fire({
     confirmButtonText: 'Aceptar'
 }).then(() => {
     // Redirección corregida (sin tilde si renombraste el archivo)
-    window.location.href = "../../views/administración.php?seccion=servicios&status=success";
+    window.location.href = "../../views/administracion_view.php?seccion=servicios&status=success";
 });
 </script>
 <?php } ?>

@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
     // 3. Ejecutamos
     if ($stmt->execute()) {
         // Redirigimos para que la tabla se actualice y no se reenvíe el formulario
-        header("Location: ../../views/administración.php?seccion=servicios");
+        header("Location: ../../views/administracion_view.php?seccion=servicios");
         exit();
     } else {
         echo "Error al eliminar: " . $conexion->error;

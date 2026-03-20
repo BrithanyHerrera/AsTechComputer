@@ -25,16 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    try {
         if ($stmt->execute()) {
            // Por esto (si estás dentro de la carpeta 'acciones'):
-          header("Location: ../../views/administración.php?seccion=empleado&status=success");
+          header("Location: ../../views/administracion_view.php?seccion=empleado&status=success");
         } else {
-            header("Location: ../../views/administración.php?seccion=empleado&status=error");
+            header("Location: ../../views/administracion_view.php?seccion=empleado&status=error");
         }
     } catch (mysqli_sql_exception $e) {
         // Error 1062 es "Duplicate entry"
         if ($e->getCode() == 1062) {
-            header("Location: ../../views/administración.php?seccion=empleado&status=duplicate");
+            header("Location: ../../views/administracion_view.php?seccion=empleado&status=duplicate");
         } else {
-            header("Location: ../../views/administración.php?seccion=empleado&status=error");
+            header("Location: ../../views/administracion_view.php?seccion=empleado&status=error");
         }
     }
     exit();

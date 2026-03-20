@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         if ($stmt->execute()) {
             // Redirección exitosa con los parámetros solicitados
-            header("Location: ../../views/administración.php?seccion=contenedor&status=success");
+            header("Location: ../../views/administracion_view.php?seccion=contenedor&status=success");
         } else {
             // Error en la ejecución
             header("Location: ../../views/secciones/crud_contenedores.php?status=error");

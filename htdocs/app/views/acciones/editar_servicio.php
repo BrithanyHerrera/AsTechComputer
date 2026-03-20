@@ -43,16 +43,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         if ($stmt->execute()) {
           
-            header("Location: ../../views/administración.php?seccion=servicios&status=success");
+            header("Location: ../../views/administracion_view.php?seccion=servicios&status=success");
         } else {
-            header("Location: ../../views/administración.php?seccion=servicios&status=error");
+            header("Location: ../../views/administracion_view.php?seccion=servicios&status=error");
         }
     } catch (mysqli_sql_exception $e) {
         // Manejo de errores (por ejemplo, si el tipo_servicio debe ser único)
         if ($e->getCode() == 1062) {
-            header("Location: ../../views/administración.php?seccion=servicios&status=duplicate");
+            header("Location: ../../views/administracion_view.php?seccion=servicios&status=duplicate");
         } else {
-            header("Location: ../../views/administración.php?seccion=servicios&status=error");
+            header("Location: ../../views/administracion_view.php?seccion=servicios&status=error");
         }
     }
     

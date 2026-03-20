@@ -14,16 +14,16 @@ try {
 
     $conexion->query($sql);
 
-    header("Location: ../../views/administración.php?seccion=contenedor&status=success");
+    header("Location: ../../views/administracion_view.php?seccion=contenedor&status=success");
     exit();
 
 } catch (mysqli_sql_exception $e) {
 
     // Error por duplicado (PRIMARY KEY)
     if ($e->getCode() == 1062) {
-        header("Location: ../../views/administración.php?seccion=contenedor&status=duplicate");
+        header("Location: ../../views/administracion_view.php?seccion=contenedor&status=duplicate");
     } else {
-        header("Location: ../../views/administración.php?seccion=contenedor&status=error");
+        header("Location: ../../views/administracion_view.php?seccion=contenedor&status=error");
     }
 
     exit();

@@ -15,9 +15,9 @@ if (isset($_GET['id']) && isset($_GET['estado'])) {
 
         if ($stmt->execute()) {
             // Regresamos a la tabla con mensaje de éxito
-            header("Location: ../../views/administración.php?seccion=contacto&status=success");
+            header("Location: ../../views/administracion_view.php?seccion=contacto&status=success");
         } else {
-            header("Location: ../../views/administración.php?seccion=contacto&status=error");
+            header("Location: ../../views/administracion_view.php?seccion=contacto&status=error");
         }
         $stmt->close();
     }

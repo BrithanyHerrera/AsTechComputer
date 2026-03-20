@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($password, $user['password_hash'])) {
        
         $_SESSION['user_id'] = $user['id'];
-        header("Location: ../../app/views/administración.php");
+        header("Location: ../../app/views/administracion_view.php");
         exit;
     } else {
         echo "Usuario o contraseña incorrectos.";
