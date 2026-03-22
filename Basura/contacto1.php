@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
             confirmButtonColor: '#52073a'
         }).then(() => {
             // Limpiar el formulario al cerrar la alerta
-            window.location.href = "contacto.php"; 
+            window.location.href = "contacto_view.php"; 
         });
     } else if (res === "error") {
         Swal.fire({
