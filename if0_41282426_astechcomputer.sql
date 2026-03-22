@@ -163,7 +163,7 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`id_empleado`, `nombre`, `apellido`, `telefono`, `correo`, `nombre_usuario`, `contrasena`, `id_puesto`) VALUES
-(1, 'Carlos', 'López', '3312345678', 'carlos@astech.com', '', '', 1);
+(1, 'Carlos', 'López', '3312345678', 'carlos@astech.com', 'admin', 'admin', 2);
 
 -- --------------------------------------------------------
 
