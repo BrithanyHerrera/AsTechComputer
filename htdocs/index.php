@@ -136,7 +136,7 @@
           <li><a href="#">Contacto</a></li>
           <li><a href="#">Ubicación</a></li>
           <li><a href="app/views/Convenios.php">Convenios</a></li>
-          <li><a href="app/views/login.php">Operaciones</a></li>
+          <li><a href="app/controllers/login_controller.php">Operaciones</a></li>
         </ul>
       </div>
     </div>
