@@ -1,0 +1,187 @@
+:root { 
+    --color-primario: #6b0b4df5;
+    --color-secundario: #1a0111;
+    --color-acento: #e9ecef;
+    --texto-oscuro: #333;
+    --texto-claro: #fff;
+}
+
+/* BASE */
+body {
+    margin: 0;
+       font-family: 'Lato', sans-serif;
+    background: #f8f9fa;
+}
+
+/* HERO */
+.seccion-convenios {
+    padding: 120px 20px 60px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+    color: white;
+}
+
+.titulo-convenios {
+    font-size: 3.0rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.subtitulo-convenios {
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.9;
+    font-size:1.2rem;
+    margin-bottom:10px;
+}
+
+/* CONTENEDOR GENERAL */
+.contenedor-convenios {
+    max-width: 1100px;
+    margin: -50px auto 40px;
+    padding: 0 20px;
+}
+
+/* SECCIONES */
+.bloque {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* TITULOS SECCION */
+.titulo-bloque {
+    font-size: 1.6rem;
+    color: var(--color-primario);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* GRID */
+.grid-convenios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* CARDS */
+.card-convenio {
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    transition: 0.3s;
+    border: 1px solid #eee;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-convenio::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: var(--color-primario);
+}
+
+.card-convenio:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card-convenio h3 {
+    margin-top: 10px;
+    color: var(--color-primario);
+}
+
+.badge-convenio {
+    background: var(--color-acento);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+/* LISTA */
+.beneficios-lista {
+    padding: 0;
+    list-style: none;
+    margin-top: 15px;
+}
+
+.beneficios-lista li {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+/* CAROUSEL MEJORADO */
+.carousel {
+    position: relative;
+    overflow: visible;
+    padding:20px;
+   
+}
+
+
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 50px;
+}
+
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.logo {
+height: 100px;
+    width: 100px;
+    height: 80px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto; 
+    transition: 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* BOTONES */
+.btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-primario);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.prev { left: -10px; }
+.next { right: -10px; }
+
+.btn:hover {
+    background: var(--color-secundario);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .titulo-convenios {
+        font-size: 2rem;
+    }
+
+    .contenedor-convenios {
+        margin-top: -30px;
+    }
+}

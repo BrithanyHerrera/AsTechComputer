@@ -13,7 +13,11 @@
         <li><a href="<?php echo $ruta_prefijo; ?>app/views/servicios.php?id_tipo_servicio=5" class="enlace-opcion-serv">Servicios a domicilio</a></li>
         <li><a href="<?php echo $ruta_prefijo; ?>app/views/servicios.php?servicios.php" class="enlace-opcion-serv">Todos los servicios</a></li>
 
-        <li><a href="" class="enlace-opcion-serv"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+      <li>
+     <a href="#" id="btnBuscador" class="enlace-opcion-serv" onclick="abrirBuscador()">
+    <i class="fa-solid fa-magnifying-glass"></i>
+</a>
+</li>
         <li><a href="" class="enlace-opcion-serv"><i class="fa-solid fa-calendar"></i></a></li>
         
         </ul>
