@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: sql113.infinityfree.com
--- Tiempo de generación: 22-03-2026 a las 02:13:19
+-- Tiempo de generación: 22-03-2026 a las 22:46:23
 -- Versión del servidor: 11.4.10-MariaDB
 -- Versión de PHP: 7.2.22
 
@@ -78,6 +78,7 @@ CREATE TABLE `causas_servicio` (
 
 CREATE TABLE `citas_web` (
   `id_cita` int(11) NOT NULL,
+  `id_google_calendar` varchar(255) DEFAULT NULL,
   `nombre_cliente` varchar(50) NOT NULL,
   `apellido_cliente` varchar(50) NOT NULL,
   `whatsapp` varchar(20) NOT NULL,

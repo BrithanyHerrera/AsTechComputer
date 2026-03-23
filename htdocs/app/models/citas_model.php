@@ -62,11 +62,15 @@ class CitaModel {
         return $ocupado;
     }
 
+    // ¡AQUÍ ESTÁ EL CAMBIO PRINCIPAL!
     public function registrarCita($datos) {
-        $sql = "INSERT INTO citas_web (nombre_cliente, apellido_cliente, whatsapp, id_tipo_equipo, tipo_equipo_otro, id_marca, marca_otro, modelo, numero_serie, problema_reportado, fecha_cita, hora_cita) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO citas_web (id_google_calendar, nombre_cliente, apellido_cliente, whatsapp, id_tipo_equipo, tipo_equipo_otro, id_marca, marca_otro, modelo, numero_serie, problema_reportado, fecha_cita, hora_cita) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bind_param("sssisissssss", $datos['nombre'], $datos['apellido'], $datos['whatsapp'], $datos['id_tipo_equipo'], $datos['tipo_equipo_otro'], $datos['id_marca'], $datos['marca_otro'], $datos['modelo'], $datos['numero_serie'], $datos['problema'], $datos['fecha'], $datos['hora']);
+        
+        // Se agregó una 's' al inicio del string de tipos y la variable $datos['id_google_calendar']
+        $stmt->bind_param("ssssisissssss", $datos['id_google_calendar'], $datos['nombre'], $datos['apellido'], $datos['whatsapp'], $datos['id_tipo_equipo'], $datos['tipo_equipo_otro'], $datos['id_marca'], $datos['marca_otro'], $datos['modelo'], $datos['numero_serie'], $datos['problema'], $datos['fecha'], $datos['hora']);
+        
         if (!$stmt->execute()) { throw new Exception("Error DB: " . $stmt->error); }
         $stmt->close();
         return true;
