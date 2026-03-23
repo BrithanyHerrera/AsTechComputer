@@ -74,7 +74,12 @@
   </nav>
 
   <main class="contenido-principal">
+
+
+
     <?php
+    // Recoger la sección de la URL, si no existe, usar 'dashboard' por defecto
+$seccion_actual = isset($_GET['seccion']) ? $_GET['seccion'] : 'dashboard';
     // Usamos __DIR__ para asegurar que siempre busque dentro de app/views/secciones/
     $ruta_secciones = __DIR__ . '/secciones/';
 

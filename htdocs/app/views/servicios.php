@@ -73,18 +73,17 @@ elseif ($id_tipo == "") {
         <a href="#" class="link-info">Más información     <i class="fa-solid fa-angle-right"></i></a>
     </div>
 </div>
-<h1 class="titulo-servicios"></h1>
 <?php
 // Incluir la conexión
 require_once('../../app/config/conexion.db.php');
 $id_tipo = isset($_GET['id_tipo_servicio']) ? $_GET['id_tipo_servicio'] : null;
 
 if ($id_tipo) {
-    $query = "SELECT tipo_servicio, descripcion, precio, imagen_servicio
+    $query = "SELECT id_servicio, tipo_servicio, descripcion, precio, imagen_servicio
               FROM servicios 
               WHERE estado = 'activo' AND id_tipo_servicio = '$id_tipo'";
 } else {
-    $query = "SELECT tipo_servicio, descripcion, precio, imagen_servicio
+    $query = "SELECT id_servicio, tipo_servicio, descripcion, precio, imagen_servicio
               FROM servicios 
               WHERE estado = 'activo'";
 }
@@ -93,7 +92,7 @@ $resultado = mysqli_query($conexion, $query);
 ?>
 <div class="contenedor-servicios">
     <?php while($row = mysqli_fetch_assoc($resultado)): ?>
-        <div class="card-servicio">
+        <div class="card-servicio"  onclick="verServicio(<?php echo $row['id_servicio']; ?>)">
             <img src="<?php echo $row['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
             
             <div class="info-basica">
@@ -171,5 +170,8 @@ window.addEventListener("click", (e) => {
 });
     }
 });
+function verServicio(id){
+    window.location.href = "detalle_servicio.php?id=" + id;
+}
 </script>
 </html>

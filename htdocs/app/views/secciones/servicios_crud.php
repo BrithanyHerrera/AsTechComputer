@@ -16,13 +16,27 @@ if (!isset($conexion)) {
     </div>
 <div id="formulario-servicio" class="modal-formulario" style="display: none;">
     <div class="contenido-modal modal-purpura">
-        <span class="cerrar" onclick="cerrarForm()">&times;</span>
+    
         <h3>Registrar Nuevo Servicio</h3>
-        <form action="../views/acciones/agregar_servicio.php" method="POST">
+        <form action="acciones/agregar_servicio.php" method="POST">
             <div class="grupo-input">
-                <label>Tipo de Servicio:</label>
+                <label>Nombre del Servicio:</label>
                 <input type="text" name="tipo_servicio" required placeholder="Ej. Reparación de Laptop">
             </div>
+            <div class="grupo-input">
+    <label> Tipo de Servicio:</label>
+    <select name="id_tipo_servicio" required>
+        <option value="">Selecciona un tipo</option>
+        <?php
+        $tipos = $conexion->query("SELECT * FROM tipos_servicios");
+        while($tipo = $tipos->fetch_assoc()){
+            echo "<option value='{$tipo['id_tipo_servicio']}'>
+                    {$tipo['nombre_tipo']}
+                  </option>";
+        }
+        ?>
+    </select>
+</div>
             <div class="grupo-input">
                 <label>Descripción:</label>
                 <textarea name="descripcion" required></textarea>
@@ -62,6 +76,7 @@ if (!isset($conexion)) {
             <thead>
                 <tr>
                     <th>ID</th>
+                     <th>Nombre del servicio</th>
                     <th>Tipo de servicio</th>
                     <th>Descripcion</th>
                     <th>Imagen</th>
@@ -76,8 +91,18 @@ if (!isset($conexion)) {
                      <tr>
 <?php
 // Consulta limpia para tu estructura actual
-$query = "SELECT id_servicio, tipo_servicio, descripcion, imagen_servicio, tiempo_estimado, precio, estado FROM servicios";
-
+$query = "SELECT 
+            s.id_servicio,
+            s.tipo_servicio,
+            s.descripcion,
+            s.imagen_servicio,
+            s.tiempo_estimado,
+            s.precio,
+            s.estado,
+            t.nombre_tipo
+          FROM servicios s
+          LEFT JOIN tipos_servicios t 
+          ON s.id_tipo_servicio = t.id_tipo_servicio";
 $resultado = $conexion->query($query);
 
 if (!$resultado) {
@@ -90,6 +115,7 @@ if (!$resultado) {
         echo "<tr>
                 <td>{$row['id_servicio']}</td>
                 <td>" . htmlspecialchars($row['tipo_servicio']) . "</td>
+                <td>{$row['nombre_tipo']}</td>
                 <td><strong>" . htmlspecialchars($row['descripcion']) . "</strong></td>
                 <td>
                     <img src='" . htmlspecialchars($row['imagen_servicio'] ?? '../../img/default-servicio.png') . "' 
@@ -104,7 +130,7 @@ if (!$resultado) {
                     </span>
                 </td>
                 <td class='acciones'>
-                    <button class='btn-editar' title='Editar' onclick='abrirEditarServicio($datosJson)'>
+                    <button class='btn-editar' title='Editar' onclick='abrirEditarServicio(event, $datosJson)'>
                         <i class='fa-solid fa-pen-to-square'></i>
                     </button>
                       <button class='btn-eliminar' onclick='confirmarEliminacion({$row['id_servicio']})'>
@@ -121,16 +147,29 @@ if (!$resultado) {
 </div>
 <div id="modal-editar-servicio" class="modal-formulario" style="display: none;">
     <div class="contenido-modal modal-purpura">
-        <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
+ 
         <h3><i class="fa-solid fa-pen-to-square"></i> Editar Servicio</h3>
         
         <form action="../views/acciones/editar_servicio.php" method="POST" id="form-editar">
             <input type="hidden" name="id_servicio" id="edit-id">
 
             <div class="grupo-input">
-                <label>Tipo de Servicio:</label>
+                <label>Nombre del Servicio:</label>
                 <input type="text" name="tipo_servicio" id="edit-tipo" required>
             </div>
+            <div class="grupo-input">
+    <label>Tipo de Servicio:</label>
+    <select name="id_tipo_servicio" id="edit-tipo-servicio" required>
+        <?php
+        $tipos = $conexion->query("SELECT * FROM tipos_servicios");
+        while($tipo = $tipos->fetch_assoc()){
+            echo "<option value='{$tipo['id_tipo_servicio']}'>
+                    {$tipo['nombre_tipo']}
+                  </option>";
+        }
+        ?>
+    </select>
+</div>
             <div class="grupo-input">
                 <label>Descripción:</label>
                 <textarea name="descripcion" id="edit-descripcion" required></textarea>
@@ -208,18 +247,22 @@ function confirmarEliminacion(id) {
         }
     });
 }
-function abrirEditarServicio(datos) {
-    // Llenar los campos con los datos del servicio (No de empleados)
+function abrirEditarServicio(event, datos) {
+    const modal = document.getElementById('modal-editar-servicio');
+    const contenido = modal.querySelector('.contenido-modal');
+
+    // llenar datos
     document.getElementById('edit-id').value = datos.id_servicio;
     document.getElementById('edit-tipo').value = datos.tipo_servicio;
     document.getElementById('edit-descripcion').value = datos.descripcion;
     document.getElementById('edit-precio').value = datos.precio;
     document.getElementById('edit-tiempo').value = datos.tiempo_estimado;
     document.getElementById('edit-estado').value = datos.estado;
-    // La imagen no se llena por seguridad, solo si el usuario selecciona una nueva
-    document.getElementById('edit-imagen').value = ""; 
+    document.getElementById('edit-tipo-servicio').value = datos.id_tipo_servicio;
 
-    document.getElementById('modal-editar-servicio').style.display = 'flex';
+    modal.style.display = 'block';
+
+
 }
 
 function cerrarModalEditar() {

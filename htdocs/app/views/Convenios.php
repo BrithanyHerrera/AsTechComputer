@@ -29,7 +29,7 @@
 
     <!-- MARCAS -->
     <div class="bloque">
-        <h2 class="titulo-bloque">Marcas</h2>
+        <h2 class="titulo-bloque">Nuestras marcas favoritas</h2>
 
         <div class="carousel">
             <button class="btn prev">&#10094;</button>
@@ -45,6 +45,7 @@
                 <div class="logo"><img src="../../public/img/msi.png" style="width:100%;"></img></div>
                 <div class="logo"><img src="../../public/img/kingston.png" style="width:100%;"></img></div>
                  <div class="logo"><img src="../../public/img/xpg.jfif" style="width:100%;"></img></div>
+                                  <div class="logo"><img src="../../public/img/gigabyte.png" style="width:100%;"></img></div>
             </div>
 
             <button class="btn next">&#10095;</button>
@@ -53,7 +54,7 @@
 
     <!-- PROVEEDORES -->
     <div class="bloque">
-        <h2 class="titulo-bloque">Proveedores</h2>
+        <h2 class="titulo-bloque">Aliados estrategicos</h2>
         <div class="grid-convenios">
 
             <div class="card-convenio">

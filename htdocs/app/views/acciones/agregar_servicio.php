@@ -1,12 +1,13 @@
 <?php
 include __DIR__ . "/../../config/conexion.db.php";
+// Verifica qué está llegando realmente
 
 $exito = null;
 $error = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Usamos el operador null coalescing (??) para evitar el error de "Undefined array key"
     $tipo_servicio = $_POST['tipo_servicio'] ?? '';
+    $id_tipo_servicio = $_POST['id_tipo_servicio'] ?? '';
     $descripcion = $_POST['descripcion'] ?? ''; // Corregido: descripción con 's'
     $imagen_servicio = $_POST['imagen_servicio'] ?? '';
     $tiempo_estimado = $_POST['tiempo_estimado'] ?? '';
@@ -19,15 +20,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Por favor, completa los campos obligatorios (Tipo, Descripción y Precio).";
     } else {
         $sql = "INSERT INTO servicios 
-                (tipo_servicio, descripcion, imagen_servicio, tiempo_estimado, precio, estado)
-                VALUES (?, ?, ?, ?, ?, ?)";
+                (tipo_servicio, id_tipo_servicio, descripcion, imagen_servicio, tiempo_estimado, precio, estado)
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conexion->prepare($sql);
-        
-        // s = string, d = double/decimal
-        // Ajustado a: tipo(s), desc(s), img(s), tiempo(s), precio(d), estado(s)
+
         $stmt->bind_param("ssssds", 
             $tipo_servicio,
+            $id_tipo_servicio,
             $descripcion,
             $imagen_servicio,
             $tiempo_estimado,

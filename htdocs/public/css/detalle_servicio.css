@@ -1,0 +1,168 @@
+/* Reset básico */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+/* Fondo general */
+body{
+    background: #f5f6fa;
+    color: #333;
+}
+
+/* Contenedor principal */
+.detalle-container{
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Encabezado */
+.detalle-header{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+/* Imagen */
+.detalle-img{
+    width: 350px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Info principal */
+.detalle-info h1{
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.detalle-info .precio{
+    font-size: 22px;
+    color:  #e17203; /* morado */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.detalle-info .descripcion{
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555555;
+}
+
+/* Secciones (procedimiento, beneficios, etc.) */
+.detalle-seccion{
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.detalle-seccion:hover{
+    transform: translateY(-3px);
+}
+
+/* Títulos de sección */
+.detalle-seccion h2{
+    font-size: 23px;
+    color:  #ce6801;
+    margin-bottom: 10px;
+}
+i{
+    margin-right:5px;
+}
+/* Texto */
+.detalle-seccion p{
+    line-height: 1.6;
+    font-size: 15px;
+    color: #444444;
+}
+.detalle-flex-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+.indicaciones {
+    grid-column: 2; /* Se va debajo de beneficios */
+    margin-top:-230px;
+}
+
+/* Procedimiento ocupa columna izquierda */
+.detalle-flex-row .detalle-seccion:nth-child(1) {
+    grid-column: 1;
+}
+
+/* Beneficios arriba derecha */
+.detalle-flex-row .detalle-seccion:nth-child(2) {
+    grid-column: 2;
+}
+
+/* Estilo para que el texto respete los saltos de línea y parezca lista */
+.detalle-seccion p {
+    line-height: 1.3; /* antes 1.6 */
+    margin: 0;
+}
+.detalle-seccion p br {
+    margin-bottom: 5px;
+    display: block;
+    content: "";
+}
+/* RESPONSIVO: Si la pantalla es pequeña (celular), se ponen uno abajo del otro */
+@media (max-width: 768px) {
+    .detalle-flex-row {
+        flex-direction: column;
+    }
+}
+
+/* Extra: Estilo para la lista de pagos que pediste antes */
+.detalle-seccion ul {
+    list-style: none;
+    padding: 0;
+}
+
+.detalle-seccion li {
+    background: #f9f9f9;
+    margin-bottom: -10px;
+    padding: 10px;
+    border-radius: 5px;
+ 
+}
+
+/* Botón */
+.btn-agendar{
+    display: inline-block;
+    background:  #e17203;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-agendar:hover{
+    background: #52073a;
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media(max-width: 768px){
+
+    .detalle-header{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .detalle-img{
+        width: 100%;
+        height: auto;
+    }
+}
