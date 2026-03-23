@@ -12,7 +12,7 @@
     
 </head>
 <body>
-<?php $ruta_prefijo = "../../"; include "../../toolbarServicios.php"; ?>
+<?php $ruta_prefijo = "../../"; include "../../toolbar_servicios.php"; ?>
 <div id="contenedorBuscador" class="buscador-oculto">
     <input type="text" id="inputBuscador" placeholder="Buscar servicios...">
     <div id="resultadosBusqueda"></div>

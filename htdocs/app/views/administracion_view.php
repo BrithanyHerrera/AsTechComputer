@@ -67,7 +67,7 @@
     </ul>
 
     <div class="seccion-inferior">
-      <a href="../../app/views/login.php" class="boton-salir">
+      <a href="../../app/controllers/logout_controller.php" class="boton-salir">
         <i class="fa-solid fa-right-from-bracket"></i> Salir
       </a>
     </div>

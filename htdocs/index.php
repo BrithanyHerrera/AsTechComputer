@@ -16,8 +16,9 @@
 
 <body>
 
-<?php $ruta_prefijo = ""; include "toolbar.php"; ?>
-   
+    <?php $ruta_prefijo = "";
+    include "toolbar.php"; ?>
+
 
     <main>
         <div class="fondo">
@@ -88,95 +89,98 @@
                         <button class="btn-servicio">Reparación</button>
                     </div>
                 </div>
-           
+
             </div>
         </section>
- 
-            <section class="seccion-ceo">
-  <div class="contenedor-ceo">
-    <div class="contenido-texto">
-      <img src="public/img/Iso.png" alt="Logo" class="logo-empresa">
-      <blockquote class="frase-ceo">
-    “En nuestra empresa tratamos cada equipo como si fuera propio, porque sabemos que ahí está tu trabajo, tus recuerdos y tu información."
-      </blockquote>
-      <p class="nombre-ceo"><strong>Ferdán Garrigos</strong></p>
-      <p class="puesto-ceo">Fundador & CEO</p>
-    </div>
-    <div class="imagen-ceo">
-      <img src="public/img/ceoo.png" alt="CEO de Astech Computer" >
-    </div>
-  </div>
-</section>
+
+        <section class="seccion-ceo">
+            <div class="contenedor-ceo">
+                <div class="contenido-texto">
+                    <img src="public/img/Iso.png" alt="Logo" class="logo-empresa">
+                    <blockquote class="frase-ceo">
+                        “En nuestra empresa tratamos cada equipo como si fuera propio, porque sabemos que ahí está tu
+                        trabajo, tus recuerdos y tu información."
+                    </blockquote>
+                    <p class="nombre-ceo"><strong>Ferdán Garrigos</strong></p>
+                    <p class="puesto-ceo">Fundador & CEO</p>
+                </div>
+                <div class="imagen-ceo">
+                    <img src="public/img/ceoo.png" alt="CEO de Astech Computer">
+                </div>
+            </div>
+        </section>
 
         <footer class="pie-pagina">
-  <div class="contenedor-pie">
-    
-    <div class="seccion-logo">
-      <img src="public/img/logoATC.png" alt="AS TECH Logo" class="logo-footer">
+            <div class="contenedor-pie">
 
-    </div>
+                <div class="seccion-logo">
+                    <img src="public/img/logoATC.png" alt="AS TECH Logo" class="logo-footer">
 
-    <div class="filas-enlaces">
-      <div class="fila-links">
-        <h4>Servicios</h4>
-        <ul>
-          <li><a href="#">Reparacion y remplazo</a></li>
-          <li><a href="#">Mantenimiento preventivo</a></li>
-          <li><a href="#">Instalación de software</a></li>
-          <li><a href="#">Servicios especializados</a></li>
-         <li><a href="#">Servicios a domicilio</a></li>
-        
-        </ul>
-      </div>
+                </div>
 
-      <div class="fila-links">
-        <h4>Empresa</h4>
-        <ul>
-          <li><a href="#">Sobre Nosotros</a></li>
-          <li><a href="#">Contacto</a></li>
-          <li><a href="#">Ubicación</a></li>
-          <li><a href="app/views/Convenios.php">Convenios</a></li>
-          <li><a href="app/views/login.php">Operaciones</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="fila-links">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Politica de privacidad</a></li>
-          <li><a href="#">Aviso de privacidad</a></li>
-          <li><a href="#">Preferencias</a></li>
+                <div class="filas-enlaces">
+                    <div class="fila-links">
+                        <h4>Servicios</h4>
+                        <ul>
+                            <li><a href="#">Reparacion y remplazo</a></li>
+                            <li><a href="#">Mantenimiento preventivo</a></li>
+                            <li><a href="#">Instalación de software</a></li>
+                            <li><a href="#">Servicios especializados</a></li>
+                            <li><a href="#">Servicios a domicilio</a></li>
 
-        </ul>
-      </div>
-     <div class="redes-sociales">
-  <h4>Siguenos en</h4>
-  <ul>
-    <li><button class="btn-Whatsapp"><i class="fa-brands fa-square-whatsapp"></i></button></li>
-    <li><button class="btn-ig"><i class="fa-brands fa-square-instagram"></i></button></li>
-    <li><button class="btn-facebook"><i class="fa-brands fa-square-facebook"></i></button></li>
-    <li><button class="btn-tiktok"><i class="fa-brands fa-tiktok"></i></button></li>
-    <li><button class="btn-yo"><i class="fa-brands fa-square-youtube"></i></button></li>
-    
-  </ul>
-  <hr></hr>
+                        </ul>
+                    </div>
 
-  </ul>
-    
+                    <div class="fila-links">
+                        <h4>Empresa</h4>
+                        <ul>
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#">Contacto</a></li>
+                            <li><a href="#">Ubicación</a></li>
+                            <li><a href="app/controllers/convenios_controller.php">Convenios</a></li>
+                            <li><a href="app/controllers/login_controller.php">Operaciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="fila-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Politica de privacidad</a></li>
+                        <li><a href="#">Aviso de privacidad</a></li>
+                        <li><a href="#">Preferencias</a></li>
 
-</div>
-    </div>
+                    </ul>
+                </div>
+                <div class="redes-sociales">
+                    <h4>Siguenos en</h4>
+                    <ul>
+                        <li><button class="btn-Whatsapp"><i class="fa-brands fa-square-whatsapp"></i></button></li>
+                        <li><button class="btn-ig"><i class="fa-brands fa-square-instagram"></i></button></li>
+                        <li><button class="btn-facebook"><i class="fa-brands fa-square-facebook"></i></button></li>
+                        <li><button class="btn-tiktok"><i class="fa-brands fa-tiktok"></i></button></li>
+                        <li><button class="btn-yo"><i class="fa-brands fa-square-youtube"></i></button></li>
 
-  </div>
-  
-  <div class="barra-derechos">
-    <p>&copy; 2026 AS TECH COMPUTER. Todos los derechos reservados.</p>
-  </div>
-</footer>
+                    </ul>
+                    <hr>
+                    </hr>
+
+                    </ul>
+
+
+                </div>
+            </div>
+
+            </div>
+
+            <div class="barra-derechos">
+                <p>&copy; 2026 AS TECH COMPUTER. Todos los derechos reservados.</p>
+            </div>
+        </footer>
     </main>
 
 
 
     <script src="public/js/fuciones.js"></script>
 </body>
+
 </html>

@@ -14,17 +14,38 @@ use Google\Service\Calendar;
 
 date_default_timezone_set('America/Mexico_City');
 
-// 1. Limpieza de citas expiradas
-$sql_limpieza = "DELETE FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
-$conexion->query($sql_limpieza);
+// ... tus requires y timezone ...
 
-// 2. Configurar Cliente Google
+// 1. Configurar Cliente Google (Lo movemos arriba para poder usarlo en la limpieza)
 $client = new Client();
 $ruta_credenciales = dirname(__DIR__, 2) . '/credenciales.json';
 $client->setAuthConfig($ruta_credenciales);
 $client->addScope(Calendar::CALENDAR);
 $service = new Calendar($client);
 $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@group.calendar.google.com';
+
+// 2. Limpieza de citas expiradas (Sincronizada BD + Google)
+// Primero, buscamos cuáles son las citas expiradas
+$sql_buscar_expiradas = "SELECT id_cita, id_google_calendar FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
+$res_expiradas = $conexion->query($sql_buscar_expiradas);
+
+if ($res_expiradas && $res_expiradas->num_rows > 0) {
+    while ($cita_expirada = $res_expiradas->fetch_assoc()) {
+        // A. Intentamos borrarla de Google Calendar
+        if (!empty($cita_expirada['id_google_calendar'])) {
+            try {
+                $service->events->delete($calendarId, $cita_expirada['id_google_calendar']);
+            } catch (Exception $e) {
+                // Si la cita ya no existe en Google o hay error, la ignoramos y seguimos
+            }
+        }
+        
+        // B. La borramos de nuestra base de datos local
+        $stmt_delete = $conexion->prepare("DELETE FROM citas_web WHERE id_cita = ?");
+        $stmt_delete->bind_param("i", $cita_expirada['id_cita']);
+        $stmt_delete->execute();
+    }
+}
 
 // 3. Lógica Eliminar (DB + GOOGLE)
 if (isset($_GET['delete_id'])) {

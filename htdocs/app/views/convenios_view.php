@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convenios | AS TECH</title>
+
+    <link rel="stylesheet" href="../../public/css/toolbar.css">
+    <link rel="stylesheet" href="../../public/css/convenios.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <?php 
+    // Mantenemos tu toolbar original
+    $ruta_prefijo = "../../";
+    @include "../../toolbar.php"; 
+    ?>
+    
+    <section class="seccion-convenios">
+        <h1 class="titulo-convenios">Convenios</h1>
+        <p class="subtitulo-convenios">
+            Conectamos con empresas, marcas y aliados estratégicos para ofrecer mejores servicios.
+        </p>
+    </section>
+
+    <div class="contenedor-convenios">
+
+        <div class="bloque">
+            <h2 class="titulo-bloque">Marcas</h2>
+
+            <div class="carousel">
+                <button class="btn prev">&#10094;</button>
+
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="logo"><img src="../../public/img/dell.png" style="width:100%;"></div>
+                    <div class="logo"><img src="../../public/img/lenovo.png" style="width:100%;"></div>
+                    <div class="logo"><img src="../../public/img/hp.png" style="width:100%;"></div>
+                    <div class="logo"><img src="../../public/img/acer.png" style="width:100%;"></div>
+                    <div class="logo"><img src="../../public/img/samsung.png" style="width:100%;"></div>
+                    <div class="logo"><img src="../../public/img/asus.png" style="width:100%;"></div>
+                    <div class="logo"><img src="../../public/img/huawei.png" style="width:100%;"></div>
+                    <div class="logo"><img src="../../public/img/msi.png" style="width:100%;"></div>
+                    <div class="logo"><img src="../../public/img/kingston.png" style="width:100%;"></div>
+                    <div class="logo"><img src="../../public/img/xpg.jfif" style="width:100%;"></div>
+                </div>
+
+                <button class="btn next">&#10095;</button>
+            </div>
+        </div>
+
+        <div class="bloque">
+            <h2 class="titulo-bloque">Proveedores</h2>
+            <div class="grid-convenios">
+                <div class="card-convenio">
+                    <span class="badge-convenio">Proveedor</span>
+                    <h3>Empresa X</h3>
+                    <ul class="beneficios-lista">
+                        <li>Descuentos especiales</li>
+                        <li>Entrega rápida</li>
+                    </ul>
+                </div>
+
+                <div class="card-convenio">
+                    <span class="badge-convenio">Proveedor</span>
+                    <h3>Empresa Y</h3>
+                    <ul class="beneficios-lista">
+                        <li>Soporte técnico</li>
+                        <li>Garantía extendida</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="bloque">
+            <h2 class="titulo-bloque">Alianzas Estratégicas</h2>
+            <div class="grid-convenios">
+                <div class="card-convenio">
+                    <span class="badge-convenio">Alianza</span>
+                    <h3>Organización A</h3>
+                    <ul class="beneficios-lista">
+                        <li>Capacitaciones</li>
+                        <li>Eventos conjuntos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="bloque">
+            <h2 class="titulo-bloque">Partners</h2>
+            <div class="grid-convenios">
+                <div class="card-convenio">
+                    <span class="badge-convenio">Partner</span>
+                    <h3>Empresa Partner</h3>
+                    <ul class="beneficios-lista">
+                        <li>Integración de servicios</li>
+                        <li>Soporte dedicado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="bloque">
+            <h2 class="titulo-bloque">Convenios Educativos</h2>
+            <div class="grid-convenios">
+                <article class="card-convenio">
+                    <div class="header-convenio">
+                        <i class="fa-solid fa-graduation-cap" style="font-size: 4rem; color: #e17203;"></i>
+                    </div>
+                    <div class="body-convenio">
+                        <span class="badge-convenio">Activo</span>
+                        <h3>Universidad de Guadalajara <br><small>CUCosta</small></h3>
+                        <p>Convenio de colaboración académica y beneficios en servicios tecnológicos para la comunidad universitaria.</p>
+                        
+                        <ul class="beneficios-lista">
+                            <li><i class="fa-solid fa-circle-check"></i> Practicas profesionales.</li>
+                            <li><i class="fa-solid fa-circle-check"></i> .....</li>
+                            <li><i class="fa-solid fa-circle-check"></i> .....</li>
+                            <li><i class="fa-solid fa-circle-check"></i> .....</li>
+                        </ul>
+                    </div>
+                    <div class="footer-convenio">
+                        <i class="fa-solid fa-location-dot"></i> Puerto Vallarta, Jalisco.
+                    </div>
+                </article>
+
+                <article class="card-convenio" style="border-top-color: #ccc; opacity: 0.7;">
+                    <div class="header-convenio" style="background: #eee;">
+                        <i class="fa-solid fa-handshake" style="font-size: 4rem; color: #999;"></i>
+                    </div>
+                    <div class="body-convenio">
+                        <h3>Próximamente</h3>
+                        <p>Estamos trabajando para expandir nuestras alianzas con más instituciones de la región.</p>
+                        <div style="height: 120px;"></div> 
+                    </div>
+                </article>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="../../public/js/carousel.js"></script>
+</body>
+</html>

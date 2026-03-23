@@ -1,15 +1,10 @@
 <?php
 // Usamos dirname() para subir niveles en las carpetas. 
-// El controlador está en htdocs/app/controllers/
-
-// Subimos 3 niveles para llegar a la raíz de AsTechComputer y entrar a vendor
 require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
 
-// Subimos 3 niveles para salir de controllers -> app -> htdocs y llegar a AsTechComputer
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 3));
 $dotenv->load();
 
-// Subimos 1 nivel (a la carpeta app) y entramos a config y models
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/citas_model.php';
 
@@ -47,17 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($modeloCita->verificarDisponibilidad($fecha, $hora)) {
             $horario_ocupado = true;
         } else {
-            // FASE 1: GUARDAR EN MYSQL
-            $datosDB = compact('nombre', 'apellido', 'whatsapp', 'id_tipo_equipo', 'tipo_equipo_otro', 'id_marca', 'marca_otro', 'modelo', 'numero_serie', 'problema', 'fecha', 'hora');
-            $modeloCita->registrarCita($datosDB);
-
-            // FASE 2: TRADUCCIÓN PARA CALENDARIO
+            
+            // FASE 1: TRADUCCIÓN PARA CALENDARIO (Lo movemos arriba para usarlo en Google)
             $nombre_marca_cal = ($id_marca == "12") ? $marca_otro : $modeloCita->obtenerNombreMarca($id_marca);
             $nombre_tipo_cal = ($id_tipo_equipo == "7") ? $tipo_equipo_otro : $modeloCita->obtenerNombreTipo($id_tipo_equipo);
 
-            // FASE 3: GOOGLE CALENDAR
+            // FASE 2: GOOGLE CALENDAR (Primero creamos el evento allá)
             $client = new Client();
-            // Subimos 2 niveles (hasta htdocs) para encontrar el JSON
             $client->setAuthConfig(dirname(__DIR__, 2) . '/credenciales.json');
             $client->addScope(Calendar::CALENDAR);
             $service = new Calendar($client);
@@ -73,7 +64,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'end' => ['dateTime' => $end_time, 'timeZone' => 'America/Mexico_City'],
                 'colorId' => '6', 
             ]);
-            $service->events->insert($calendarId, $event);
+            
+            // ¡AQUÍ ESTÁ LA MAGIA! Insertamos y atrapamos el ID
+            $evento_creado = $service->events->insert($calendarId, $event);
+            $id_google_calendar = $evento_creado->getId();
+
+            // FASE 3: GUARDAR EN MYSQL (Ahora agregamos 'id_google_calendar' al paquete de datos)
+            $datosDB = compact('id_google_calendar', 'nombre', 'apellido', 'whatsapp', 'id_tipo_equipo', 'tipo_equipo_otro', 'id_marca', 'marca_otro', 'modelo', 'numero_serie', 'problema', 'fecha', 'hora');
+            
+            $modeloCita->registrarCita($datosDB);
 
             // FASE 4: WHATSAPP (TWILIO)
             try {
@@ -101,5 +100,4 @@ $json_ocupadas = json_encode($modeloCita->obtenerCitasOcupadas());
 
 // CARGAR LA VISTA DEL CLIENTE
 require_once dirname(__DIR__) . '/views/citas_cliente_view.php';
-?>
 ?>
