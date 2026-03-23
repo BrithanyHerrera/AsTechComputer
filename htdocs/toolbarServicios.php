@@ -6,12 +6,12 @@
     </a>
     <nav class="navegacion-principal">
         <ul class="lista-opciones-serv">
-            <li><a href="<?php echo $ruta_prefijo; ?>app/views/servicios.php?id_tipo_servicio=1" class="enlace-opcion-serv">Mantenimiento preventivo</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/views/servicios.php?id_tipo_servicio=2" class="enlace-opcion-serv">Reparación y Reemplazo</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/views/servicios.php?id_tipo_servicio=3" class="enlace-opcion-serv">Instalación de software</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/views/servicios.php?id_tipo_servicio=4" class="enlace-opcion-serv">Servicios de entrega</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/views/servicios.php?id_tipo_servicio=5" class="enlace-opcion-serv">Servicios especializados</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/views/servicios.php?servicios.php" class="enlace-opcion-serv">Todos los servicios</a></li>
+            <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=1" class="enlace-opcion-serv">Mantenimiento preventivo</a></li>
+        <li><a href="<?php echo $ruta_prefijo; ?>app//htdocs/app/views/servicios_controller.php?id_tipo_servicio=2" class="enlace-opcion-serv">Reparación y Reemplazo</a></li>
+        <li><a href="<?php echo $ruta_prefijo; ?>app//htdocs/app/views/servicios_controller.php?id_tipo_servicio=3" class="enlace-opcion-serv">Instalación de software</a></li>
+        <li><a href="<?php echo $ruta_prefijo; ?>app//htdocs/app/views/servicios_controller.php?id_tipo_servicio=4" class="enlace-opcion-serv">Servicios de entrega</a></li>
+        <li><a href="<?php echo $ruta_prefijo; ?>app//htdocs/app/views/servicios_controller.php?id_tipo_servicio=5" class="enlace-opcion-serv">Servicios especializados</a></li>
+        <li><a href="<?php echo $ruta_prefijo; ?>app//htdocs/app/views/servicios_controller.php?servicios.php" class="enlace-opcion-serv">Todos los servicios</a></li>
 
       <li>
      <a href="#" id="btnBuscador" class="enlace-opcion-serv" onclick="abrirBuscador()">
