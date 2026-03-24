@@ -61,36 +61,53 @@ if (!isset($conexion)) {
 <th>Tipo espacio</th>
 <th>Folio</th>
 <th>Estado</th>
+<th>Acciones</th> </tr>
 </tr>
 </thead>
 <tbody>
                     <tr>
                 <?php
-              $resultado = $conexion->query("SELECT * FROM gabinetes");
+                // La consulta maestra que une gabinetes con órdenes activas
+                $sql = "SELECT 
+                            g.id_gabinete, 
+                            g.tipo_espacio, 
+                            g.estado, 
+                            o.folio 
+                        FROM gabinetes g 
+                        LEFT JOIN ordenes_ingreso o 
+                            ON g.id_gabinete = o.id_gabinete 
+                            AND o.estado != 'entregado'";
 
-while ($row = $resultado->fetch_assoc()) {
-$estado = $row['estado'];
+                $resultado = $conexion->query($sql);
 
-echo "<tr>
-<td>{$row['id_gabinete']}</td>
-<td>{$row['tipo_espacio']}</td>
-<td>{$row['folio']}</td>
-<td><span class='badge status-{$estado}'>
-            " . ucfirst($estado) . "
-        </span></td>
- <td class='acciones'>
-                                  <button class='btn-editar' onclick='abrirEditar(".json_encode($row).")'>
-    <i class='fa-solid fa-pen-to-square'></i>
-</button>
-<button class='btn-eliminar' onclick=\"confirmarEliminacion('{$row['id_gabinete']}')\">
-    <i class='fa-solid fa-trash'></i>
-</button>
-                           
-</td>
-</tr>";
+                while ($row = $resultado->fetch_assoc()) {
+                    $estado = $row['estado'];
+                    // Si el JOIN encontró un folio lo guardamos, si no, ponemos "N/A"
+                    $folio_mostrar = !empty($row['folio']) ? $row['folio'] : 'N/A';
+                    
+                    // Limpiamos el texto del tipo de espacio (ej. computadora_escritorio -> Computadora escritorio)
+                    $tipo_limpio = ucfirst(str_replace('_', ' ', $row['tipo_espacio']));
 
-}
-?>
+                    echo "<tr>
+                            <td><strong>{$row['id_gabinete']}</strong></td>
+                            <td>{$tipo_limpio}</td>
+                            <td><strong>{$folio_mostrar}</strong></td>
+                            <td>
+                                <span class='badge status-{$estado}'>
+                                    " . ucfirst($estado) . "
+                                </span>
+                            </td>
+                            <td class='acciones'>
+                                <button class='btn-editar' onclick='abrirEditar(".json_encode($row).")'>
+                                    <i class='fa-solid fa-pen-to-square'></i>
+                                </button>
+                                <button class='btn-eliminar' onclick=\"confirmarEliminacion('{$row['id_gabinete']}')\">
+                                    <i class='fa-solid fa-trash'></i>
+                                </button>
+                            </td>
+                        </tr>";
+                }
+                ?>
                
             </tbody>
         </table>
@@ -115,8 +132,9 @@ echo "<tr>
                 </select>
             </div>
             <div class="grupo-input">
-                <label>Folio Asociado (Opcional):</label>
-                <input type="text" name="folio" id="edit-folio" placeholder="Número de folio">
+                <label>Folio Asociado:</label>
+                <input type="text" id="edit-folio" readonly style="background-color: #f4f4f4; color: #666;">
+                <p style="font-size: 0.8em; color: #888; margin-top: 5px; margin-bottom: 0;">* El folio se gestiona automáticamente desde la sección de Ingresos.</p>
             </div>
             <div class="grupo-input">
                 <label>Estado:</label>
