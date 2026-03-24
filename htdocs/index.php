@@ -19,7 +19,6 @@
     <?php $ruta_prefijo = "";
     include "toolbar.php"; ?>
 
-
     <main>
         <div class="fondo">
             <img src="public/img/logoATC.png" alt="Logo ATC" style="width:30%; margin-left:5%;">
@@ -27,17 +26,12 @@
 
         <div class="infoAbUs">
             <div class="texto">
-                <h2 class="titulo">¿Quienes somos?</h2>
-                <p>En Astech, somos una microempresa orgullosamente mexicana dedicada a transformar la relación de las
-                    personas con su tecnología. Entendemos que hoy en día, una computadora no es solo una herramienta;
-                    es tu oficina, tu centro de entretenimiento y tu conexión con el mundo.</p>
-                <p>Nacimos con la misión de ofrecer soluciones integrales en sistemas de información, combinando la
-                    precisión técnica con un trato honesto y transparente.</p>
+                <h2 class="titulo">¿Quiénes somos?</h2>
+                <p style="font-size: 1.1rem; color: #444; line-height: 1.8;">Somos una empresa humana y amigable, guiada por los valores de integridad y transparencia para brindar a nuestros clientes servicios de reparación y mantenimiento de calidad. Nuestro compromiso es garantizar que tu tecnología siempre funcione a la perfección.</p>
             </div>
             <div class="imagen">
                 <div class="wrapper-irregular">
-                    <img src="public/img/trabajado.JPG
-                    " alt="" class="Iprincipal">
+                    <img src="public/img/trabajado.JPG" alt="" class="Iprincipal">
                 </div>
             </div>
         </div>
@@ -47,23 +41,64 @@
                 <img src="public/img/mision.png" alt="Misión" style="width: 100%; height:100%;">
                 <div class="wrapperm">
                     <h1>Misión</h1>
-                    <p>"Brindar soluciones tecnológicas integrales en sistemas de información, mantenimiento y armado de
-                        equipos de cómputo, garantizando un servicio honesto, técnico y personalizado que permita a
-                        nuestros clientes optimizar su productividad y mantenerse conectados con lo que más les
-                        importa."</p>
+                    <p>"Brindamos una experiencia integral a nuestros clientes con servicios de reparación, mantenimiento, asesoría computacional y soporte a MiPymes de la región, garantizando la privacidad de datos y ofreciendo garantía en todos nuestros servicios, con principios de transparencia, honestidad y respeto para cumplir las expectativas y brindar soluciones confiables y vanguardistas."</p>
                 </div>
             </div>
             <div class="vision">
                 <img src="public/img/vision.png" alt="Visión" style="width: 100.7%; height:100%;">
                 <div class="wrapperv">
                     <h1>Visión</h1>
-                    <p>"Consolidarnos como la microempresa líder y de mayor confianza en nuestra región para el soporte
-                        técnico y ensamble de computadoras, siendo reconocidos por nuestra innovación constante, la
-                        calidad de nuestros procesos y el trato humano que nos distingue de las grandes corporaciones."
-                    </p>
+                    <p>"En AsTech Computer soñamos con un 2030 donde seamos la empresa de servicios tecnológicos de referencia en Puerto Vallarta, reconocida por nuestra excelencia, compromiso, innovación y la confianza que nos brinda nuestra comunidad.</p>
+                    <p>Creceremos junto a nuestros clientes y aliados estratégicos, compartiendo una misma visión de futuro: desarrollar talento local, promover la tecnología responsable y generar un impacto positivo en nuestro entorno."</p>
                 </div>
             </div>
         </div>
+
+        <section class="seccion-valores">
+            <h2 class="titulo titulo-centrado">Nuestros Valores</h2>
+            
+            <div class="lista-valores">
+                <div class="item-valor">
+                    <div class="icono-valor">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="textos-valor">
+                        <h4>Confiabilidad</h4>
+                        <p>Nos comprometemos a ofrecer servicios y soluciones tecnológicas en los que nuestros clientes puedan confiar, reflejando seguridad y profesionalismo en cada acción.</p>
+                    </div>
+                </div>
+
+                <div class="item-valor">
+                    <div class="icono-valor">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="textos-valor">
+                        <h4>Calidad y Garantía</h4>
+                        <p>Cuidamos la excelencia de nuestro trabajo, los insumos y refacciones que utilizamos, asegurando la satisfacción y respaldo total en cada servicio.</p>
+                    </div>
+                </div>
+
+                <div class="item-valor">
+                    <div class="icono-valor">
+                        <i class="fa-solid fa-handshake-simple"></i>
+                    </div>
+                    <div class="textos-valor">
+                        <h4>Integridad y Transparencia</h4>
+                        <p>Actuamos con honestidad, ética y responsabilidad en todas nuestras relaciones, fomentando la confianza y el respeto mutuo dentro y fuera de la organización.</p>
+                    </div>
+                </div>
+
+                <div class="item-valor">
+                    <div class="icono-valor">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="textos-valor">
+                        <h4>Enfoque en el Cliente</h4>
+                        <p>Ponemos al cliente en el centro de nuestras decisiones, comprendiendo sus necesidades y brindando soluciones efectivas y personalizadas que superen sus expectativas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="seccion-servicios">
             <h2 class="servicios-titulo">Nuestros servicios</h2>
@@ -115,7 +150,6 @@
 
                 <div class="seccion-logo">
                     <img src="public/img/logoATC.png" alt="AS TECH Logo" class="logo-footer">
-
                 </div>
 
                 <div class="filas-enlaces">
@@ -127,7 +161,6 @@
                             <li><a href="#">Instalación de software</a></li>
                             <li><a href="#">Servicios especializados</a></li>
                             <li><a href="#">Servicios a domicilio</a></li>
-
                         </ul>
                     </div>
 
@@ -148,7 +181,6 @@
                         <li><a href="#">Politica de privacidad</a></li>
                         <li><a href="#">Aviso de privacidad</a></li>
                         <li><a href="#">Preferencias</a></li>
-
                     </ul>
                 </div>
                 <div class="redes-sociales">
@@ -159,17 +191,9 @@
                         <li><button class="btn-facebook"><i class="fa-brands fa-square-facebook"></i></button></li>
                         <li><button class="btn-tiktok"><i class="fa-brands fa-tiktok"></i></button></li>
                         <li><button class="btn-yo"><i class="fa-brands fa-square-youtube"></i></button></li>
-
                     </ul>
                     <hr>
-                    </hr>
-
-                    </ul>
-
-
                 </div>
-            </div>
-
             </div>
 
             <div class="barra-derechos">
@@ -177,8 +201,6 @@
             </div>
         </footer>
     </main>
-
-
 
     <script src="public/js/fuciones.js"></script>
 </body>

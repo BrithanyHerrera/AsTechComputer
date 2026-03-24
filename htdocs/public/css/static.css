@@ -67,8 +67,8 @@ nav a {
 .nav-link-P:hover{
     background-color: #f4f4f4;
     color: #e07006;
-     border: 1px solid #c77100;
- transform: scale(1.1);
+    border: 1px solid #c77100;
+    transform: scale(1.1);
 }
 
 /* --- SECCIONES PRINCIPALES --- */
@@ -82,7 +82,17 @@ nav a {
     justify-content: center;
 }
 
-.infoAbUs, .infoMV {
+.infoAbUs {
+    width: 100%;
+    padding: 60px 20px 20px; /* Menos padding abajo para conectar con los valores */
+    display: flex;
+    background: rgba(255, 255, 255, 0.425);
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.infoMV {
     width: 100%;
     min-height: 60vh;
     padding: 40px 20px;
@@ -100,6 +110,11 @@ nav a {
     font-size: 2.5rem;
     color: #e06c00;
     margin-bottom: 20px;
+}
+
+.titulo-centrado {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 /* --- MISION Y VISION --- */
@@ -169,6 +184,61 @@ nav a {
     z-index: 1;
 }
 
+/* =========================================
+   NUEVA SECCIÓN DE VALORES (CUADRÍCULA)
+   ========================================= */
+.seccion-valores {
+    padding: 20px 20px 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.lista-valores {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 Columnas */
+    gap: 25px; /* Espacio entre tarjetas */
+}
+
+.item-valor {
+    display: flex;
+    align-items: flex-start;
+    background: #ffffff;
+    padding: 25px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-left: 5px solid #e06c00; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item-valor:hover {
+    transform: translateY(-8px); /* Flota hacia arriba */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.icono-valor {
+    font-size: 28px;
+    color: #52073a; 
+    margin-right: 20px;
+    margin-top: 2px;
+    min-width: 35px;
+    text-align: center;
+}
+
+.textos-valor h4 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.textos-valor p {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
 /* --- SECCIÓN SERVICIOS--- */
 .seccion-servicios {
     padding: 80px 20px;
@@ -221,7 +291,6 @@ nav a {
     color: #333;
 }
 
-/* CONTENIDO INTERNO CARD */
 .contenido-tarjeta img {
     width: 100%;
     height: 220px;
@@ -241,6 +310,8 @@ nav a {
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease;
 }
+
+/* --- SECCIÓN CEO --- */
 .seccion-ceo {
   background-color: #f9f9f9;
   padding: 60px 20px;
@@ -276,46 +347,14 @@ nav a {
   margin: 0 0 20px 0;
 }
 
-.nombre-ceo {
-  margin-bottom: 5px;
-  font-size: 1.2rem;
-}
+.nombre-ceo { margin-bottom: 5px; font-size: 1.2rem; }
+.puesto-ceo { color: #7f8c8d; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+.imagen-ceo { flex: 1; min-width: 300px; text-align: center; }
+.imagen-ceo img { max-width: 100%; height: auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
-.puesto-ceo {
-  color: #7f8c8d;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.9rem;
-}
-
-.imagen-ceo {
-  flex: 1;
-  min-width: 300px;
-  text-align: center;
-}
-
-.imagen-ceo img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-@media (max-width: 768px) {
-  .contenedor-ceo {
-    flex-direction: column-reverse;
-    text-align: center;
-  }
-  .frase-ceo {
-    border-left: none;
-    border-top: 3px solid #e67e22;
-    padding-left: 0;
-    padding-top: 20px;
-  }
-}
 /* --- FOOTER --- */
 .pie-pagina {
-  background-color: #000000;
+  background-color: #2a2a2a;
   color: #ffffff;
   padding: 50px 20px 20px;
   font-family: sans-serif;
@@ -331,16 +370,8 @@ nav a {
   gap: 40px;
 }
 
-.seccion-logo {
-  flex: 1;
-  min-width: 200px;
-}
-
-.logo-footer {
-  max-width: 200px;
-  height: auto;
-  filter: brightness(0) invert(1); /* Opcional: hace el logo blanco si es oscuro */
-}
+.seccion-logo { flex: 1; min-width: 200px; }
+.logo-footer { max-width: 200px; height: auto; filter: brightness(0) invert(1); }
 
 .filas-enlaces {
   display: flex;
@@ -350,132 +381,43 @@ nav a {
   flex-wrap: wrap;
 }
 
-.fila-links h4 {
-  color: #ffffff;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-}
-
-.fila-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.fila-links li {
-  margin-bottom: 12px;
-}
-
-.fila-links a {
-  color: #ffffff;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  font-size: 0.95rem;
-}
-
-.fila-links a:hover {
-  color: #e67e22; /* Naranja de tu marca */
-}
+.fila-links h4 { color: #ffffff; margin-bottom: 20px; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+.fila-links ul { list-style: none; padding: 0; margin: 0; }
+.fila-links li { margin-bottom: 12px; }
+.fila-links a { color: #ffffff; text-decoration: none; transition: color 0.3s ease; font-size: 0.95rem; }
+.fila-links a:hover { color: #e67e22; }
 
 .barra-derechos {
-  text-align: center;
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid #333;
-  font-size: 0.8rem;
-  color: #777;
-}
-/*iconos footer*/
-
-/* Contenedor principal */
-.redes-sociales {
-    color: white;
-    font-family: 'Lato', sans-serif;
+  text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #333; font-size: 0.8rem; color: #777;
 }
 
-.redes-sociales h4 {
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+.redes-sociales { color: white; font-family: 'Lato', sans-serif; }
+.redes-sociales h4 { margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+.redes-sociales ul { list-style: none; padding: 0; display: flex; gap: 15px; }
+.redes-sociales button { background: transparent; border: none; padding: 0; cursor: pointer; transition: transform 0.3s ease, color 0.3s ease; }
+.redes-sociales i { color: white; font-size: 30px; }
+.redes-sociales button:hover { transform: translateY(-5px); }
 
-/* Estilo de la lista */
-.redes-sociales ul {
-    list-style: none;
-    padding: 0;
-    display: flex; /* Alinea los iconos en fila */
-    gap: 15px;     /* Espacio entre cada icono */
-}
-
-/* Estilo base para todos los botones de redes */
-.redes-sociales button {
-    background: transparent; /* Quita el fondo gris/blanco del botón */
-    border: none;            /* Quita el borde */
-    padding: 0;
-    cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-/* Estilo de los iconos de Font Awesome */
-.redes-sociales i {
-    color: white;            /* Color blanco para los iconos */
-    font-size: 30px;         /* Tamaño de los iconos */
-}
-
-/* Efecto Hover (al pasar el mouse) */
-.redes-sociales button:hover {
-    transform: translateY(-5px); /* Pequeño salto hacia arriba */
-}
-
-/* Colores específicos opcionales al pasar el mouse */
 .btn-Whatsapp:hover i { color: #25D366; }
 .btn-ig:hover i { color: #E1306C; }
 .btn-facebook:hover i { color: #1877F2; }
 .btn-youtube:hover i { color: red; }
-hr{
-  margin: 10px;
-  border:1px solid #ffffffb0;
-}
-
-@media (max-width: 768px) {
-  .contenedor-pie {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .filas-enlaces {
-    justify-content: center;
-    gap: 40px;
-    width: 100%;
-  }
-  
-  .seccion-logo {
-    width: 100%;
-  }
-}
+hr{ margin: 10px; border:1px solid #ffffffb0; }
 
 /* --- RESPONSIVO --- */
 @media (max-width: 768px) {
-    header {
-        position: relative;
-        flex-direction: column;
-        height: auto;
-    }
+    header { position: relative; flex-direction: column; height: auto; }
+    nav ul { flex-direction: column; gap: 10px; padding: 10px 0; }
+    .nav-link, .nav-link-P { margin: 0; }
+    .infoAbUs, .infoMV { flex-direction: column; height: auto; }
     
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-        padding: 10px 0;
-    }
-
-    .nav-link, .nav-link-P {
-        margin: 0;
-    }
-
-    .infoAbUs, .infoMV {
-        flex-direction: column;
-        height: auto;
-    }
+    /* La cuadrícula pasa a ser de 1 columna en celular */
+    .lista-valores { grid-template-columns: 1fr; }
+    
+    .contenedor-ceo { flex-direction: column-reverse; text-align: center; }
+    .frase-ceo { border-left: none; border-top: 3px solid #e67e22; padding-left: 0; padding-top: 20px; }
+    
+    .contenedor-pie { flex-direction: column; text-align: center; }
+    .filas-enlaces { justify-content: center; gap: 40px; width: 100%; }
+    .seccion-logo { width: 100%; }
 }
