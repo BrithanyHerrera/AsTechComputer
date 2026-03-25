@@ -7,8 +7,6 @@ if (!isset($conexion)) {
     die("Error: No se pudo cargar la variable de conexión \$pdo. Verifica el archivo conexion.db.php");
 }
 ?>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="contenedor-crud">
     <div class="encabezado-seccion">
         <button class="boton-primario" onclick="abrirFormulario()">
@@ -19,7 +17,7 @@ if (!isset($conexion)) {
         <div class="contenido-modal">
             <span class="cerrar" onclick="cerrarFormulario()">&times;</span>
             <h3>Registrar Nuevo Empleado</h3>
-            <form action="../views/acciones/agregar_empleado.php" method="POST">
+            <form action="../controllers/empleado_controller.php?accion=agregar" method="POST">
                 <div class="grupo-input">
                     <label>Nombre:</label>
                     <input type="text" name="nombre" required placeholder="Ej. Carlos">
@@ -171,7 +169,7 @@ window.onclick = function(event) {
 function confirmarEliminacion(id) {
     if (confirm("¿Estás seguro?")) {
         
-        window.location.href = "../../app/views/acciones/eliminar_empleado.php?id=" + id;
+        window.location.href = `../controllers/empleado_controller.php?accion=eliminar&id=${id}`;
     }
 }function abrirEditar(datos) {
     // Llenar los campos del formulario con los datos del empleado
@@ -224,3 +222,4 @@ document.addEventListener('DOMContentLoaded', function() {
     window.history.replaceState({}, document.title, window.location.pathname);
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
