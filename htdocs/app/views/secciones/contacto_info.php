@@ -190,7 +190,7 @@ function cambiarEstado(id, estadoActual) {
         if (result.isConfirmed) {
             const nuevoEstado = result.value;
             // Redirección al proceso PHP
-window.location.href = `../controllers/actualizar_mensaje.php?id=${id}&estado=${nuevoEstado}`;        }
+window.location.href = `../controllers/mensaje_controller.php?id=${id}&estado=${nuevoEstado}`;        }
     });
 
 

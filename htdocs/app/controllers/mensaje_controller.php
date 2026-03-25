@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/conexion.db.php';
-require_once __DIR__ . "/../models/modelo_mensajes.php";
+require_once __DIR__ . "/../models/mensaje_model.php";
 
 $modelo = new MensajesModel($conexion);
 
