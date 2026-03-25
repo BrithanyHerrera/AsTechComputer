@@ -2,6 +2,7 @@
 // Usamos dirname() para subir niveles en las carpetas. 
 require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
 
+// Para versiones modernas (v5.x)
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 3));
 $dotenv->load();
 

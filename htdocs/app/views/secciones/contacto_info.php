@@ -160,7 +160,7 @@ function confirmarEliminarMensaje(id) {
     });
 }
 
-// ESTA ES LA FUNCIÓN QUE NO TE ABRÍA
+
 function cambiarEstado(id, estadoActual) {
     if (typeof Swal === 'undefined') {
         console.error("SweetAlert2 no está cargado");
@@ -190,8 +190,33 @@ function cambiarEstado(id, estadoActual) {
         if (result.isConfirmed) {
             const nuevoEstado = result.value;
             // Redirección al proceso PHP
-            window.location.href = `../views/acciones/actualizar_mensaje.php?id=${id}&estado=${nuevoEstado}`;
-        }
+window.location.href = `../controllers/actualizar_mensaje.php?id=${id}&estado=${nuevoEstado}`;        }
     });
+
+
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php if (isset($_GET['status'])): ?>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let status = "<?php echo $_GET['status']; ?>";
+
+    if (status === "success") {
+        Swal.fire({
+            icon: "success",
+            title: "¡Éxito!",
+            text: "El estado del mensaje se actualizó correctamente",
+            confirmButtonColor: "#6a0dad"
+        });
+    } else if (status === "error") {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se pudo actualizar el estado",
+            confirmButtonColor: "#6a0dad"
+        });
+    }
+});
+</script>
+<?php endif; ?>

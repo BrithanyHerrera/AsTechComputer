@@ -15,7 +15,7 @@ if ($id > 0) {
     $servicio = mysqli_fetch_assoc($resultado);
 }
 //http://localhost:3000/htdocs/app/controllers/servicios_controller.php?id_tipo_servicio=1
-//htdocs/app//htdocs/app/views/servicios_view.php?id_tipo_servicio=1
+//http://localhost:3000/htdocs/app/controllers/servicios_view.php?id_tipo_servicio=1
 // 5. Si el servicio no existe, redirigir o mostrar error
 if (!$servicio) {
     echo "Servicio no encontrado.";
