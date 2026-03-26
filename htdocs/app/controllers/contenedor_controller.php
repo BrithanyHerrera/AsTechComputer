@@ -65,4 +65,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $accion == 'editar') {
     }
     exit();
 }
+
 ?>

@@ -18,7 +18,7 @@ if (!isset($conexion)) {
     <div class="contenido-modal modal-purpura">
     
         <h3>Registrar Nuevo Servicio</h3>
-        <form action="acciones/agregar_servicio.php" method="POST">
+        <form action="../controllers/servicios_controller.php?accion=agregar" method="POST">
             <div class="grupo-input">
                 <label>Nombre del Servicio:</label>
                 <input type="text" name="tipo_servicio" required placeholder="Ej. Reparación de Laptop">
@@ -150,7 +150,7 @@ if (!$resultado) {
  
         <h3><i class="fa-solid fa-pen-to-square"></i> Editar Servicio</h3>
         
-        <form action="../views/acciones/editar_servicio.php" method="POST" id="form-editar">
+        <form action="../controllers/servicios_controller.php?accion=editar" method="POST" id="form-editar">
             <input type="hidden" name="id_servicio" id="edit-id">
 
             <div class="grupo-input">
@@ -231,9 +231,10 @@ window.onclick = function(event) {
         cerrarFormulario();
     }
 }
+
 function confirmarEliminacion(id) {
     Swal.fire({
-        title: '¿Estás seguro?',
+        title: '¿Eliminar servicio?',
         text: "Esta acción no se puede deshacer.",
         icon: 'warning',
         showCancelButton: true,
@@ -243,7 +244,8 @@ function confirmarEliminacion(id) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "../../app/views/acciones/eliminar_servicio.php?id=" + id;
+            // Enviamos la petición al controlador unificado
+            window.location.href = `../controllers/servicios_controller.php?accion=eliminar&id=${id}`;
         }
     });
 }
