@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
             if ($password === $empleado['contrasena']) { 
                 
                 // 5. FILTRO DE PUESTOS PERMITIDOS
-                $puestos_permitidos = [2, 3]; 
+                $puestos_permitidos = [2, 3, 4]; 
 
                 if (in_array($empleado['id_puesto'], $puestos_permitidos)) {
                     // ¡Éxito! Guardamos datos en sesión

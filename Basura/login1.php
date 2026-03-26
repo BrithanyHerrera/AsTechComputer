@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
                 // ==========================================================
                 // Aquí defines quién puede entrar. 
                 // Ej. [3] para solo Gerente, [2, 3] para Recepción y Gerente
-                $puestos_permitidos = [2, 3]; 
+                $puestos_permitidos = [2, 3, 4]; 
 
                 if (in_array($empleado['id_puesto'], $puestos_permitidos)) {
                     // ¡Éxito! Guardamos sus datos en la memoria del servidor

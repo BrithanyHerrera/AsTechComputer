@@ -168,7 +168,7 @@ if ($resultado && $resultado->num_rows > 0) {
             </p>
         </div>
 
-        <form action="acciones/entregar_equipo.php" method="POST">
+        <form action="/Astech/AsTechComputer/htdocs/app/views/acciones/entregar_equipo.php" method="POST">
             <input type="hidden" id="input_folio_entregar" name="folio">
             <input type="hidden" id="input_gabinete_entregar" name="id_gabinete">
             

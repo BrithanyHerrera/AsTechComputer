@@ -18,7 +18,7 @@ $modeloCita->limpiarCitasExpiradas();
 // 2. CONFIGURAR CLIENTE GOOGLE
 // ===============================
 $client = new Client();
-$ruta_credenciales = dirname(__DIR__, 2) . '/credenciales.json';
+$ruta_credenciales = dirname(__DIR__, 1) . '/credenciales.json';
 $client->setAuthConfig($ruta_credenciales);
 $client->addScope(Calendar::CALENDAR);
 $service = new Calendar($client);

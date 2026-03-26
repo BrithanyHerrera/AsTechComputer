@@ -1,0 +1,8 @@
+# Bloquear acceso desde el navegador a archivos sensibles
+<FilesMatch "(?i)(^\.env|credenciales\.json|composer\.json|composer\.lock)$">
+    Require all denied
+</FilesMatch>
+
+# Bloquear acceso desde el navegador a la carpeta vendor
+RewriteEngine On
+RewriteRule ^vendor/.*$ - [F,L]

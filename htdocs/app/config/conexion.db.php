@@ -1,36 +1,31 @@
 <?php
-// ==================================================================
-// CONEXIÓN INTELIGENTE A LA BASE DE DATOS (ASTECH COMPUTER)
-// ==================================================================
-
-// Detectamos si estamos en XAMPP/Laragon (localhost) o en InfinityFree
-if ($_SERVER['SERVER_NAME'] == 'localhost') {
-    // --------------------------------------------------------------
-    // ENTORNO LOCAL (Tú con Laragon o tus compañeros con XAMPP)
-    // --------------------------------------------------------------
-    $host = "localhost";
-    $usuario = "root";      // Usuario por defecto en Laragon/XAMPP
-    $contrasena = "";       // Contraseña vacía por defecto
-    $base_datos = "astech_bd"; // ¡Asegúrense de que todos usen este nombre!
+// Detectamos si estamos trabajando en tu computadora (localhost/Laragon)
+if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1') {
+    // -----------------------------------------
+    // CREDENCIALES LOCALES (LARAGON)
+    // -----------------------------------------
+    $servidor = "localhost";
+    $usuario = "root";
+    $password = ""; 
+    $base_datos = "astech_bd"; // Pon aquí el nombre de tu base de datos local
 } else {
-    // --------------------------------------------------------------
-    // ENTORNO DE PRODUCCIÓN (InfinityFree)
-    // --------------------------------------------------------------
-    $host = "sql.infinityfree.com"; // Cambia esto por el host real que te da InfinityFree
-    $usuario = "if0_41282426";      // Tu usuario de InfinityFree
-    $contrasena = "TU_CONTRASEÑA_DEL_CPANEL"; 
-    $base_datos = "if0_41282426_bienhecho"; 
+    // -----------------------------------------
+    // CREDENCIALES EN VIVO (INFINITYFREE)
+    // -----------------------------------------
+    $servidor = "sql210.infinityfree.com";
+    $usuario = "if0_41265721";
+    $password = "iD0gMpRoOozv1"; // ¡No olvides cambiar esto!
+    $base_datos = "if0_41265721_astech_computer_bd";
 }
 
-// Intentamos conectar usando las credenciales detectadas
-$conexion = new mysqli($host, $usuario, $contrasena, $base_datos);
+// Intentamos conectar
+$conexion = new mysqli($servidor, $usuario, $password, $base_datos);
 
-// Verificamos si hubo algún error
+// Verificamos si hubo un error
 if ($conexion->connect_error) {
-    die("Error crítico de conexión: " . $conexion->connect_error);
+    die("Error de conexión: " . $conexion->connect_error);
 }
 
-// Forzamos el uso de UTF-8 para proteger los acentos y la 'ñ'
+// Configuramos los caracteres especiales para evitar problemas con las ñ y acentos
 $conexion->set_charset("utf8mb4");
-
 ?>

@@ -6,7 +6,7 @@
 
 // No necesitamos volver a pedir el autoload o la BD si ya los pidió el controlador principal,
 // pero los ponemos con require_once por seguridad.
-require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 
 use Google\Client;
