@@ -20,7 +20,7 @@ if (!isset($conexion)) {
             <span class="cerrar" onclick="cerrarFormulario()">&times;</span>
             <h3>Registrar Nuevo Gabinete</h3>
 
-<form action="../views/acciones/agregar_gabinete.php" method="POST">
+<form action="../controllers/contenedor_controller.php?accion=agregar" method="POST">
 
 <div class="grupo-input">
 <label>ID Gabinete:</label>
@@ -117,7 +117,7 @@ if (!isset($conexion)) {
     <div class="contenido-modal modal-purpura">
         <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
         <h3><i class="fa-solid fa-box-open"></i> Editar Gabinete</h3>
-        <form action="../views/acciones/editar_contenedor.php" method="POST" id="form-editar">
+        <form action="../controllers/contenedor_controller.php?accion=editar" method="POST" id="form-editar">
             <input type="hidden" name="id_gabinete" id="edit-id">
             <div class="grupo-input">
                 <label>ID Gabinete (Lectura):</label>
@@ -153,6 +153,7 @@ if (!isset($conexion)) {
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    
 function abrirFormulario() {
     document.getElementById('formulario-gabinete').style.display = 'flex';
 }
@@ -166,27 +167,6 @@ window.onclick = function(event) {
     }
 }
 function confirmarEliminacion(id) {
-    if (confirm("¿Estás seguro?")) {
-        
-        window.location.href = "../../app/views/acciones/eliminar_contenedor.php?id=" + id;
-    }}
-// --- FUNCIONES PARA EDITAR ---
-function abrirEditar(datos) {
- 
-    document.getElementById('edit-id').value = datos.id_gabinete;
-    document.getElementById('display-id').value = datos.id_gabinete;
-    document.getElementById('edit-tipo').value = datos.tipo_espacio;
-    document.getElementById('edit-folio').value = datos.folio ? datos.folio : "";
-    document.getElementById('edit-estado').value = datos.estado;
-
-
-    document.getElementById('modal-editar-gabinete').style.display = 'flex';
-}
-function cerrarModalEditar() {
-    document.getElementById('modal-editar-gabinete').style.display = 'none';
-}
-
-function confirmarEliminacion(id) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "Se eliminará el gabinete " + id,
@@ -198,10 +178,27 @@ function confirmarEliminacion(id) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "../views/acciones/eliminar_contenedor.php?id=" + id;
+            // CORRECCIÓN: Usar backticks (`) correctamente y sin la comilla extra al final
+            window.location.href = `../controllers/contenedor_controller.php?accion=eliminar&id=${id}`;
         }
     })
 }
+// --- FUNCIONES PARA EDITAR ---
+function abrirEditar(datos) {
+    document.getElementById('edit-id').value = datos.id_gabinete;
+    document.getElementById('display-id').value = datos.id_gabinete;
+    document.getElementById('edit-tipo').value = datos.tipo_espacio;
+    document.getElementById('edit-estado').value = datos.estado;
+    // Si el folio no viene en el objeto, ponemos N/A
+    document.getElementById('edit-folio').value = datos.folio ? datos.folio : 'N/A';
+
+    document.getElementById('modal-editar-gabinete').style.display = 'flex';
+}
+function cerrarModalEditar() {
+    document.getElementById('modal-editar-gabinete').style.display = 'none';
+}
+
+
 
 // Cerrar modales al hacer clic fuera
 window.onclick = function(event) {
@@ -213,40 +210,52 @@ window.onclick = function(event) {
 
 // --- ALERTAS SWEETALERT ---
 document.addEventListener('DOMContentLoaded', function() {
+    // 1. Capturamos los parámetros de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
     const seccion = urlParams.get('seccion');
 
-    // Solo mostrar si estamos en la sección de contenedor
-    if (seccion === 'contenedor' || !seccion) {
-        if (status === 'success') {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Operación Exitosa!',
-                text: 'Los cambios se han guardado correctamente.',
-                confirmButtonColor: '#52073a'
-            });
-        } 
-        else if (status === 'duplicate') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Dato Duplicado',
-                text: 'Ese gabinete ya existe o el folio está ocupado.',
-                confirmButtonColor: '#52073a'
-            });
-        } 
-        else if (status === 'error') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Ocurrió un problema al procesar la solicitud.',
-                confirmButtonColor: '#52073a'
-            });
+    // 2. Ejecutamos la alerta ANTES de limpiar la URL
+    if (status) {
+        // Solo mostramos si la sección coincide o si no hay sección definida
+        if (!seccion || seccion === 'contenedor') {
+            
+            if (status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Operación Exitosa!',
+                    text: 'Los cambios se han guardado correctamente.',
+                    confirmButtonColor: '#52073a'
+                });
+            } 
+            else if (status === 'duplicate') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Dato Duplicado',
+                    text: 'Ese gabinete ya existe.',
+                    confirmButtonColor: '#52073a'
+                });
+            } 
+            else if (status === 'error') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ocurrió un problema al procesar la solicitud.',
+                    confirmButtonColor: '#52073a'
+                });
+            }
         }
+    }
+
+    // 3. LIMPIAR URL: Esto va al final para que no interfiera con la lógica anterior
+    // Solo lo hacemos si hay parámetros para limpiar
+    if (window.location.search) {
+        const nuevaUrl = window.location.pathname + (seccion ? "?seccion=" + seccion : "");
+        window.history.replaceState({}, document.title, nuevaUrl);
     }
 });
 
-    window.history.replaceState({}, document.title, window.location.pathname + (seccion ? "?seccion=" + seccion : ""));
+
 
 
 

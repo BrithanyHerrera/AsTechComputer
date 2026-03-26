@@ -113,7 +113,7 @@ while ($row = $resultado->fetch_assoc()) {
         <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
         <h3><i class="fa-solid fa-user-pen"></i> Editar Empleado</h3>
         
-        <form action="../views/acciones/editar_empleado.php" method="POST" id="form-editar">
+         <form action="../controllers/empleado_controller.php?accion=editar"method="POST" id="form-editar">
             <input type="hidden" name="id_empleado" id="edit-id">
 
             <div class="grupo-input">

@@ -48,4 +48,37 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'eliminar') {
 
     exit();
 }
+
+//EDITAR EMPLEADO
+
+// --- AGREGAR EMPLEADO ---
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $accion == 'editar') {
+$modelo = new EmpleadosModel($conexion);
+
+    // Recoger datos
+    $id = $_POST['id_empleado'] ?? null;
+    $nombre = $_POST['nombre'] ?? '';
+    $apellido = $_POST['apellido'] ?? '';
+    $telefono = $_POST['telefono'] ?? '';
+    $correo = $_POST['correo'] ?? '';
+    $usuario = $_POST['nombre_usuario'] ?? '';
+    $puesto = $_POST['id_puesto'] ?? '';
+
+    try {
+        $resultado = $modelo->actualizarEmpleado($id, $nombre, $apellido, $telefono, $correo, $usuario, $puesto);
+
+        if ($resultado) {
+            header("Location: ../controllers/administracion_controller.php?seccion=empleado&status=success");
+        } else {
+            header("Location: ../controllers/administracion_controller.php?seccion=empleado&status=error");
+        }
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() == 1062) {
+            header("Location: ../controllers/administracion_controller.php?seccion=empleado&status=duplicate");
+        } else {
+            header("Location: ../controllers/administracion_controller.php?seccion=empleado&status=error");
+        }
+    }
+    exit();
+}
 ?>
