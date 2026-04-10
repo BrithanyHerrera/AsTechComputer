@@ -179,7 +179,7 @@
                     <h4>Legal</h4>
                     <ul>
                         <li><a href="#">Politica de privacidad</a></li>
-                        <li><a href="#">Aviso de privacidad</a></li>
+                        <li><a href="app/views/politica_cookies.php">Política de Cookies</a></li>
                         <li><a href="#">Preferencias</a></li>
                     </ul>
                 </div>
@@ -203,6 +203,178 @@
     </main>
 
     <script src="public/js/fuciones.js"></script>
+
+    <div id="overlay-bloqueo" class="overlay-cookies"></div>
+
+    <div id="banner-cookies" class="contenedor-cookies">
+        <div class="texto-cookies">
+            <i class="fa-solid fa-cookie-bite"></i>
+            <div>
+                <h3 style="margin: 0 0 5px 0; color: #52073a; font-size: 1.1rem;">Tu privacidad es importante</h3>
+                <p>En <strong>Astech Computer</strong> utilizamos cookies propias y de terceros para mejorar tu experiencia, garantizar el agendamiento de citas y analizar el tráfico de la web. Puedes aceptar todas las cookies o rechazarlas. Conoce más en nuestra <a href="app/views/politica_cookies.php" target="_blank">Política de Cookies</a>.</p>
+            </div>
+        </div>
+        <div class="botones-cookies">
+            <button id="btn-rechazar-cookies" class="btn-rechazar">Rechazar</button>
+            <button id="btn-aceptar-cookies" class="btn-aceptar">Aceptar</button>
+        </div>
+    </div>
+
+    <style>
+        /* Clase para bloquear el scroll del body */
+        .bloquear-scroll {
+            overflow: hidden;
+        }
+
+        /* El fondo semitransparente que bloquea clics */
+        .overlay-cookies {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(3px); /* Difumina el fondo levemente */
+            z-index: 999998; /* Justo debajo del banner */
+            display: none; /* Oculto por defecto */
+        }
+
+        /* Contenedor del banner estilo modal */
+        .contenedor-cookies {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            background-color: #ffffff;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border-top: 6px solid #e06c00;
+            display: none; /* Oculto por defecto */
+            flex-direction: column;
+            padding: 30px;
+            z-index: 999999;
+            font-family: 'Lato', sans-serif;
+            text-align: center;
+        }
+        
+        .texto-cookies {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .texto-cookies i {
+            font-size: 50px;
+            color: #e06c00;
+        }
+        
+        .texto-cookies p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .texto-cookies a {
+            color: #e06c00;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .botones-cookies {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        /* Estilo Botón Aceptar */
+        .btn-aceptar {
+            background-color: #52073a;
+            color: white;
+            border: 2px solid #52073a;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-aceptar:hover {
+            background-color: #e06c00;
+            border-color: #e06c00;
+        }
+
+        /* Estilo Botón Rechazar */
+        .btn-rechazar {
+            background-color: transparent;
+            color: #52073a;
+            border: 2px solid #52073a;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-rechazar:hover {
+            background-color: #f4f4f4;
+            color: #e06c00;
+            border-color: #e06c00;
+        }
+
+        @media (max-width: 600px) {
+            .botones-cookies {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const banner = document.getElementById("banner-cookies");
+            const overlay = document.getElementById("overlay-bloqueo");
+            const btnAceptar = document.getElementById("btn-aceptar-cookies");
+            const btnRechazar = document.getElementById("btn-rechazar-cookies");
+
+            // Comprobamos si no existe nuestra cookie de estado
+            if (!document.cookie.split('; ').find(row => row.startsWith('astech_cookies_estado='))) {
+                // Si no existe, mostramos el modal obligatorio y bloqueamos el scroll
+                banner.style.display = "flex";
+                overlay.style.display = "block";
+                document.body.classList.add("bloquear-scroll");
+            }
+
+            // Función centralizada para cerrar el banner y guardar la decisión
+            function procesarDecision(decision) {
+                banner.style.display = "none";
+                overlay.style.display = "none";
+                document.body.classList.remove("bloquear-scroll");
+
+                // Guardamos la cookie por 1 año para recordar que ya respondió
+                let fechaExpiracion = new Date();
+                fechaExpiracion.setTime(fechaExpiracion.getTime() + (365 * 24 * 60 * 60 * 1000));
+                document.cookie = "astech_cookies_estado=" + decision + "; expires=" + fechaExpiracion.toUTCString() + "; path=/";
+            }
+
+            // Asignamos los eventos a los botones
+            btnAceptar.addEventListener("click", function() {
+                procesarDecision("aceptadas");
+            });
+
+            btnRechazar.addEventListener("click", function() {
+                procesarDecision("rechazadas");
+                // NOTA TÉCNICA: Al estar "rechazadas", tú como desarrollador puedes usar PHP 
+                // en el futuro para NO cargar scripts analíticos si $_COOKIE['astech_cookies_estado'] == 'rechazadas'
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -23,7 +23,7 @@
 
 <body>
     <?php 
-    // Mantenemos tu toolbar original
+    // Toolbar
     $ruta_prefijo = "../../";
     @include "../../toolbar.php"; 
     ?>

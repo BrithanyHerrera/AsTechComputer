@@ -1,4 +1,8 @@
-/vendor/
-/htdocs/credenciales.json
-.env
+# Ignorar dependencias de Composer
+htdocs/vendor/
+Basura/
+
+# Ignorar archivos con contraseñas (¡Súper importante!)
+htdocs/.env
+htdocs/credenciales.json
 *.log
