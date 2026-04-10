@@ -7,11 +7,11 @@
     <title>Astech Computer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="public/css/static.css">
     <link rel="icon" href="public/img/Astech ICO.ico" type="image/x-icon">
     <link rel="stylesheet" href="public/css/toolbar.css">
+    <link rel="stylesheet" href="public/css/index.css">
 </head>
 
 <body>
@@ -20,126 +20,125 @@
     include "toolbar.php"; ?>
 
     <main>
-        <div class="fondo">
-            <img src="public/img/logoATC.png" alt="Logo ATC" style="width:30%; margin-left:5%;">
-        </div>
-
-        <div class="infoAbUs">
-            <div class="texto">
-                <h2 class="titulo">¿Quiénes somos?</h2>
-                <p style="font-size: 1.1rem; color: #444; line-height: 1.8;">Somos una empresa humana y amigable, guiada por los valores de integridad y transparencia para brindar a nuestros clientes servicios de reparación y mantenimiento de calidad. Nuestro compromiso es garantizar que tu tecnología siempre funcione a la perfección.</p>
-            </div>
-            <div class="imagen">
-                <div class="wrapper-irregular">
-                    <img src="public/img/trabajado.JPG" alt="" class="Iprincipal">
+        <section class="hero-wrapper">
+            <div class="hero-xiaomi">
+                <div class="hero-texto">
+                    <span class="badge-premium">Astech Premium</span>
+                    <h1>Astech Computer</h1>
+                    <p class="subtitulo">Mantenimiento integral y reparación especializada.</p>
+                    <p class="destacado">Confianza y rapidez.</p>
+                    <div class="hero-botones">
+                        <a href="app/views/agendar_cita.php" class="btn-comprar">Agendar cita</a>
+                        <a href="#servicios" class="enlace-mas">Más información <i class="fa-solid fa-angle-right"></i></a>
+                    </div>
+                </div>
+                <div class="hero-imagen">
+                    <img src="public/img/logoATC.png" alt="Logo Astech Computer">
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="infoMV">
-            <div class="mision">
-                <img src="public/img/mision.png" alt="Misión" style="width: 100%; height:100%;">
-                <div class="wrapperm">
-                    <h1>Misión</h1>
-                    <p>"Brindamos una experiencia integral a nuestros clientes con servicios de reparación, mantenimiento, asesoría computacional y soporte a MiPymes de la región, garantizando la privacidad de datos y ofreciendo garantía en todos nuestros servicios, con principios de transparencia, honestidad y respeto para cumplir las expectativas y brindar soluciones confiables y vanguardistas."</p>
+        <section class="seccion-about">
+            <div class="grid-about">
+                <div class="texto-about">
+                    <h2>¿Quiénes somos?</h2>
+                    <p>Somos una empresa humana y amigable, guiada por los valores de integridad y transparencia para brindar a nuestros clientes servicios de reparación y mantenimiento de calidad.</p>
+                    <p>Nuestro compromiso es garantizar que tu tecnología siempre funcione a la perfección, asegurando tu información y extendiendo la vida útil de tus equipos.</p>
+                </div>
+                <div class="imagen-about">
+                    <img src="public/img/trabajado.JPG" alt="Trabajo en Astech">
                 </div>
             </div>
-            <div class="vision">
-                <img src="public/img/vision.png" alt="Visión" style="width: 100.7%; height:100%;">
-                <div class="wrapperv">
-                    <h1>Visión</h1>
-                    <p>"En AsTech Computer soñamos con un 2030 donde seamos la empresa de servicios tecnológicos de referencia en Puerto Vallarta, reconocida por nuestra excelencia, compromiso, innovación y la confianza que nos brinda nuestra comunidad.</p>
-                    <p>Creceremos junto a nuestros clientes y aliados estratégicos, compartiendo una misma visión de futuro: desarrollar talento local, promover la tecnología responsable y generar un impacto positivo en nuestro entorno."</p>
-                </div>
-            </div>
-        </div>
+        </section>
 
-        <section class="seccion-valores">
-            <h2 class="titulo titulo-centrado">Nuestros Valores</h2>
-            
-            <div class="lista-valores">
-                <div class="item-valor">
-                    <div class="icono-valor">
-                        <i class="fa-solid fa-shield-halved"></i>
+        <section id="servicios" class="seccion-valores">
+            <div class="contenedor-max">
+                <h2 class="titulo-seccion">Nuestros Servicios</h2>
+                <div class="grid-cards">
+                    <div class="xiaomi-card">
+                        <img src="public/img/diagnostico.jpg" alt="Diagnóstico">
+                        <div class="xiaomi-card-body">
+                            <h3>Diagnóstico</h3>
+                            <p>Revisión profunda para identificar el origen exacto de la falla en tu equipo.</p>
+                            <button class="btn-comprar">Solicitar</button>
+                        </div>
                     </div>
-                    <div class="textos-valor">
-                        <h4>Confiabilidad</h4>
-                        <p>Nos comprometemos a ofrecer servicios y soluciones tecnológicas en los que nuestros clientes puedan confiar, reflejando seguridad y profesionalismo en cada acción.</p>
+                    <div class="xiaomi-card">
+                        <img src="public/img/manten.jpg" alt="Mantenimiento">
+                        <div class="xiaomi-card-body">
+                            <h3>Mantenimiento</h3>
+                            <p>Limpieza física y optimización de software para máxima velocidad.</p>
+                            <button class="btn-comprar">Solicitar</button>
+                        </div>
                     </div>
-                </div>
-
-                <div class="item-valor">
-                    <div class="icono-valor">
-                        <i class="fa-solid fa-award"></i>
-                    </div>
-                    <div class="textos-valor">
-                        <h4>Calidad y Garantía</h4>
-                        <p>Cuidamos la excelencia de nuestro trabajo, los insumos y refacciones que utilizamos, asegurando la satisfacción y respaldo total en cada servicio.</p>
-                    </div>
-                </div>
-
-                <div class="item-valor">
-                    <div class="icono-valor">
-                        <i class="fa-solid fa-handshake-simple"></i>
-                    </div>
-                    <div class="textos-valor">
-                        <h4>Integridad y Transparencia</h4>
-                        <p>Actuamos con honestidad, ética y responsabilidad en todas nuestras relaciones, fomentando la confianza y el respeto mutuo dentro y fuera de la organización.</p>
-                    </div>
-                </div>
-
-                <div class="item-valor">
-                    <div class="icono-valor">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <div class="textos-valor">
-                        <h4>Enfoque en el Cliente</h4>
-                        <p>Ponemos al cliente en el centro de nuestras decisiones, comprendiendo sus necesidades y brindando soluciones efectivas y personalizadas que superen sus expectativas.</p>
+                    <div class="xiaomi-card">
+                        <img src="public/img/reparacion.jpg" alt="Reparación">
+                        <div class="xiaomi-card-body">
+                            <h3>Reparación</h3>
+                            <p>Sustitución de piezas y microelectrónica con garantía extendida.</p>
+                            <button class="btn-comprar">Solicitar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="seccion-servicios">
-            <h2 class="servicios-titulo">Nuestros servicios</h2>
-
-            <div class="servicios-contenedor">
-                <div class="servicio-tarjeta">
-                    <div class="contenido-tarjeta">
-                        <img src="public/img/diagnostico.jpg" alt="Diagnóstico">
-                        <button class="btn-servicio">Diagnostico</button>
+        <section class="seccion-about">
+            <div class="contenedor-max">
+                <h2 class="titulo-seccion">Filosofía Empresarial</h2>
+                
+                <div class="grid-cards" style="margin-bottom: 60px;">
+                    <div class="xiaomi-card">
+                        <img src="public/img/mision.png" alt="Misión">
+                        <div class="xiaomi-card-body">
+                            <h3>Nuestra Misión</h3>
+                            <p>Brindamos una experiencia integral a nuestros clientes con servicios de reparación, mantenimiento, asesoría computacional y soporte a MiPymes de la región, garantizando la privacidad de datos y ofreciendo garantía en todos nuestros servicios, con principios de transparencia, honestidad y respeto para cumplir las expectativas y brindar soluciones confiables y vanguardistas.</p>
+                        </div>
+                    </div>
+                    <div class="xiaomi-card">
+                        <img src="public/img/vision.png" alt="Visión">
+                        <div class="xiaomi-card-body">
+                            <h3>Nuestra Visión</h3>
+                            <p>En AsTech Computer soñamos con un 2030 donde seamos la empresa de servicios tecnológicos de referencia en Puerto Vallarta, reconocida por nuestra excelencia, compromiso, innovación y la confianza que nos brinda nuestra comunidad.</p> <p>Creceremos junto a nuestros clientes y aliados estratégicos, compartiendo una misma visión de futuro: desarrollar talento local, promover la tecnología responsable y generar un impacto positivo en nuestro entorno.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="servicio-tarjeta">
-                    <div class="contenido-tarjeta">
-                        <img src="public/img/manten.jpg" alt="Mantenimiento">
-                        <button class="btn-servicio">Mantenimiento</button>
+                <div class="grid-valores">
+                    <div class="valor-item">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h4>Confiabilidad</h4>
+                        <p>Seguridad y profesionalismo en cada acción.</p>
+                    </div>
+                    <div class="valor-item">
+                        <i class="fa-solid fa-award"></i>
+                        <h4>Garantía</h4>
+                        <p>Excelencia en insumos asegurando el respaldo total.</p>
+                    </div>
+                    <div class="valor-item">
+                        <i class="fa-solid fa-handshake-simple"></i>
+                        <h4>Transparencia</h4>
+                        <p>Honestidad y ética en todas nuestras relaciones.</p>
+                    </div>
+                    <div class="valor-item">
+                        <i class="fa-solid fa-users"></i>
+                        <h4>Enfoque al Cliente</h4>
+                        <p>Soluciones efectivas que superan expectativas.</p>
                     </div>
                 </div>
-
-                <div class="servicio-tarjeta">
-                    <div class="contenido-tarjeta">
-                        <img src="public/img/reparacion.jpg" alt="Reparación">
-                        <button class="btn-servicio">Reparación</button>
-                    </div>
-                </div>
-
             </div>
         </section>
 
         <section class="seccion-ceo">
-            <div class="contenedor-ceo">
-                <div class="contenido-texto">
-                    <img src="public/img/Iso.png" alt="Logo" class="logo-empresa">
-                    <blockquote class="frase-ceo">
-                        “En nuestra empresa tratamos cada equipo como si fuera propio, porque sabemos que ahí está tu
-                        trabajo, tus recuerdos y tu información."
-                    </blockquote>
-                    <p class="nombre-ceo"><strong>Ferdán Garrigos</strong></p>
-                    <p class="puesto-ceo">Fundador & CEO</p>
+            <div class="caja-ceo">
+                <div class="ceo-texto">
+                    <img src="public/img/Iso.png" alt="Logo" style="width: 60px; margin-bottom: 20px;">
+                    <blockquote>“En nuestra empresa tratamos cada equipo como si fuera propio, porque sabemos que ahí está tu trabajo, tus recuerdos y tu información.”</blockquote>
+                    <p style="font-weight: 700; font-size: 1.2rem;">Ferdán Garrigos</p>
+                    <p style="color: var(--color-texto-secundario);">Fundador & CEO</p>
                 </div>
-                <div class="imagen-ceo">
+                <div class="ceo-img">
                     <img src="public/img/ceoo.png" alt="CEO de Astech Computer">
                 </div>
             </div>
@@ -147,55 +146,45 @@
 
         <footer class="pie-pagina">
             <div class="contenedor-pie">
-
                 <div class="seccion-logo">
-                    <img src="public/img/logoATC.png" alt="AS TECH Logo" class="logo-footer">
+                    <img src="public/img/logoATC.png" alt="AS TECH Logo" style="width: 160px; filter: brightness(0) invert(1);">
                 </div>
-
-                <div class="filas-enlaces">
+                <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px;">
                     <div class="fila-links">
                         <h4>Servicios</h4>
                         <ul>
-                            <li><a href="#">Reparacion y remplazo</a></li>
+                            <li><a href="#">Reparación y reemplazo</a></li>
                             <li><a href="#">Mantenimiento preventivo</a></li>
                             <li><a href="#">Instalación de software</a></li>
                             <li><a href="#">Servicios especializados</a></li>
-                            <li><a href="#">Servicios a domicilio</a></li>
                         </ul>
                     </div>
-
                     <div class="fila-links">
                         <h4>Empresa</h4>
                         <ul>
                             <li><a href="#">Sobre Nosotros</a></li>
-                            <li><a href="#">Contacto</a></li>
-                            <li><a href="#">Ubicación</a></li>
                             <li><a href="app/controllers/convenios_controller.php">Convenios</a></li>
                             <li><a href="app/controllers/login_controller.php">Operaciones</a></li>
                         </ul>
                     </div>
-                </div>
-                <div class="fila-links">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Politica de privacidad</a></li>
-                        <li><a href="app/views/politica_cookies.php">Política de Cookies</a></li>
-                        <li><a href="#">Preferencias</a></li>
-                    </ul>
+                    <div class="fila-links">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Política de privacidad</a></li>
+                            <li><a href="app/views/politica_cookies.php">Política de Cookies</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="redes-sociales">
-                    <h4>Siguenos en</h4>
+                    <h4>Síguenos</h4>
                     <ul>
-                        <li><button class="btn-Whatsapp"><i class="fa-brands fa-square-whatsapp"></i></button></li>
-                        <li><button class="btn-ig"><i class="fa-brands fa-square-instagram"></i></button></li>
-                        <li><button class="btn-facebook"><i class="fa-brands fa-square-facebook"></i></button></li>
-                        <li><button class="btn-tiktok"><i class="fa-brands fa-tiktok"></i></button></li>
-                        <li><button class="btn-yo"><i class="fa-brands fa-square-youtube"></i></button></li>
+                        <li><i class="fa-brands fa-whatsapp"></i></li>
+                        <li><i class="fa-brands fa-instagram"></i></li>
+                        <li><i class="fa-brands fa-facebook"></i></li>
+                        <li><i class="fa-brands fa-tiktok"></i></li>
                     </ul>
-                    <hr>
                 </div>
             </div>
-
             <div class="barra-derechos">
                 <p>&copy; 2026 AS TECH COMPUTER. Todos los derechos reservados.</p>
             </div>
@@ -205,7 +194,6 @@
     <script src="public/js/fuciones.js"></script>
 
     <div id="overlay-bloqueo" class="overlay-cookies"></div>
-
     <div id="banner-cookies" class="contenedor-cookies">
         <div class="texto-cookies">
             <i class="fa-solid fa-cookie-bite"></i>
@@ -221,119 +209,20 @@
     </div>
 
     <style>
-        /* Clase para bloquear el scroll del body */
-        .bloquear-scroll {
-            overflow: hidden;
-        }
-
-        /* El fondo semitransparente que bloquea clics */
-        .overlay-cookies {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(3px); /* Difumina el fondo levemente */
-            z-index: 999998; /* Justo debajo del banner */
-            display: none; /* Oculto por defecto */
-        }
-
-        /* Contenedor del banner estilo modal */
-        .contenedor-cookies {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 600px;
-            background-color: #ffffff;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            border-top: 6px solid #e06c00;
-            display: none; /* Oculto por defecto */
-            flex-direction: column;
-            padding: 30px;
-            z-index: 999999;
-            font-family: 'Lato', sans-serif;
-            text-align: center;
-        }
-        
-        .texto-cookies {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .texto-cookies i {
-            font-size: 50px;
-            color: #e06c00;
-        }
-        
-        .texto-cookies p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #444;
-            line-height: 1.6;
-        }
-
-        .texto-cookies a {
-            color: #e06c00;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
-        .botones-cookies {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-        }
-
-        /* Estilo Botón Aceptar */
-        .btn-aceptar {
-            background-color: #52073a;
-            color: white;
-            border: 2px solid #52073a;
-            padding: 12px 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            flex: 1;
-        }
-
-        .btn-aceptar:hover {
-            background-color: #e06c00;
-            border-color: #e06c00;
-        }
-
-        /* Estilo Botón Rechazar */
-        .btn-rechazar {
-            background-color: transparent;
-            color: #52073a;
-            border: 2px solid #52073a;
-            padding: 12px 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            flex: 1;
-        }
-
-        .btn-rechazar:hover {
-            background-color: #f4f4f4;
-            color: #e06c00;
-            border-color: #e06c00;
-        }
-
-        @media (max-width: 600px) {
-            .botones-cookies {
-                flex-direction: column;
-            }
-        }
+        .bloquear-scroll { overflow: hidden; }
+        .overlay-cookies { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 999998; display: none; }
+        .contenedor-cookies { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 600px; background-color: #ffffff; box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.2); border-radius: 20px; display: none; flex-direction: column; padding: 40px; z-index: 999999; text-align: center; }
+        .texto-cookies { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 30px; }
+        .texto-cookies i { font-size: 55px; color: #e06c00; }
+        .texto-cookies p { margin: 0; font-size: 1rem; color: #444; line-height: 1.6; }
+        .texto-cookies a { color: #e06c00; font-weight: bold; text-decoration: none; border-bottom: 2px solid transparent; transition: border-color 0.3s; }
+        .texto-cookies a:hover { border-color: #e06c00; }
+        .botones-cookies { display: flex; justify-content: center; gap: 20px; width: 100%; }
+        .btn-aceptar { background-color: #52073a; color: white; border: 2px solid #52073a; padding: 14px 30px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: all 0.3s; flex: 1; font-size: 1rem;}
+        .btn-aceptar:hover { background-color: #e06c00; border-color: #e06c00; }
+        .btn-rechazar { background-color: transparent; color: #52073a; border: 2px solid #52073a; padding: 14px 30px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: all 0.3s; flex: 1; font-size: 1rem;}
+        .btn-rechazar:hover { background-color: #f5f5f7; color: #e06c00; border-color: #e06c00; }
+        @media (max-width: 600px) { .botones-cookies { flex-direction: column; } }
     </style>
 
     <script>
@@ -343,38 +232,24 @@
             const btnAceptar = document.getElementById("btn-aceptar-cookies");
             const btnRechazar = document.getElementById("btn-rechazar-cookies");
 
-            // Comprobamos si no existe nuestra cookie de estado
             if (!document.cookie.split('; ').find(row => row.startsWith('astech_cookies_estado='))) {
-                // Si no existe, mostramos el modal obligatorio y bloqueamos el scroll
                 banner.style.display = "flex";
                 overlay.style.display = "block";
                 document.body.classList.add("bloquear-scroll");
             }
 
-            // Función centralizada para cerrar el banner y guardar la decisión
             function procesarDecision(decision) {
                 banner.style.display = "none";
                 overlay.style.display = "none";
                 document.body.classList.remove("bloquear-scroll");
-
-                // Guardamos la cookie por 1 año para recordar que ya respondió
                 let fechaExpiracion = new Date();
                 fechaExpiracion.setTime(fechaExpiracion.getTime() + (365 * 24 * 60 * 60 * 1000));
                 document.cookie = "astech_cookies_estado=" + decision + "; expires=" + fechaExpiracion.toUTCString() + "; path=/";
             }
 
-            // Asignamos los eventos a los botones
-            btnAceptar.addEventListener("click", function() {
-                procesarDecision("aceptadas");
-            });
-
-            btnRechazar.addEventListener("click", function() {
-                procesarDecision("rechazadas");
-                // NOTA TÉCNICA: Al estar "rechazadas", tú como desarrollador puedes usar PHP 
-                // en el futuro para NO cargar scripts analíticos si $_COOKIE['astech_cookies_estado'] == 'rechazadas'
-            });
+            btnAceptar.addEventListener("click", function() { procesarDecision("aceptadas"); });
+            btnRechazar.addEventListener("click", function() { procesarDecision("rechazadas"); });
         });
     </script>
 </body>
-
 </html>
