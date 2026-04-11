@@ -8,5 +8,5 @@
 // venga de la base de datos, aquí llamarías a tu modelo.
 
 // Por ahora, simplemente cargamos la vista maestra de inicio.
-require_once __DIR__ . '/app/views/index_view.php';
+require_once dirname(__DIR__) . '/views/politica_cookies_view.php';
 ?>
