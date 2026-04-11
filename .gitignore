@@ -1,6 +1,6 @@
 # Ignorar dependencias de Composer
 htdocs/vendor/
-Basura/
+#Basura/
 
 # Ignorar archivos con contraseñas (¡Súper importante!)
 htdocs/.env
