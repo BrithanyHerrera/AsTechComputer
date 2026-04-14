@@ -1,7 +1,7 @@
 <?php
 // ========================================================
 // CONTROLADOR: index.php (Página de Inicio Principal)
-// UBICACIÓN: Raíz del proyecto (AsTechComputer/index.php)
+// UBICACIÓN: app/controllers/politica_cookies_controller.php
 // ========================================================
 
 // Si en el futuro decides que la información de inicio 

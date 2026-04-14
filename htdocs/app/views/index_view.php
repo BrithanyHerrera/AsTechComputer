@@ -17,7 +17,9 @@
 <body>
 
     <?php $ruta_prefijo = "";
-    include "toolbar.php"; ?>
+    $ruta_prefijo = "";
+    include "app/controllers/toolbar_controller.php"; 
+    ?>
 
     <main>
         <section class="hero-wrapper">

@@ -22,10 +22,9 @@
 </head>
 
 <body>
-    <?php 
-    // Toolbar
-    $ruta_prefijo = "../../";
-    @include "../../toolbar.php"; 
+    <?php
+    $ruta_prefijo = "../../../"; 
+    include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 
     <div class="contenedor-cita">

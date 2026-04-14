@@ -15,9 +15,8 @@
 
 <body>
     <?php
-    // Mantenemos tu toolbar original
-    $ruta_prefijo = "../../";
-    @include "../../toolbar.php";
+    $ruta_prefijo = "../../../"; 
+    include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 
     <div class="main-container">
