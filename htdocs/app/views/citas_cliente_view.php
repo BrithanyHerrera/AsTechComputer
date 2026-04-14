@@ -8,9 +8,9 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
     <link rel="stylesheet" href="../../public/css/toolbar.css">
+    <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/citas_cliente.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -224,5 +224,10 @@
     <?php endif; ?>
 
     <script src="../../public/js/citas_cliente.js"></script>
+
+    <?php
+    $ruta_prefijo = "../../../"; 
+    include __DIR__ . "/../controllers/footer_controller.php";
+    ?>
 </body>
 </html>

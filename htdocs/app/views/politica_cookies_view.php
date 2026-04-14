@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Cookies - AsTech Computer</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../public/css/static.css">
     <link rel="stylesheet" href="../../public/css/toolbar.css">
+    <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/politica_cookies.css">
 </head>
 
@@ -74,6 +76,11 @@
             <p>Esta política actúa como un complemento indispensable a nuestra Política de Tratamiento de Datos Personales, asegurando un manejo ético y profesional de toda su información.</p>
         </section>
     </main>
+
+    <?php
+    $ruta_prefijo = "../../../"; 
+    include __DIR__ . "/../controllers/footer_controller.php";
+    ?>
 
 </body>
 </html>
