@@ -80,3 +80,50 @@
     color: var(--purpura-oscuro);
     border-bottom: 2px solid var(--naranja-principal);
 }
+.item-servicio {
+    position: relative;
+}
+
+/* PANEL OCULTO */
+.submenu-servicios {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+
+    display: flex;
+gap:6px;
+    flex-wrap: wrap;
+
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+
+    transition: all 0.3s ease;
+}
+
+/* BOTONES */
+.submenu-servicios a {
+    padding: 8px 12px;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.2s;
+    margin-left:5px;
+    color:#000000;
+}
+
+.submenu-servicios a:hover {
+   color: var(--naranja-principal);
+    text-decoration: underline;
+    color: var(--naranja-principal);
+}
+
+/* ACTIVAR HOVER */
+.item-servicio:hover .submenu-servicios {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}

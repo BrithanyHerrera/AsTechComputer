@@ -6,12 +6,28 @@
     </a>
     <nav class="navegacion-principal">
         <ul class="lista-opciones-serv">
-            <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=1" class="enlace-opcion-serv">Reparación y reemplazo</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=2" class="enlace-opcion-serv">Mantenimiento preventivo</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=3" class="enlace-opcion-serv">Instalación de software</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=4" class="enlace-opcion-serv">Servicios especializados</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=5" class="enlace-opcion-serv">Servicios a domicilio</a></li>
-        <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?servicios.php" class="enlace-opcion-serv">Todos los servicios</a></li>
+
+<li  class="item-servicio">
+        <a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=1" class="enlace-opcion-serv">Reparación y reemplazo</a>
+        <div class="submenu-servicios">
+        <a href="#">Cambio de pantalla</a>
+        <a href="#">Reparación de batería</a>
+        <a href="#">Cambio de teclado</a>
+    </div>
+</li>
+
+        <li  class="item-servicio">
+            <a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=2" class="enlace-opcion-serv">Mantenimiento preventivo</a>
+        <div class="submenu-servicios">
+        <a href="#">Cambio de pantalla</a>
+        <a href="#">Reparación de batería</a>
+        <a href="#">Cambio de teclado</a>
+        
+        </li>
+        <li class="item-servicio"><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=3" class="enlace-opcion-serv">Instalación de software</a></li>
+        <li class="item-servicio"><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=4" class="enlace-opcion-serv">Servicios especializados</a></li>
+        <li class="item-servicio"><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?id_tipo_servicio=5" class="enlace-opcion-serv">Servicios a domicilio</a></li>
+        <li class="item-servicio"><a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php?servicios.php" class="enlace-opcion-serv">Todos los servicios</a></li>
 
       <li>
      <a href="#" id="btnBuscador" class="enlace-opcion-serv" onclick="abrirBuscador()">

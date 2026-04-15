@@ -92,20 +92,29 @@ a{
         
     }
 
-    .card-servicio {
-        position: relative;
-        width: 300px;
-        height: 400px; /* Un poco más alta para mejor estética */
-        border-radius: 12px;
-        overflow: hidden;
-        background-color: #fff;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.397);
-        transition: transform 0.3s ease;
-    }
+.card-servicio {
+    position: relative;
+    width: 300px;
+    max-height: 420px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.397);
 
-    .card-servicio:hover {
-        transform: translateY(-5px);
-    }
+    display: flex;
+    flex-direction: column;
+
+    transition: 
+        max-height 0.7s cubic-bezier(0.25, 0.8, 0.25, 1),
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.card-servicio:hover {
+    max-height: 600px;
+    transform: translateY(-3px); /* menos movimiento = más elegante */
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+}
 
     .imagen-url {
       width: 300px;
@@ -115,14 +124,10 @@ a{
 
     /* Contenedor de Título y Precio (Siempre visible abajo) */
     .info-basica {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 20px 15px;
-        z-index: 2;
-        transition: opacity 0.3s;
-        background-color: rgb(255, 255, 255);
+         position: relative; /* 👈 esto es lo que te falta */
+        padding: 14px 16px 6px;
+    background: #fff;
+    z-index: 2;
       
         
     }
@@ -142,27 +147,38 @@ a{
         margin-top: 5px;
     }
 
-    /* Overlay de descripción que sube */
-    .overlay-descripcion {
-        position: absolute;
-        top: 100%; /* Inicia totalmente abajo */
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(24, 0, 18, 0.95); /* Azul muy oscuro profesional */
-        color: #e2e8f0;
-        padding: 25px;
-        box-sizing: border-box;
-        transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 3;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+.overlay-descripcion {
+    padding: 0 16px 16px;
+    background: #fff;
+    color: #555;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 
+        opacity 0.5s ease 0.2s,
+        transform 0.5s ease 0.2s,
+        padding 0.4s ease;
 
-    .card-servicio:hover .overlay-descripcion {
-        top: 0; /* Sube y cubre todo */
-    }
+}
+.card-servicio:hover .overlay-descripcion {
+    opacity: 1;
+    transform: translateY(0);
+      padding: 10px 16px 16px;
+
+    border-top: 2px solid #66666686;
+}
+
+.overlay-descripcion h3 {
+    /* puedes quitarlo si prefieres no repetir el título */
+    display: none;
+}
+
+.overlay-descripcion p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+    color: #555;
+    text-align: left;
+}
 
     .overlay-descripcion h4 {
         color: #ffc18f;
@@ -172,17 +188,7 @@ a{
         font-size: 1rem;
     }
 
-    .overlay-descripcion p {
-        font-size: 0.85rem;
-        line-height: 1.5;
-        margin: 0;
-        text-align: left;
-    }
-
-    /* Ocultar info básica cuando sube el overlay para que no se traslapen */
-    .card-servicio:hover .info-basica {
-        opacity: 0;
-    }
+  
     /*servicios */
    .buscador-oculto {
     display: flex; /* Cambiamos a flex permanentemente */
