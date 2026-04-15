@@ -1,0 +1,14 @@
+{
+    "name": "jocel/as-tech-computer",
+    "autoload": {
+        "psr-4": {
+            "Jocel\\AsTechComputer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jo"
+        }
+    ],
+    "require": {}
+}

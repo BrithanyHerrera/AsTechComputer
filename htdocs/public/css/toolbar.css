@@ -1,129 +1,228 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Lato', sans-serif;
-}
-
 :root {
     --naranja-principal: #e17203;
     --purpura-oscuro: #52073a;
     --blanco: #FFFFFF;
     --negro-texto: #000000;
 }
-.fa-solid.fa-magnifying-glass , .fa-solid.fa-calendar{
-    font-size: 20px;
 
-}
-
-
-.barra-herramientas {
-    background-color: var(--blanco);
-    height: 70px;
-    width: 100%;
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    z-index: 1000;
-    box-sizing: border-box;
-    font-family: 'Lato', sans-serif;
-    
-}
-
-.logo-superior {
-    height: 40px;
-    width: auto;
-}
-
-.lista-opciones {
-    display: flex;
-    list-style: none;
-    gap: 30px;
-}
-.lista-opciones-serv{
-    display: flex;
-    list-style: none;
-    gap: 20px;
-}
-
-.enlace-opcion {
-    text-decoration: none;
-    color: var(--negro-texto);
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    transition: 0.3s;
-}
-
-.enlace-opcion:hover {
-    color: var(--naranja-principal);
-}
-.enlace-opcion-serv {
-    text-decoration: none;
-    color: var(--negro-texto);
-    font-size: 17px;
-    font-weight: 500;
-    transition: 0.3s;
-}
-
-.enlace-opcion-serv:hover , .enlace-opcion-serv:active{
-    color: var(--naranja-principal);
-    text-decoration: underline;
-}
-
-.boton-subrayado {
-    color: var(--purpura-oscuro);
-    border-bottom: 2px solid var(--naranja-principal);
-}
-.item-servicio {
+    padding: 0 5%;
+    height: 80px;
+    background: #fff;
     position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* PANEL OCULTO */
-.submenu-servicios {
+.logo img { height: 50px; }
+
+.menu ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    height: 100%;
+    align-items: center;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+/* MEGA MENU */
+/* MEGA MENU CON TRANSICIÓN */
+.mega-menu {
+    /* Estado inicial: oculto y desplazado */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px); 
+    transition: all 0.4s ease-in-out; /* Controla la suavidad */
+
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100vw;
+    background: var(--blanco);
+    border-top: 4px solid var(--naranja-principal);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+/* El truco para que no se cierre: un pseudo-elemento que une el botón con el menú */
+.servicios-hover::after {
+    content: "";
     position: absolute;
     top: 100%;
     left: 0;
-    background: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    width: 100%;
+    height: 20px; /* Puente invisible */
+}
 
+.servicios-hover:hover .mega-menu {
+    display: block;
+}
+
+.mega-menu-content {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-gap:6px;
-    flex-wrap: wrap;
-
-    opacity: 0;
-    transform: translateY(10px);
-    pointer-events: none;
-
-    transition: all 0.3s ease;
+    padding: 40px;
 }
 
-/* BOTONES */
-.submenu-servicios a {
-    padding: 8px 12px;
-    text-decoration: none;
-    font-size: 13px;
-    transition: 0.2s;
-    margin-left:5px;
-    color:#000000;
+/* ACORDEÓN IZQUIERDA */
+.menu-izquierda {
+    width: 50%;
+    padding-right: 20px;
 }
 
-.submenu-servicios a:hover {
-   color: var(--naranja-principal);
-    text-decoration: underline;
+.acordeon-item {
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.titulo-tipo-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 15px 0;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--negro-texto);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+}
+
+.titulo-tipo-btn:hover, .titulo-tipo-btn.active {
     color: var(--naranja-principal);
 }
 
-/* ACTIVAR HOVER */
-.item-servicio:hover .submenu-servicios {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+.submenu-desplegable {
+    display: none;
+    padding: 0 0 15px 20px;
 }
+
+.submenu-desplegable.active {
+    display: block;
+}
+
+.submenu-desplegable a {
+    display: block;
+    color: #555;
+    padding: 8px 0;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.submenu-desplegable a:hover {
+    color: var(--naranja-principal);
+    transform: translateX(5px);
+}
+
+/* PANEL DERECHA */
+.menu-derecha {
+    width: 50%;
+    border-left: 1px solid #eee;
+    padding-left: 40px;
+}
+
+.label-recientes {
+    color: var(--naranja-principal);
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.grid-recientes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.tarjeta {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid #eee;
+    position: relative;
+}
+
+.tarjeta img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.tarjeta h4 {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: var(--naranja-principal);
+    color: white;
+    padding: 2px 8px;
+    font-size: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+/* MEGA MENU CONFIGURACIÓN CON TRANSICIÓN */
+.mega-menu {
+    /* En lugar de display: none, usamos opacidad y visibilidad */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px); /* Empieza un poco más abajo */
+    transition: all 0.4s ease-in-out; /* Esta es la transición suave */
+    
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100vw;
+    background: var(--blanco);
+    border-top: 4px solid var(--naranja-principal);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    z-index: 1000;
+    cursor: default;
+}
+
+/* Al hacer hover, cambiamos los estados para que se anime */
+.servicios-hover:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Sube a su posición original */
+}
+
+/* Ajuste para el acordeón interno (opcional: transición para los submenús) */
+.submenu-desplegable {
+    max-height: 0;
+    overflow: hidden;
+    display: block; /* Cambiamos de none a block para animar el height */
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    padding: 0 0 0 20px;
+}
+
+.submenu-desplegable.active {
+    max-height: 500px; /* Un valor lo suficientemente alto */
+    opacity: 1;
+    padding: 10px 0 15px 20px;
+}
+.botones a:hover{
+     transition: max-height 0.3s ease, opacity 0.3s ease;
+     color: #e17203;
+     text-decoration: underline;
+    
+}
+   
+
