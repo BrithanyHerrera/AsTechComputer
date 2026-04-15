@@ -26,12 +26,12 @@
         <section class="hero-wrapper">
             <div class="hero-astech">
                 <div class="hero-texto">
-                    <span class="badge-premium">Astech Premium</span>
+                    <span class="badge-premium">Servicio Premium</span>
                     <h1>Astech Computer</h1>
                     <p class="subtitulo">Mantenimiento integral y reparación especializada.</p>
                     <p class="destacado">Confianza y rapidez.</p>
                     <div class="hero-botones">
-                        <a href="app/views/agendar_cita.php" class="btn-comprar">Agendar cita</a>
+                        <a href="app/controllers/citas_cliente_controller.php" class="btn-comprar">Agendar cita</a>
                         <a href="#servicios" class="enlace-mas">Más información <i
                                 class="fa-solid fa-angle-right"></i></a>
                     </div>

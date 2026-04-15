@@ -27,7 +27,7 @@
                 <h4>Legal</h4>
                 <ul>
                     <li><a href="#">Política de privacidad</a></li>
-                    <li><a href="<?php echo $ruta_prefijo; ?>app/views/politica_cookies.php">Política de Cookies</a>
+                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/politica_cookies_controller.php">Política de Cookies</a>
                     </li>
                 </ul>
             </div>

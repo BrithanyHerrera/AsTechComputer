@@ -29,8 +29,6 @@ if (isset($permitirAnaliticas) && $permitirAnaliticas): ?>
                    class="enlace-opcion">Servicios</a></li>
             <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/citas_cliente_controller.php" 
                    class="enlace-opcion boton-subrayado">Agendar Cita</a></li>
-            <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/politica_cookies_controller.php" 
-                   class="enlace-opcion">Cookies</a></li>
         </ul>
     </nav>
 </header>

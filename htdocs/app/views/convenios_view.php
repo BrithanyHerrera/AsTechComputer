@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convenios | AS TECH</title>
-
-    <link rel="stylesheet" href="../../public/css/toolbar.css">
-    <link rel="stylesheet" href="../../public/css/convenios.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../public/css/toolbar.css">
+    <link rel="stylesheet" href="../../public/css/footer.css">
+    <link rel="stylesheet" href="../../public/css/convenios.css">
 </head>
 <body>
-    <?php 
-    // Mantenemos tu toolbar original
-    $ruta_prefijo = "../../";
-    @include "../../toolbar.php"; 
+    <?php
+    $ruta_prefijo = "../../../"; 
+    include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
     
     <section class="seccion-convenios">
@@ -140,5 +139,10 @@
     </div>
 
     <script src="../../public/js/carousel.js"></script>
+
+    <?php
+    $ruta_prefijo = "../../../"; 
+    include __DIR__ . "/../controllers/footer_controller.php";
+    ?>
 </body>
 </html>
