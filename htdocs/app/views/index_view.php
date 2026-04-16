@@ -32,7 +32,7 @@
                     <p class="destacado">Confianza y rapidez.</p>
                     <div class="hero-botones">
                         <a href="app/controllers/citas_cliente_controller.php" class="btn-comprar">Agendar cita</a>
-                        <a href="#servicios" class="enlace-mas">Más información <i
+                        <a href="app/controllers/mas_info_controller.php" class="enlace-mas">Más información <i
                                 class="fa-solid fa-angle-right"></i></a>
                     </div>
                 </div>

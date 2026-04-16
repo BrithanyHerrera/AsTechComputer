@@ -1,0 +1,136 @@
+/* --- VARIABLES BASE (Ajustables al tema de AsTech) --- */
+:root {
+    --color-naranja: #e17203; /* El naranja corporativo de AsTech */
+    --color-texto: #333333;
+    --color-gris-fondo: #f9f9fb;
+    --color-blanco: #ffffff;
+    --sombra-xiaomi: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+body {
+    background-color: var(--color-gris-fondo);
+    font-family: 'Lato', sans-serif;
+}
+
+/* --- ESTRUCTURA PRINCIPAL --- */
+.contenedor-principal-resenas {
+    max-width: 1200px;
+    /* margin: 120px arriba | auto a los lados | 50px abajo */
+    margin: 120px auto 50px auto; 
+    padding: 0 20px;
+    flex-grow: 1; /* Esto lo dejamos para que tu footer no quede flotando */
+}
+
+/* --- ENCABEZADO ASTECH --- */
+.encabezado {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.titulo-seccion {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--color-texto);
+    margin-bottom: 12px;
+}
+
+.separador {
+    width: 60px;
+    height: 4px;
+    background-color: var(--color-naranja);
+    margin: 0 auto 15px auto;
+    border-radius: 2px;
+}
+
+.subtitulo-resenas {
+    color: #666;
+    font-size: 1.1rem;
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- GRID Y TARJETAS (ESTILO XIAOMI) --- */
+.grid-resenas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.tarjeta-resena {
+    background-color: var(--color-blanco);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: var(--sombra-xiaomi);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+.tarjeta-resena:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* --- PERFIL DEL CLIENTE --- */
+.perfil-resena {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.perfil-resena img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-gris-fondo);
+}
+
+.perfil-resena h4 {
+    margin: 0 0 4px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-texto);
+}
+
+.estrellas {
+    color: #FFD700; /* Oro estándar para reseñas */
+    font-size: 0.9rem;
+}
+
+/* --- TEXTO DE LA RESEÑA --- */
+.texto-resena {
+    font-size: 1rem;
+    color: #555555;
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Mantiene la fecha abajo sin importar el tamaño del texto */
+}
+
+.fecha-resena {
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    font-weight: 400;
+}
+
+/* --- ALERTA DE ERROR / VACÍO --- */
+.alerta-vacia {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px 20px;
+    background: var(--color-blanco);
+    border-radius: 12px;
+    color: #666;
+    box-shadow: var(--sombra-xiaomi);
+}
+
+.alerta-vacia i {
+    font-size: 2.5rem;
+    color: var(--color-naranja);
+    margin-bottom: 15px;
+}

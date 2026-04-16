@@ -1,8 +1,15 @@
 /* --- FOOTER --- */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
 .pie-pagina {
-    background-color: #1d1d1f;
-    color: #f5f5f7;
+    background-color: #1d1d1f !important; /* Blindaje de fondo oscuro */
+    color: #f5f5f7 !important;            /* Blindaje de texto claro */
     padding: 80px 20px 30px;
+    width: 100%;
 }
 
 .contenedor-pie {
@@ -15,7 +22,7 @@
 }
 
 .fila-links h4 {
-    color: #fff;
+    color: #fff !important; /* Blindaje para los títulos de las columnas */
     margin-bottom: 25px;
     font-size: 1rem;
     font-weight: 700;
@@ -23,6 +30,7 @@
 
 .fila-links ul {
     list-style: none;
+    padding: 0;
 }
 
 .fila-links li {
@@ -30,31 +38,33 @@
 }
 
 .fila-links a {
-    color: #a1a1a6;
+    color: #a1a1a6 !important; /* Blindaje para los enlaces (gris claro) */
     text-decoration: none;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
     font-size: 0.95rem;
 }
 
+/* El toque de tu marca al pasar el mouse */
 .fila-links a:hover {
-    color: var(--color-blanco);
+    color: var(--color-naranja, #e17203) !important; 
 }
 
 .redes-sociales ul {
     display: flex;
     gap: 15px;
     list-style: none;
+    padding: 0;
 }
 
 .redes-sociales i {
     font-size: 24px;
-    color: #a1a1a6;
-    transition: color 0.3s;
+    color: #a1a1a6 !important; /* Blindaje para los íconos */
+    transition: color 0.3s ease;
     cursor: pointer;
 }
 
 .redes-sociales i:hover {
-    color: var(--color-acento);
+    color: var(--color-naranja, #e17203) !important;
 }
 
 .barra-derechos {
@@ -62,10 +72,9 @@
     margin-top: 60px;
     padding-top: 30px;
     border-top: 1px solid #424245;
-    color: #a1a1a6;
+    color: #a1a1a6 !important; /* Blindaje para el texto de copyright */
     font-size: 0.85rem;
 }
-
 
 /* =========================================================
 (RESPONSIVE DESIGN)
