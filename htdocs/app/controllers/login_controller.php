@@ -21,7 +21,6 @@ $modeloLogin = new LoginModel($conexion);
 $mensaje_error = '';
 
 // 3. Verificamos si el formulario fue enviado
-// Ahora PHP solo verifica que se haya enviado el POST con el campo 'usuario'
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
     $usuario = trim($_POST['usuario']);
     $password = trim($_POST['password']);
@@ -31,14 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
         $empleado = $modeloLogin->buscarUsuario($usuario);
 
         if ($empleado) {
-            // 4. Verificamos la contraseña
-            if ($password === $empleado['contrasena']) { 
+            // 4. Verificamos la contraseña (Soporta encriptadas y la vieja de texto plano por compatibilidad)
+            if (password_verify($password, $empleado['contrasena']) || $password === $empleado['contrasena']) { 
                 
-                // 5. FILTRO DE PUESTOS PERMITIDOS
-                $puestos_permitidos = [2, 3, 4]; 
+                // 5. FILTRO DE PUESTOS PERMITIDOS (1: Soporte, 2: Recepción, 3: Gerente)
+                $puestos_permitidos = [1, 2, 3, 4]; 
 
                 if (in_array($empleado['id_puesto'], $puestos_permitidos)) {
-                    // ¡Éxito! Guardamos datos en sesión
+                    // ¡Éxito! Guardamos datos en sesión para que el RBAC los lea
                     $_SESSION['id_empleado'] = $empleado['id_empleado'];
                     $_SESSION['nombre_usuario'] = $empleado['nombre'];
                     $_SESSION['id_puesto'] = $empleado['id_puesto'];
@@ -47,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
                     $direccion_ip = $_SERVER['REMOTE_ADDR']; 
                     $modeloLogin->registrarBitacora($empleado['id_empleado'], $direccion_ip);
                     
-                    // Lo enviamos al controlador de administración (misma carpeta)
+                    // Lo enviamos al controlador de administración
                     header("Location: administracion_controller.php");
                     exit;
                 } else {

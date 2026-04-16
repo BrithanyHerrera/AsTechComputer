@@ -21,8 +21,8 @@ class DashboardController {
         // 1. Obtener info del usuario
         $usuario = $this->model->obtenerInfoUsuario($id_empleado_actual);
         
-        // 2. Verificar si es Gerente/Administrador (id_puesto == 3)
-        $es_admin = ($usuario['id_puesto'] == 3);
+        // 2. Verificar si es Gerente (3) o Administrador (4)
+        $es_admin = ($usuario['id_puesto'] == 3 || $usuario['id_puesto'] == 4);
 
         // 3. Si es admin, cargar la bitácora
         $actividad_reciente = [];
