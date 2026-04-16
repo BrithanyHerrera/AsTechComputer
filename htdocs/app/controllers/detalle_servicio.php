@@ -2,21 +2,28 @@
 // 1. Incluir la conexión
 require_once('../../app/config/conexion.db.php');
 
-// 2. Obtener el ID de la URL y validar que existe
+// Inicializar la variable como null para evitar el error de "Undefined variable"
+$servicio = null;
+$resultado_pagos = null;
+
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if ($id > 0) {
-    // 3. Consultar los datos del servicio (incluyendo las nuevas columnas)
+    // 2. Usar mysqli_real_escape_string por seguridad aunque sea un entero
     $query = "SELECT * FROM servicios WHERE id_servicio = $id AND estado = 'activo'";
     $resultado = mysqli_query($conexion, $query);
-    $query_pagos = "SELECT nombre_metodo, detalles FROM metodos_pago WHERE estado = 'activo'";
-    $resultado_pagos = mysqli_query($conexion, $query_pagos);
-    // 4. Guardar el resultado en la variable $servicio
-    $servicio = mysqli_fetch_assoc($resultado);
+    
+    // Solo intentamos extraer los datos si la consulta tuvo éxito
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        $servicio = mysqli_fetch_assoc($resultado);
+        
+        // Consultar métodos de pago solo si el servicio existe
+        $query_pagos = "SELECT nombre_metodo, detalles FROM metodos_pago WHERE estado = 'activo'";
+        $resultado_pagos = mysqli_query($conexion, $query_pagos);
+    }
 }
-//http://localhost:3000/htdocs/app/controllers/servicios_controller.php?id_tipo_servicio=1
-//http://localhost:3000/htdocs/app/controllers/servicios_view.php?id_tipo_servicio=1
-// 5. Si el servicio no existe, redirigir o mostrar error
+
+// Ahora la variable $servicio existe siempre (ya sea como array o como null)
 if (!$servicio) {
     echo "Servicio no encontrado.";
     exit;
@@ -37,7 +44,7 @@ if (!$servicio) {
 </head>
 
 <body>
-<?php $ruta_prefijo = "../../"; include "../../toolbarServicios.php"; ?>
+<?php $ruta_prefijo = "../../";   include __DIR__ . '/../controllers/toolbar_controller.php';?>
 <div class="detalle-container">
 
     <div class="detalle-header">
