@@ -26,7 +26,7 @@
         <section class="hero-wrapper">
             <div class="hero-astech">
                 <div class="hero-texto">
-                    <span class="badge-premium">Servicio Premium</span>
+                   
                     <h1>Astech Computer</h1>
                     <p class="subtitulo">Mantenimiento integral y reparación especializada.</p>
                     <p class="destacado">Confianza y rapidez.</p>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="hero-imagen">
-                    <img src="public/img/logoATC.png" alt="Logo Astech Computer">
+                    <img src="public/img/Isologotipo_isotipo color.png" alt="Logo Astech Computer">
                 </div>
             </div>
         </section>
