@@ -12,7 +12,10 @@
     
 </head>
 <body>
-<?php $ruta_prefijo = "../../"; include "../../toolbar_servicios.php"; ?>
+    <?php
+    $ruta_prefijo = "../../"; 
+    include __DIR__ . "/../controllers/toolbar_controller.php";
+    ?>
 <div id="contenedorBuscador" class="buscador-oculto">
     <input type="text" id="inputBuscador" placeholder="Buscar servicios...">
     <div id="resultadosBusqueda"></div>
@@ -115,26 +118,7 @@ $resultado = mysqli_query($conexion, $query);
 </div>
 </body>
 <script>
-const btn = document.getElementById("btnBuscador");
-const contenedor = document.getElementById("contenedorBuscador");
-const input = document.getElementById("inputBuscador");
-const resultados = document.getElementById("resultadosBusqueda");
 
-function abrirBuscador() {
-    const buscador = document.querySelector('.buscador-oculto');
-    buscador.classList.toggle('active'); // Esto añade o quita la clase que creamos
-}
-
-
-input.addEventListener("keyup", () => {
-    let valor = input.value;
-
-    fetch("acciones/buscar_servicio.php?q=" + valor)
-        .then(res => res.text())
-        .then(data => {
-            resultados.innerHTML = data;
-        });
-});
 resultados.addEventListener("click", (e) => {
     if(e.target.closest(".resultado-item")){
         let texto = e.target.innerText;

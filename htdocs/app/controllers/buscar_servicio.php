@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . "/../../config/conexion.db.php";
+include __DIR__ . "../../config/conexion.db.php";
 
 $q = isset($_GET['q']) ? $_GET['q'] : '';
 

@@ -37,14 +37,17 @@
 
 
 .servicios-hover::after {
-     height: 20px;
+
+    height: 60px;
     content: "";
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
+    z-index: 100000;
 
 }
+
 
 .servicios-hover:hover .mega-menu {
     display: block;
@@ -178,9 +181,12 @@
     z-index: 1000;
     cursor: default;
     top: 100%; 
+    margin-top: 0;
+
 }
 
-.servicios-hover:hover .mega-menu {
+.servicios-hover:hover .mega-menu,
+.mega-menu:hover {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
