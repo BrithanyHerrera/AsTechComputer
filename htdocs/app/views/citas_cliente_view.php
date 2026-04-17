@@ -23,7 +23,7 @@
 
 <body>
     <?php
-    $ruta_prefijo = "../../../"; 
+    $ruta_prefijo = "../../"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 

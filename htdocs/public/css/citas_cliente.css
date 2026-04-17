@@ -4,7 +4,7 @@
     --blanco: #FFFFFF;
     --negro: #000000;
     --gris-suave: #656464;
-    --fondo-gris: #fcfcfc;
+    --fondo-gris: #8d8d8d7e;
     --borde: #e0e0e0;
 }
 
@@ -19,16 +19,18 @@ body {
     background-color: var(--fondo-gris);
     color: var(--negro);
     line-height: 1.6;
-    padding-top: 90px;
+
 }
 
 .contenedor-cita {
+    
     background: var(--blanco);
     max-width: 650px;
     margin: 0 auto 50px;
     padding: 50px;
     border-radius: 2px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.795);
+    
 }
 
 .encabezado {

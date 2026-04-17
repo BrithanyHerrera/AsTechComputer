@@ -27,18 +27,18 @@
             <div class="hero-astech">
                 <div class="hero-texto">
                    
-                    <h1>Astech Computer</h1>
-                    <p class="subtitulo">Mantenimiento integral y reparación especializada.</p>
-                    <p class="destacado">Confianza y rapidez.</p>
+                      <div class="hero-imagen">
+                    <img src="public/img/Isologotipo_horizontal color.png" alt="Logo Astech Computer">
+                </div>
+                    
+                    <p class="destacado"> Confiabilidad, garantia y transparencia </p>
                     <div class="hero-botones">
                         <a href="app/controllers/citas_cliente_controller.php" class="btn-comprar">Agendar cita</a>
                         <a href="app/controllers/mas_info_controller.php" class="enlace-mas">Más información <i
                                 class="fa-solid fa-angle-right"></i></a>
                     </div>
                 </div>
-                <div class="hero-imagen">
-                    <img src="public/img/Isologotipo_isotipo color.png" alt="Logo Astech Computer">
-                </div>
+              
             </div>
         </section>
 

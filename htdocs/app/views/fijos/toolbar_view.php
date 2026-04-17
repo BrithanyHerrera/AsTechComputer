@@ -23,7 +23,9 @@ if (isset($permitirAnaliticas) && $permitirAnaliticas): ?>
 <?php endif; ?>
 
 <?php
-require_once __DIR__ . "/../../config/conexion.db.php";
+if (!isset($conexion)) {
+    require_once __DIR__ . "/../../config/conexion.db.php";
+}
 
 // 1. Obtener tipos de servicios
 $queryTipos = "SELECT id_tipo_servicio, nombre_tipo FROM tipos_servicios ORDER BY id_tipo_servicio ASC";
@@ -52,7 +54,7 @@ $resultRecientes = $conexion->query($queryRecientes);
 <header class="navbar">
     <div class="logo">
         <a href="<?php echo $ruta_prefijo; ?>index.php">
-            <img src="<?php echo $ruta_prefijo; ?>public/img/Iso.png" class="logo-superior" alt="Logo">
+            <img src="<?php echo $ruta_prefijo; ?>public/img/Isologotipo_horizontal color.png" class="logo-superior" alt="Logo">
         </a>
     </div>
 
