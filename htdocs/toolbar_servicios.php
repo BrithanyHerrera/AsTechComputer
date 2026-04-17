@@ -1,6 +1,6 @@
 <?php
 // Conexión a la base de datos
-require_once("C:\AsTechComputer\htdocs\app\config\conexion.db.php");
+require_once __DIR__ . '/app/config/conexion.db.php';
 
 // 1. Obtener los nombres de las categorías desde la tabla correcta (tipos_servicios)
 $queryTipos = "
