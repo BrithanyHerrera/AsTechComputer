@@ -9,10 +9,10 @@ $dotenv->load();
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/citas_model.php';
 
+// Solo dejamos las librerías de Google. Meta API funciona nativamente con cURL de PHP.
 use Google\Client;
 use Google\Service\Calendar;
 use Google\Service\Calendar\Event;
-use Twilio\Rest\Client as TwilioClient;
 
 $modeloCita = new CitaModel($conexion);
 
@@ -44,11 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $horario_ocupado = true;
         } else {
             
-            // FASE 1: TRADUCCIÓN PARA CALENDARIO (Lo movemos arriba para usarlo en Google)
+            // FASE 1: TRADUCCIÓN PARA CALENDARIO
             $nombre_marca_cal = ($id_marca == "12") ? $marca_otro : $modeloCita->obtenerNombreMarca($id_marca);
             $nombre_tipo_cal = ($id_tipo_equipo == "7") ? $tipo_equipo_otro : $modeloCita->obtenerNombreTipo($id_tipo_equipo);
 
-            // FASE 2: GOOGLE CALENDAR (Primero creamos el evento allá)
+            // FASE 2: GOOGLE CALENDAR
             $client = new Client();
             $client->setAuthConfig(dirname(__DIR__, 2) . '/credenciales.json');
             $client->addScope(Calendar::CALENDAR);
@@ -66,23 +66,66 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'colorId' => '6', 
             ]);
             
-            // ¡AQUÍ ESTÁ LA MAGIA! Insertamos y atrapamos el ID
             $evento_creado = $service->events->insert($calendarId, $event);
             $id_google_calendar = $evento_creado->getId();
 
-            // FASE 3: GUARDAR EN MYSQL (Ahora agregamos 'id_google_calendar' al paquete de datos)
+            // FASE 3: GUARDAR EN MYSQL
             $datosDB = compact('id_google_calendar', 'nombre', 'apellido', 'whatsapp', 'id_tipo_equipo', 'tipo_equipo_otro', 'id_marca', 'marca_otro', 'modelo', 'numero_serie', 'problema', 'fecha', 'hora');
             
             $modeloCita->registrarCita($datosDB);
 
-            // FASE 4: WHATSAPP (TWILIO)
+            // FASE 4: WHATSAPP (API OFICIAL META CON PLANTILLA)
             try {
-                $twilio = new TwilioClient($_ENV['TWILIO_SID'], $_ENV['TWILIO_TOKEN']);
-                $twilio->messages->create('whatsapp:+521' . $whatsapp, [
-                    "from" => $_ENV['TWILIO_NUMBER'],
-                    "body" => "¡Hola $nombre! Tu cita en As Tech Computer para el $fecha a las $hora ha sido agendada con éxito."
-                ]);
-            } catch (Exception $e) { /* Silencioso */ }
+                // Las variables ocultas de tu archivo .env
+                $token = $_ENV['META_WA_TOKEN'];
+                $phone_id = $_ENV['META_PHONE_ID'];
+                
+                // Meta requiere el código de país (52 para México) sin el signo de '+'
+                $telefono_destino = "52" . ltrim($whatsapp, '+'); 
+
+                // Endpoint de la API Graph v25.0
+                $url = "https://graph.facebook.com/v25.0/" . $phone_id . "/messages";
+
+                // Armado del JSON para la plantilla aprobada
+                $data = [
+                    "messaging_product" => "whatsapp",
+                    "to" => $telefono_destino,
+                    "type" => "template",
+                    "template" => [
+                        "name" => "confirmacion_cita_astech", // Nombre exacto de tu plantilla en Meta
+                        "language" => [ "code" => "es_MX" ],  // O el que hayas usado, ej. 'es'
+                        "components" => [
+                            [
+                                "type" => "body",
+                                "parameters" => [
+                                    [ "type" => "text", "text" => $nombre ],      // Valor para {{1}}
+                                    [ "type" => "text", "text" => $fecha ],       // Valor para {{2}}
+                                    [ "type" => "text", "text" => $hora ]         // Valor para {{3}}
+                                ]
+                            ]
+                        ]
+                    ]
+                ];
+
+                // Petición cURL hacia los servidores de Facebook
+                $options = [
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => json_encode($data),
+                    CURLOPT_HTTPHEADER => [
+                        "Authorization: Bearer " . $token,
+                        "Content-Type: application/json"
+                    ]
+                ];
+
+                $curl = curl_init();
+                curl_setopt_array($curl, $options);
+                $response = curl_exec($curl);
+                // Si algo falla, el response de Meta te dice por qué (ideal para revisar los logs de InfinityFree)
+                curl_close($curl);
+
+            } catch (Exception $e) { /* Silencioso para que no impida agendar la cita */ }
 
             $exito = true;
         }
@@ -96,6 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // ==========================================
 $query_tipos = $modeloCita->obtenerTiposFormulario();
 $query_marcas = $modeloCita->obtenerMarcasFormulario();
+$query_servicios = $modeloCita->obtenerServiciosActivos(); // NUEVA LÍNEA: Traemos los servicios
 $json_relaciones = json_encode($modeloCita->obtenerRelaciones());
 $json_ocupadas = json_encode($modeloCita->obtenerCitasOcupadas());
 

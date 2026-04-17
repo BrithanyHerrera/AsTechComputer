@@ -7,20 +7,29 @@
 // 1. Iniciamos la sesión
 session_start();
 
-// Si el usuario ya está logueado, lo mandamos directo al dashboard
+// Si el usuario ya está logueado, lo mandamos directo al dashboard (AQUÍ ESTABA UN ERROR)
 if (isset($_SESSION['id_empleado'])) {
     header("Location: administracion_controller.php");
     exit;
 }
 
-// 2. Requerimos la base de datos y el modelo
+// 2. CARGAMOS VARIABLES DE ENTORNO PARA LA API DE META
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
+try {
+    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
+    $dotenv->load();
+} catch (Exception $e) {
+    // Silencioso
+}
+
+// 3. Requerimos la base de datos y el modelo
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/login_model.php';
 
 $modeloLogin = new LoginModel($conexion);
 $mensaje_error = '';
 
-// 3. Verificamos si el formulario fue enviado
+// 4. Verificamos si el formulario fue enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
     $usuario = trim($_POST['usuario']);
     $password = trim($_POST['password']);
@@ -30,25 +39,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
         $empleado = $modeloLogin->buscarUsuario($usuario);
 
         if ($empleado) {
-            // 4. Verificamos la contraseña (Soporta encriptadas y la vieja de texto plano por compatibilidad)
             if (password_verify($password, $empleado['contrasena']) || $password === $empleado['contrasena']) { 
                 
-                // 5. FILTRO DE PUESTOS PERMITIDOS (1: Soporte, 2: Recepción, 3: Gerente)
                 $puestos_permitidos = [1, 2, 3, 4]; 
 
                 if (in_array($empleado['id_puesto'], $puestos_permitidos)) {
-                    // ¡Éxito! Guardamos datos en sesión para que el RBAC los lea
-                    $_SESSION['id_empleado'] = $empleado['id_empleado'];
-                    $_SESSION['nombre_usuario'] = $empleado['nombre'];
-                    $_SESSION['id_puesto'] = $empleado['id_puesto'];
                     
-                    // 6. GUARDAR REGISTRO EN LA BITÁCORA
-                    $direccion_ip = $_SERVER['REMOTE_ADDR']; 
-                    $modeloLogin->registrarBitacora($empleado['id_empleado'], $direccion_ip);
+                    // A. Generar código de 6 dígitos
+                    $codigo_2fa = rand(100000, 999999);
                     
-                    // Lo enviamos al controlador de administración
-                    header("Location: administracion_controller.php");
+                    // B. Guardar datos en sesión TEMPORAL
+                    $_SESSION['temp_empleado'] = $empleado;
+                    $_SESSION['codigo_2fa'] = $codigo_2fa;
+                    
+                    // C. Enviar el código vía Meta API
+                    try {
+                        $token = $_ENV['META_WA_TOKEN'];
+                        $phone_id = $_ENV['META_PHONE_ID'];
+                        
+                        $telefono_limpio = preg_replace('/[^0-9]/', '', $empleado['telefono']);
+                        $telefono_destino = (strlen($telefono_limpio) == 10) ? "52" . $telefono_limpio : $telefono_limpio;
+
+                        $url = "https://graph.facebook.com/v25.0/" . $phone_id . "/messages";
+
+                        $data = [
+                            "messaging_product" => "whatsapp",
+                            "to" => $telefono_destino,
+                            "type" => "template",
+                            "template" => [
+                                "name" => "codigo_verificacion_astech", 
+                                "language" => [ "code" => "es_MX" ],
+                                "components" => [
+                                    [
+                                        "type" => "body",
+                                        "parameters" => [
+                                            [ "type" => "text", "text" => (string)$codigo_2fa ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ];
+
+                        $options = [
+                            CURLOPT_URL => $url,
+                            CURLOPT_RETURNTRANSFER => true,
+                            CURLOPT_POST => true,
+                            CURLOPT_POSTFIELDS => json_encode($data),
+                            CURLOPT_HTTPHEADER => [
+                                "Authorization: Bearer " . $token,
+                                "Content-Type: application/json"
+                            ]
+                        ];
+
+                        $curl = curl_init();
+                        curl_setopt_array($curl, $options);
+                        curl_exec($curl);
+                        curl_close($curl);
+
+                    } catch (Exception $e) { /* Error silencioso */ }
+
+                    // D. Redirigir a la pantalla para poner el código (AQUÍ ESTABA EL ERROR 404)
+                    header("Location: ../views/acciones/verificar_2fa.php");
                     exit;
+
                 } else {
                     $mensaje_error = "Tu puesto no tiene los permisos para acceder a esta área.";
                 }
@@ -63,6 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
     }
 }
 
-// 7. Cargamos la vista
+// Cargamos la vista del login principal
 require_once dirname(__DIR__) . '/views/login_view.php';
 ?>

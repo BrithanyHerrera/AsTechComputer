@@ -117,11 +117,18 @@
 
                 <select name="problema_lista" class="control" style="margin-bottom: 10px;">
                     <option value="">Opciones rápidas...</option>
-                    <option value="mantenimiento">Mantenimiento preventivo (Limpieza)</option>
-                    <option value="lento">Equipo lento / Se traba</option>
-                    <option value="pantalla">Pantalla rota o dañada</option>
-                    <option value="virus">Eliminación de Virus / Software</option>
-                    <option value="bisagras">Reparación de bisagras</option>
+                    
+                    <?php
+                    // Recorremos los servicios que trajimos de la base de datos
+                    if (isset($query_servicios) && $query_servicios->num_rows > 0) {
+                        while ($fila = $query_servicios->fetch_assoc()) {
+                            // Usamos el 'tipo_servicio' como value para que tu controlador actual 
+                            // lo guarde perfectamente como texto en 'problema_reportado'
+                            echo '<option value="' . htmlspecialchars($fila['tipo_servicio']) . '">' . htmlspecialchars($fila['tipo_servicio']) . '</option>';
+                        }
+                    }
+                    ?>
+                    
                     <option value="otro">Otro</option>
                 </select>
 

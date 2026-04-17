@@ -47,6 +47,13 @@ class CitaModel {
         return $mapa_db;
     }
 
+    // Obtener los servicios activos para el combo de "Problema o Falla"
+    public function obtenerServiciosActivos() {
+        $sql = "SELECT id_servicio, tipo_servicio FROM servicios WHERE estado = 'activo' ORDER BY tipo_servicio ASC";
+        $resultado = $this->conexion->query($sql);
+        return $resultado;
+    }
+
     // ==========================================
     // MÉTODOS PARA EL CLIENTE
     // ==========================================
