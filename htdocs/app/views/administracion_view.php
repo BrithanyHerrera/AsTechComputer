@@ -14,8 +14,8 @@ $seccion_actual = isset($_GET['seccion']) ? $_GET['seccion'] : 'dashboard';
 $permisos = [
     1 => ['dashboard', 'registrosCRUD', 'contenedor'], // Técnico
     2 => ['dashboard', 'citas', 'ingreso', 'registrosCRUD'], // Atención al Cliente
-    3 => ['dashboard', 'servicios', 'inicio', 'citas', 'contacto', 'ingreso', 'registrosCRUD', 'empleado', 'contenedor'], // Gerente
-    4 => ['dashboard', 'servicios', 'inicio', 'citas', 'contacto', 'ingreso', 'registrosCRUD', 'empleado', 'contenedor']  // Administrador
+    3 => ['dashboard', 'servicios', 'inicio', 'citas', 'contacto', 'ingreso', 'registrosCRUD', 'empleado', 'contenedor', 'estadisticas'], // Gerente
+    4 => ['dashboard', 'servicios', 'inicio', 'citas', 'contacto', 'ingreso', 'registrosCRUD', 'empleado', 'contenedor', 'estadisticas']  // Administrador
 ];
 
 // Validación de seguridad por URL
@@ -64,12 +64,20 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
       <img src="../../public/img/2.png" alt="Logo AS TECH" class="logo-sidebar">
     </div>
     <ul class="menu-navegacion">
-      
+
       <li>
         <a href="?seccion=dashboard" class="<?= $seccion_actual == 'dashboard' ? 'activo' : '' ?>">
           <i class="fa-solid fa-gears"></i> Dashboard
         </a>
       </li>
+
+      <?php if ($puesto_usuario == 3 || $puesto_usuario == 4): ?>
+      <li>
+        <a href="?seccion=estadisticas" class="<?= $seccion_actual == 'estadisticas' ? 'activo' : '' ?>">
+          <i class="fa-solid fa-chart-pie"></i> Estadísticas
+        </a>
+      </li>
+      <?php endif; ?>
 
       <?php if ($puesto_usuario == 3 || $puesto_usuario == 4): ?>
       <li>
@@ -123,6 +131,7 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
         </a>
       </li>
       <?php endif; ?>
+
     </ul>
 
     <div class="seccion-inferior">
@@ -141,6 +150,12 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         echo "<h1>Bienvenido al panel principal</h1>";
         if (file_exists($ruta_secciones . "panel_info.php")) { include $ruta_secciones . "panel_info.php"; }
+        break;
+
+      // NUEVA SECCIÓN DE ESTADÍSTICAS
+      case 'estadisticas':
+        echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+        if (file_exists($ruta_secciones . "estadisticas.php")) { include $ruta_secciones . "estadisticas.php"; }
         break;
 
       case 'servicios':

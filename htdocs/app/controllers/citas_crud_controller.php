@@ -26,7 +26,7 @@ $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@
 
 // 2. Limpieza de citas expiradas (Sincronizada BD + Google)
 // Primero, buscamos cuáles son las citas expiradas
-$sql_buscar_expiradas = "SELECT id_cita, id_google_calendar FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
+$sql_buscar_expiradas = "SELECT id_cita, id_google_calendar FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MONTH)";
 $res_expiradas = $conexion->query($sql_buscar_expiradas);
 
 if ($res_expiradas && $res_expiradas->num_rows > 0) {
