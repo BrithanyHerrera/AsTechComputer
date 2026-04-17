@@ -3,6 +3,15 @@
  * VISTA: toolbar_view.php
  * Se encarga de mostrar la barra de navegación y el código de seguimiento (Google Analytics)
  */
+/**
+ * VISTA: toolbar_view.php
+ */
+/**
+ * VISTA: toolbar_view.php
+ */
+/**
+ * VISTA: toolbar_view.php
+ */
 
 if (isset($permitirAnaliticas) && $permitirAnaliticas): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-862PM8JVQD"></script>
