@@ -23,12 +23,13 @@ class DashboardModel {
     }
 
     // Obtener las últimas conexiones (Solo para el Administrador/Gerente)
+    // Obtener las últimas acciones de los empleados (Para el Gerente)
     public function obtenerConexiones() {
-        $sql = "SELECT b.fecha_hora, e.nombre, e.apellido, p.nombre_puesto 
-                FROM bitacora_logins b 
+        $sql = "SELECT b.fecha_hora, b.accion, b.detalle, e.nombre, e.apellido, p.nombre_puesto 
+                FROM bitacora_movimientos b 
                 JOIN empleados e ON b.id_empleado = e.id_empleado 
                 JOIN puestos p ON e.id_puesto = p.id_puesto 
-                ORDER BY b.fecha_hora DESC LIMIT 20"; // Limitamos a las últimas 20
+                ORDER BY b.fecha_hora DESC LIMIT 30"; 
         
         $resultado = $this->conexion->query($sql);
         $conexiones = [];
