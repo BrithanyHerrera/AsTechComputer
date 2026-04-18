@@ -1,7 +1,7 @@
 <?php
 /*  CITAS_CIENTE_CONTROLLER.PHP */
 /*
-Este archivo actúa como el Controlador (Controller) principal para el proceso de agendamiento de citas del cliente dentro de tu arquitectura MVC. Su trabajo es ser el "director de orquesta": primero, carga las librerías necesarias y tu modelo de base de datos. Si el cliente envía el formulario (POST), el controlador atrapa los datos, verifica que el horario no esté ocupado, crea el evento directamente en tu Google Calendar, guarda la copia en tu base de datos local y, finalmente, dispara un mensaje automático de confirmación vía WhatsApp usando la API de Meta. Al terminar, le pasa toda la información necesaria (marcas, servicios, horarios) a la Vista para que se dibuje en la pantalla.
+Este archivo actúa como el Controlador (Controller) principal para el proceso de agendamiento de citas del cliente dentro de la arquitectura MVC. Su trabajo es ser el "director de orquesta": primero, carga las librerías necesarias y el modelo de base de datos. Si el cliente envía el formulario (POST), el controlador atrapa los datos, verifica que el horario no esté ocupado, crea el evento directamente en el Google Calendar, guarda la copia en la base de datos local y, finalmente, dispara un mensaje automático de confirmación vía WhatsApp usando la API de Meta. Al terminar, le pasa toda la información necesaria (marcas, servicios, horarios) a la Vista para que se dibuje en la pantalla.
 */
 
 /* ==========================================
