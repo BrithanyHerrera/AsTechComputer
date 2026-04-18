@@ -1,21 +1,36 @@
 <?php
-// Usamos dirname() para subir niveles en las carpetas. 
+/*  CITAS_CIENTE_CONTROLLER.PHP */
+/*
+Este archivo actúa como el Controlador (Controller) principal para el proceso de agendamiento de citas del cliente dentro de tu arquitectura MVC. Su trabajo es ser el "director de orquesta": primero, carga las librerías necesarias y tu modelo de base de datos. Si el cliente envía el formulario (POST), el controlador atrapa los datos, verifica que el horario no esté ocupado, crea el evento directamente en tu Google Calendar, guarda la copia en tu base de datos local y, finalmente, dispara un mensaje automático de confirmación vía WhatsApp usando la API de Meta. Al terminar, le pasa toda la información necesaria (marcas, servicios, horarios) a la Vista para que se dibuje en la pantalla.
+*/
+
+/* ==========================================
+   1. IMPORTACIÓN DE DEPENDENCIAS Y CONFIGURACIONES
+   ========================================== */
+// Usamos dirname() para subir niveles en las carpetas y cargar Composer
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
-// Para versiones modernas (v5.x)
+// Carga de variables de entorno (Para versiones modernas v5.x)
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
 
+// Conexión a la base de datos y modelo MVC
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/citas_model.php';
 
-// Solo dejamos las librerías de Google. Meta API funciona nativamente con cURL de PHP.
+// Librerías exclusivas de Google Calendar (Meta API usa cURL nativo)
 use Google\Client;
 use Google\Service\Calendar;
 use Google\Service\Calendar\Event;
 
+/* ==========================================
+   2. INICIALIZACIÓN DEL MODELO
+   ========================================== */
 $modeloCita = new CitaModel($conexion);
 
+/* ==========================================
+   3. RECEPCIÓN Y PROCESAMIENTO DEL FORMULARIO (POST)
+   ========================================== */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = $_POST['nombre_cliente'];
     $apellido = $_POST['apellido_cliente'];
@@ -39,16 +54,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hora = $_POST['hora_cita'];
 
     try {
-        // FASE 0: VALIDAR DISPONIBILIDAD
+        /* ==========================================
+           4. FASE 0: VALIDACIÓN DE DISPONIBILIDAD
+           ========================================== */
         if ($modeloCita->verificarDisponibilidad($fecha, $hora)) {
             $horario_ocupado = true;
         } else {
             
-            // FASE 1: TRADUCCIÓN PARA CALENDARIO
+            /* ==========================================
+               5. FASE 1: TRADUCCIÓN DE DATOS PARA CALENDARIO
+               ========================================== */
             $nombre_marca_cal = ($id_marca == "12") ? $marca_otro : $modeloCita->obtenerNombreMarca($id_marca);
             $nombre_tipo_cal = ($id_tipo_equipo == "7") ? $tipo_equipo_otro : $modeloCita->obtenerNombreTipo($id_tipo_equipo);
 
-            // FASE 2: GOOGLE CALENDAR
+            /* ==========================================
+               6. FASE 2: CREACIÓN DE EVENTO EN GOOGLE CALENDAR
+               ========================================== */
             $client = new Client();
             $client->setAuthConfig(dirname(__DIR__, 2) . '/credenciales.json');
             $client->addScope(Calendar::CALENDAR);
@@ -69,12 +90,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $evento_creado = $service->events->insert($calendarId, $event);
             $id_google_calendar = $evento_creado->getId();
 
-            // FASE 3: GUARDAR EN MYSQL
+            /* ==========================================
+               7. FASE 3: GUARDAR REGISTRO EN BASE DE DATOS LOCAL
+               ========================================== */
             $datosDB = compact('id_google_calendar', 'nombre', 'apellido', 'whatsapp', 'id_tipo_equipo', 'tipo_equipo_otro', 'id_marca', 'marca_otro', 'modelo', 'numero_serie', 'problema', 'fecha', 'hora');
             
             $modeloCita->registrarCita($datosDB);
 
-            // FASE 4: WHATSAPP (API OFICIAL META CON PLANTILLA)
+            /* ==========================================
+               8. FASE 4: ENVÍO DE CONFIRMACIÓN VÍA WHATSAPP (API META)
+               ========================================== */
             try {
                 // Las variables ocultas de tu archivo .env
                 $token = $_ENV['META_WA_TOKEN'];
@@ -125,24 +150,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Si algo falla, el response de Meta te dice por qué (ideal para revisar los logs de InfinityFree)
                 curl_close($curl);
 
-            } catch (Exception $e) { /* Silencioso para que no impida agendar la cita */ }
+            } catch (Exception $e) { 
+                /* Error silencioso para no impedir el registro de la cita si falla WhatsApp */ 
+            }
 
             $exito = true;
         }
     } catch (Exception $e) {
+        /* ==========================================
+           9. MANEJO DE ERRORES GENERALES
+           ========================================== */
         $error_msg = $e->getMessage();
     }
 }
 
-// ==========================================
-// OBTENER CATÁLOGOS PARA LA VISTA
-// ==========================================
+/* ==========================================
+   10. OBTENER CATÁLOGOS Y DATOS PARA LA VISTA
+   ========================================== */
 $query_tipos = $modeloCita->obtenerTiposFormulario();
 $query_marcas = $modeloCita->obtenerMarcasFormulario();
-$query_servicios = $modeloCita->obtenerServiciosActivos(); // NUEVA LÍNEA: Traemos los servicios
+$query_servicios = $modeloCita->obtenerServiciosActivos(); 
 $json_relaciones = json_encode($modeloCita->obtenerRelaciones());
 $json_ocupadas = json_encode($modeloCita->obtenerCitasOcupadas());
 
-// CARGAR LA VISTA DEL CLIENTE
+/* ==========================================
+   11. CARGAR LA VISTA DEL CLIENTE (RENDER)
+   ========================================== */
 require_once dirname(__DIR__) . '/views/citas_cliente_view.php';
 ?>
