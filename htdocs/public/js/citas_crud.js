@@ -1,6 +1,6 @@
 // ========================================================
-// SCRIPT: citas_admin.js
-// UBICACIÓN: public/js/citas_admin.js
+// SCRIPT: citas_crud.js
+// UBICACIÓN: public/js/citas_crud.js
 // ========================================================
 
 function filtrarTabla() {
@@ -128,13 +128,9 @@ window.onclick = function (e) {
 function cambiarEstadoCita(idCitaDB, selectElement) {
     const nuevoEstado = selectElement.value;
     
-    // Cambiar la clase CSS para cambiar el color del select en vivo
     selectElement.className = 'status-pill ' + nuevoEstado.toLowerCase().replace(' ', '-');
-    
-    // Actualizar el atributo de la fila para que el filtro siga funcionando
     selectElement.closest('tr').setAttribute('data-estado', nuevoEstado.toLowerCase().replace(' ', '-'));
     
-    // Enviar los datos por AJAX al controlador sin recargar la página
     fetch('?seccion=citas', { 
         method: 'POST',
         headers: {

@@ -6,11 +6,18 @@
 
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/conexion.db.php';
+require_once dirname(__DIR__) . '/models/citas_crud_model.php'; // <-- INCLUIMOS EL MODELO
 
 use Google\Client;
 use Google\Service\Calendar;
 
 date_default_timezone_set('America/Mexico_City');
+
+// Instanciamos el Modelo
+$modeloCitas = new CitasAdminModel($conexion);
+
+// Variable para controlar las alertas de la vista (En vez de hacer echo <script>)
+$alerta_script = ""; 
 
 // 1. Configurar Cliente Google
 $client = new Client();
@@ -27,52 +34,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     $id_cita = $_POST['id_cita'];
     $nuevo_estado = $_POST['nuevo_estado'];
 
-    // Actualizamos solo el estado en la base de datos
-    $stmt = $conexion->prepare("UPDATE citas_web SET estado = ? WHERE id_cita = ?");
-    $stmt->bind_param("si", $nuevo_estado, $id_cita);
-    
-    if ($stmt->execute()) {
+    // Le pedimos al modelo que actualice
+    if ($modeloCitas->actualizarEstado($id_cita, $nuevo_estado)) {
         echo "OK";
     } else {
         echo "ERROR";
     }
     exit(); 
 }
+
 // ==========================================================
-
-// 2. Limpieza de citas expiradas
-$sql_buscar_expiradas = "SELECT id_cita, id_google_calendar FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MONTH)";
-$res_expiradas = $conexion->query($sql_buscar_expiradas);
-
-if ($res_expiradas && $res_expiradas->num_rows > 0) {
-    while ($cita_expirada = $res_expiradas->fetch_assoc()) {
-        if (!empty($cita_expirada['id_google_calendar'])) {
-            try {
-                $service->events->delete($calendarId, $cita_expirada['id_google_calendar']);
-            } catch (Exception $e) {}
-        }
-        $stmt_delete = $conexion->prepare("DELETE FROM citas_web WHERE id_cita = ?");
-        $stmt_delete->bind_param("i", $cita_expirada['id_cita']);
-        $stmt_delete->execute();
+// LIMPIEZA DE CITAS EXPIRADAS
+// ==========================================================
+$citas_expiradas = $modeloCitas->obtenerCitasExpiradas();
+foreach ($citas_expiradas as $cita_exp) {
+    if (!empty($cita_exp['id_google_calendar'])) {
+        try {
+            $service->events->delete($calendarId, $cita_exp['id_google_calendar']);
+        } catch (Exception $e) {} // Ignoramos si ya no existe en Google
     }
+    $modeloCitas->eliminarCitaLocal($cita_exp['id_cita']);
 }
 
-// 3. Lógica Eliminar
+// ==========================================================
+// LÓGICA ELIMINAR (Vía botón)
+// ==========================================================
 if (isset($_GET['delete_id'])) {
     try {
         $service->events->delete($calendarId, $_GET['delete_id']);
+        
         if (!empty($_GET['db_id'])) {
-            $stmt = $conexion->prepare("DELETE FROM citas_web WHERE id_cita = ?");
-            $stmt->bind_param("i", $_GET['db_id']);
-            $stmt->execute();
+            $modeloCitas->eliminarCitaLocal($_GET['db_id']);
         }
-        echo "<script>alert('Cita eliminada correctamente'); window.location.href='?seccion=citas';</script>";
+        // Creamos la alerta para que la vista la dibuje
+        $alerta_script = "Swal.fire('Eliminada', 'Cita eliminada correctamente', 'success').then(() => { window.location.href='?seccion=citas'; });";
     } catch (Exception $e) {
-        echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
+        $alerta_script = "Swal.fire('Error', 'No se pudo eliminar: " . addslashes($e->getMessage()) . "', 'error');";
     }
 }
 
-// 4. Lógica Actualizar General (Desde el Modal)
+// ==========================================================
+// LÓGICA ACTUALIZAR GENERAL (Desde el Modal)
+// ==========================================================
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar') {
     $id_google = $_POST['modal_google_id'];
     $id_db = $_POST['modal_db_id'];
@@ -88,12 +91,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     $hora = $_POST['hora'];
 
     try {
-        $m_nom = $conexion->query("SELECT marca FROM marcas WHERE id_marca = '$id_marca'")->fetch_assoc()['marca'];
-        $t_nom = $conexion->query("SELECT tipo FROM tipos_equipo WHERE id_tipo_equipo = '$id_tipo'")->fetch_assoc()['tipo'];
+        // Pedimos los nombres al modelo para el resumen de Google
+        $m_nom = $modeloCitas->obtenerNombreMarca($id_marca);
+        $t_nom = $modeloCitas->obtenerNombreTipo($id_tipo);
 
         $nuevo_resumen = "SERVICIO: $nombre $apellido - $t_nom";
         $nueva_desc = "Marca: $m_nom\nModelo: $modelo\nNo. Serie: $n_serie\nFalla: $falla\nWhatsApp: $whatsapp";
 
+        // Actualizamos Google Calendar
         $evento = $service->events->get($calendarId, $id_google);
         $inicio_dt = $fecha . 'T' . $hora . ':00-06:00';
         $fin_dt = date('Y-m-d\TH:i:sP', strtotime($inicio_dt . ' + 1 hour'));
@@ -105,21 +110,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 
         $service->events->update($calendarId, $id_google, $evento);
 
+        // Actualizamos BD Local
         if (!empty($id_db)) {
-            $stmt = $conexion->prepare("UPDATE citas_web SET nombre_cliente=?, apellido_cliente=?, id_tipo_equipo=?, id_marca=?, modelo=?, numero_serie=?, problema_reportado=?, fecha_cita=?, hora_cita=?, whatsapp=? WHERE id_cita=?");
-            $stmt->bind_param("ssiissssssi", $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $fecha, $hora, $whatsapp, $id_db);
-            $stmt->execute();
+            $modeloCitas->actualizarCitaCompleta($id_db, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $fecha, $hora, $whatsapp);
         }
-        echo "<script>alert('Información actualizada en todo el sistema'); window.location.href='?seccion=citas';</script>";
+        
+        $alerta_script = "Swal.fire('Actualizado', 'Información actualizada en todo el sistema', 'success').then(() => { window.location.href='?seccion=citas'; });";
     } catch (Exception $e) {
-        echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
+        $alerta_script = "Swal.fire('Error', 'No se pudo actualizar: " . addslashes($e->getMessage()) . "', 'error');";
     }
 }
 
-// 5. Consultas para la vista
-$marcas_res = $conexion->query("SELECT * FROM marcas ORDER BY marca ASC");
-$tipos_res = $conexion->query("SELECT * FROM tipos_equipo ORDER BY tipo ASC");
+// ==========================================================
+// PREPARAR DATOS PARA LA VISTA
+// ==========================================================
+$marcas_res = $modeloCitas->obtenerMarcas();
+$tipos_res = $modeloCitas->obtenerTiposEquipo();
+$mapa_db = $modeloCitas->obtenerCitasCompletas();
 
+// Traer eventos de Google y calcular horas ocupadas
 $eventos_google = $service->events->listEvents($calendarId, ['singleEvents' => true, 'orderBy' => 'startTime', 'timeMin' => date('c')])->getItems();
 
 $citas_ocupadas = [];
@@ -131,14 +140,5 @@ foreach ($eventos_google as $ev) {
 }
 $json_ocupadas = json_encode($citas_ocupadas);
 
-$sql_db = "SELECT c.*, m.marca, t.tipo 
-           FROM citas_web c
-           LEFT JOIN marcas m ON c.id_marca = m.id_marca
-           LEFT JOIN tipos_equipo t ON c.id_tipo_equipo = t.id_tipo_equipo";
-$res_db = $conexion->query($sql_db);
-
-$mapa_db = [];
-while ($f = $res_db->fetch_assoc()) {
-    $mapa_db[strtoupper($f['nombre_cliente'] . " " . $f['apellido_cliente'])] = $f;
-}
+// Nota: La vista será incluida automáticamente por el administracion_controller.php
 ?>

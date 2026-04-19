@@ -17,7 +17,8 @@
                     <option value="pendiente">Pendiente</option>
                     <option value="en-proceso">En proceso</option>
                     <option value="listo">Listo</option>
-                    <option value="entregado">Entregado</option> </select>
+                    <option value="entregado">Entregado</option>
+                </select>
             </div>
 
             <div class="filtro-grupo">
@@ -189,4 +190,13 @@
 <script>
     const horasOcupadas = <?= $json_ocupadas ?? '{}' ?>;
 </script>
+
+<?php if (!empty($alerta_script)): ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            <?php echo $alerta_script; ?>
+        });
+    </script>
+<?php endif; ?>
+
 <script src="../../public/js/citas_crud.js"></script>
