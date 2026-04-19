@@ -70,33 +70,100 @@ document.getElementById('m_fecha').addEventListener('change', function() {
     }
 });
 
-function abrirModalEditar(gid, dbid, nom, ape, marca, tipo, mod, serie, falla, wa, fecha, hora) {
-    document.getElementById('m_google_id').value = gid;
-    document.getElementById('m_db_id').value = dbid;
-    document.getElementById('m_nombre').value = nom;
-    document.getElementById('m_apellido').value = ape;
-    document.getElementById('m_marca').value = marca;
-    document.getElementById('m_tipo').value = tipo;
-    document.getElementById('m_modelo').value = mod;
-    document.getElementById('m_serie').value = serie;
-    
-    let selectFalla = document.getElementById('m_falla');
-    let optionFallaExists = Array.from(selectFalla.options).some(opt => opt.value === falla);
-    selectFalla.value = optionFallaExists ? falla : "Otro";
+function abrirModalEditar(boton) {
+    try {
+        let jsonString = boton.getAttribute('data-cita');
+        let datos = JSON.parse(jsonString);
 
-    document.getElementById('m_wa').value = wa;
-    
-    const inFecha = document.getElementById('m_fecha');
-    const selHora = document.getElementById('m_hora');
+        document.getElementById('modalEditar').style.display = 'flex';
 
-    inFecha.value = fecha;
-    inFecha.setAttribute('data-fecha-orig', fecha);
-    selHora.setAttribute('data-hora-orig', hora);
+        const asignarValor = (id, valor) => {
+            let elemento = document.getElementById(id);
+            if (elemento) elemento.value = valor || '';
+        };
 
-    generarHorarios(fecha, hora);
-    
-    document.getElementById('modalEditar').style.display = 'flex';
+        asignarValor('m_google_id', datos.googleId);
+        asignarValor('m_db_id', datos.dbId);
+        asignarValor('m_nombre', datos.nombre);
+        asignarValor('m_apellido', datos.apellido);
+        asignarValor('m_wa', datos.whatsapp);
+        asignarValor('m_serie', datos.serie);
+        asignarValor('m_modelo', datos.modelo);
+        asignarValor('m_fecha', datos.fecha);
+
+        let elTipo = document.getElementById('m_tipo');
+        if (elTipo && datos.idTipo) elTipo.value = datos.idTipo;
+
+        let elMarca = document.getElementById('m_marca');
+        if (elMarca && datos.idMarca) elMarca.value = datos.idMarca;
+
+        let selectFalla = document.getElementById('m_falla');
+        if (selectFalla && datos.falla) {
+            let existeOpcion = Array.from(selectFalla.options).some(opt => opt.value === datos.falla);
+            selectFalla.value = existeOpcion ? datos.falla : 'Otro';
+        }
+
+        let selectHora = document.getElementById('m_hora');
+        if (selectHora) {
+            selectHora.innerHTML = `<option value="${datos.hora}" selected>${datos.hora}</option>`;
+            generarHorarios(datos.fecha, datos.hora);
+        }
+
+    } catch (error) {
+        console.error("Error al cargar modal:", error);
+    }
 }
 
-function cerrarModal() { document.getElementById('modalEditar').style.display = 'none'; }
-window.onclick = function (e) { if (e.target == document.getElementById('modalEditar')) cerrarModal(); }
+function cerrarModal() { 
+    document.getElementById('modalEditar').style.display = 'none'; 
+}
+
+window.onclick = function (e) { 
+    if (e.target == document.getElementById('modalEditar')) cerrarModal(); 
+}
+
+// --------------------------------------------------------
+// FUNCIÓN AJAX PARA CAMBIAR EL ESTADO DIRECTAMENTE
+// --------------------------------------------------------
+function cambiarEstadoCita(idCitaDB, selectElement) {
+    const nuevoEstado = selectElement.value;
+    
+    // Cambiar la clase CSS para cambiar el color del select en vivo
+    selectElement.className = 'status-pill ' + nuevoEstado.toLowerCase().replace(' ', '-');
+    
+    // Actualizar el atributo de la fila para que el filtro siga funcionando
+    selectElement.closest('tr').setAttribute('data-estado', nuevoEstado.toLowerCase().replace(' ', '-'));
+    
+    // Enviar los datos por AJAX al controlador sin recargar la página
+    fetch('?seccion=citas', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `accion=actualizar_estado_rapido&id_cita=${idCitaDB}&nuevo_estado=${encodeURIComponent(nuevoEstado)}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Estado actualizado en BD:", data);
+    })
+    .catch(error => {
+        alert("Hubo un error al actualizar el estado. Revisa tu conexión.");
+        console.error(error);
+    });
+}
+
+// Bloqueo de doble envío
+document.addEventListener("DOMContentLoaded", function() {
+    let formularios = document.querySelectorAll('form');
+    formularios.forEach(formulario => {
+        formulario.addEventListener('submit', function() {
+            let botonSubmit = this.querySelector('button[type="submit"]');
+            if (botonSubmit) {
+                botonSubmit.disabled = true;
+                botonSubmit.style.opacity = '0.7';
+                botonSubmit.style.cursor = 'not-allowed';
+                botonSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Procesando...';
+            }
+        });
+    });
+});

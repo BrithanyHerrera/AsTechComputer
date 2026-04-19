@@ -17,7 +17,7 @@
                     <option value="pendiente">Pendiente</option>
                     <option value="en-proceso">En proceso</option>
                     <option value="listo">Listo</option>
-                </select>
+                    <option value="entregado">Entregado</option> </select>
             </div>
 
             <div class="filtro-grupo">
@@ -55,6 +55,11 @@
                     $estado_actual = strtolower($datos_db['estado'] ?? 'pendiente');
                     $clase_estado = str_replace(' ', '-', $estado_actual);
                     $fecha_formato_filtro = date('Y-m-d', strtotime($start_dt));
+
+                    // Nombres de fallback
+                    $partes_nombre = explode(' ', $nombre_mostrar);
+                    $nombre_fallback = array_shift($partes_nombre);
+                    $apellido_fallback = implode(' ', $partes_nombre);
                 ?>
                     <tr class="fila-registro" 
                         data-nombre="<?= strtolower(htmlspecialchars($nombre_mostrar)) ?>" 
@@ -71,26 +76,36 @@
                         <td><small><?= htmlspecialchars($datos_db['numero_serie'] ?? 'N/V') ?></small></td>
                         
                         <td>
-                            <span class="status-pill <?= $clase_estado ?>">
-                                <?= ucfirst($datos_db['estado'] ?? 'Pendiente') ?>
-                            </span>
+                            <?php if(!empty($datos_db['id_cita'])): ?>
+                                <select class="status-pill <?= $clase_estado ?>" 
+                                        onchange="cambiarEstadoCita(<?= $datos_db['id_cita'] ?>, this)">
+                                    <option class="pendiente" value="Pendiente" <?= $estado_actual == 'pendiente' ? 'selected' : '' ?>>Pendiente</option>
+                                    <option class="en-proceso" value="En proceso" <?= $estado_actual == 'en proceso' ? 'selected' : '' ?>>En proceso</option>
+                                    <option class="listo" value="Listo" <?= $estado_actual == 'listo' ? 'selected' : '' ?>>Listo</option>
+                                    <option class="entregado" value="Entregado" <?= $estado_actual == 'entregado' ? 'selected' : '' ?>>Entregado</option>
+                                </select>
+                            <?php else: ?>
+                                <span class="status-pill pendiente">Pendiente (No BD)</span>
+                            <?php endif; ?>
                         </td>
 
                         <td class="acciones">
-                            <button class="btn-editar" type="button" title="Editar" onclick='abrirModalEditar(
-                                "<?= $event->getId() ?>", 
-                                "<?= $datos_db['id_cita'] ?? '' ?>", 
-                                "<?= $datos_db['nombre_cliente'] ?? '' ?>", 
-                                "<?= $datos_db['apellido_cliente'] ?? '' ?>",
-                                "<?= $datos_db['id_marca'] ?? '' ?>",
-                                "<?= $datos_db['id_tipo_equipo'] ?? '' ?>",
-                                "<?= addslashes($datos_db['modelo'] ?? '') ?>",
-                                "<?= addslashes($datos_db['numero_serie'] ?? '') ?>",
-                                "<?= addslashes(str_replace(["\r", "\n"], ' ', $datos_db['problema_reportado'] ?? '')) ?>",
-                                "<?= $datos_db['whatsapp'] ?? '' ?>",
-                                "<?= $fecha_formato_filtro ?>",
-                                "<?= date('H:i', strtotime($start_dt)) ?>"
-                            )'>
+                            <button class="btn-editar" type="button" title="Editar" 
+                                    data-cita='<?= htmlspecialchars(json_encode([
+                                        "googleId" => $event->getId(),
+                                        "dbId"     => $datos_db['id_cita'] ?? "",
+                                        "nombre"   => $datos_db['nombre_cliente'] ?? $nombre_fallback,
+                                        "apellido" => $datos_db['apellido_cliente'] ?? $apellido_fallback,
+                                        "idMarca"  => $datos_db['id_marca'] ?? "",
+                                        "idTipo"   => $datos_db['id_tipo_equipo'] ?? "",
+                                        "modelo"   => $datos_db['modelo'] ?? "",
+                                        "serie"    => $datos_db['numero_serie'] ?? "",
+                                        "falla"    => $datos_db['problema_reportado'] ?? "",
+                                        "whatsapp" => $datos_db['whatsapp'] ?? "",
+                                        "fecha"    => $fecha_formato_filtro,
+                                        "hora"     => date("H:i", strtotime($start_dt))
+                                    ]), ENT_QUOTES, "UTF-8") ?>'
+                                    onclick="abrirModalEditar(this)">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
                             <a href="?seccion=citas&delete_id=<?= $event->getId() ?>&db_id=<?= $datos_db['id_cita'] ?? '' ?>"

@@ -4,8 +4,6 @@
 // UBICACIÓN: app/controllers/citas_admin_controller.php
 // ========================================================
 
-// No necesitamos volver a pedir el autoload o la BD si ya los pidió el controlador principal,
-// pero los ponemos con require_once por seguridad.
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 
@@ -14,9 +12,7 @@ use Google\Service\Calendar;
 
 date_default_timezone_set('America/Mexico_City');
 
-// ... tus requires y timezone ...
-
-// 1. Configurar Cliente Google (Lo movemos arriba para poder usarlo en la limpieza)
+// 1. Configurar Cliente Google
 $client = new Client();
 $ruta_credenciales = dirname(__DIR__, 2) . '/credenciales.json';
 $client->setAuthConfig($ruta_credenciales);
@@ -24,30 +20,44 @@ $client->addScope(Calendar::CALENDAR);
 $service = new Calendar($client);
 $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@group.calendar.google.com';
 
-// 2. Limpieza de citas expiradas (Sincronizada BD + Google)
-// Primero, buscamos cuáles son las citas expiradas
+// ==========================================================
+// ACTUALIZACIÓN DE ESTADO RÁPIDA VÍA AJAX
+// ==========================================================
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar_estado_rapido') {
+    $id_cita = $_POST['id_cita'];
+    $nuevo_estado = $_POST['nuevo_estado'];
+
+    // Actualizamos solo el estado en la base de datos
+    $stmt = $conexion->prepare("UPDATE citas_web SET estado = ? WHERE id_cita = ?");
+    $stmt->bind_param("si", $nuevo_estado, $id_cita);
+    
+    if ($stmt->execute()) {
+        echo "OK";
+    } else {
+        echo "ERROR";
+    }
+    exit(); 
+}
+// ==========================================================
+
+// 2. Limpieza de citas expiradas
 $sql_buscar_expiradas = "SELECT id_cita, id_google_calendar FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MONTH)";
 $res_expiradas = $conexion->query($sql_buscar_expiradas);
 
 if ($res_expiradas && $res_expiradas->num_rows > 0) {
     while ($cita_expirada = $res_expiradas->fetch_assoc()) {
-        // A. Intentamos borrarla de Google Calendar
         if (!empty($cita_expirada['id_google_calendar'])) {
             try {
                 $service->events->delete($calendarId, $cita_expirada['id_google_calendar']);
-            } catch (Exception $e) {
-                // Si la cita ya no existe en Google o hay error, la ignoramos y seguimos
-            }
+            } catch (Exception $e) {}
         }
-        
-        // B. La borramos de nuestra base de datos local
         $stmt_delete = $conexion->prepare("DELETE FROM citas_web WHERE id_cita = ?");
         $stmt_delete->bind_param("i", $cita_expirada['id_cita']);
         $stmt_delete->execute();
     }
 }
 
-// 3. Lógica Eliminar (DB + GOOGLE)
+// 3. Lógica Eliminar
 if (isset($_GET['delete_id'])) {
     try {
         $service->events->delete($calendarId, $_GET['delete_id']);
@@ -62,7 +72,7 @@ if (isset($_GET['delete_id'])) {
     }
 }
 
-// 4. Lógica Actualizar (DB + GOOGLE)
+// 4. Lógica Actualizar General (Desde el Modal)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar') {
     $id_google = $_POST['modal_google_id'];
     $id_db = $_POST['modal_db_id'];
@@ -131,5 +141,4 @@ $mapa_db = [];
 while ($f = $res_db->fetch_assoc()) {
     $mapa_db[strtoupper($f['nombre_cliente'] . " " . $f['apellido_cliente'])] = $f;
 }
-// Fin del controlador. No imprimimos la vista aquí porque se hace desde administracion_view.php
 ?>
