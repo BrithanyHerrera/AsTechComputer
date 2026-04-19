@@ -139,11 +139,25 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
 }
 
 /* =========================================
-   4. BOTONES DE ACCIÓN (EDITAR / ELIMINAR)
+   4. BOTONES DE ACCIÓN (VER / EDITAR / ELIMINAR)
    ========================================= */
 .acciones {
     display: flex;
     gap: 8px;
+}
+
+.btn-ver {
+    background: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-ver:hover {
+    background: #138496;
 }
 
 .btn-editar {
@@ -176,7 +190,7 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
 }
 
 /* =========================================
-   5. DISEÑO DE LA VENTANA MODAL (EDICIÓN)
+   5. DISEÑO DE LA VENTANA MODAL (GENERAL)
    ========================================= */
 .modal-personalizado {
     position: fixed;
@@ -220,6 +234,9 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
     margin-bottom: 20px;
 }
 
+/* =========================================
+   6. DISEÑO INTERNO DEL MODAL DE EDICIÓN
+   ========================================= */
 .fila-form {
     display: flex;
     gap: 15px;
@@ -263,4 +280,36 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
 
 .btn-guardar-cambios:hover {
     background: #218838;
+}
+
+/* =========================================
+   7. DISEÑO INTERNO DEL MODAL DE DETALLES (SOLO LECTURA)
+   ========================================= */
+.grid-detalles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.detalle-item {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid #e17203;
+}
+
+.detalle-item span {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.detalle-item p {
+    margin: 5px 0 0;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
 }

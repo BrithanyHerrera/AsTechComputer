@@ -64,7 +64,6 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                     $clase_estado = str_replace(' ', '-', $estado_actual);
                     $fecha_formato_filtro = date('Y-m-d', strtotime($start_dt));
 
-                    // Nombres de fallback
                     $partes_nombre = explode(' ', $nombre_mostrar);
                     $nombre_fallback = array_shift($partes_nombre);
                     $apellido_fallback = implode(' ', $partes_nombre);
@@ -98,6 +97,23 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                         </td>
 
                         <td class="acciones">
+                            <button class="btn-ver" type="button" title="Ver Detalles"
+                                    data-cita='<?= htmlspecialchars(json_encode([
+                                        "nombre"   => $datos_db['nombre_cliente'] ?? $nombre_fallback,
+                                        "apellido" => $datos_db['apellido_cliente'] ?? $apellido_fallback,
+                                        "tipoTxt"  => $datos_db['tipo'] ?? "N/A",
+                                        "marcaTxt" => $datos_db['marca'] ?? "N/A",
+                                        "modelo"   => $datos_db['modelo'] ?? "N/A",
+                                        "serie"    => $datos_db['numero_serie'] ?? "N/V",
+                                        "falla"    => $datos_db['problema_reportado'] ?? "N/A",
+                                        "whatsapp" => $datos_db['whatsapp'] ?? "No registrado",
+                                        "fecha"    => date("d/m/Y", strtotime($start_dt)),
+                                        "hora"     => date("H:i", strtotime($start_dt))
+                                    ]), ENT_QUOTES, "UTF-8") ?>'
+                                    onclick="abrirModalVer(this)">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
                             <button class="btn-editar" type="button" title="Editar" 
                                     data-cita='<?= htmlspecialchars(json_encode([
                                         "googleId" => $event->getId(),
@@ -116,6 +132,7 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                                     onclick="abrirModalEditar(this)">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
+
                             <a href="?seccion=citas&delete_id=<?= $event->getId() ?>&db_id=<?= $datos_db['id_cita'] ?? '' ?>"
                                class="btn-eliminar" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar esta cita?')">
                                <i class="fa-solid fa-trash"></i>
@@ -128,10 +145,28 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
     </div>
 </div>
 
+<div id="modalVer" class="modal-personalizado">
+    <div class="contenido-modal">
+        <span class="cerrar-modal" onclick="cerrarModalVer()">&times;</span>
+        <h2><i class="fa-solid fa-address-card"></i> Detalles Completos del Servicio</h2>
+        <div class="grid-detalles">
+            <div class="detalle-item"><span>Cliente</span><p id="v_cliente"></p></div>
+            <div class="detalle-item"><span>WhatsApp</span><p id="v_wa"></p></div>
+            <div class="detalle-item"><span>Dispositivo</span><p id="v_dispositivo"></p></div>
+            <div class="detalle-item"><span>Marca y Modelo</span><p id="v_marca_modelo"></p></div>
+            <div class="detalle-item"><span>No. Serie</span><p id="v_serie"></p></div>
+            <div class="detalle-item"><span>Falla Reportada</span><p id="v_falla"></p></div>
+            <div class="detalle-item"><span>Fecha</span><p id="v_fecha"></p></div>
+            <div class="detalle-item"><span>Hora</span><p id="v_hora"></p></div>
+        </div>
+    </div>
+</div>
+
 <div id="modalEditar" class="modal-personalizado">
     <div class="contenido-modal">
         <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
         <h2><i class="fa-solid fa-edit"></i> Editar Información</h2>
+        
         <form method="POST">
             <input type="hidden" name="accion" value="actualizar">
             <input type="hidden" id="m_google_id" name="modal_google_id">

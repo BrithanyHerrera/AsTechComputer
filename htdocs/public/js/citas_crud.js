@@ -3,6 +3,9 @@
 Este archivo concentra toda la lógica interactiva del lado del cliente (Frontend) para el panel de administración de citas. Su propósito es dotar a la tabla de registros de capacidades dinámicas sin necesidad de recargar la página. Entre sus responsabilidades destacan: filtrar las citas en tiempo real (por nombre, estado o fecha), gestionar los horarios disponibles para reagendar citas, controlar la apertura y llenado automático de la ventana modal de edición, enviar actualizaciones rápidas de estado mediante peticiones AJAX al servidor, y prevenir el doble envío de formularios para mantener la integridad de los datos.
 */
 
+/* ==========================================
+   1. SISTEMA DE FILTRADO DINÁMICO EN TABLA
+   ========================================== */
 function filtrarTabla() {
     const busqueda = document.getElementById('buscadorGlobal').value.toLowerCase();
     const estado = document.getElementById('filtroEstado').value;
@@ -33,6 +36,9 @@ function limpiarFiltros() {
     filtrarTabla();
 }
 
+/* ==========================================
+   2. GESTIÓN DINÁMICA DE HORARIOS EN MODAL
+   ========================================== */
 function generarHorarios(fechaElegida, horaPreseleccionada) {
     const selectorHora = document.getElementById('m_hora');
     selectorHora.innerHTML = '<option value="">Seleccione una hora...</option>';
@@ -70,6 +76,37 @@ document.getElementById('m_fecha').addEventListener('change', function() {
     }
 });
 
+/* ==========================================
+   3. CONTROLADOR DE LA VENTANA MODAL (VER DETALLES)
+   ========================================== */
+function abrirModalVer(boton) {
+    try {
+        let jsonString = boton.getAttribute('data-cita');
+        let datos = JSON.parse(jsonString);
+
+        document.getElementById('modalVer').style.display = 'flex';
+
+        document.getElementById('v_cliente').innerText = `${datos.nombre} ${datos.apellido}`;
+        document.getElementById('v_wa').innerText = datos.whatsapp || 'No registrado';
+        document.getElementById('v_dispositivo').innerText = datos.tipoTxt || 'N/A';
+        document.getElementById('v_marca_modelo').innerText = `${datos.marcaTxt || 'N/A'} - ${datos.modelo || 'N/A'}`;
+        document.getElementById('v_serie').innerText = datos.serie || 'N/A';
+        document.getElementById('v_falla').innerText = datos.falla || 'N/A';
+        document.getElementById('v_fecha').innerText = datos.fecha || 'N/A';
+        document.getElementById('v_hora').innerText = datos.hora || 'N/A';
+
+    } catch (error) {
+        console.error("Error al cargar modal de detalles:", error);
+    }
+}
+
+function cerrarModalVer() {
+    document.getElementById('modalVer').style.display = 'none';
+}
+
+/* ==========================================
+   4. CONTROLADORES DE LA VENTANA MODAL (EDICIÓN)
+   ========================================== */
 function abrirModalEditar(boton) {
     try {
         let jsonString = boton.getAttribute('data-cita');
@@ -118,13 +155,23 @@ function cerrarModal() {
     document.getElementById('modalEditar').style.display = 'none'; 
 }
 
+/* ==========================================
+   5. OYENTE DE CLIC EN EL ÁREA EXTERIOR DE MODALES
+   ========================================== */
 window.onclick = function (e) { 
-    if (e.target == document.getElementById('modalEditar')) cerrarModal(); 
+    const modalEdicion = document.getElementById('modalEditar');
+    const modalVisualizacion = document.getElementById('modalVer');
+
+    if (e.target === modalEdicion) {
+        cerrarModal(); 
+    } else if (e.target === modalVisualizacion) {
+        cerrarModalVer();
+    }
 }
 
-// --------------------------------------------------------
-// FUNCIÓN AJAX PARA CAMBIAR EL ESTADO DIRECTAMENTE
-// --------------------------------------------------------
+/* ==========================================
+   6. ACTUALIZACIÓN RÁPIDA DE ESTADOS MEDIANTE AJAX
+   ========================================== */
 function cambiarEstadoCita(idCitaDB, selectElement) {
     const nuevoEstado = selectElement.value;
     
@@ -148,7 +195,9 @@ function cambiarEstadoCita(idCitaDB, selectElement) {
     });
 }
 
-// Bloqueo de doble envío
+/* ==========================================
+   7. PREVENCIÓN DE DUPLICIDAD EN ENVÍO DE FORMULARIOS
+   ========================================== */
 document.addEventListener("DOMContentLoaded", function() {
     let formularios = document.querySelectorAll('form');
     formularios.forEach(formulario => {
