@@ -1,9 +1,13 @@
 <?php
-// ========================================================
-// CONTROLADOR: citas_admin_controller.php
-// UBICACIÓN: app/controllers/citas_admin_controller.php
-// ========================================================
+/* CITAS_CRUD_CONTROLLER.PHP */
+/*
+Este archivo es el Controlador (Controller) responsable de la gestión interna de citas (CRUD) dentro del panel administrativo de ASTECH COMPUTER. Funciona como el intermediario principal entre la interfaz del administrador, la base de datos local y la API de Google Calendar. Sus tareas incluyen: cargar las librerías necesarias, recibir solicitudes asíncronas (AJAX) para cambiar rápidamente el estado de una cita, limpiar automáticamente los registros que ya han expirado, gestionar la eliminación o edición de citas asegurando que los cambios se reflejen de manera sincronizada tanto en el servidor local como en Google Calendar, y finalmente, preparar todos los datos en crudo (listas de marcas, tipos de equipo y horarios ocupados) que serán renderizados por la Vista.
+*/
+/* ========================================================
+   1. INICIALIZACIÓN Y CARGA DE DEPENDENCIAS
+   ======================================================== */
 
+// Inclusión de librerías mediante Composer y conexión a BD
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/citas_crud_model.php'; // <-- INCLUIMOS EL MODELO
@@ -13,13 +17,16 @@ use Google\Service\Calendar;
 
 date_default_timezone_set('America/Mexico_City');
 
-// Instanciamos el Modelo
+/* ==========================================================
+   2. INSTANCIACIÓN DEL MODELO Y CONFIGURACIÓN DE GOOGLE API
+   ========================================================== */
+// Se instancia el Modelo para gestionar operaciones de base de datos
 $modeloCitas = new CitasAdminModel($conexion);
 
 // Variable para controlar las alertas de la vista (En vez de hacer echo <script>)
 $alerta_script = ""; 
 
-// 1. Configurar Cliente Google
+// Configuración de credenciales y acceso al cliente de Google Calendar
 $client = new Client();
 $ruta_credenciales = dirname(__DIR__, 2) . '/credenciales.json';
 $client->setAuthConfig($ruta_credenciales);
@@ -27,14 +34,15 @@ $client->addScope(Calendar::CALENDAR);
 $service = new Calendar($client);
 $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@group.calendar.google.com';
 
-// ==========================================================
-// ACTUALIZACIÓN DE ESTADO RÁPIDA VÍA AJAX
-// ==========================================================
+/* ==========================================================
+   3. ACTUALIZACIÓN DE ESTADO RÁPIDA VÍA AJAX
+   ========================================================== */
+// Intercepta peticiones POST para actualizar el estado de una cita de forma asíncrona
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar_estado_rapido') {
     $id_cita = $_POST['id_cita'];
     $nuevo_estado = $_POST['nuevo_estado'];
 
-    // Le pedimos al modelo que actualice
+    // Se delega al modelo la actualización en base de datos
     if ($modeloCitas->actualizarEstado($id_cita, $nuevo_estado)) {
         echo "OK";
     } else {
@@ -43,9 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     exit(); 
 }
 
-// ==========================================================
-// LIMPIEZA DE CITAS EXPIRADAS
-// ==========================================================
+/* ==========================================================
+   4. LIMPIEZA AUTOMÁTICA DE CITAS EXPIRADAS
+   ========================================================== */
+// Extrae y elimina citas cuya vigencia ha expirado, sincronizando BD y Calendar
 $citas_expiradas = $modeloCitas->obtenerCitasExpiradas();
 foreach ($citas_expiradas as $cita_exp) {
     if (!empty($cita_exp['id_google_calendar'])) {
@@ -56,9 +65,10 @@ foreach ($citas_expiradas as $cita_exp) {
     $modeloCitas->eliminarCitaLocal($cita_exp['id_cita']);
 }
 
-// ==========================================================
-// LÓGICA ELIMINAR (Vía botón)
-// ==========================================================
+/* ==========================================================
+   5. LÓGICA PARA ELIMINACIÓN MANUAL DE CITAS
+   ========================================================== */
+// Elimina una cita específica cuando el administrador acciona el botón de eliminar
 if (isset($_GET['delete_id'])) {
     try {
         $service->events->delete($calendarId, $_GET['delete_id']);
@@ -66,16 +76,17 @@ if (isset($_GET['delete_id'])) {
         if (!empty($_GET['db_id'])) {
             $modeloCitas->eliminarCitaLocal($_GET['db_id']);
         }
-        // Creamos la alerta para que la vista la dibuje
+        // Se genera el script de alerta para confirmación en la vista
         $alerta_script = "Swal.fire('Eliminada', 'Cita eliminada correctamente', 'success').then(() => { window.location.href='?seccion=citas'; });";
     } catch (Exception $e) {
         $alerta_script = "Swal.fire('Error', 'No se pudo eliminar: " . addslashes($e->getMessage()) . "', 'error');";
     }
 }
 
-// ==========================================================
-// LÓGICA ACTUALIZAR GENERAL (Desde el Modal)
-// ==========================================================
+/* ==========================================================
+   6. LÓGICA DE EDICIÓN Y ACTUALIZACIÓN GENERAL (MODAL)
+   ========================================================== */
+// Procesa los datos enviados desde la ventana modal de edición
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar') {
     $id_google = $_POST['modal_google_id'];
     $id_db = $_POST['modal_db_id'];
@@ -91,14 +102,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     $hora = $_POST['hora'];
 
     try {
-        // Pedimos los nombres al modelo para el resumen de Google
+        // Se solicitan los nombres textuales al modelo para armar el resumen en Google
         $m_nom = $modeloCitas->obtenerNombreMarca($id_marca);
         $t_nom = $modeloCitas->obtenerNombreTipo($id_tipo);
 
         $nuevo_resumen = "SERVICIO: $nombre $apellido - $t_nom";
         $nueva_desc = "Marca: $m_nom\nModelo: $modelo\nNo. Serie: $n_serie\nFalla: $falla\nWhatsApp: $whatsapp";
 
-        // Actualizamos Google Calendar
+        // Sincronización de los nuevos datos hacia Google Calendar
         $evento = $service->events->get($calendarId, $id_google);
         $inicio_dt = $fecha . 'T' . $hora . ':00-06:00';
         $fin_dt = date('Y-m-d\TH:i:sP', strtotime($inicio_dt . ' + 1 hour'));
@@ -110,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 
         $service->events->update($calendarId, $id_google, $evento);
 
-        // Actualizamos BD Local
+        // Actualización persistente en la Base de Datos local
         if (!empty($id_db)) {
             $modeloCitas->actualizarCitaCompleta($id_db, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $fecha, $hora, $whatsapp);
         }
@@ -121,14 +132,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     }
 }
 
-// ==========================================================
-// PREPARAR DATOS PARA LA VISTA
-// ==========================================================
+/* ==========================================================
+   7. PREPARACIÓN Y EXTRACCIÓN DE DATOS PARA LA VISTA
+   ========================================================== */
+// Se solicitan al modelo los catálogos y el mapa completo de citas
 $marcas_res = $modeloCitas->obtenerMarcas();
 $tipos_res = $modeloCitas->obtenerTiposEquipo();
 $mapa_db = $modeloCitas->obtenerCitasCompletas();
 
-// Traer eventos de Google y calcular horas ocupadas
+// Extracción de eventos directamente desde Google Calendar para sincronizar horarios ocupados
 $eventos_google = $service->events->listEvents($calendarId, ['singleEvents' => true, 'orderBy' => 'startTime', 'timeMin' => date('c')])->getItems();
 
 $citas_ocupadas = [];
@@ -139,6 +151,4 @@ foreach ($eventos_google as $ev) {
     $citas_ocupadas[$fecha_ev][] = $hora_ev;
 }
 $json_ocupadas = json_encode($citas_ocupadas);
-
-// Nota: La vista será incluida automáticamente por el administracion_controller.php
 ?>

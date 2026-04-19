@@ -1,7 +1,11 @@
-/* =========================================
-   ESTILOS GENERALES, CONTENEDOR Y FILTROS
-   ========================================= */
+/* CITAS_CRUD.CSS */
+/*
+Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la interfaz de administración (CRUD) de citas de ASTECH COMPUTER. Su objetivo es estructurar visualmente el panel de control, incluyendo la barra de búsqueda y filtros, el diseño de la tabla responsiva de registros, la personalización de los botones de acción, y el formato de las "pills" (etiquetas de estado) que indican la etapa de cada servicio. Adicionalmente, define la apariencia y el posicionamiento centrado de la ventana modal que se utiliza para editar la información detallada de cada cita.
+*/
 
+/* =========================================
+   1. ESTILOS GENERALES, CONTENEDOR Y FILTROS
+   ========================================= */
 .contenedor-ingresos {
     padding: 25px;
     background: #fff;
@@ -64,9 +68,8 @@
 }
 
 /* =========================================
-   TABLA, BADGES Y BOTONES DE ACCIÓN
+   2. TABLA RESPONSIVA Y TEXTOS DESCRIPTIVOS
    ========================================= */
-
 .tabla-responsiva {
     overflow-x: auto;
 }
@@ -99,7 +102,9 @@
     font-style: italic;
 }
 
-/* Pills de Estado */
+/* =========================================
+   3. ETIQUETAS DE ESTADO (PILLS)
+   ========================================= */
 .status-pill {
     padding: 5px 12px;
     border-radius: 20px;
@@ -128,13 +133,14 @@
     color: #155724;
 }
 
-/* Nnuevo estado agregado según tu base de datos */
 .entregado {
     background: #e2e3e5;
     color: #383d41;
 }
 
-/* Botones Tabla */
+/* =========================================
+   4. BOTONES DE ACCIÓN (EDITAR / ELIMINAR)
+   ========================================= */
 .acciones {
     display: flex;
     gap: 8px;
@@ -170,9 +176,8 @@
 }
 
 /* =========================================
-   ESTILOS DEL MODAL (CENTRADOS)
+   5. DISEÑO DE LA VENTANA MODAL (EDICIÓN)
    ========================================= */
-
 .modal-personalizado {
     position: fixed;
     z-index: 99999;
