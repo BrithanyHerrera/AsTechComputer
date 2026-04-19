@@ -12,6 +12,7 @@
     
 </head>
 <body>
+    <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
     <?php
     $ruta_prefijo = "../../"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
