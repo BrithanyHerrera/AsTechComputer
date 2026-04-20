@@ -59,6 +59,8 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
 </head>
 
 <body>
+  <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
+  
   <nav class="barra-lateral">
     <div class="contenedor-logo">
       <img src="../../public/img/2.png" alt="Logo AS TECH" class="logo-sidebar">

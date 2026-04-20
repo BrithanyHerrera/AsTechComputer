@@ -1,9 +1,11 @@
+/* CITAS_CRUD.CSS */
+/*
+Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la interfaz de administración (CRUD) de citas de ASTECH COMPUTER. Su objetivo es estructurar visualmente el panel de control, incluyendo la barra de búsqueda y filtros, el diseño de la tabla responsiva de registros, la personalización de los botones de acción, y el formato de las "pills" (etiquetas de estado) que indican la etapa de cada servicio. Adicionalmente, define la apariencia y el posicionamiento centrado de la ventana modal que se utiliza para editar la información detallada de cada cita.
+*/
+
 /* =========================================
-
-   ESTILOS GENERALES, CONTENEDOR Y FILTROS
-
+   1. ESTILOS GENERALES, CONTENEDOR Y FILTROS
    ========================================= */
-
 .contenedor-ingresos {
     padding: 25px;
     background: #fff;
@@ -19,29 +21,16 @@
     padding-left: 15px;
 }
 
-
-
 .barra-filtros {
-
     display: flex;
-
     gap: 20px;
-
     background: #f9f9f9;
-
     padding: 15px;
-
     border-radius: 10px;
-
     margin-bottom: 20px;
-
     align-items: center;
-
     flex-wrap: wrap;
-
 }
-
-
 
 .filtro-grupo {
     display: flex;
@@ -57,20 +46,12 @@
 
 .filtro-grupo input,
 .filtro-grupo select {
-
     padding: 8px 12px;
-
     border: 1px solid #ddd;
-
     border-radius: 8px;
-
     outline: none;
-
     font-size: 0.85rem;
-
 }
-
-
 
 .btn-limpiar {
     background: #666;
@@ -86,14 +67,9 @@
     background: #333;
 }
 
-
-
 /* =========================================
-
-   TABLA, BADGES Y BOTONES DE ACCIÓN
-
+   2. TABLA RESPONSIVA Y TEXTOS DESCRIPTIVOS
    ========================================= */
-
 .tabla-responsiva {
     overflow-x: auto;
 }
@@ -121,17 +97,14 @@
     vertical-align: middle;
 }
 
-
-
 .falla-txt {
     color: #555;
     font-style: italic;
 }
 
-
-
-/* Pills de Estado */
-
+/* =========================================
+   3. ETIQUETAS DE ESTADO (PILLS)
+   ========================================= */
 .status-pill {
     padding: 5px 12px;
     border-radius: 20px;
@@ -140,30 +113,36 @@
     text-transform: uppercase;
     display: inline-block;
     text-align: center;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 
-.pendiente {
-    background: #fff3cd;
-    color: #856404;
-}
+/* Colores para los estados de la base de datos */
+.pendiente { background: #fff3cd; color: #856404; } /* Amarillo */
+.atendida { background: #d4edda; color: #155724; }  /* Verde */
+.cancelada { background: #f8d7da; color: #721c24; } /* Rojo */
 
-.en-proceso {
-    background: #cce5ff;
-    color: #004085;
-}
-
-.listo {
-    background: #d4edda;
-    color: #155724;
-}
-
-
-
-/* Botones Tabla */
-
+/* =========================================
+   4. BOTONES DE ACCIÓN (VER / EDITAR / ELIMINAR)
+   ========================================= */
 .acciones {
     display: flex;
     gap: 8px;
+}
+
+.btn-ver {
+    background: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-ver:hover {
+    background: #138496;
 }
 
 .btn-editar {
@@ -195,79 +174,44 @@
     background: #c82333;
 }
 
-
-
 /* =========================================
-
-   ESTILOS DEL MODAL (MANTENIDOS)
-
+   5. DISEÑO DE LA VENTANA MODAL (GENERAL)
    ========================================= */
-
 .modal-personalizado {
-
     position: fixed;
-
     z-index: 99999;
-
     left: 0;
-
     top: 0;
-
-    width: 100vw;
-
-    height: 100vh;
-
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.8);
-
     display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
 }
-
-
 
 .contenido-modal {
-
     background: #fff;
-
     padding: 25px;
-
     border-radius: 12px;
-
     width: 95%;
-
     max-width: 550px;
-
-    position: relative;
-
     border-top: 5px solid #52073a;
-
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 90vh;
+    overflow-y: auto;
 }
-
-
 
 .cerrar-modal {
-
     position: absolute;
-
     right: 15px;
-
     top: 10px;
-
     font-size: 28px;
-
     cursor: pointer;
-
     color: #999;
-
     font-weight: bold;
-
 }
-
-
 
 .contenido-modal h2 {
     color: #52073a;
@@ -275,8 +219,9 @@
     margin-bottom: 20px;
 }
 
-
-
+/* =========================================
+   6. DISEÑO INTERNO DEL MODAL DE EDICIÓN
+   ========================================= */
 .fila-form {
     display: flex;
     gap: 15px;
@@ -288,81 +233,68 @@
 }
 
 .grupo-form label {
-
     display: block;
-
     font-weight: bold;
-
     margin-bottom: 4px;
-
     color: #555;
-
     font-size: 0.85em;
-
     text-transform: uppercase;
-
 }
 
 .grupo-form input,
 .grupo-form select {
-
     width: 100%;
-
     padding: 10px;
-
     border: 1px solid #ddd;
-
     border-radius: 6px;
-
     box-sizing: border-box;
-
 }
-
-
 
 .btn-guardar-cambios {
-
     background: #28a745;
-
     color: #fff;
-
     border: none;
-
     padding: 14px;
-
     border-radius: 8px;
-
     cursor: pointer;
-
     width: 100%;
-
     font-weight: bold;
-
     margin-top: 10px;
-
     font-size: 1rem;
-
 }
 
 .btn-guardar-cambios:hover {
     background: #218838;
 }
 
-.btn-guardar-cambios:hover {
-    background: #218838;
+/* =========================================
+   7. DISEÑO INTERNO DEL MODAL DE DETALLES (SOLO LECTURA)
+   ========================================= */
+.grid-detalles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
 }
 
-.contenedor-ingresos {
-    padding: 25px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+.detalle-item {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid #e17203;
 }
 
-.encabezado-crud h1 {
-    color: #52073a;
-    margin-bottom: 20px;
-    font-size: 1.6rem;
-    border-left: 5px solid #e17203;
-    padding-left: 15px;
+.detalle-item span {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.detalle-item p {
+    margin: 5px 0 0;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
 }

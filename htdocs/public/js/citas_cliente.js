@@ -1,13 +1,15 @@
-//--------------------------------------------
-// LÓGICA DE CAMPOS DINÁMICOS
-//--------------------------------------------
+/* CITAS_CLIENTE.JS  */
+/*
+Este archivo de JavaScript se encarga de toda la interactividad del lado del cliente para el formulario de citas. Su función principal es mejorar la experiencia del usuario de forma dinámica: muestra u oculta campos de texto si el usuario elige opciones como "Otro", filtra las marcas disponibles dependiendo del tipo de dispositivo seleccionado, bloquea la entrada manual de marcas restringidas (como Apple), gestiona la generación de horarios disponibles en tiempo real (evitando horas ya ocupadas) e intercepta el envío del formulario para mostrar una ventana modal de confirmación con el resumen de los datos antes de registrar la cita en el servidor.
+*/
 
-// Función para mostrar/ocultar campos de texto al seleccionar "Otro"
+/* ==========================================
+   1. LÓGICA DE CAMPOS DINÁMICOS (MOSTRAR/OCULTAR "OTRO")
+   ========================================== */
 function toggleOtro(select, idContenedor) {
     const contenedor = document.getElementById(idContenedor);
     const inputInterno = contenedor.querySelector('input, textarea');
 
-    // Ahora usamos los IDs de tu base de datos (7=Otro equipo, 12=Otra marca)
     if (select.value === "7" || select.value === "12" || select.value === "Otro") {
         contenedor.style.display = "block";
         inputInterno.required = true;
@@ -19,9 +21,9 @@ function toggleOtro(select, idContenedor) {
     }
 }
 
-//--------------------------------------------
-// SELECTS ANIDADOS (FILTRAR MARCAS POR EQUIPO)
-//--------------------------------------------
+/* ==========================================
+   2. SELECTS ANIDADOS (FILTRAR MARCAS POR EQUIPO)
+   ========================================== */
 const selectTipo = document.querySelector('select[name="tipo_dispositivo"]');
 const selectMarca = document.querySelector('select[name="marca"]');
 
@@ -51,10 +53,11 @@ if (selectTipo && selectMarca) {
     });
 }
 
-//--------------------------------------------
-// VALIDACIÓN DE MARCA RESTRINGIDA (APPLE)
-//--------------------------------------------
+/* ==========================================
+   3. VALIDACIÓN DE MARCA RESTRINGIDA (APPLE)
+   ========================================== */
 const inputOtraMarca = document.querySelector('input[name="otra_marca_texto"]');
+
 if (inputOtraMarca) {
     inputOtraMarca.addEventListener('input', function (e) {
         const valor = e.target.value.toLowerCase();
@@ -65,9 +68,9 @@ if (inputOtraMarca) {
     });
 }
 
-//--------------------------------------------
-// GESTIÓN DEL MENSAJE DE CONFIRMACIÓN (MODAL)
-//--------------------------------------------
+/* ==========================================
+   4. GESTIÓN DEL MENSAJE DE CONFIRMACIÓN (MODAL)
+   ========================================== */
 const formulario = document.querySelector('form');
 const modal = document.getElementById('modalConfirmacion');
 
@@ -94,7 +97,6 @@ if (formulario && modal) {
             const fecha = document.querySelector('input[name="fecha_cita"]').value;
             const hora = document.querySelector('select[name="hora_cita"]').value;
             
-            // Inyectar datos en el Modal con el texto limpio
             document.getElementById('res-nombre').innerText = nombreCompleto;
             document.getElementById('res-equipo').innerText = `${tipoTexto} ${marcaTexto} - ${modelo}`;
             document.getElementById('res-fecha').innerText = fecha;
@@ -105,9 +107,9 @@ if (formulario && modal) {
     });
 }
 
-//--------------------------------------------
-// Función que se ejecuta al presionar "Entendido" en el modal
-//--------------------------------------------
+/* ==========================================
+   5. FUNCIÓN DE ENVÍO FINAL (DESDE EL MODAL)
+   ========================================== */
 function cerrarYEnviar() {
     const botonModal = document.querySelector('.modal-contenido .boton-agendar');
     botonModal.disabled = true;
@@ -115,9 +117,10 @@ function cerrarYEnviar() {
     botonModal.style.backgroundColor = "#ccc"; 
     formulario.submit(); 
 }
-//--------------------------------------------
-// MEJORA DE ACCESIBILIDAD
-//--------------------------------------------
+
+/* ==========================================
+   6. MEJORA DE ACCESIBILIDAD (CERRAR TOOLTIPS)
+   ========================================== */
 document.addEventListener('click', function(e) {
     const ayudaSerie = document.querySelector('.ayuda-serie');
     if (ayudaSerie && !ayudaSerie.contains(e.target)) {
@@ -125,6 +128,9 @@ document.addEventListener('click', function(e) {
     }
 });
 
+/* ==========================================
+   7. ACTUALIZACIÓN DINÁMICA DE HORARIOS DISPONIBLES
+   ========================================== */
 function actualizarHorarios() {
     const selectorHora = document.getElementById('selector_hora');
     const fechaSeleccionada = document.getElementById('fecha_cita').value;
@@ -133,7 +139,6 @@ function actualizarHorarios() {
 
     if (!fechaSeleccionada) return;
 
-    // Horarios (10:00 a 16:00)
     const horariosBase = [
         "10:00", "10:20", "10:40",
         "11:00", "11:20", "11:40",
@@ -144,10 +149,8 @@ function actualizarHorarios() {
         "16:00"
     ];
 
-    // Buscamos si la fecha seleccionada tiene horas ya reservadas en la BD
     const horasOcupadasHoy = citasOcupadas[fechaSeleccionada] || [];
 
-    // Recorremos la plantilla e insertamos solo las horas que NO estén ocupadas
     let horasDisponibles = 0;
     horariosBase.forEach(hora => {
         if (!horasOcupadasHoy.includes(hora)) {

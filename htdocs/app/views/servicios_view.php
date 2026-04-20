@@ -12,8 +12,12 @@
     
 </head>
 <body>
+
 <?php
+
+
     $ruta_prefijo = "../../"; 
+    include_once __DIR__ . "/fijos/loader_view.php";
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 <div id="contenedorBuscador" class="buscador-oculto">

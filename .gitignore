@@ -7,3 +7,5 @@ vendor
 htdocs/.env
 htdocs/credenciales.json
 *.log
+
+htdocs/.htaccess

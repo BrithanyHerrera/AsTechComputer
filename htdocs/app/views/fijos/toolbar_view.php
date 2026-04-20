@@ -54,7 +54,7 @@ $resultRecientes = $conexion->query($queryRecientes);
 <header class="navbar">
     <div class="logo">
         <a href="<?php echo $ruta_prefijo; ?>index.php">
-            <img src="<?php echo $ruta_prefijo; ?>public/img/Isologotipo_horizontal color.png" class="logo-superior" alt="Logo">
+            <img src="<?php echo $ruta_prefijo; ?>public/img/Isologotipo_horizontal_color.png" class="logo-superior" alt="Logo">
         </a>
     </div>
 

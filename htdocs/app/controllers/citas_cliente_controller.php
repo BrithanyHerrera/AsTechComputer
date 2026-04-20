@@ -1,15 +1,18 @@
 <?php
-// Usamos dirname() para subir niveles en las carpetas. 
+/* CITAS_CIENTE_CONTROLLER.PHP */
+/*
+Este archivo actúa como el Controlador (Controller) principal para el proceso de agendamiento de citas del cliente.
+*/
+
+// Usamos dirname() para subir niveles en las carpetas y cargar Composer
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
-// Para versiones modernas (v5.x)
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
 
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/citas_model.php';
 
-// Solo dejamos las librerías de Google. Meta API funciona nativamente con cURL de PHP.
 use Google\Client;
 use Google\Service\Calendar;
 use Google\Service\Calendar\Event;
@@ -31,24 +34,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $modelo = $_POST['modelo'];
     $numero_serie = !empty($_POST['numero_serie']) ? $_POST['numero_serie'] : null;
     
+    // AQUÍ ESTÁ LA MAGIA: Ya no concatenamos, los guardamos limpios
     $falla_lista = $_POST['problema_lista'];
     $falla_detalle = $_POST['problema_detalle'];
-    $problema = (!empty($falla_lista)) ? strtoupper($falla_lista) . ": " . $falla_detalle : $falla_detalle;
+    
+    $problema = $falla_lista; 
+    $detalle_falla = $falla_detalle; // NUEVA VARIABLE
     
     $fecha = $_POST['fecha_cita'];
     $hora = $_POST['hora_cita'];
 
     try {
-        // FASE 0: VALIDAR DISPONIBILIDAD
         if ($modeloCita->verificarDisponibilidad($fecha, $hora)) {
             $horario_ocupado = true;
         } else {
             
-            // FASE 1: TRADUCCIÓN PARA CALENDARIO
             $nombre_marca_cal = ($id_marca == "12") ? $marca_otro : $modeloCita->obtenerNombreMarca($id_marca);
             $nombre_tipo_cal = ($id_tipo_equipo == "7") ? $tipo_equipo_otro : $modeloCita->obtenerNombreTipo($id_tipo_equipo);
 
-            // FASE 2: GOOGLE CALENDAR
             $client = new Client();
             $client->setAuthConfig(dirname(__DIR__, 2) . '/credenciales.json');
             $client->addScope(Calendar::CALENDAR);
@@ -60,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $event = new Event([
                 'summary' => "SERVICIO: $nombreCompleto - $nombre_tipo_cal",
-                'description' => "Marca: $nombre_marca_cal\nModelo: $modelo\nFalla: $problema\nWhatsApp: $whatsapp",
+                // NUEVO: Se agrega el detalle a la descripción de Google Calendar
+                'description' => "Marca: $nombre_marca_cal\nModelo: $modelo\nFalla: $problema\nDetalle: $detalle_falla\nWhatsApp: $whatsapp",
                 'start' => ['dateTime' => $start_time, 'timeZone' => 'America/Mexico_City'],
                 'end' => ['dateTime' => $end_time, 'timeZone' => 'America/Mexico_City'],
                 'colorId' => '6', 
@@ -69,45 +73,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $evento_creado = $service->events->insert($calendarId, $event);
             $id_google_calendar = $evento_creado->getId();
 
-            // FASE 3: GUARDAR EN MYSQL
-            $datosDB = compact('id_google_calendar', 'nombre', 'apellido', 'whatsapp', 'id_tipo_equipo', 'tipo_equipo_otro', 'id_marca', 'marca_otro', 'modelo', 'numero_serie', 'problema', 'fecha', 'hora');
+            // NUEVO: Agregamos detalle_falla al compact para enviarlo al modelo
+            $datosDB = compact('id_google_calendar', 'nombre', 'apellido', 'whatsapp', 'id_tipo_equipo', 'tipo_equipo_otro', 'id_marca', 'marca_otro', 'modelo', 'numero_serie', 'problema', 'detalle_falla', 'fecha', 'hora');
             
             $modeloCita->registrarCita($datosDB);
 
-            // FASE 4: WHATSAPP (API OFICIAL META CON PLANTILLA)
             try {
-                // Las variables ocultas de tu archivo .env
                 $token = $_ENV['META_WA_TOKEN'];
                 $phone_id = $_ENV['META_PHONE_ID'];
                 
-                // Meta requiere el código de país (52 para México) sin el signo de '+'
                 $telefono_destino = "52" . ltrim($whatsapp, '+'); 
 
-                // Endpoint de la API Graph v25.0
                 $url = "https://graph.facebook.com/v25.0/" . $phone_id . "/messages";
 
-                // Armado del JSON para la plantilla aprobada
                 $data = [
                     "messaging_product" => "whatsapp",
                     "to" => $telefono_destino,
                     "type" => "template",
                     "template" => [
-                        "name" => "confirmacion_cita_astech", // Nombre exacto de tu plantilla en Meta
-                        "language" => [ "code" => "es_MX" ],  // O el que hayas usado, ej. 'es'
+                        "name" => "confirmacion_cita_astech", 
+                        "language" => [ "code" => "es_MX" ],  
                         "components" => [
                             [
                                 "type" => "body",
                                 "parameters" => [
-                                    [ "type" => "text", "text" => $nombre ],      // Valor para {{1}}
-                                    [ "type" => "text", "text" => $fecha ],       // Valor para {{2}}
-                                    [ "type" => "text", "text" => $hora ]         // Valor para {{3}}
+                                    [ "type" => "text", "text" => $nombre ],      
+                                    [ "type" => "text", "text" => $fecha ],       
+                                    [ "type" => "text", "text" => $hora ]         
                                 ]
                             ]
                         ]
                     ]
                 ];
 
-                // Petición cURL hacia los servidores de Facebook
                 $options = [
                     CURLOPT_URL => $url,
                     CURLOPT_RETURNTRANSFER => true,
@@ -122,10 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $curl = curl_init();
                 curl_setopt_array($curl, $options);
                 $response = curl_exec($curl);
-                // Si algo falla, el response de Meta te dice por qué (ideal para revisar los logs de InfinityFree)
                 curl_close($curl);
 
-            } catch (Exception $e) { /* Silencioso para que no impida agendar la cita */ }
+            } catch (Exception $e) { }
 
             $exito = true;
         }
@@ -134,15 +131,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// ==========================================
-// OBTENER CATÁLOGOS PARA LA VISTA
-// ==========================================
 $query_tipos = $modeloCita->obtenerTiposFormulario();
 $query_marcas = $modeloCita->obtenerMarcasFormulario();
-$query_servicios = $modeloCita->obtenerServiciosActivos(); // NUEVA LÍNEA: Traemos los servicios
+$query_servicios = $modeloCita->obtenerServiciosActivos(); 
 $json_relaciones = json_encode($modeloCita->obtenerRelaciones());
 $json_ocupadas = json_encode($modeloCita->obtenerCitasOcupadas());
 
-// CARGAR LA VISTA DEL CLIENTE
 require_once dirname(__DIR__) . '/views/citas_cliente_view.php';
 ?>

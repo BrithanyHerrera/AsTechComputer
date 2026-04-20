@@ -6,3 +6,5 @@
 # Bloquear acceso desde el navegador a la carpeta vendor
 RewriteEngine On
 RewriteRule ^vendor/.*$ - [F,L]
+
+ErrorDocument 404 /app/views/fijos/error_404.php

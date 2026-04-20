@@ -7,6 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
+    
     <div class="contenedor-admin">
         <main class="contenido-principal">
             <h1>Análisis de Negocio As Tech</h1>

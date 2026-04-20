@@ -1,3 +1,12 @@
+<?php
+/* CITAS_CRUD_VIEW.PHP - VERSIÓN INTEGRADA */
+/* Cambios realizados:
+   1. Mapeo exacto de JSON para evitar 'undefined' en los modales.
+   2. Integración del campo 'Estado' dentro del formulario de edición (POST).
+   3. Limpieza de la columna de estado en la tabla (ahora es solo visual).
+*/
+?>
+
 <link rel="stylesheet" href="../../public/css/citas_crud.css">
 
 <div class="contenedor-ingresos">
@@ -15,8 +24,8 @@
                 <select id="filtroEstado" onchange="filtrarTabla()">
                     <option value="todos">Todos los estados</option>
                     <option value="pendiente">Pendiente</option>
-                    <option value="en-proceso">En proceso</option>
-                    <option value="listo">Listo</option>
+                    <option value="atendida">Atendida</option>
+                    <option value="cancelada">Cancelada</option>
                 </select>
             </div>
 
@@ -33,7 +42,7 @@
             <thead>
                 <tr>
                     <th>Nombre Cliente</th>
-                    <th>Falla</th>
+                    <th>Motivo</th>
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Dispositivo</th>
@@ -47,22 +56,37 @@
             <tbody>
                 <?php foreach ($eventos_google as $event):
                     $start_dt = $event->start->dateTime ?: $event->start->date;
-                    $summary_clean = str_replace("SERVICIO: ", "", $event->getSummary());
-                    $nombre_buscar = strtoupper(explode(' - ', $summary_clean)[0]);
-                    $datos_db = $mapa_db[$nombre_buscar] ?? null;
+                    $id_evento = $event->getId();
+                    $datos_db = $mapa_db[$id_evento] ?? null; 
                     
-                    $nombre_mostrar = isset($datos_db) ? $datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] : $summary_clean;
+                    $summary_clean = str_replace("SERVICIO: ", "", $event->getSummary());
+                    $nombre_google = explode(' - ', $summary_clean)[0];
+                    
+                    $nombre_mostrar = isset($datos_db) ? $datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] : $nombre_google;
                     $estado_actual = strtolower($datos_db['estado'] ?? 'pendiente');
                     $clase_estado = str_replace(' ', '-', $estado_actual);
                     $fecha_formato_filtro = date('Y-m-d', strtotime($start_dt));
+
+                    // Datos de respaldo para el JSON
+                    $partes_nombre = explode(' ', $nombre_mostrar);
+                    $nombre_f = $datos_db['nombre_cliente'] ?? array_shift($partes_nombre);
+                    $apellido_f = $datos_db['apellido_cliente'] ?? implode(' ', $partes_nombre);
                 ?>
+
                     <tr class="fila-registro" 
                         data-nombre="<?= strtolower(htmlspecialchars($nombre_mostrar)) ?>" 
                         data-estado="<?= $clase_estado ?>" 
                         data-fecha="<?= $fecha_formato_filtro ?>">
                         
                         <td><strong><?= htmlspecialchars($nombre_mostrar) ?></strong></td>
-                        <td><span class="falla-txt"><?= htmlspecialchars($datos_db['problema_reportado'] ?? 'N/A') ?></span></td>
+                        <td>
+                            <span class="falla-txt">
+                                <strong><?= htmlspecialchars($datos_db['problema_reportado'] ?? 'N/A') ?></strong>
+                            </span><br>
+                            <small style="color: #666;">
+                                <?= htmlspecialchars($datos_db['detalle_falla'] ?? '') ?>
+                            </small>
+                        </td>
                         <td><?= date('d/m/Y', strtotime($start_dt)) ?></td>
                         <td><?= date('H:i', strtotime($start_dt)) ?></td>
                         <td><?= htmlspecialchars($datos_db['tipo'] ?? 'N/A') ?></td>
@@ -72,28 +96,50 @@
                         
                         <td>
                             <span class="status-pill <?= $clase_estado ?>">
-                                <?= ucfirst($datos_db['estado'] ?? 'Pendiente') ?>
+                                <?= ucfirst($estado_actual) ?>
                             </span>
                         </td>
 
                         <td class="acciones">
-                            <button class="btn-editar" type="button" title="Editar" onclick='abrirModalEditar(
-                                "<?= $event->getId() ?>", 
-                                "<?= $datos_db['id_cita'] ?? '' ?>", 
-                                "<?= $datos_db['nombre_cliente'] ?? '' ?>", 
-                                "<?= $datos_db['apellido_cliente'] ?? '' ?>",
-                                "<?= $datos_db['id_marca'] ?? '' ?>",
-                                "<?= $datos_db['id_tipo_equipo'] ?? '' ?>",
-                                "<?= addslashes($datos_db['modelo'] ?? '') ?>",
-                                "<?= addslashes($datos_db['numero_serie'] ?? '') ?>",
-                                "<?= addslashes(str_replace(["\r", "\n"], ' ', $datos_db['problema_reportado'] ?? '')) ?>",
-                                "<?= $datos_db['whatsapp'] ?? '' ?>",
-                                "<?= $fecha_formato_filtro ?>",
-                                "<?= date('H:i', strtotime($start_dt)) ?>"
-                            )'>
+                            <button class="btn-ver" type="button" title="Ver Detalles"
+                                    data-cita='<?= htmlspecialchars(json_encode([
+                                        "nombre"   => $nombre_f,
+                                        "apellido" => $apellido_f,
+                                        "tipoTxt"  => $datos_db['tipo'] ?? "N/A",
+                                        "marcaTxt" => $datos_db['marca'] ?? "N/A",
+                                        "modelo"   => $datos_db['modelo'] ?? "N/A",
+                                        "serie"    => $datos_db['numero_serie'] ?? "N/V",
+                                        "falla"    => $datos_db['problema_reportado'] ?? "N/A",
+                                        "whatsapp" => $datos_db['whatsapp'] ?? "No registrado",
+                                        "fecha"    => date("d/m/Y", strtotime($start_dt)),
+                                        "hora"     => date("H:i", strtotime($start_dt))
+                                    ]), ENT_QUOTES, "UTF-8") ?>'
+                                    onclick="abrirModalVer(this)">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                            <button class="btn-editar" type="button" title="Editar" 
+                                    data-cita='<?= htmlspecialchars(json_encode([
+                                        "googleId" => $id_evento,
+                                        "dbId"     => $datos_db['id_cita'] ?? "",
+                                        "nombre"   => $nombre_f,
+                                        "apellido" => $apellido_f,
+                                        "idMarca"  => $datos_db['id_marca'] ?? "",
+                                        "idTipo"   => $datos_db['id_tipo_equipo'] ?? "",
+                                        "modelo"   => $datos_db['modelo'] ?? "",
+                                        "serie"    => $datos_db['numero_serie'] ?? "",
+                                        "falla"    => $datos_db['problema_reportado'] ?? "",
+                                        "detalle" => $datos_db['detalle_falla'] ?? "",
+                                        "whatsapp" => $datos_db['whatsapp'] ?? "",
+                                        "fecha"    => $fecha_formato_filtro,
+                                        "hora"     => date("H:i", strtotime($start_dt)),
+                                        "estado"   => $estado_actual
+                                    ]), ENT_QUOTES, "UTF-8") ?>'
+                                    onclick="abrirModalEditar(this)">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
-                            <a href="?seccion=citas&delete_id=<?= $event->getId() ?>&db_id=<?= $datos_db['id_cita'] ?? '' ?>"
+
+                            <a href="?seccion=citas&delete_id=<?= $id_evento ?>&db_id=<?= $datos_db['id_cita'] ?? '' ?>"
                                class="btn-eliminar" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar esta cita?')">
                                <i class="fa-solid fa-trash"></i>
                             </a>
@@ -105,10 +151,28 @@
     </div>
 </div>
 
+<div id="modalVer" class="modal-personalizado">
+    <div class="contenido-modal">
+        <span class="cerrar-modal" onclick="cerrarModalVer()">&times;</span>
+        <h2><i class="fa-solid fa-address-card"></i> Detalles del Servicio</h2>
+        <div class="grid-detalles">
+            <div class="detalle-item"><span>Cliente</span><p id="v_cliente"></p></div>
+            <div class="detalle-item"><span>WhatsApp</span><p id="v_wa"></p></div>
+            <div class="detalle-item"><span>Dispositivo</span><p id="v_dispositivo"></p></div>
+            <div class="detalle-item"><span>Marca y Modelo</span><p id="v_marca_modelo"></p></div>
+            <div class="detalle-item"><span>No. Serie</span><p id="v_serie"></p></div>
+            <div class="detalle-item"><span>Falla Reportada</span><p id="v_falla"></p></div>
+            <div class="detalle-item"><span>Fecha</span><p id="v_fecha"></p></div>
+            <div class="detalle-item"><span>Hora</span><p id="v_hora"></p></div>
+        </div>
+    </div>
+</div>
+
 <div id="modalEditar" class="modal-personalizado">
     <div class="contenido-modal">
         <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
         <h2><i class="fa-solid fa-edit"></i> Editar Información</h2>
+        
         <form method="POST">
             <input type="hidden" name="accion" value="actualizar">
             <input type="hidden" id="m_google_id" name="modal_google_id">
@@ -148,13 +212,34 @@
             <div class="grupo-form"><label>Modelo:</label><input type="text" id="m_modelo" name="modelo" required></div>
             
             <div class="grupo-form">
-                <label>Falla:</label>
+                <label>Falla / Motivo del Servicio:</label>
                 <select id="m_falla" name="falla" required>
-                    <option value="Mantenimiento">Mantenimiento</option>
-                    <option value="Pantalla no funciona">Pantalla no funciona</option>
-                    <option value="No enciende">No enciende</option>
-                    <option value="Lento / Virus">Lento / Virus</option>
-                    <option value="Otro">Otro</option>
+                    <option value="">Seleccione un servicio...</option>
+                    <?php 
+                    // Reiniciamos el puntero por si acaso y recorremos los servicios
+                    if($servicios_res):
+                        $servicios_res->data_seek(0);
+                        while ($s = $servicios_res->fetch_assoc()): ?>
+                            <option value="<?= htmlspecialchars($s['tipo_servicio']) ?>">
+                                <?= htmlspecialchars($s['tipo_servicio']) ?>
+                            </option>
+                        <?php endwhile; 
+                    endif; ?>
+                    <option value="Otro">Otro / No listado</option>
+                </select>
+            </div>
+
+            <div class="grupo-form">
+                <label>Descripción detallada (Opcional):</label>
+                <textarea id="m_detalle" name="detalle_falla" rows="3" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+            </div>
+
+            <div class="grupo-form">
+                <label>Estado de la Cita:</label>
+                <select id="m_estado" name="estado" required>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="atendida">Atendida</option>
+                    <option value="cancelada">Cancelada</option>
                 </select>
             </div>
 
@@ -174,4 +259,13 @@
 <script>
     const horasOcupadas = <?= $json_ocupadas ?? '{}' ?>;
 </script>
+
+<?php if (!empty($alerta_script)): ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            <?php echo $alerta_script; ?>
+        });
+    </script>
+<?php endif; ?>
+
 <script src="../../public/js/citas_crud.js"></script>

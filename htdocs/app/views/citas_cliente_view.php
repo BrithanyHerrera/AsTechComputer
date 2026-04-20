@@ -1,3 +1,11 @@
+<script>
+    /* CITAS_CLIENTE_VIEW.PHP */
+    /*
+    Este archivo es la Vista principal del sistema de agendamiento para los clientes. Su función es renderizar el formulario interactivo donde los usuarios ingresan sus datos personales, la información de su equipo (marca, modelo, falla) y seleccionan la fecha y hora de su cita. Además, incluye la lógica de presentación para mostrar alertas dinámicas (usando SweetAlert2) en caso de éxito, error o si el horario elegido ya fue ocupado, integrándose fluidamente con el Toolbar y Footer de As Tech Computer.
+    */
+</script>
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,17 +21,13 @@
     <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/citas_cliente.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        // Recibimos las variables JSON desde el controlador
-        const relacionesEquipoMarca = <?php echo $json_relaciones ?? '{}'; ?>;
-        const citasOcupadas = <?php echo $json_ocupadas ?? '{}'; ?>;
-    </script>
 </head>
 
 <body>
+    <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
+    
     <?php
-    $ruta_prefijo = "../../"; 
+    $ruta_prefijo = "../../";
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 
@@ -54,7 +58,8 @@
 
             <div class="grupo-campo">
                 <label>WhatsApp de Contacto (Número de Teléfono)</label>
-                <input type="tel" name="whatsapp" class="control" required>
+                <input type="tel" name="whatsapp" id="whatsapp_input" class="control" maxlength="10" minlength="10"
+                    pattern="[0-9]{10}" title="Por favor, ingresa exactamente 10 números." required>
             </div>
 
             <div class="fila-doble">
@@ -99,8 +104,8 @@
 
             <div class="fila-doble">
                 <div class="grupo-campo">
-                    <label>Modelo <span class="ayuda-modelo">?</span></label>
-                    <input type="text" name="modelo" class="control" required>
+                    <label>Modelo (Opcional)<span class="ayuda-modelo">?</span></label>
+                    <input type="text" name="modelo" class="control">
                 </div>
                 <div class="grupo-campo">
                     <label>
@@ -113,28 +118,27 @@
 
             <div class="grupo-campo">
                 <label>Problema o Falla</label>
-                <p class="nota-formulario" style="font-size: 13px; margin-bottom: 8px;">Puedes seleccionar una opción rápida y/o detallar el problema abajo.</p>
+                <p class="nota-formulario" style="font-size: 13px; margin-bottom: 8px;">Puedes seleccionar una opción
+                    rápida y/o detallar el problema abajo.</p>
 
                 <select name="problema_lista" class="control" style="margin-bottom: 10px;">
                     <option value="">Opciones rápidas...</option>
-                    
+
                     <?php
-                    // Recorremos los servicios que trajimos de la base de datos
                     if (isset($query_servicios) && $query_servicios->num_rows > 0) {
                         while ($fila = $query_servicios->fetch_assoc()) {
-                            // Usamos el 'tipo_servicio' como value para que tu controlador actual 
-                            // lo guarde perfectamente como texto en 'problema_reportado'
                             echo '<option value="' . htmlspecialchars($fila['tipo_servicio']) . '">' . htmlspecialchars($fila['tipo_servicio']) . '</option>';
                         }
                     }
                     ?>
-                    
+
                     <option value="otro">Otro</option>
                 </select>
 
                 <div id="detalle_falla_box">
                     <label> Descripción de detalles: </label>
-                    <input type="text" name="problema_detalle" class="control" placeholder="(Marcas, ruidos, errores, etc.)">
+                    <input type="text" name="problema_detalle" class="control"
+                        placeholder="(Marcas, ruidos, errores, etc.)">
                 </div>
             </div>
 
@@ -177,64 +181,69 @@
         </form>
     </div>
 
-    <?php if(isset($horario_ocupado) && $horario_ocupado): ?>
-    <script>
-        setTimeout(() => {
+    <?php if (isset($horario_ocupado) && $horario_ocupado): ?>
+        <script>
+            setTimeout(() => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Horario Ocupado',
+                    text: 'Este horario acaba de ser reservado. Elige otro, por favor.',
+                    confirmButtonColor: '#e17203'
+                }).then(() => { window.history.back(); });
+            }, 100);
+        </script>
+    <?php endif; ?>
+
+    <?php if (isset($exito) && $exito): ?>
+        <script>
+            let timerInterval;
+            Swal.fire({
+                icon: 'success',
+                title: '¡Cita Agendada!',
+                html: 'Tu solicitud se registró correctamente.<br>Serás redirigido en breve.',
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                    const b = Swal.getHtmlContainer().querySelector('b');
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft();
+                    }, 100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
+                }
+            }).then((result) => {
+                window.location.href = window.location.href;
+            });
+        </script>
+    <?php endif; ?>
+
+    <?php if (isset($error_msg)): ?>
+        <script>
             Swal.fire({
                 icon: 'error',
-                title: 'Horario Ocupado',
-                text: 'Este horario acaba de ser reservado. Elige otro, por favor.',
+                title: 'Error de Registro',
+                text: '<?php echo addslashes($error_msg); ?>',
+                confirmButtonText: 'Reintentar',
                 confirmButtonColor: '#e17203'
-            }).then(() => { window.history.back(); });
-        }, 100);
-    </script>
-    <?php endif; ?>
-
-    <?php if(isset($exito) && $exito): ?>
-    <script>
-        let timerInterval;
-        Swal.fire({
-            icon: 'success',
-            title: '¡Cita Agendada!',
-            html: 'Tu solicitud se registró correctamente.<br>Serás redirigido en <b></b> milisegundos.',
-            timer: 3000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-            didOpen: () => {
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector('b');
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft();
-                }, 100);
-            },
-            willClose: () => {
-                clearInterval(timerInterval);
-            }
-        }).then((result) => {
-            window.location.href = window.location.href; 
-        });
-    </script>
-    <?php endif; ?>
-
-    <?php if(isset($error_msg)): ?>
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error de Registro',
-            text: '<?php echo addslashes($error_msg); ?>',
-            confirmButtonText: 'Reintentar',
-            confirmButtonColor: '#e17203'
-        }).then(() => {
-            window.history.back();
-        });
-    </script>
+            }).then(() => {
+                window.history.back();
+            });
+        </script>
     <?php endif; ?>
 
     <script src="../../public/js/citas_cliente.js"></script>
+    <script>
+        const relacionesEquipoMarca = <?php echo $json_relaciones ?? '{}'; ?>;
+        const citasOcupadas = <?php echo $json_ocupadas ?? '{}'; ?>;
+    </script>
 
     <?php
-    $ruta_prefijo = "../../../"; 
+    $ruta_prefijo = "../../../";
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>
 </body>
+
 </html>

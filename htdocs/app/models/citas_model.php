@@ -1,14 +1,16 @@
 <?php
+/* CITAS_MODEL.PHP  */
+/*
+Este archivo es el Modelo (Model) para el cliente en tu arquitectura MVC.
+*/
+
 class CitaModel {
     private $conexion;
 
     public function __construct($conexion) {
         $this->conexion = $conexion;
     }
-
-    // ==========================================
-    // MÉTODOS PARA EL ADMINISTRADOR
-    // ==========================================
+       
     public function limpiarCitasExpiradas() {
         $sql = "DELETE FROM citas_web WHERE TIMESTAMP(fecha_cita, hora_cita) < DATE_SUB(NOW(), INTERVAL 1 MINUTE)";
         return $this->conexion->query($sql);
@@ -47,16 +49,11 @@ class CitaModel {
         return $mapa_db;
     }
 
-    // Obtener los servicios activos para el combo de "Problema o Falla"
     public function obtenerServiciosActivos() {
         $sql = "SELECT id_servicio, tipo_servicio FROM servicios WHERE estado = 'activo' ORDER BY tipo_servicio ASC";
-        $resultado = $this->conexion->query($sql);
-        return $resultado;
+        return $this->conexion->query($sql);
     }
 
-    // ==========================================
-    // MÉTODOS PARA EL CLIENTE
-    // ==========================================
     public function verificarDisponibilidad($fecha, $hora) {
         $hora_bd = $hora . ":00"; 
         $sql = "SELECT id_cita FROM citas_web WHERE fecha_cita = ? AND hora_cita = ?";
@@ -69,14 +66,14 @@ class CitaModel {
         return $ocupado;
     }
 
-    // ¡AQUÍ ESTÁ EL CAMBIO PRINCIPAL!
+    // NUEVO: Función actualizada para insertar en 14 columnas, incluyendo detalle_falla
     public function registrarCita($datos) {
-        $sql = "INSERT INTO citas_web (id_google_calendar, nombre_cliente, apellido_cliente, whatsapp, id_tipo_equipo, tipo_equipo_otro, id_marca, marca_otro, modelo, numero_serie, problema_reportado, fecha_cita, hora_cita) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO citas_web (id_google_calendar, nombre_cliente, apellido_cliente, whatsapp, id_tipo_equipo, tipo_equipo_otro, id_marca, marca_otro, modelo, numero_serie, problema_reportado, detalle_falla, fecha_cita, hora_cita) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conexion->prepare($sql);
         
-        // Se agregó una 's' al inicio del string de tipos y la variable $datos['id_google_calendar']
-        $stmt->bind_param("ssssisissssss", $datos['id_google_calendar'], $datos['nombre'], $datos['apellido'], $datos['whatsapp'], $datos['id_tipo_equipo'], $datos['tipo_equipo_otro'], $datos['id_marca'], $datos['marca_otro'], $datos['modelo'], $datos['numero_serie'], $datos['problema'], $datos['fecha'], $datos['hora']);
+        // Exactamente 14 parámetros (ssssisisssssss)
+        $stmt->bind_param("ssssisisssssss", $datos['id_google_calendar'], $datos['nombre'], $datos['apellido'], $datos['whatsapp'], $datos['id_tipo_equipo'], $datos['tipo_equipo_otro'], $datos['id_marca'], $datos['marca_otro'], $datos['modelo'], $datos['numero_serie'], $datos['problema'], $datos['detalle_falla'], $datos['fecha'], $datos['hora']);
         
         if (!$stmt->execute()) { throw new Exception("Error DB: " . $stmt->error); }
         $stmt->close();
@@ -93,9 +90,6 @@ class CitaModel {
         return ($q->num_rows > 0) ? $q->fetch_assoc()['tipo'] : null;
     }
 
-    // ==========================================
-    // NUEVOS MÉTODOS PARA EL FORMULARIO DEL CLIENTE
-    // ==========================================
     public function obtenerTiposFormulario() {
         return $this->conexion->query("SELECT id_tipo_equipo, tipo FROM tipos_equipo WHERE id_tipo_equipo != 7 ORDER BY tipo ASC");
     }
@@ -120,7 +114,6 @@ class CitaModel {
         $ocupadas = [];
         if ($q) {
             while ($row = $q->fetch_assoc()) {
-                // Solo tomamos H:i (ej. 10:00)
                 $ocupadas[$row['fecha_cita']][] = substr($row['hora_cita'], 0, 5); 
             }
         }

@@ -1,14 +1,26 @@
+/* CONTACTO.CSS */
+/*
+Este archivo define las hojas de estilo en cascada (CSS) específicas para la sección de contacto de ASTECH COMPUTER. Su propósito principal es estructurar visualmente el formulario de envío de mensajes, la columna de información (que incluye el mapa interactivo de ubicación) y el bloque de redes sociales. Controla la paleta de colores corporativa, establece el diseño de cuadrícula (grid) para alinear los elementos en pantallas grandes y aplica las reglas de diseño responsivo para garantizar su correcta visualización en dispositivos móviles.
+*/
+
+/* ==========================================
+   1. VARIABLES GLOBALES Y PALETA DE COLORES
+   ========================================== */
 :root {
-  --naranja-principal: #e17203; 
-    --purpura-oscuro: #52073a;    
-    --blanco-puro: #FFFFFF;      
-    --negro-texto: #000000;       
-    --gris-suave: #656464b2;        
-    --fondo-minimalista: rgba(224, 224, 224, 0.562); 
+    --naranja-principal: #e17203;
+    --purpura-oscuro: #52073a;
+    --blanco-puro: #FFFFFF;
+    --negro-texto: #000000;
+    --gris-suave: #656464b2;
+    --fondo-minimalista: rgba(224, 224, 224, 0.562);
 }
-h1{
+
+/* ==========================================
+   2. ESTILOS GENERALES (CUERPO Y TÍTULOS)
+   ========================================== */
+h1 {
     color: var(--naranja-principal);
-    margin:-10px;
+    margin: -10px;
 }
 
 body {
@@ -17,32 +29,25 @@ body {
     margin: 0;
 }
 
+/* ==========================================
+   3. CONTENEDOR PRINCIPAL (GRID LAYOUT)
+   ========================================== */
 .main-container {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     background: #fff;
-    margin: 30px auto 80px auto; 
+    margin: 30px auto 80px auto;
     width: 80%;
     max-width: 1200px;
-    min-height: 500px; 
+    min-height: 500px;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.288);
 }
 
-.boton-submit{
-    background-color:#52073a;
-     color: white;
-      cursor: pointer; 
-      margin-top:-50px;
-}
-.boton-submit:hover{
-    background-color:#000000;
-     color: white;
-      cursor: pointer; 
-      margin-top:-50px;
-}
-
+/* ==========================================
+   4. ESTILOS DEL FORMULARIO Y CONTROLES
+   ========================================== */
 .form-section {
     padding: 40px;
 }
@@ -68,8 +73,8 @@ label {
     color: var(--purpura-oscuro);
 }
 
-
-input, textarea {
+input,
+textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #cbd5e1;
@@ -78,9 +83,12 @@ input, textarea {
     box-sizing: border-box;
 }
 
-button {
-    background: var(--primary);
-    color: white;
+/* ==========================================
+   5. BOTONES DE ACCIÓN Y SUS ESTADOS
+   ========================================== */
+.boton-submit {
+    background-color: var(--purpura-oscuro); 
+    color: var(--blanco-puro);
     border: none;
     padding: 15px;
     width: 100%;
@@ -88,13 +96,24 @@ button {
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
+    margin-top: 10px;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-button:hover {
-    background: var(--accent);
+.boton-submit:hover {
+    background-color: var(--negro-texto); 
+    transform: translateY(-4px); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
+.boton-submit:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================
+   6. SECCIÓN DE INFORMACIÓN Y MAPA DE UBICACIÓN
+   ========================================== */
 .info-section {
     background: var(--naranja-principal);
     color: white;
@@ -111,23 +130,25 @@ button:hover {
     margin: 20px 0;
 }
 
-
 .info-section {
-    position: relative; 
-    padding-bottom: 60px; 
+    position: relative;
+    padding-bottom: 60px;
 }
 
+/* ==========================================
+   7. ICONOS DE REDES SOCIALES E INTERACCIONES
+   ========================================== */
 .social-icons {
     position: absolute;
-    top: 500px; 
-  right:100px;
+    top: 500px;
+    right: 100px;
     display: flex;
     gap: 15px;
-    background: white; 
+    background: white;
     padding: 10px 20px;
     border-radius: 50px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    z-index: 10; 
+    z-index: 10;
 }
 
 .social-icons a {
@@ -137,25 +158,40 @@ button:hover {
 
 .social-icons i {
     font-size: 28px;
-    color: #52073a; 
+    color: #52073a;
     display: block;
 }
-
 
 .social-icons a:hover {
     transform: translateY(-5px);
 }
 
-.fa-square-whatsapp:hover { color: #25D366; }
-.fa-square-instagram:hover { color: #E1306C; }
-.fa-square-facebook:hover { color: #1877F2; }
-.fa-tiktok:hover { color: #000000; }
-.fa-square-youtube:hover { color: #FF0000; }
+.fa-square-whatsapp:hover {
+    color: #25D366;
+}
 
+.fa-square-instagram:hover {
+    color: #E1306C;
+}
 
+.fa-square-facebook:hover {
+    color: #1877F2;
+}
+
+.fa-tiktok:hover {
+    color: #000000;
+}
+
+.fa-square-youtube:hover {
+    color: #FF0000;
+}
+
+/* ==========================================
+   8. ADAPTABILIDAD A DISPOSITIVOS MÓVILES (RESPONSIVE)
+   ========================================== */
 @media (max-width: 768px) {
     .social-icons {
-        position: static; 
+        position: static;
         margin: 20px auto;
         justify-content: center;
         box-shadow: none;
@@ -163,5 +199,7 @@ button:hover {
 }
 
 @media (max-width: 768px) {
-    .main-container { grid-template-columns: 1fr; }
+    .main-container {
+        grid-template-columns: 1fr;
+    }
 }

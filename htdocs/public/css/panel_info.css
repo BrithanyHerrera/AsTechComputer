@@ -1,0 +1,44 @@
+/* ========================================================
+   ESTILOS: panel_info.css
+   UBICACIÓN: public/css/panel_info.css
+   ======================================================== */
+.contenedor-dashboard { padding: 30px; background-color: #f7f7f7; min-height: 100vh; font-family: 'Lato', sans-serif; }
+.bitacora-panel { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.titulo-panel { color: #52073a; border-bottom: 2px solid #e17203; padding-bottom: 10px; margin-bottom: 20px; }
+
+/* Píldora de Usuario Superior */
+.pildora-usuario { display: inline-flex; align-items: center; background-color: #bba8b4; border-radius: 30px; padding: 5px 20px 5px 5px; margin-bottom: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.icono-usuario { background-color: #52073a; color: #ffffff; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 16px; }
+.texto-usuario { color: #000000; font-weight: 600; font-size: 16px; }
+
+/* Barra de Filtros (Estilo As Tech) */
+.barra-filtros { display: flex; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: flex-end; border: 1px solid #eee; }
+.filtro-grupo { display: flex; flex-direction: column; gap: 5px; flex-grow: 1; }
+.filtro-grupo.buscador { flex-direction: row; align-items: center; background: white; border: 1px solid #ddd; border-radius: 8px; padding: 0 10px; flex-grow: 2; }
+.filtro-grupo.buscador input { border: none; width: 100%; box-shadow: none; outline: none;}
+.filtro-grupo label { font-weight: bold; color: #555; font-size: 0.85rem; }
+.filtro-grupo input, .filtro-grupo select { padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-size: 0.9rem; width: 100%; box-sizing: border-box; }
+.btn-limpiar { background: #666; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; height: 38px; }
+.btn-limpiar:hover { background: #333; }
+
+/* Tabla Estilizada */
+.tabla-responsiva { width: 100%; overflow-x: auto; }
+.tabla-admin { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; min-width: 800px; }
+.tabla-admin th { background-color: #52073a; color: white; padding: 12px; }
+.tabla-admin th:first-child { border-radius: 5px 0 0 0; }
+.tabla-admin th:last-child { border-radius: 0 5px 0 0; }
+.tabla-admin td { padding: 12px; border-bottom: 1px solid #eaeaea; }
+.fila-panel-info:hover { background-color: #fdfafc !important; }
+.td-detalle { color: #444; word-wrap: break-word; max-width: 300px; }
+
+/* Elementos visuales de la tabla */
+.badge-accion { background-color: #f0f0f0; border: 1px solid #ddd; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; color: #333; }
+.mensaje-vacio { padding: 20px; text-align: center; color: #666; font-style: italic; background: #f9f9f9; border-radius: 5px; }
+.mensaje-vacio i { font-size: 24px; color: #ccc; margin-bottom: 10px; display: block; }
+
+/* Status Pills (Colores de Puestos) */
+.status-pill { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+.rol-administrador { background: #e17203; color: white; } 
+.rol-gerente { background: #4a148c; color: white; } 
+.rol-recepcion { background: #cce5ff; color: #004085; }
+.rol-tecnico { background: #e2e3e5; color: #383d41; }
