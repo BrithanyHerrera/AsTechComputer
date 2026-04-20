@@ -13,7 +13,7 @@ $accion = $_GET['accion'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($accion == 'entregar') {
         $modeloRegistros->entregarEquipo($_POST['folio'], $_POST['id_gabinete']);
-        header("Location: administracion_controller.php?seccion=registrosCRUD");
+        header("Location: administracion_controller.php?seccion=registros_ingresados_crud_view");
         exit;
     }
     
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST['apellido_cliente'],
             $_POST['telefono_cliente']
         );
-        header("Location: administracion_controller.php?seccion=registrosCRUD");
+        header("Location: administracion_controller.php?seccion=registros_ingresados_crud_view");
         exit;
     }
 }

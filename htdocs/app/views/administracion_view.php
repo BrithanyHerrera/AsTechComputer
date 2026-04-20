@@ -12,10 +12,10 @@ $seccion_actual = isset($_GET['seccion']) ? $_GET['seccion'] : 'dashboard';
 
 // 2. DEFINICIÓN DE PERMISOS (Arquitectura de Seguridad)
 $permisos = [
-    1 => ['dashboard', 'registrosCRUD', 'contenedor'], // Técnico
-    2 => ['dashboard', 'citas', 'ingreso', 'registrosCRUD'], // Atención al Cliente
-    3 => ['dashboard', 'servicios', 'inicio', 'citas', 'contacto', 'ingreso', 'registrosCRUD', 'empleado', 'contenedor', 'estadisticas'], // Gerente
-    4 => ['dashboard', 'servicios', 'inicio', 'citas', 'contacto', 'ingreso', 'registrosCRUD', 'empleado', 'contenedor', 'estadisticas']  // Administrador
+    1 => ['dashboard', 'registros_ingresados_crud_view', 'contenedor'], // Técnico
+    2 => ['dashboard', 'citas', 'ingreso', 'registros_ingresados_crud_view'], // Atención al Cliente
+    3 => ['dashboard', 'servicios', 'inicio', 'citas', 'contacto', 'ingreso', 'registros_ingresados_crud_view', 'empleado', 'contenedor', 'estadisticas'], // Gerente
+    4 => ['dashboard', 'servicios', 'inicio', 'citas', 'contacto', 'ingreso', 'registros_ingresados_crud_view', 'empleado', 'contenedor', 'estadisticas']  // Administrador
 ];
 
 // Validación de seguridad por URL
@@ -113,7 +113,7 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
       <?php endif; ?>
 
       <li>
-        <a href="?seccion=registrosCRUD" class="<?= $seccion_actual == 'registrosCRUD' ? 'activo' : '' ?>">
+        <a href="?seccion=registros_ingresados_crud_view" class="<?= $seccion_actual == 'registros_ingresados_crud_view' ? 'activo' : '' ?>">
           <i class="fa-solid fa-save"></i> Registros Ingresados
         </a>
       </li>
@@ -185,9 +185,9 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
         if (file_exists($ruta_secciones . "ingreso.php")) { include $ruta_secciones . "ingreso.php"; }
         break;
 
-      case 'registrosCRUD':
+      case 'registros_ingresados_crud_view':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
-        if (file_exists($ruta_secciones . "registrosCRUD.php")) { include $ruta_secciones . "registrosCRUD.php"; }
+        if (file_exists($ruta_secciones . "registros_ingresados_crud_view.php")) { include $ruta_secciones . "registros_ingresados_crud_view.php"; }
         break;
 
       case 'empleado':

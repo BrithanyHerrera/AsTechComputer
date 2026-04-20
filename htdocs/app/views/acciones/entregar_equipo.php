@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['folio']) && !empty($_
         $conexion->commit();
 
         // Regresamos a la tabla principal con un mensaje de éxito
-        header("Location: ../administracion_view.php?seccion=registrosCRUD&status=success_entrega");
+        header("Location: ../administracion_view.php?seccion=registros_ingresados_crud_view&status=success_entrega");
         exit;
 
     } catch (Exception $e) {
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['folio']) && !empty($_
         die("Error en la base de datos: " . $e->getMessage());
     }
 } else {
-    header("Location: ../administracion_view.php?seccion=registrosCRUD");
+    header("Location: ../administracion_view.php?seccion=registros_ingresados_crud_view");
     exit;
 }
 ?>
