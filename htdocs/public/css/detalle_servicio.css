@@ -92,8 +92,9 @@ i{
     align-items: start;
 }
 .indicaciones {
+    margin-top:-50px;
     grid-column: 2; /* Se va debajo de beneficios */
-    margin-top:-230px;
+
 }
 
 /* Procedimiento ocupa columna izquierda */

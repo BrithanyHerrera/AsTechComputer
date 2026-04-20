@@ -12,7 +12,7 @@
     
 </head>
 <body>
-    <?php
+<?php
     $ruta_prefijo = "../../"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
@@ -20,64 +20,7 @@
     <input type="text" id="inputBuscador" placeholder="Buscar servicios...">
     <div id="resultadosBusqueda"></div>
 </div>
-<?php 
-$id_tipo = isset($_GET['id_tipo_servicio']) ? $_GET['id_tipo_servicio'] : null;
-
-// Valores por defecto (cuando no seleccionan nada)
-$titulo = "Nuestros servicios";
-$subtitulo = "Soluciones para tu equipo";
-$precio = "";
-$imagen = "../../public/img/principalAdv.png";
-
-
-if ($id_tipo == 1) {
-    $titulo = "Reparación y reemplazo";
-    $subtitulo = "Soluciones rápidas para tu equipo";
-    $precio = "Desde: $800 pesos";
-    $imagen = "../../public/img/ReparacionGranFond.png";
-} elseif ($id_tipo == 2) {
-    $titulo = "Mantenimiento preventivo";
-    $subtitulo = "para equipos portátiles de alto rendimiento";
-    $precio = "Desde: $1350 pesos";
-    $imagen = "../../public/img/principalAdv.png";
-} elseif ($id_tipo == 3) {
-    $titulo = "Instalación de software";
-    $subtitulo = "Optimiza el rendimiento de tu equipo";
-    $precio = "Desde: $300 pesos";
-    $imagen = "../../public/img/SoftwareGranFond.png";
-}
-
-elseif ($id_tipo == 4) {
-    $titulo = "Servicios especializados";
-    $subtitulo = "Soluciones avanzadas para casos complejos";
-    $precio = "Desde: $300 pesos";
-    $imagen = "../../public/img/EspecialGranFond.png";
-}
-elseif ($id_tipo == 5) {
-    $titulo = "Servicios a domicilio";
-    $subtitulo = "Atención profesional en la comodidad de tu hogar";
-    $precio = "Desde: $500 pesos";
-    $imagen = "../../public/img/DomicilioGranFond.png";
-}
-elseif ($id_tipo == "") {
-    $titulo = "Servicios";
-    $subtitulo = "Conoce todas nuestras soluciones tecnológicas";
-    $precio = "Desde: $1000 pesos";
-    $imagen = "../../public/img/TodoGranFond.png";
-}?>
-<div class="imagen-principal">
-    <img src="<?php echo $imagen; ?>" alt="Imagen de servicios" class="img-p">
-
-    <div class="contenido-imagen">
-          <h1><?php echo $titulo; ?></h1>
-        <h2><?php echo $subtitulo; ?></h2>
-         <p><?php echo $precio; ?></p>
-        <button class="boton-servicio">Agendar cita</button>
-        <a href="#" class="link-info">Más información     <i class="fa-solid fa-angle-right"></i></a>
-    </div>
-</div>
 <?php
-// Incluir la conexión
 require_once('../../app/config/conexion.db.php');
 $id_tipo = isset($_GET['id_tipo_servicio']) ? $_GET['id_tipo_servicio'] : null;
 
@@ -93,11 +36,38 @@ if ($id_tipo) {
 
 $resultado = mysqli_query($conexion, $query);
 ?>
+<?php
+// Preparamos los datos para el carousel basándonos en tus categorías
+$slides = [
+    ["img" => "../../public/img/ReparacionGranFond.png", "t" => "Reparación y reemplazo", "s" => "Soluciones rápidas para tu equipo", "p" => "Desde: $800 pesos"],
+    ["img" => "../../public/img/principalAdv.png", "t" => "Mantenimiento preventivo", "s" => "Para equipos portátiles de alto rendimiento", "p" => "Desde: $1350 pesos"],
+    ["img" => "../../public/img/SoftwareGranFond.png", "t" => "Instalación de software", "s" => "Optimiza el rendimiento de tu equipo", "p" => "Desde: $300 pesos"],
+    ["img" => "../../public/img/EspecialGranFond.png", "t" => "Servicios especializados", "s" => "Soluciones avanzadas para casos complejos", "p" => "Desde: $300 pesos"],
+    ["img" => "../../public/img/DomicilioGranFond.png", "t" => "Servicios a domicilio", "s" => "Atención profesional en tu hogar", "p" => "Desde: $500 pesos"]
+];
+?>
+
+<div class="carousel-container">
+    <div class="carousel-track">
+        <?php foreach ($slides as $index => $slide): ?>
+            <div class="carousel-slide <?php echo $index === 0 ? 'active' : ''; ?>">
+                <img src="<?php echo $slide['img']; ?>" alt="Banner">
+                <div class="contenido-imagen">
+                    <h1><?php echo $slide['t']; ?></h1>
+                    <h2><?php echo $slide['s']; ?></h2>
+                    <p><?php echo $slide['p']; ?></p>
+                    <button class="boton-servicio">Agendar cita</button>
+                    <a href="#" class="link-info">Más información <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
 <div class="contenedor-servicios">
     <?php while($row = mysqli_fetch_assoc($resultado)): ?>
         <div class="card-servicio"  onclick="verServicio(<?php echo $row['id_servicio']; ?>)">
             <img src="<?php echo $row['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
-            
+            <button class="btn-ver-mas">Ver mas <i class="fa-solid fa-angles-right"></i></button>
             <div class="info-basica">
                 <h3><?php echo $row['tipo_servicio']; ?></h3>
                 <span class="precio">$<?php echo number_format($row['precio'], 2); ?></span>
@@ -118,7 +88,61 @@ $resultado = mysqli_query($conexion, $query);
 </div>
 </body>
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // --- LÓGICA DEL CAROUSEL ---
+    const slides = document.querySelectorAll(".carousel-slide");
+    let currentSlide = 0;
 
+    function nextSlide() {
+        if (slides.length === 0) return;
+        
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add("active");
+    }
+
+    // Cambia cada 5 segundos
+    setInterval(nextSlide, 9000);
+
+    // --- LÓGICA DEL BUSCADOR Y MODAL ---
+    const resultados = document.getElementById("resultadosBusqueda");
+    const modal = document.getElementById("modalServicio");
+    const contenidoModal = document.getElementById("contenidoModal");
+    const cerrar = document.querySelector(".cerrar");
+
+    if (resultados) {
+        resultados.addEventListener("click", (e) => {
+            const item = e.target.closest(".resultado-item");
+            if (item) {
+                let id = item.getAttribute("data-id");
+                fetch("acciones/obtener_servicio.php?id=" + id)
+                    .then(res => res.text())
+                    .then(data => {
+                        contenidoModal.innerHTML = data;
+                        modal.style.display = "block";
+                    })
+                    .catch(err => console.error("Error al cargar servicio:", err));
+            }
+        });
+    }
+
+    if (cerrar) {
+        cerrar.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+    }
+
+    window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+
+// Función global para las cards
+function verServicio(id) {
+    window.location.href = "detalle_servicio.php?id=" + id;
+}
 resultados.addEventListener("click", (e) => {
     if(e.target.closest(".resultado-item")){
         let texto = e.target.innerText;
@@ -154,6 +178,7 @@ window.addEventListener("click", (e) => {
 });
     }
 });
+
 function verServicio(id){
     window.location.href = "detalle_servicio.php?id=" + id;
 }

@@ -76,31 +76,32 @@ $resultRecientes = $conexion->query($queryRecientes);
                                         <?php echo $tipo['nombre_tipo']; ?>
                                         <i class="fa-solid fa-chevron-down"></i>
                                     </button>
-                                    <div class="submenu-desplegable">
-                                        <?php 
-                                        $id_actual = $tipo['id_tipo_servicio'];
-                                        if(isset($serviciosPorTipo[$id_actual])):
-                                            foreach($serviciosPorTipo[$id_actual] as $srv): ?>
-                                                <a href="<?php echo $ruta_prefijo; ?>detalle_servicio.php?id=<?php echo $srv['id_servicio']; ?>">
-                                                    <?php echo $srv['tipo_servicio']; ?>
-                                                </a>
-                                        <?php endforeach; endif; ?>
-                                    </div>
+                                <div class="submenu-desplegable">
+                                 <?php 
+                                    $id_actual = $tipo['id_tipo_servicio'];
+                                     if(isset($serviciosPorTipo[$id_actual])):
+                                     foreach($serviciosPorTipo[$id_actual] as $srv): ?>
+                                <a href="<?php echo $ruta_prefijo; ?>app/controllers/detalle_servicio.php?id=<?php echo $srv['id_servicio']; ?>">
+                                <?php echo $srv['tipo_servicio']; ?>
+                                 </a>
+                                 <?php endforeach; endif; ?>
+                                </div>
                                 </div>
                             <?php endwhile; ?>
                         </div>
 
                         <div class="menu-derecha">
                             <p class="label-recientes">Lo más reciente</p>
-                            <div class="grid-recientes">
-                                <?php while($reciente = $resultRecientes->fetch_assoc()): ?>
-                                    <div class="tarjeta">
-                                        <span class="badge">Nuevo</span>
-                                        <img src="<?php echo $reciente['imagen_servicio']; ?>" alt="Servicio">
-                                        <h4><?php echo $reciente['nombre_tipo']; ?></h4>
-                                    </div>
-                                <?php endwhile; ?>
-                            </div>
+                             <div class="grid-recientes">
+    <?php while($reciente = $resultRecientes->fetch_assoc()): ?>
+        <a href="<?php echo $ruta_prefijo; ?>app/controllers/detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>" style="text-decoration: none; color: inherit;">
+            <div class="tarjeta">
+                <span class="badge">Nuevo</span>
+                <img src="<?php echo $reciente['imagen_servicio']; ?>" alt="Servicio">
+                <h4><?php echo $reciente['tipo_servicio']; ?></h4> </div>
+        </a>
+    <?php endwhile; ?>
+</div>                           
                         </div>
                     </div>
                 </div>
@@ -201,8 +202,8 @@ $resultRecientes = $conexion->query($queryRecientes);
     });
 })();
 
-// Función auxiliar global por si la usas en onlick="verServicio(id)"
 function verServicio(id){
+    // Usamos la variable PHP $ruta_prefijo para que la ruta sea siempre absoluta desde la raíz
     window.location.href = "<?php echo $ruta_prefijo; ?>detalle_servicio.php?id=" + id;
 }
 </script>
