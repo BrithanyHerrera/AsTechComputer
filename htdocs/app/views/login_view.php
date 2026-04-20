@@ -49,7 +49,6 @@
           Entrar al Sistema
         </button>
         
-        <a href="#" class="link-olvido">¿Olvidaste tu contraseña?</a>
       </form>
     </div>
 

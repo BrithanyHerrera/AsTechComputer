@@ -142,8 +142,11 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
     display: none;
-    align-items: center;
+    align-items: center;      /* Cambia a flex-start */
     justify-content: center;
+    overflow-y: auto;             /* ← NUEVO: permite scroll del backdrop */
+    padding: 30px 15px;           /* ← NUEVO: margen vertical en la pantalla */
+    box-sizing: border-box;
 }
 
 .contenido-modal {
@@ -153,6 +156,12 @@
     width: 90%;
     max-width: 650px;
     position: relative;
+    
+    /* 👇 RESET CONTRA LA HERENCIA DE SECCIONES.CSS 👇 */
+    left: 0;
+    top: 0;
+    transform: none;
+    margin: 0;
 }
 
 .seccion-det h3 {
@@ -169,6 +178,81 @@
     font-size: 28px;
     cursor: pointer;
     color: #bbb;
+}
+
+/* ========================================================
+   ESTILOS DEL GRID DEL MODAL (Acomodo en columnas)
+   ======================================================== */
+.grid-detalles { 
+    display: grid; 
+    /* EL SECRETO: minmax(0, 1fr) obliga a las columnas a no desbordarse jamás */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); 
+    gap: 20px; 
+    margin-top: 15px;
+    width: 100%;
+}
+
+.seccion-det-full { 
+    grid-column: 1 / -1; 
+}
+
+.seccion-det p, 
+.seccion-det-full p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #333;
+    /* ESTOS 3 COMANDOS FUERZAN AL TEXTO A BAJAR DE LÍNEA Y NO ROMPER EL MODAL */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.seccion-det h3, 
+.seccion-det-full h3 { 
+    color: #e17203; 
+    font-size: 1.1rem; 
+    margin-bottom: 12px; 
+    border-bottom: 2px solid #f0f0f0; 
+    padding-bottom: 5px;
+}
+
+/* ========================================================
+   ESTILOS DE LOS FORMULARIOS (Para que no se desborden)
+   ======================================================== */
+.grupo-input {
+    margin-bottom: 15px;
+}
+
+.grupo-input label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #4a148c; /* Morado As Tech */
+}
+
+.grupo-input input, 
+.grupo-input select, 
+.grupo-input textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* ESTO EVITA QUE SE SALGA DEL MODAL */
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.grupo-input input:focus, 
+.grupo-input select:focus, 
+.grupo-input textarea:focus {
+    border-color: #e17203; /* Naranja As Tech al hacer clic */
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .grid-detalles {
+        grid-template-columns: 1fr;   /* ← NUEVO: 1 columna en móvil */
+    }
 }
 
 /* Pills de Estado Actualizados según DB */
