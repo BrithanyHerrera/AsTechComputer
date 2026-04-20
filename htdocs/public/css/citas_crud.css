@@ -118,25 +118,10 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
     cursor: pointer;
 }
 
-.pendiente {
-    background: #fff3cd;
-    color: #856404;
-}
-
-.en-proceso {
-    background: #cce5ff;
-    color: #004085;
-}
-
-.listo {
-    background: #d4edda;
-    color: #155724;
-}
-
-.entregado {
-    background: #e2e3e5;
-    color: #383d41;
-}
+/* Colores para los estados de la base de datos */
+.pendiente { background: #fff3cd; color: #856404; } /* Amarillo */
+.atendida { background: #d4edda; color: #155724; }  /* Verde */
+.cancelada { background: #f8d7da; color: #721c24; } /* Rojo */
 
 /* =========================================
    4. BOTONES DE ACCIÓN (VER / EDITAR / ELIMINAR)

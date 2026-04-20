@@ -127,13 +127,20 @@ function abrirModalEditar(boton) {
         asignarValor('m_serie', datos.serie);
         asignarValor('m_modelo', datos.modelo);
         asignarValor('m_fecha', datos.fecha);
+        asignarValor('m_estado', datos.estado);
+        
+        // ¡ESTA ES LA NUEVA LÍNEA PARA EL DETALLE!
+        asignarValor('m_detalle', datos.detalle); 
 
+        // Select: Tipo de equipo
         let elTipo = document.getElementById('m_tipo');
         if (elTipo && datos.idTipo) elTipo.value = datos.idTipo;
 
+        // Select: Marca
         let elMarca = document.getElementById('m_marca');
         if (elMarca && datos.idMarca) elMarca.value = datos.idMarca;
 
+        // Select: Falla (El bloque inteligente que tú notaste que era diferente)
         let selectFalla = document.getElementById('m_falla');
         if (selectFalla && datos.falla) {
             let existeOpcion = Array.from(selectFalla.options).some(opt => opt.value === datos.falla);

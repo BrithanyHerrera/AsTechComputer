@@ -67,9 +67,13 @@ class CitasAdminModel {
        5. EDICIÓN PROFUNDA DE REGISTROS (VENTANA MODAL)
        ======================================================== */
     // Sobrescribe todos los campos de una cita existente con los nuevos datos recibidos
-    public function actualizarCitaCompleta($id_cita, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $fecha, $hora, $whatsapp) {
-        $stmt = $this->conexion->prepare("UPDATE citas_web SET nombre_cliente=?, apellido_cliente=?, id_tipo_equipo=?, id_marca=?, modelo=?, numero_serie=?, problema_reportado=?, fecha_cita=?, hora_cita=?, whatsapp=? WHERE id_cita=?");
-        $stmt->bind_param("ssiissssssi", $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $fecha, $hora, $whatsapp, $id_cita);
+    public function actualizarCitaCompleta($id_cita, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado) {
+        
+        $stmt = $this->conexion->prepare("UPDATE citas_web SET nombre_cliente=?, apellido_cliente=?, id_tipo_equipo=?, id_marca=?, modelo=?, numero_serie=?, problema_reportado=?, detalle_falla=?, fecha_cita=?, hora_cita=?, whatsapp=?, estado=? WHERE id_cita=?");
+        
+        // CORREGIDO: 13 letras exactas para las 13 variables (ssiissssssssi)
+        $stmt->bind_param("ssiissssssssi", $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado, $id_cita);
+        
         return $stmt->execute();
     }
 
@@ -97,11 +101,26 @@ class CitasAdminModel {
         $mapa = [];
         if ($resultado) {
             while ($f = $resultado->fetch_assoc()) {
-                // Estructura los resultados en un arreglo asociativo cuya clave es el nombre del cliente
-                $mapa[strtoupper($f['nombre_cliente'] . " " . $f['apellido_cliente'])] = $f;
+                // LA MAGIA: Usamos el ID de Google Calendar como llave del mapa
+                $mapa[$f['id_google_calendar']] = $f;
             }
         }
         return $mapa;
+    }
+
+    /* ========================================================
+       7. CATÁLOGO DE SERVICIOS DINÁMICOS
+       ======================================================== */
+    // Recupera los servicios configurados en la tabla 'servicios'
+    public function obtenerServiciosConfigurados() {
+        try {
+            // Reemplaza 'nombre_servicio' por como se llame tu columna realmente
+            $resultado = $this->conexion->query("SELECT tipo_servicio FROM servicios ORDER BY tipo_servicio ASC");
+            return $resultado;
+        } catch (Exception $e) {
+            // Si la columna no existe, regresamos false en lugar de tirar la página (Error 500)
+            return false; 
+        }
     }
 }
 ?>

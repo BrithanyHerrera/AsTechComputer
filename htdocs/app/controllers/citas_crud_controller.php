@@ -88,18 +88,20 @@ if (isset($_GET['delete_id'])) {
    ========================================================== */
 // Procesa los datos enviados desde la ventana modal de edición
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar') {
-    $id_google = $_POST['modal_google_id'];
-    $id_db = $_POST['modal_db_id'];
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $id_marca = $_POST['id_marca'];
-    $id_tipo = $_POST['id_tipo'];
-    $falla = $_POST['falla'];
-    $whatsapp = $_POST['whatsapp'];
-    $modelo = $_POST['modelo'];
-    $n_serie = $_POST['n_serie'];
-    $fecha = $_POST['fecha'];
-    $hora = $_POST['hora'];
+    $id_google     = $_POST['modal_google_id'];
+    $id_db         = $_POST['modal_db_id'];
+    $nombre        = $_POST['nombre'];
+    $apellido      = $_POST['apellido'];
+    $id_marca      = $_POST['id_marca'];
+    $id_tipo       = $_POST['id_tipo'];
+    $falla         = $_POST['falla'];
+    $detalle_falla = $_POST['detalle_falla'] ?? ''; // NUEVO: Captura el detalle de la falla
+    $whatsapp      = $_POST['whatsapp'];
+    $modelo        = $_POST['modelo'];
+    $n_serie       = $_POST['n_serie'];
+    $fecha         = $_POST['fecha'];
+    $hora          = $_POST['hora'];
+    $estado        = $_POST['estado']; 
 
     try {
         // Se solicitan los nombres textuales al modelo para armar el resumen en Google
@@ -107,7 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
         $t_nom = $modeloCitas->obtenerNombreTipo($id_tipo);
 
         $nuevo_resumen = "SERVICIO: $nombre $apellido - $t_nom";
-        $nueva_desc = "Marca: $m_nom\nModelo: $modelo\nNo. Serie: $n_serie\nFalla: $falla\nWhatsApp: $whatsapp";
+        
+        // NUEVO: Agregamos el detalle de la falla al evento de Google Calendar
+        $nueva_desc = "Marca: $m_nom\nModelo: $modelo\nNo. Serie: $n_serie\nFalla: $falla\nDetalles: $detalle_falla\nWhatsApp: $whatsapp";
 
         // Sincronización de los nuevos datos hacia Google Calendar
         $evento = $service->events->get($calendarId, $id_google);
@@ -123,7 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 
         // Actualización persistente en la Base de Datos local
         if (!empty($id_db)) {
-            $modeloCitas->actualizarCitaCompleta($id_db, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $fecha, $hora, $whatsapp);
+            // NUEVO: Pasamos las 13 variables, incluyendo el $detalle_falla, hacia el modelo
+            $modeloCitas->actualizarCitaCompleta($id_db, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado);
         }
         
         $alerta_script = "Swal.fire('Actualizado', 'Información actualizada en todo el sistema', 'success').then(() => { window.location.href='?seccion=citas'; });";
@@ -139,6 +144,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 $marcas_res = $modeloCitas->obtenerMarcas();
 $tipos_res = $modeloCitas->obtenerTiposEquipo();
 $mapa_db = $modeloCitas->obtenerCitasCompletas();
+
+$servicios_res = $modeloCitas->obtenerServiciosConfigurados();
 
 // Extracción de eventos directamente desde Google Calendar para sincronizar horarios ocupados
 $eventos_google = $service->events->listEvents($calendarId, ['singleEvents' => true, 'orderBy' => 'startTime', 'timeMin' => date('c')])->getItems();
