@@ -103,25 +103,36 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
 }
 
 /* =========================================
-   3. ETIQUETAS DE ESTADO (PILLS)
+   3. ETIQUETAS DE ESTADO (PILLS) Y SELECTS
    ========================================= */
 .status-pill {
-    padding: 5px 12px;
+    padding: 6px 30px 6px 15px; /* Más padding a la derecha para que quepa la flecha */
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: bold;
     text-transform: uppercase;
     display: inline-block;
-    text-align: center;
     border: none;
     outline: none;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
 }
 
-/* Colores para los estados de la base de datos */
-.pendiente { background: #fff3cd; color: #856404; } /* Amarillo */
-.atendida { background: #d4edda; color: #155724; }  /* Verde */
-.cancelada { background: #f8d7da; color: #721c24; } /* Rojo */
+/* Colores de fondo según el estado */
+.pendiente { background-color: #fff3cd; color: #856404; }
+.atendida { background-color: #d4edda; color: #155724; }
+.cancelada { background-color: #f8d7da; color: #721c24; }
+
+/* Flechita universal para el Select */
+select.status-pill {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* Ubicación de la flecha */
+    background-size: 10px; /* Tamaño de la flecha */
+}
 
 /* =========================================
    4. BOTONES DE ACCIÓN (VER / EDITAR / ELIMINAR)

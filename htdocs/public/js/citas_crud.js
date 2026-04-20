@@ -65,16 +65,21 @@ function generarHorarios(fechaElegida, horaPreseleccionada) {
     });
 }
 
-document.getElementById('m_fecha').addEventListener('change', function() {
-    const fechaOriginal = this.getAttribute('data-fecha-orig');
-    const horaOriginal = document.getElementById('m_hora').getAttribute('data-hora-orig');
-    
-    if (this.value === fechaOriginal) {
-        generarHorarios(this.value, horaOriginal);
-    } else {
-        generarHorarios(this.value, null);
-    }
-});
+// Oyente para cuando el usuario cambia la fecha en el modal de edición
+const inputFecha = document.getElementById('m_fecha');
+if (inputFecha) {
+    inputFecha.addEventListener('change', function() {
+        const fechaOriginal = this.getAttribute('data-fecha-orig');
+        const horaOriginal = document.getElementById('m_hora').getAttribute('data-hora-orig');
+        
+        if (this.value === fechaOriginal) {
+            generarHorarios(this.value, horaOriginal);
+        } else {
+            generarHorarios(this.value, null);
+        }
+    });
+}
+
 
 /* ==========================================
    3. CONTROLADOR DE LA VENTANA MODAL (VER DETALLES)
@@ -92,6 +97,7 @@ function abrirModalVer(boton) {
         document.getElementById('v_marca_modelo').innerText = `${datos.marcaTxt || 'N/A'} - ${datos.modelo || 'N/A'}`;
         document.getElementById('v_serie').innerText = datos.serie || 'N/A';
         document.getElementById('v_falla').innerText = datos.falla || 'N/A';
+        document.getElementById('v_estado').textContent = datos.estado || "No definido"; // Se corrigió 'data' por 'datos'
         document.getElementById('v_fecha').innerText = datos.fecha || 'N/A';
         document.getElementById('v_hora').innerText = datos.hora || 'N/A';
 
@@ -109,16 +115,20 @@ function cerrarModalVer() {
    ========================================== */
 function abrirModalEditar(boton) {
     try {
+        // Obtenemos los datos en formato JSON desde el botón
         let jsonString = boton.getAttribute('data-cita');
         let datos = JSON.parse(jsonString);
 
+        // Mostramos el modal de edición
         document.getElementById('modalEditar').style.display = 'flex';
 
+        // Función auxiliar para acortar la escritura
         const asignarValor = (id, valor) => {
             let elemento = document.getElementById(id);
             if (elemento) elemento.value = valor || '';
         };
 
+        // Asignamos los valores de texto simples
         asignarValor('m_google_id', datos.googleId);
         asignarValor('m_db_id', datos.dbId);
         asignarValor('m_nombre', datos.nombre);
@@ -126,11 +136,18 @@ function abrirModalEditar(boton) {
         asignarValor('m_wa', datos.whatsapp);
         asignarValor('m_serie', datos.serie);
         asignarValor('m_modelo', datos.modelo);
-        asignarValor('m_fecha', datos.fecha);
-        asignarValor('m_estado', datos.estado);
-        
-        // ¡ESTA ES LA NUEVA LÍNEA PARA EL DETALLE!
         asignarValor('m_detalle', datos.detalle); 
+
+        // Asignamos la fecha y guardamos registro de cuál era la original
+        let elFecha = document.getElementById('m_fecha');
+        if (elFecha) {
+            elFecha.value = datos.fecha || '';
+            elFecha.setAttribute('data-fecha-orig', datos.fecha || '');
+        }
+
+        // Select: Estado
+        let elEstado = document.getElementById('m_estado');
+        if (elEstado && datos.estado) elEstado.value = datos.estado;
 
         // Select: Tipo de equipo
         let elTipo = document.getElementById('m_tipo');
@@ -140,21 +157,23 @@ function abrirModalEditar(boton) {
         let elMarca = document.getElementById('m_marca');
         if (elMarca && datos.idMarca) elMarca.value = datos.idMarca;
 
-        // Select: Falla (El bloque inteligente que tú notaste que era diferente)
+        // Select: Falla
         let selectFalla = document.getElementById('m_falla');
         if (selectFalla && datos.falla) {
             let existeOpcion = Array.from(selectFalla.options).some(opt => opt.value === datos.falla);
             selectFalla.value = existeOpcion ? datos.falla : 'Otro';
         }
 
+        // Select: Hora (Generamos las horas disponibles y pre-seleccionamos la actual)
         let selectHora = document.getElementById('m_hora');
         if (selectHora) {
+            selectHora.setAttribute('data-hora-orig', datos.hora || '');
             selectHora.innerHTML = `<option value="${datos.hora}" selected>${datos.hora}</option>`;
             generarHorarios(datos.fecha, datos.hora);
         }
 
     } catch (error) {
-        console.error("Error al cargar modal:", error);
+        console.error("Error al procesar JSON para edición:", error);
     }
 }
 
@@ -179,6 +198,7 @@ window.onclick = function (e) {
 /* ==========================================
    6. ACTUALIZACIÓN RÁPIDA DE ESTADOS MEDIANTE AJAX
    ========================================== */
+// (NOTA: Usas submit de form para esto ahora, pero si quieres usar Fetch, aquí se queda)
 function cambiarEstadoCita(idCitaDB, selectElement) {
     const nuevoEstado = selectElement.value;
     
@@ -210,7 +230,8 @@ document.addEventListener("DOMContentLoaded", function() {
     formularios.forEach(formulario => {
         formulario.addEventListener('submit', function() {
             let botonSubmit = this.querySelector('button[type="submit"]');
-            if (botonSubmit) {
+            // Solo desactivamos los botones que tengan texto (ignoramos los de actualizar estado rápido)
+            if (botonSubmit && botonSubmit.innerText.trim() !== '') {
                 botonSubmit.disabled = true;
                 botonSubmit.style.opacity = '0.7';
                 botonSubmit.style.cursor = 'not-allowed';
