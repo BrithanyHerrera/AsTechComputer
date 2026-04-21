@@ -32,19 +32,19 @@ while ($fila = $queryPuestos->fetch_assoc()) {
                 </div>
                 <div class="grupo-input">
                     <label>Telefono:</label>
-                    <input type="text" name="telefono" >
+                    <input type="text" name="telefono">
                 </div>
-                 <div class="grupo-input">
+                <div class="grupo-input">
                     <label>Correo electronico:</label>
-                    <input type="email" name="correo" required placeholder="carlos@astech.com" >
+                    <input type="email" name="correo" required placeholder="carlos@astech.com">
                 </div>
                 <div class="grupo-input">
                     <label>Nombre Usuario:</label>
-                    <input type="text" name="nombre_usuario" required placeholder="carlos-01" >
+                    <input type="text" name="nombre_usuario" required placeholder="carlos-01">
                 </div>
                 <div class="grupo-input">
                     <label>Contraseña</label>
-                    <input type="password" name="contrasena" required placeholder="***********" >
+                    <input type="password" name="contrasena" required placeholder="***********">
                 </div>
                 <div class="grupo-input">
                     <label>Puesto:</label>
@@ -87,7 +87,7 @@ while ($fila = $queryPuestos->fetch_assoc()) {
                             <td>{$row['correo']}</td>
                             <td>{$row['nombre_usuario']}</td>
                             <td>{$row['nombre_puesto']}</td> <td class='acciones'>
-                                <button class='btn-editar' onclick='abrirEditar(".json_encode($row).")'><i class='fa-solid fa-pen-to-square'></i></button>
+                                <button class='btn-editar' onclick='abrirEditar(" . json_encode($row) . ")'><i class='fa-solid fa-pen-to-square'></i></button>
                                 <button class='btn-eliminar' onclick='confirmarEliminacion({$row['id_empleado']})'><i class='fa-solid fa-trash'></i></button>
                                 <button class='btn-contactar'><i class='fa-brands fa-whatsapp'></i></button>
                             </td>
@@ -103,13 +103,15 @@ while ($fila = $queryPuestos->fetch_assoc()) {
     <div class="contenido-modal modal-purpura">
         <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
         <h3><i class="fa-solid fa-user-pen"></i> Editar Empleado</h3>
-        
-         <form action="../controllers/empleado_controller.php?accion=editar" method="POST" id="form-editar">
+
+        <form action="../controllers/empleado_controller.php?accion=editar" method="POST" id="form-editar">
             <input type="hidden" name="id_empleado" id="edit-id">
 
             <div class="grupo-input">
                 <label>Nombre:</label>
-                <input type="text" name="nombre" id="edit-nombre" required>
+                <input type="text" name="nombre" id="edit-nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                    title="Solo se permiten letras y espacios."
+                    oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>>
             </div>
             <div class="grupo-input">
                 <label>Apellido:</label>
@@ -135,12 +137,14 @@ while ($fila = $queryPuestos->fetch_assoc()) {
             </div>
 
             <?php if (isset($_SESSION['id_puesto']) && $_SESSION['id_puesto'] == 4): ?>
-            <div class="grupo-input" style="background: #fdf2f8; padding: 10px; border-radius: 5px; border-left: 4px solid #8e44ad; margin-top: 15px;">
-                <label style="color: #4a148c; font-weight: bold;"><i class="fa-solid fa-shield-halved"></i> Cambio de Contraseña (Solo Admin)</label>
-                <input type="password" name="contrasena" placeholder="Deja en blanco para no modificar">
-            </div>
+                <div class="grupo-input"
+                    style="background: #fdf2f8; padding: 10px; border-radius: 5px; border-left: 4px solid #8e44ad; margin-top: 15px;">
+                    <label style="color: #4a148c; font-weight: bold;"><i class="fa-solid fa-shield-halved"></i> Cambio de
+                        Contraseña (Solo Admin)</label>
+                    <input type="password" name="contrasena" placeholder="Deja en blanco para no modificar">
+                </div>
             <?php endif; ?>
-            
+
             <div class="botones-form" style="margin-top: 20px;">
                 <button type="submit" class="btn-actualizar">Actualizar Cambios</button>
                 <button type="button" class="btn-cancelar" onclick="cerrarModalEditar()">Cancelar</button>
@@ -150,59 +154,59 @@ while ($fila = $queryPuestos->fetch_assoc()) {
 </div>
 
 <script>
-function abrirFormulario() {
-    document.getElementById('formulario-empleado').style.display = 'flex';
-}
-function cerrarFormulario() {
-    document.getElementById('formulario-empleado').style.display = 'none';
-}
-// Cerrar modal al hacer clic fuera
-window.onclick = function(event) {
-    if (event.target == document.getElementById('formulario-empleado')) {
-        cerrarFormulario();
+    function abrirFormulario() {
+        document.getElementById('formulario-empleado').style.display = 'flex';
     }
-}
-function confirmarEliminacion(id) {
-    if (confirm("¿Estás seguro de eliminar a este empleado?")) {
-        window.location.href = `../controllers/empleado_controller.php?accion=eliminar&id=${id}`;
+    function cerrarFormulario() {
+        document.getElementById('formulario-empleado').style.display = 'none';
     }
-}
-function abrirEditar(datos) {
-    // Llenar los campos
-    document.getElementById('edit-id').value = datos.id_empleado;
-    document.getElementById('edit-nombre').value = datos.nombre;
-    document.getElementById('edit-apellido').value = datos.apellido;
-    document.getElementById('edit-telefono').value = datos.telefono;
-    document.getElementById('edit-correo').value = datos.correo;
-    document.getElementById('edit-usuario').value = datos.nombre_usuario;
-    document.getElementById('edit-puesto').value = datos.id_puesto;
-
-    // Mostrar el modal
-    document.getElementById('modal-editar-empleado').style.display = 'flex';
-}
-
-function cerrarModalEditar() {
-    document.getElementById('modal-editar-empleado').style.display = 'none';
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-
-    if (status === 'success') {
-        Swal.fire({
-            icon: 'success', title: '¡Actualizado!', text: 'Los datos se guardaron correctamente.', confirmButtonColor: '#52073a'
-        });
-    } else if (status === 'duplicate') {
-        Swal.fire({
-            icon: 'error', title: 'Dato Duplicado', text: 'El correo o nombre de usuario ya existe.', confirmButtonColor: '#52073a'
-        });
-    } else if (status === 'error') {
-        Swal.fire({
-            icon: 'error', title: 'Error', text: 'Ocurrió un problema al procesar la solicitud.', confirmButtonColor: '#52073a'
-        });
+    // Cerrar modal al hacer clic fuera
+    window.onclick = function (event) {
+        if (event.target == document.getElementById('formulario-empleado')) {
+            cerrarFormulario();
+        }
     }
-    window.history.replaceState({}, document.title, window.location.pathname);
-});
+    function confirmarEliminacion(id) {
+        if (confirm("¿Estás seguro de eliminar a este empleado?")) {
+            window.location.href = `../controllers/empleado_controller.php?accion=eliminar&id=${id}`;
+        }
+    }
+    function abrirEditar(datos) {
+        // Llenar los campos
+        document.getElementById('edit-id').value = datos.id_empleado;
+        document.getElementById('edit-nombre').value = datos.nombre;
+        document.getElementById('edit-apellido').value = datos.apellido;
+        document.getElementById('edit-telefono').value = datos.telefono;
+        document.getElementById('edit-correo').value = datos.correo;
+        document.getElementById('edit-usuario').value = datos.nombre_usuario;
+        document.getElementById('edit-puesto').value = datos.id_puesto;
+
+        // Mostrar el modal
+        document.getElementById('modal-editar-empleado').style.display = 'flex';
+    }
+
+    function cerrarModalEditar() {
+        document.getElementById('modal-editar-empleado').style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+
+        if (status === 'success') {
+            Swal.fire({
+                icon: 'success', title: '¡Actualizado!', text: 'Los datos se guardaron correctamente.', confirmButtonColor: '#52073a'
+            });
+        } else if (status === 'duplicate') {
+            Swal.fire({
+                icon: 'error', title: 'Dato Duplicado', text: 'El correo o nombre de usuario ya existe.', confirmButtonColor: '#52073a'
+            });
+        } else if (status === 'error') {
+            Swal.fire({
+                icon: 'error', title: 'Error', text: 'Ocurrió un problema al procesar la solicitud.', confirmButtonColor: '#52073a'
+            });
+        }
+        window.history.replaceState({}, document.title, window.location.pathname);
+    });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
