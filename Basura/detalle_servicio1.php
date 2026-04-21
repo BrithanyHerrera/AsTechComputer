@@ -56,11 +56,12 @@ if (!$servicio) {
 </head>
 
 <body>
-<?php $ruta_prefijo = "../../";   include __DIR__ . '/../controllers/toolbar_controller.php';?>
+
+<?php $ruta_prefijo = "../../";   include __DIR__ . '/../controllers/toolbar_controller.php';  $ruta_img = "../../public/img/servicios/";?>
 <div class="detalle-container">
 
     <div class="detalle-header">
-        <img src="<?php echo $servicio['imagen_servicio']; ?>" class="detalle-img">
+        <img src="<?php echo $ruta_img . $servicio['imagen_servicio']; ?>" class="detalle-img">
 
         <div class="detalle-info">
             <h1><?php echo $servicio['tipo_servicio']; ?></h1>

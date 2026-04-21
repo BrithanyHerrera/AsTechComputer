@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Función global para las cards
 function verServicio(id) {
-    window.location.href = "detalle_servicio.php?id=" + id;
+    window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
 }
 resultados.addEventListener("click", (e) => {
     if(e.target.closest(".resultado-item")){
@@ -188,7 +188,9 @@ window.addEventListener("click", (e) => {
 });
 
 function verServicio(id){
-    window.location.href = "detalle_servicio.php?id=" + id;
+    
+    window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
 }
+
 </script>
 </html>
