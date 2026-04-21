@@ -1,3 +1,11 @@
+<script>
+/* POLITICA_COOKIES_VIEW.PHP */
+/*
+Este archivo actúa como la Vista (View) encargada de mostrar el documento oficial de la Política de Cookies de ASTECH COMPUTER. Su objetivo es transparentar hacia el usuario el tipo de tecnologías de rastreo y almacenamiento de datos que utiliza la plataforma, clasificándolas según su función (técnicas, funcionales, analíticas y publicitarias) y explicando claramente cómo impactan en servicios específicos (como el agendamiento de citas o el formulario de contacto). El diseño mantiene una estructura tipográfica limpia y profesional, e incorpora de forma modular la barra de navegación (Toolbar) y el pie de página (Footer) para preservar la uniformidad del sitio web corporativo.
+*/
+</script>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +14,7 @@
     <title>Política de Cookies - AsTech Computer</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../../public/css/static.css">
+    <link rel="icon" href="../../public/img/Astech%20ICO.ico" type="image/x-icon">    <link rel="stylesheet" href="../../public/css/static.css">    <link rel="stylesheet" href="../../public/css/static.css">
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/politica_cookies.css">

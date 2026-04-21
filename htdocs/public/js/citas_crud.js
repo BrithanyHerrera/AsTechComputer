@@ -9,17 +9,39 @@ Este archivo concentra toda la lógica interactiva del lado del cliente (Fronten
 function filtrarTabla() {
     const busqueda = document.getElementById('buscadorGlobal').value.toLowerCase();
     const estado = document.getElementById('filtroEstado').value;
-    const fecha = document.getElementById('filtroFecha').value;
+    
+    // Capturamos ambas fechas
+    const fechaInicio = document.getElementById('filtroFechaInicio').value;
+    const fechaFin = document.getElementById('filtroFechaFin').value;
+    
     const filas = document.querySelectorAll('#tablaCitas .fila-registro');
 
+    // Convertimos las fechas ingresadas a timestamps (milisegundos) para una comparación matemática exacta
+    const tsInicio = fechaInicio ? new Date(fechaInicio + "T00:00:00").getTime() : null;
+    const tsFin = fechaFin ? new Date(fechaFin + "T23:59:59").getTime() : null;
+
     filas.forEach(fila => {
-        const txtNombre = fila.getAttribute('data-nombre');
-        const txtEstado = fila.getAttribute('data-estado');
-        const txtFecha = fila.getAttribute('data-fecha');
+        const txtNombre = fila.getAttribute('data-nombre') || "";
+        const txtEstado = fila.getAttribute('data-estado') || "";
+        const txtFecha = fila.getAttribute('data-fecha') || ""; // Formato: YYYY-MM-DD
 
         const coincideBusqueda = txtNombre.includes(busqueda);
         const coincideEstado = estado === 'todos' || txtEstado === estado;
-        const coincideFecha = !fecha || txtFecha === fecha;
+        
+        // Lógica matemática infalible para el rango de fechas
+        let coincideFecha = true;
+        if (txtFecha) {
+            // Creamos una fecha al mediodía para evitar problemas de zonas horarias
+            const tsFila = new Date(txtFecha + "T12:00:00").getTime(); 
+            
+            if (tsInicio && tsFin) {
+                coincideFecha = (tsFila >= tsInicio && tsFila <= tsFin);
+            } else if (tsInicio) {
+                coincideFecha = (tsFila >= tsInicio);
+            } else if (tsFin) {
+                coincideFecha = (tsFila <= tsFin);
+            }
+        }
 
         if (coincideBusqueda && coincideEstado && coincideFecha) {
             fila.style.display = '';
@@ -32,7 +54,10 @@ function filtrarTabla() {
 function limpiarFiltros() {
     document.getElementById('buscadorGlobal').value = '';
     document.getElementById('filtroEstado').value = 'todos';
-    document.getElementById('filtroFecha').value = '';
+    document.getElementById('filtroFechaInicio').value = '';
+    document.getElementById('filtroFechaFin').value = '';
+    
+    // Ejecutamos la función para que la tabla vuelva a mostrar todo
     filtrarTabla();
 }
 
@@ -65,16 +90,20 @@ function generarHorarios(fechaElegida, horaPreseleccionada) {
     });
 }
 
-document.getElementById('m_fecha').addEventListener('change', function() {
-    const fechaOriginal = this.getAttribute('data-fecha-orig');
-    const horaOriginal = document.getElementById('m_hora').getAttribute('data-hora-orig');
-    
-    if (this.value === fechaOriginal) {
-        generarHorarios(this.value, horaOriginal);
-    } else {
-        generarHorarios(this.value, null);
-    }
-});
+// Oyente para cuando el usuario cambia la fecha en el modal de edición
+const inputFecha = document.getElementById('m_fecha');
+if (inputFecha) {
+    inputFecha.addEventListener('change', function() {
+        const fechaOriginal = this.getAttribute('data-fecha-orig');
+        const horaOriginal = document.getElementById('m_hora').getAttribute('data-hora-orig');
+        
+        if (this.value === fechaOriginal) {
+            generarHorarios(this.value, horaOriginal);
+        } else {
+            generarHorarios(this.value, null);
+        }
+    });
+}
 
 /* ==========================================
    3. CONTROLADOR DE LA VENTANA MODAL (VER DETALLES)
@@ -92,6 +121,10 @@ function abrirModalVer(boton) {
         document.getElementById('v_marca_modelo').innerText = `${datos.marcaTxt || 'N/A'} - ${datos.modelo || 'N/A'}`;
         document.getElementById('v_serie').innerText = datos.serie || 'N/A';
         document.getElementById('v_falla').innerText = datos.falla || 'N/A';
+        
+        document.getElementById('v_detalle').innerText = datos.detalle || 'Ninguno'; 
+        
+        document.getElementById('v_estado').textContent = datos.estado || "No definido";
         document.getElementById('v_fecha').innerText = datos.fecha || 'N/A';
         document.getElementById('v_hora').innerText = datos.hora || 'N/A';
 
@@ -109,16 +142,20 @@ function cerrarModalVer() {
    ========================================== */
 function abrirModalEditar(boton) {
     try {
+        // Obtenemos los datos en formato JSON desde el botón
         let jsonString = boton.getAttribute('data-cita');
         let datos = JSON.parse(jsonString);
 
+        // Mostramos el modal de edición
         document.getElementById('modalEditar').style.display = 'flex';
 
+        // Función auxiliar para acortar la escritura
         const asignarValor = (id, valor) => {
             let elemento = document.getElementById(id);
             if (elemento) elemento.value = valor || '';
         };
 
+        // Asignamos los valores de texto simples
         asignarValor('m_google_id', datos.googleId);
         asignarValor('m_db_id', datos.dbId);
         asignarValor('m_nombre', datos.nombre);
@@ -126,11 +163,18 @@ function abrirModalEditar(boton) {
         asignarValor('m_wa', datos.whatsapp);
         asignarValor('m_serie', datos.serie);
         asignarValor('m_modelo', datos.modelo);
-        asignarValor('m_fecha', datos.fecha);
-        asignarValor('m_estado', datos.estado);
-        
-        // ¡ESTA ES LA NUEVA LÍNEA PARA EL DETALLE!
         asignarValor('m_detalle', datos.detalle); 
+
+        // Asignamos la fecha y guardamos registro de cuál era la original
+        let elFecha = document.getElementById('m_fecha');
+        if (elFecha) {
+            elFecha.value = datos.fecha || '';
+            elFecha.setAttribute('data-fecha-orig', datos.fecha || '');
+        }
+
+        // Select: Estado
+        let elEstado = document.getElementById('m_estado');
+        if (elEstado && datos.estado) elEstado.value = datos.estado;
 
         // Select: Tipo de equipo
         let elTipo = document.getElementById('m_tipo');
@@ -140,21 +184,23 @@ function abrirModalEditar(boton) {
         let elMarca = document.getElementById('m_marca');
         if (elMarca && datos.idMarca) elMarca.value = datos.idMarca;
 
-        // Select: Falla (El bloque inteligente que tú notaste que era diferente)
+        // Select: Falla
         let selectFalla = document.getElementById('m_falla');
         if (selectFalla && datos.falla) {
             let existeOpcion = Array.from(selectFalla.options).some(opt => opt.value === datos.falla);
             selectFalla.value = existeOpcion ? datos.falla : 'Otro';
         }
 
+        // Select: Hora (Generamos las horas disponibles y pre-seleccionamos la actual)
         let selectHora = document.getElementById('m_hora');
         if (selectHora) {
+            selectHora.setAttribute('data-hora-orig', datos.hora || '');
             selectHora.innerHTML = `<option value="${datos.hora}" selected>${datos.hora}</option>`;
             generarHorarios(datos.fecha, datos.hora);
         }
 
     } catch (error) {
-        console.error("Error al cargar modal:", error);
+        console.error("Error al procesar JSON para edición:", error);
     }
 }
 
@@ -168,11 +214,14 @@ function cerrarModal() {
 window.onclick = function (e) { 
     const modalEdicion = document.getElementById('modalEditar');
     const modalVisualizacion = document.getElementById('modalVer');
+    const modalConfirmacion = document.getElementById('modalConfirmacion');
 
     if (e.target === modalEdicion) {
         cerrarModal(); 
     } else if (e.target === modalVisualizacion) {
         cerrarModalVer();
+    } else if (e.target === modalConfirmacion) {
+        modalConfirmacion.style.display = 'none';
     }
 }
 
@@ -210,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function() {
     formularios.forEach(formulario => {
         formulario.addEventListener('submit', function() {
             let botonSubmit = this.querySelector('button[type="submit"]');
-            if (botonSubmit) {
+            if (botonSubmit && botonSubmit.innerText.trim() !== '') {
                 botonSubmit.disabled = true;
                 botonSubmit.style.opacity = '0.7';
                 botonSubmit.style.cursor = 'not-allowed';
@@ -219,3 +268,65 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+/* ==========================================
+   8. SISTEMA DE CONFIRMACIÓN (MODALES)
+   ========================================== */
+function abrirModalConfirmacion(mensaje, callbackAceptar, callbackCancelar) {
+    document.getElementById('textoConfirmacion').innerText = mensaje;
+    document.getElementById('modalConfirmacion').style.display = 'flex';
+    
+    const btnAceptar = document.getElementById('btnAceptarConfirmacion');
+    const btnCancelar = document.getElementById('btnCancelarConfirmacion');
+    
+    // Limpiamos eventos previos clonando los botones
+    let nuevoBtnAceptar = btnAceptar.cloneNode(true);
+    let nuevoBtnCancelar = btnCancelar.cloneNode(true);
+    btnAceptar.parentNode.replaceChild(nuevoBtnAceptar, btnAceptar);
+    btnCancelar.parentNode.replaceChild(nuevoBtnCancelar, btnCancelar);
+    
+    nuevoBtnAceptar.addEventListener('click', function() {
+        document.getElementById('modalConfirmacion').style.display = 'none';
+        if(callbackAceptar) callbackAceptar();
+    });
+    
+    nuevoBtnCancelar.addEventListener('click', function() {
+        document.getElementById('modalConfirmacion').style.display = 'none';
+        if(callbackCancelar) callbackCancelar();
+    });
+}
+
+// 8.1 Interceptar el guardado del Modal de Edición
+const formEditar = document.getElementById('formEditarCita');
+if (formEditar) {
+    formEditar.addEventListener('submit', function(e) {
+        e.preventDefault(); // Detenemos el envío automático
+        abrirModalConfirmacion(
+            "¿Estás seguro de guardar los cambios en esta cita?", 
+            function() {
+                formEditar.submit(); // Si acepta, se envía
+            }
+        );
+    });
+}
+
+// 8.2 Interceptar el cambio de estado rápido en la tabla
+function confirmarCambioEstado(selectElement) {
+    const estadoAnterior = selectElement.getAttribute('data-estado-anterior');
+    const nuevoEstado = selectElement.value;
+    const form = selectElement.form;
+    
+    abrirModalConfirmacion(
+        `¿Deseas cambiar el estado de la cita a "${nuevoEstado.toUpperCase()}"?`,
+        function() {
+            // Confirmado: enviamos el formulario y actualizamos la clase visual
+            selectElement.className = 'status-pill ' + nuevoEstado.replace(' ', '-');
+            selectElement.setAttribute('data-estado-anterior', nuevoEstado);
+            form.submit();
+        },
+        function() {
+            // Cancelado: regresamos el select a como estaba
+            selectElement.value = estadoAnterior;
+        }
+    );
+}

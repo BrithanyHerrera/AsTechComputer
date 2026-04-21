@@ -39,16 +39,17 @@ $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@
    ========================================================== */
 // Intercepta peticiones POST para actualizar el estado de una cita de forma asíncrona
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar_estado_rapido') {
-    $id_cita = $_POST['id_cita'];
-    $nuevo_estado = $_POST['nuevo_estado'];
+    $id_cita = $_POST['db_id'] ?? null; 
+    $nuevo_estado = $_POST['estado'] ?? 'pendiente';
 
-    // Se delega al modelo la actualización en base de datos
-    if ($modeloCitas->actualizarEstado($id_cita, $nuevo_estado)) {
-        echo "OK";
+    if ($id_cita) {
+        // Llamamos al modelo para que actualice la base de datos
+        $modeloCitas->actualizarEstado($id_cita, $nuevo_estado);
+        // Recarga la página para mostrar el nuevo color y estado
+        $alerta_script = "Swal.fire('Estado Actualizado', 'El estado de la cita ha sido modificado', 'success').then(() => { window.location.href='?seccion=citas'; });";
     } else {
-        echo "ERROR";
+        $alerta_script = "Swal.fire('Error', 'No se pudo encontrar el ID de la cita en la base de datos local', 'error');";
     }
-    exit(); 
 }
 
 /* ==========================================================
@@ -60,7 +61,7 @@ foreach ($citas_expiradas as $cita_exp) {
     if (!empty($cita_exp['id_google_calendar'])) {
         try {
             $service->events->delete($calendarId, $cita_exp['id_google_calendar']);
-        } catch (Exception $e) {} // Ignoramos si ya no existe en Google
+        } catch (Exception $e) {} 
     }
     $modeloCitas->eliminarCitaLocal($cita_exp['id_cita']);
 }
@@ -95,13 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     $id_marca      = $_POST['id_marca'];
     $id_tipo       = $_POST['id_tipo'];
     $falla         = $_POST['falla'];
-    $detalle_falla = $_POST['detalle_falla'] ?? ''; // NUEVO: Captura el detalle de la falla
+    $detalle_falla = $_POST['detalle_falla'] ?? '';
     $whatsapp      = $_POST['whatsapp'];
     $modelo        = $_POST['modelo'];
     $n_serie       = $_POST['n_serie'];
     $fecha         = $_POST['fecha'];
     $hora          = $_POST['hora'];
-    $estado        = $_POST['estado']; 
+    $estado        = $_POST['estado'] ?? ''; 
 
     try {
         // Se solicitan los nombres textuales al modelo para armar el resumen en Google
@@ -110,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 
         $nuevo_resumen = "SERVICIO: $nombre $apellido - $t_nom";
         
-        // NUEVO: Agregamos el detalle de la falla al evento de Google Calendar
+        // Agregamos el detalle de la falla al evento de Google Calendar
         $nueva_desc = "Marca: $m_nom\nModelo: $modelo\nNo. Serie: $n_serie\nFalla: $falla\nDetalles: $detalle_falla\nWhatsApp: $whatsapp";
 
         // Sincronización de los nuevos datos hacia Google Calendar
@@ -125,9 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 
         $service->events->update($calendarId, $id_google, $evento);
 
-        // Actualización persistente en la Base de Datos local
         if (!empty($id_db)) {
-            // NUEVO: Pasamos las 13 variables, incluyendo el $detalle_falla, hacia el modelo
             $modeloCitas->actualizarCitaCompleta($id_db, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado);
         }
         

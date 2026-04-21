@@ -1,3 +1,11 @@
+<script>
+/* FOOTER_VIEW.PHP */
+/*
+Este archivo actúa como la Vista Parcial (Partial View) que contiene la estructura HTML del pie de página global de ASTECH COMPUTER. Su objetivo es ser incluido al final de todas las páginas del sitio web para proporcionar una navegación secundaria uniforme. Incluye el logotipo corporativo, enlaces directos a los servicios principales, accesos a páginas legales (Políticas de Cookies, Privacidad y Términos y Condiciones), y a la sección operativa (Login). Además, integra las redes sociales de la empresa y un botón flotante persistente de WhatsApp diseñado para facilitar el contacto inmediato del cliente desde cualquier punto de la página.
+*/
+
+</script>
+
 <footer class="pie-pagina">
     <div class="contenedor-pie">
         <div class="seccion-logo">
@@ -27,6 +35,7 @@
                 <h4>Legal</h4>
                 <ul>
                     <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/terminos_y_condiciones_controller.php">Términos y Condiciones</a></li>
                     <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/politica_cookies_controller.php">Política de Cookies</a>
                     </li>
                 </ul>
