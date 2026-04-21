@@ -27,11 +27,14 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                 </select>
             </div>
 
-            <div class="filtro-grupo">
-                <label>Fecha:</label>
-                <input type="date" id="filtroFecha" onchange="filtrarTabla()">
-                <button class="btn-limpiar" onclick="limpiarFiltros()" title="Limpiar filtros"><i
-                        class="fa-solid fa-rotate-left"></i></button>
+                        <div class="filtro-grupo">
+                <label>Desde:</label>
+                <input type="date" id="filtroFechaInicio" onchange="filtrarTabla()">
+                <label>Hasta:</label>
+                <input type="date" id="filtroFechaFin" onchange="filtrarTabla()">
+                <button class="btn-limpiar" onclick="limpiarFiltros()" title="Limpiar filtros">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -203,7 +206,9 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
             <input type="hidden" name="accion" value="actualizar">
             <input type="hidden" id="m_google_id" name="modal_google_id">
             <input type="hidden" id="m_db_id" name="modal_db_id">
-            <input type="hidden" id="m_estado" name="estado"> <div class="fila-form">
+            <input type="hidden" id="m_estado" name="estado">
+
+            <div class="fila-form">
                 <div class="grupo-form"><label>Nombre(s):</label><input type="text" id="m_nombre" name="nombre"
                         required></div>
                 <div class="grupo-form"><label>Apellido(s):</label><input type="text" id="m_apellido" name="apellido"

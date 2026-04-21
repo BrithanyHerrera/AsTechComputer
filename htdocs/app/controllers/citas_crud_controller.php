@@ -39,14 +39,13 @@ $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@
    ========================================================== */
 // Intercepta peticiones POST para actualizar el estado de una cita de forma asíncrona
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar_estado_rapido') {
-    // 1. Corregimos la llave que viene del formulario de la vista a 'db_id'
     $id_cita = $_POST['db_id'] ?? null; 
     $nuevo_estado = $_POST['estado'] ?? 'pendiente';
 
     if ($id_cita) {
-        // 2. Llamamos al modelo para que actualice la base de datos
+        // Llamamos al modelo para que actualice la base de datos
         $modeloCitas->actualizarEstado($id_cita, $nuevo_estado);
-        // 3. En lugar de hacer 'echo OK', recargamos la página para mostrar el nuevo color y estado
+        // Recarga la página para mostrar el nuevo color y estado
         $alerta_script = "Swal.fire('Estado Actualizado', 'El estado de la cita ha sido modificado', 'success').then(() => { window.location.href='?seccion=citas'; });";
     } else {
         $alerta_script = "Swal.fire('Error', 'No se pudo encontrar el ID de la cita en la base de datos local', 'error');";

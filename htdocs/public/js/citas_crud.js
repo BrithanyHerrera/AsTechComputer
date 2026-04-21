@@ -9,17 +9,30 @@ Este archivo concentra toda la lógica interactiva del lado del cliente (Fronten
 function filtrarTabla() {
     const busqueda = document.getElementById('buscadorGlobal').value.toLowerCase();
     const estado = document.getElementById('filtroEstado').value;
-    const fecha = document.getElementById('filtroFecha').value;
+    
+    // MODIFICACIÓN: Capturamos ambas fechas
+    const fechaInicio = document.getElementById('filtroFechaInicio').value;
+    const fechaFin = document.getElementById('filtroFechaFin').value;
+    
     const filas = document.querySelectorAll('#tablaCitas .fila-registro');
 
     filas.forEach(fila => {
         const txtNombre = fila.getAttribute('data-nombre');
         const txtEstado = fila.getAttribute('data-estado');
-        const txtFecha = fila.getAttribute('data-fecha');
+        const txtFecha = fila.getAttribute('data-fecha'); // Formato: YYYY-MM-DD
 
         const coincideBusqueda = txtNombre.includes(busqueda);
         const coincideEstado = estado === 'todos' || txtEstado === estado;
-        const coincideFecha = !fecha || txtFecha === fecha;
+        
+        // MODIFICACIÓN: Lógica para calcular si la fecha de la cita está dentro del rango
+        let coincideFecha = true;
+        if (fechaInicio && fechaFin) {
+            coincideFecha = (txtFecha >= fechaInicio && txtFecha <= fechaFin);
+        } else if (fechaInicio) {
+            coincideFecha = (txtFecha >= fechaInicio);
+        } else if (fechaFin) {
+            coincideFecha = (txtFecha <= fechaFin);
+        }
 
         if (coincideBusqueda && coincideEstado && coincideFecha) {
             fila.style.display = '';
@@ -32,7 +45,9 @@ function filtrarTabla() {
 function limpiarFiltros() {
     document.getElementById('buscadorGlobal').value = '';
     document.getElementById('filtroEstado').value = 'todos';
-    document.getElementById('filtroFecha').value = '';
+    // MODIFICACIÓN: Limpiamos ambos campos de fecha
+    document.getElementById('filtroFechaInicio').value = '';
+    document.getElementById('filtroFechaFin').value = '';
     filtrarTabla();
 }
 
@@ -68,10 +83,10 @@ function generarHorarios(fechaElegida, horaPreseleccionada) {
 // Oyente para cuando el usuario cambia la fecha en el modal de edición
 const inputFecha = document.getElementById('m_fecha');
 if (inputFecha) {
-    inputFecha.addEventListener('change', function () {
+    inputFecha.addEventListener('change', function() {
         const fechaOriginal = this.getAttribute('data-fecha-orig');
         const horaOriginal = document.getElementById('m_hora').getAttribute('data-hora-orig');
-
+        
         if (this.value === fechaOriginal) {
             generarHorarios(this.value, horaOriginal);
         } else {
@@ -79,7 +94,6 @@ if (inputFecha) {
         }
     });
 }
-
 
 /* ==========================================
    3. CONTROLADOR DE LA VENTANA MODAL (VER DETALLES)
@@ -136,7 +150,7 @@ function abrirModalEditar(boton) {
         asignarValor('m_wa', datos.whatsapp);
         asignarValor('m_serie', datos.serie);
         asignarValor('m_modelo', datos.modelo);
-        asignarValor('m_detalle', datos.detalle);
+        asignarValor('m_detalle', datos.detalle); 
 
         // Asignamos la fecha y guardamos registro de cuál era la original
         let elFecha = document.getElementById('m_fecha');
@@ -177,20 +191,20 @@ function abrirModalEditar(boton) {
     }
 }
 
-function cerrarModal() {
-    document.getElementById('modalEditar').style.display = 'none';
+function cerrarModal() { 
+    document.getElementById('modalEditar').style.display = 'none'; 
 }
 
 /* ==========================================
    5. OYENTE DE CLIC EN EL ÁREA EXTERIOR DE MODALES
    ========================================== */
-window.onclick = function (e) {
+window.onclick = function (e) { 
     const modalEdicion = document.getElementById('modalEditar');
     const modalVisualizacion = document.getElementById('modalVer');
-    const modalConfirmacion = document.getElementById('modalConfirmacion'); // NUEVO
+    const modalConfirmacion = document.getElementById('modalConfirmacion');
 
     if (e.target === modalEdicion) {
-        cerrarModal();
+        cerrarModal(); 
     } else if (e.target === modalVisualizacion) {
         cerrarModalVer();
     } else if (e.target === modalConfirmacion) {
@@ -201,39 +215,37 @@ window.onclick = function (e) {
 /* ==========================================
    6. ACTUALIZACIÓN RÁPIDA DE ESTADOS MEDIANTE AJAX
    ========================================== */
-// (NOTA: Usas submit de form para esto ahora, pero si quieres usar Fetch, aquí se queda)
 function cambiarEstadoCita(idCitaDB, selectElement) {
     const nuevoEstado = selectElement.value;
-
+    
     selectElement.className = 'status-pill ' + nuevoEstado.toLowerCase().replace(' ', '-');
     selectElement.closest('tr').setAttribute('data-estado', nuevoEstado.toLowerCase().replace(' ', '-'));
-
-    fetch('?seccion=citas', {
+    
+    fetch('?seccion=citas', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: `accion=actualizar_estado_rapido&id_cita=${idCitaDB}&nuevo_estado=${encodeURIComponent(nuevoEstado)}`
     })
-        .then(response => response.text())
-        .then(data => {
-            console.log("Estado actualizado en BD:", data);
-        })
-        .catch(error => {
-            alert("Hubo un error al actualizar el estado. Revisa tu conexión.");
-            console.error(error);
-        });
+    .then(response => response.text())
+    .then(data => {
+        console.log("Estado actualizado en BD:", data);
+    })
+    .catch(error => {
+        alert("Hubo un error al actualizar el estado. Revisa tu conexión.");
+        console.error(error);
+    });
 }
 
 /* ==========================================
    7. PREVENCIÓN DE DUPLICIDAD EN ENVÍO DE FORMULARIOS
    ========================================== */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     let formularios = document.querySelectorAll('form');
     formularios.forEach(formulario => {
-        formulario.addEventListener('submit', function () {
+        formulario.addEventListener('submit', function() {
             let botonSubmit = this.querySelector('button[type="submit"]');
-            // Solo desactivamos los botones que tengan texto (ignoramos los de actualizar estado rápido)
             if (botonSubmit && botonSubmit.innerText.trim() !== '') {
                 botonSubmit.disabled = true;
                 botonSubmit.style.opacity = '0.7';
@@ -245,40 +257,40 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /* ==========================================
-   8. SISTEMA DE CONFIRMACIÓN (NUEVO)
+   8. SISTEMA DE CONFIRMACIÓN (MODALES)
    ========================================== */
 function abrirModalConfirmacion(mensaje, callbackAceptar, callbackCancelar) {
     document.getElementById('textoConfirmacion').innerText = mensaje;
     document.getElementById('modalConfirmacion').style.display = 'flex';
-
+    
     const btnAceptar = document.getElementById('btnAceptarConfirmacion');
     const btnCancelar = document.getElementById('btnCancelarConfirmacion');
-
+    
     // Limpiamos eventos previos clonando los botones
     let nuevoBtnAceptar = btnAceptar.cloneNode(true);
     let nuevoBtnCancelar = btnCancelar.cloneNode(true);
     btnAceptar.parentNode.replaceChild(nuevoBtnAceptar, btnAceptar);
     btnCancelar.parentNode.replaceChild(nuevoBtnCancelar, btnCancelar);
-
-    nuevoBtnAceptar.addEventListener('click', function () {
+    
+    nuevoBtnAceptar.addEventListener('click', function() {
         document.getElementById('modalConfirmacion').style.display = 'none';
-        if (callbackAceptar) callbackAceptar();
+        if(callbackAceptar) callbackAceptar();
     });
-
-    nuevoBtnCancelar.addEventListener('click', function () {
+    
+    nuevoBtnCancelar.addEventListener('click', function() {
         document.getElementById('modalConfirmacion').style.display = 'none';
-        if (callbackCancelar) callbackCancelar();
+        if(callbackCancelar) callbackCancelar();
     });
 }
 
 // 8.1 Interceptar el guardado del Modal de Edición
 const formEditar = document.getElementById('formEditarCita');
 if (formEditar) {
-    formEditar.addEventListener('submit', function (e) {
+    formEditar.addEventListener('submit', function(e) {
         e.preventDefault(); // Detenemos el envío automático
         abrirModalConfirmacion(
-            "¿Estás seguro de guardar los cambios en esta cita?",
-            function () {
+            "¿Estás seguro de guardar los cambios en esta cita?", 
+            function() {
                 formEditar.submit(); // Si acepta, se envía
             }
         );
@@ -290,16 +302,16 @@ function confirmarCambioEstado(selectElement) {
     const estadoAnterior = selectElement.getAttribute('data-estado-anterior');
     const nuevoEstado = selectElement.value;
     const form = selectElement.form;
-
+    
     abrirModalConfirmacion(
         `¿Deseas cambiar el estado de la cita a "${nuevoEstado.toUpperCase()}"?`,
-        function () {
+        function() {
             // Confirmado: enviamos el formulario y actualizamos la clase visual
             selectElement.className = 'status-pill ' + nuevoEstado.replace(' ', '-');
             selectElement.setAttribute('data-estado-anterior', nuevoEstado);
             form.submit();
         },
-        function () {
+        function() {
             // Cancelado: regresamos el select a como estaba
             selectElement.value = estadoAnterior;
         }
