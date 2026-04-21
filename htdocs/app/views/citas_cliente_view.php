@@ -5,7 +5,6 @@
     */
 </script>
 
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -48,11 +47,17 @@
             <div class="fila-doble">
                 <div class="grupo-campo">
                     <label>Nombre(s)</label>
-                    <input type="text" name="nombre_cliente" class="control" required>
+                    <input type="text" name="nombre_cliente" class="control" 
+                           pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                           title="Solo se permiten letras y espacios." 
+                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
                 </div>
                 <div class="grupo-campo">
                     <label>Apellido(s)</label>
-                    <input type="text" name="apellido_cliente" class="control" required>
+                    <input type="text" name="apellido_cliente" class="control" 
+                           pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                           title="Solo se permiten letras y espacios." 
+                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
                 </div>
             </div>
 
@@ -104,8 +109,8 @@
 
             <div class="fila-doble">
                 <div class="grupo-campo">
-                    <label>Modelo (Opcional)<span class="ayuda-modelo">?</span></label>
-                    <input type="text" name="modelo" class="control">
+                    <label>Modelo<span class="ayuda-modelo">?</span></label>
+                    <input type="text" name="modelo" class="control" required>
                 </div>
                 <div class="grupo-campo">
                     <label>
@@ -121,7 +126,7 @@
                 <p class="nota-formulario" style="font-size: 13px; margin-bottom: 8px;">Puedes seleccionar una opción
                     rápida y/o detallar el problema abajo.</p>
 
-                <select name="problema_lista" class="control" style="margin-bottom: 10px;">
+                <select name="problema_lista" class="control" style="margin-bottom: 10px;" required>
                     <option value="">Opciones rápidas...</option>
 
                     <?php
@@ -136,7 +141,7 @@
                 </select>
 
                 <div id="detalle_falla_box">
-                    <label> Descripción de detalles: </label>
+                    <label> Descripción de detalles (Opcional): </label>
                     <input type="text" name="problema_detalle" class="control"
                         placeholder="(Marcas, ruidos, errores, etc.)">
                 </div>
@@ -144,7 +149,7 @@
 
             <div class="fila-doble">
                 <div class="grupo-campo">
-                    <label>Fecha Sugerida</label>
+                    <label>Fecha</label>
                     <input type="date" name="fecha_cita" id="fecha_cita" class="control" required
                         min="<?php echo date('Y-m-d'); ?>" onchange="actualizarHorarios()">
                 </div>

@@ -27,7 +27,7 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                 </select>
             </div>
 
-                        <div class="filtro-grupo">
+            <div class="filtro-grupo">
                 <label>Desde:</label>
                 <input type="date" id="filtroFechaInicio" onchange="filtrarTabla()">
                 <label>Hasta:</label>
@@ -209,16 +209,31 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
             <input type="hidden" id="m_estado" name="estado">
 
             <div class="fila-form">
-                <div class="grupo-form"><label>Nombre(s):</label><input type="text" id="m_nombre" name="nombre"
-                        required></div>
-                <div class="grupo-form"><label>Apellido(s):</label><input type="text" id="m_apellido" name="apellido"
-                        required></div>
+                <div class="grupo-form">
+                    <label>Nombre(s):</label>
+                    <input type="text" id="m_nombre" name="nombre" 
+                           pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                           title="Solo se permiten letras y espacios." 
+                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
+                </div>
+                <div class="grupo-form">
+                    <label>Apellido(s):</label>
+                    <input type="text" id="m_apellido" name="apellido" 
+                           pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                           title="Solo se permiten letras y espacios." 
+                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
+                </div>
             </div>
 
             <div class="fila-form">
-                <div class="grupo-form"><label>WhatsApp:</label><input type="text" id="m_wa" name="whatsapp" required>
+                <div class="grupo-form">
+                    <label>WhatsApp:</label>
+                    <input type="tel" id="m_wa" name="whatsapp" required>
                 </div>
-                <div class="grupo-form"><label>No. Serie:</label><input type="text" id="m_serie" name="n_serie"></div>
+                <div class="grupo-form">
+                    <label>No. Serie (Opcional):</label>
+                    <input type="text" id="m_serie" name="n_serie">
+                </div>
             </div>
 
             <div class="fila-form">
@@ -242,7 +257,10 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                 </div>
             </div>
 
-            <div class="grupo-form"><label>Modelo:</label><input type="text" id="m_modelo" name="modelo" required></div>
+            <div class="grupo-form">
+                <label>Modelo:</label>
+                <input type="text" id="m_modelo" name="modelo" required>
+            </div>
 
             <div class="grupo-form">
                 <label>Falla / Motivo del Servicio:</label>
@@ -268,7 +286,9 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
             </div>
 
             <div class="fila-form">
-                <div class="grupo-form"><label>Fecha:</label><input type="date" id="m_fecha" name="fecha" required>
+                <div class="grupo-form">
+                    <label>Fecha:</label>
+                    <input type="date" id="m_fecha" name="fecha" required>
                 </div>
                 <div class="grupo-form">
                     <label>Hora:</label>
