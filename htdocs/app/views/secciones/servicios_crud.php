@@ -1,5 +1,4 @@
 <?php
-// Subimos dos niveles para salir de 'secciones' y 'views', luego entramos a 'config'
 include __DIR__ . "/../../config/conexion.db.php";
 
 if (!isset($conexion)) {
@@ -42,12 +41,22 @@ if (!isset($conexion)) {
                 <textarea name="descripcion" required></textarea>
             </div>
         
-            <div class="grupo-input">
-                <label>URL de Imagen:</label>
-                <input type="file" id="seleccionador" accept="image/*" onchange="convertirABase64('imagen_servicio', 'seleccionador')">
-                    <input type="hidden" name="imagen_servicio" id="imagen_servicio">
-               
-            </div>
+          <div class="flex-form-ayuda">
+    <div class="campos-principales">
+        <div class="grupo-input">
+            <label>Nombre del Archivo de Imagen:</label>
+            <input type="text" name="imagen_servicio" required placeholder="ejemplo_imagen.png">
+        </div>
+        
+        </div>
+
+    <div class="guia-url">
+        <h4><i class="fa-solid fa-circle-info"></i> Formato Requerido</h4>
+        <p>Escribe el nombre exacto del archivo con su extensión:</p>
+        <code>Miniaturas_500px_Recuperacion_De_Info.png</code>
+        <p><small>* Usa guiones bajos (_) en lugar de espacios.</small></p>
+    </div>
+</div>
             <div class="grupo-input">
                 <label>Precio:</label>
                 <input type="number" step="0.01" name="precio" required>
@@ -79,7 +88,6 @@ if (!isset($conexion)) {
                      <th>Nombre del servicio</th>
                     <th>Tipo de servicio</th>
                     <th>Descripcion</th>
-                    <th>Imagen</th>
                     <th>Tiempo estimado del servicio</th>
                     <th>Precio</th>
                     <th>Estado</th>
@@ -95,6 +103,9 @@ $query = "SELECT
             s.id_servicio,
             s.tipo_servicio,
             s.descripcion,
+              s.procedimiento,
+    s.indicaciones,
+    s.exclusiones,
             s.imagen_servicio,
             s.tiempo_estimado,
             s.precio,
@@ -117,11 +128,7 @@ if (!$resultado) {
                 <td>" . htmlspecialchars($row['tipo_servicio']) . "</td>
                 <td>{$row['nombre_tipo']}</td>
                 <td><strong>" . htmlspecialchars($row['descripcion']) . "</strong></td>
-                <td>
-                    <img src='" . htmlspecialchars($row['imagen_servicio'] ?? '../../img/default-servicio.png') . "' 
-                         alt='Servicio' 
-                         style='width:50px; height:50px; object-fit: cover; border-radius: 5px; border: 1px solid #ddd;'>
-                </td>
+                 
                 <td>{$row['tiempo_estimado']}</td>
                 <td>$" . number_format($row['precio'], 2) . "</td>
                 <td>
@@ -135,6 +142,9 @@ if (!$resultado) {
                     </button>
                       <button class='btn-eliminar' onclick='confirmarEliminacion({$row['id_servicio']})'>
     <i class='fa-solid fa-trash'></i>
+</button>
+              <button class='btn-ver' type='button' onclick='abrirModalVerServicio($datosJson)'>
+    <i class='fa-solid fa-eye'></i>
 </button>
                 </td>
               </tr>";
@@ -174,11 +184,20 @@ if (!$resultado) {
                 <label>Descripción:</label>
                 <textarea name="descripcion" id="edit-descripcion" required></textarea>
             </div>
-            <div class="grupo-input">
-                <label>Actualizar Imagen (Opcional):</label>
-                <input type="file" id="seleccionador-edit" accept="image/*" onchange="convertirABase64('edit-imagen', 'seleccionador-edit')">
-                <input type="hidden" name="imagen_servicio" id="edit-imagen">
-            </div>
+            <div class="flex-form-ayuda">
+    <div class="campos-principales">
+        <div class="grupo-input">
+            <label>Nombre del Archivo de Imagen:</label>
+            <input type="text" name="imagen_servicio" id="edit-imagen" required>
+        </div>
+    </div>
+    
+    <div class="guia-url">
+        <h4><i class="fa-solid fa-pen-to-square"></i> Editar URL</h4>
+        <p>Si cambias la imagen, asegúrate de que el nombre coincida con el archivo en el servidor.</p>
+        <code>nuevo_archivo.jpg</code>
+    </div>
+</div>
             <div class="grupo-input">
                 <label>Precio:</label>
                 <input type="number" step="0.01" name="precio" id="edit-precio" required>
@@ -200,6 +219,25 @@ if (!$resultado) {
                 <button type="button" class="btn-cancelar" onclick="cerrarModalEditar()">Cancelar</button>
             </div>
         </form>
+    </div>
+  
+</div>
+  <div id="modalVerServicio" class="modal-formulario" style="display: none;">
+    <div class="contenido-modal modal-purpura" style="max-height: 90vh; overflow-y: auto; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <span class="cerrar-modal" onclick="cerrarModalVerServicio()" style="float:right; cursor:pointer; font-size:28px;">&times;</span>
+        <h3><i class="fa-solid fa-circle-info"></i> Detalles del Servicio</h3>
+        
+        <div style="text-align:center; margin: 20px 0;">
+            <img id="v_imagen" src="" style="width:100%; max-width:250px; border-radius:10px; border: 3px solid #52073a;">
+        </div>
+
+        <div class="info-detalle" style="text-align: left; display: flex; flex-direction: column; gap: 15px;">
+
+            <div><strong>Descripción:</strong> <p id="v_descripcion" style="background:#f4f4f4; padding:10px; border-radius:5px; margin:5px 0;"></p></div>
+            <div><strong>Procedimiento:</strong> <p id="v_procedimiento" style="background:#f4f4f4; padding:10px; border-radius:5px; margin:5px 0; white-space:pre-wrap;"></p></div>
+            <div><strong>Indicaciones:</strong> <p id="v_indicaciones" style="background:#f4f4f4; padding:10px; border-radius:5px; margin:5px 0; white-space:pre-wrap;"></p></div>
+            <div><strong>Exclusiones:</strong> <p id="v_exclusiones" style="background:#f4f4f4; padding:10px; border-radius:5px; margin:5px 0; white-space:pre-wrap;"></p></div>
+        </div>
     </div>
 </div>
 
@@ -249,11 +287,11 @@ function confirmarEliminacion(id) {
         }
     });
 }
+
+
 function abrirEditarServicio(event, datos) {
     const modal = document.getElementById('modal-editar-servicio');
-    const contenido = modal.querySelector('.contenido-modal');
 
-    // llenar datos
     document.getElementById('edit-id').value = datos.id_servicio;
     document.getElementById('edit-tipo').value = datos.tipo_servicio;
     document.getElementById('edit-descripcion').value = datos.descripcion;
@@ -261,12 +299,12 @@ function abrirEditarServicio(event, datos) {
     document.getElementById('edit-tiempo').value = datos.tiempo_estimado;
     document.getElementById('edit-estado').value = datos.estado;
     document.getElementById('edit-tipo-servicio').value = datos.id_tipo_servicio;
+    
+    // CAMBIO CLAVE: Asignar el nombre del archivo al input de texto
+    document.getElementById('edit-imagen').value = datos.imagen_servicio;
 
     modal.style.display = 'block';
-
-
 }
-
 function cerrarModalEditar() {
     document.getElementById('modal-editar-servicio').style.display = 'none';
 }
@@ -307,4 +345,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Limpiar la URL para que no repita la alerta al recargar
     window.history.replaceState({}, document.title, window.location.pathname);
 });
+function abrirModalVerServicio(datos) {
+    const modal = document.getElementById('modalVerServicio');
+    const rutaImg = "../../public/img/servicios/";
+
+    document.getElementById('v_imagen').src = rutaImg + (datos.imagen_servicio || 'default.png');
+    document.getElementById('v_descripcion').textContent = datos.descripcion || 'N/A';
+    document.getElementById('v_procedimiento').textContent = datos.procedimiento || 'No especificado';
+    document.getElementById('v_indicaciones').textContent = datos.indicaciones || 'No especificado';
+    document.getElementById('v_exclusiones').textContent = datos.exclusiones || 'No especificado';
+
+    modal.style.display = 'block';
+}
+
+function cerrarModalVerServicio() {
+    document.getElementById('modalVerServicio').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modalVer = document.getElementById('modalVerServicio');
+    const modalForm = document.getElementById('formulario-servicio');
+    const modalEdit = document.getElementById('modal-editar-servicio');
+    
+    // Solo cierra si el clic es en el contenedor oscuro (el target es el modal mismo)
+    if (event.target == modalVer) cerrarModalVerServicio();
+    if (event.target == modalForm) cerrarFormulario();
+    if (event.target == modalEdit) cerrarModalEditar();
+}
 </script>
