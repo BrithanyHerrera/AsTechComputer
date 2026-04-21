@@ -68,10 +68,10 @@ function generarHorarios(fechaElegida, horaPreseleccionada) {
 // Oyente para cuando el usuario cambia la fecha en el modal de edición
 const inputFecha = document.getElementById('m_fecha');
 if (inputFecha) {
-    inputFecha.addEventListener('change', function() {
+    inputFecha.addEventListener('change', function () {
         const fechaOriginal = this.getAttribute('data-fecha-orig');
         const horaOriginal = document.getElementById('m_hora').getAttribute('data-hora-orig');
-        
+
         if (this.value === fechaOriginal) {
             generarHorarios(this.value, horaOriginal);
         } else {
@@ -97,7 +97,7 @@ function abrirModalVer(boton) {
         document.getElementById('v_marca_modelo').innerText = `${datos.marcaTxt || 'N/A'} - ${datos.modelo || 'N/A'}`;
         document.getElementById('v_serie').innerText = datos.serie || 'N/A';
         document.getElementById('v_falla').innerText = datos.falla || 'N/A';
-        document.getElementById('v_estado').textContent = datos.estado || "No definido"; // Se corrigió 'data' por 'datos'
+        document.getElementById('v_estado').textContent = datos.estado || "No definido";
         document.getElementById('v_fecha').innerText = datos.fecha || 'N/A';
         document.getElementById('v_hora').innerText = datos.hora || 'N/A';
 
@@ -136,7 +136,7 @@ function abrirModalEditar(boton) {
         asignarValor('m_wa', datos.whatsapp);
         asignarValor('m_serie', datos.serie);
         asignarValor('m_modelo', datos.modelo);
-        asignarValor('m_detalle', datos.detalle); 
+        asignarValor('m_detalle', datos.detalle);
 
         // Asignamos la fecha y guardamos registro de cuál era la original
         let elFecha = document.getElementById('m_fecha');
@@ -177,21 +177,24 @@ function abrirModalEditar(boton) {
     }
 }
 
-function cerrarModal() { 
-    document.getElementById('modalEditar').style.display = 'none'; 
+function cerrarModal() {
+    document.getElementById('modalEditar').style.display = 'none';
 }
 
 /* ==========================================
    5. OYENTE DE CLIC EN EL ÁREA EXTERIOR DE MODALES
    ========================================== */
-window.onclick = function (e) { 
+window.onclick = function (e) {
     const modalEdicion = document.getElementById('modalEditar');
     const modalVisualizacion = document.getElementById('modalVer');
+    const modalConfirmacion = document.getElementById('modalConfirmacion'); // NUEVO
 
     if (e.target === modalEdicion) {
-        cerrarModal(); 
+        cerrarModal();
     } else if (e.target === modalVisualizacion) {
         cerrarModalVer();
+    } else if (e.target === modalConfirmacion) {
+        modalConfirmacion.style.display = 'none';
     }
 }
 
@@ -201,34 +204,34 @@ window.onclick = function (e) {
 // (NOTA: Usas submit de form para esto ahora, pero si quieres usar Fetch, aquí se queda)
 function cambiarEstadoCita(idCitaDB, selectElement) {
     const nuevoEstado = selectElement.value;
-    
+
     selectElement.className = 'status-pill ' + nuevoEstado.toLowerCase().replace(' ', '-');
     selectElement.closest('tr').setAttribute('data-estado', nuevoEstado.toLowerCase().replace(' ', '-'));
-    
-    fetch('?seccion=citas', { 
+
+    fetch('?seccion=citas', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: `accion=actualizar_estado_rapido&id_cita=${idCitaDB}&nuevo_estado=${encodeURIComponent(nuevoEstado)}`
     })
-    .then(response => response.text())
-    .then(data => {
-        console.log("Estado actualizado en BD:", data);
-    })
-    .catch(error => {
-        alert("Hubo un error al actualizar el estado. Revisa tu conexión.");
-        console.error(error);
-    });
+        .then(response => response.text())
+        .then(data => {
+            console.log("Estado actualizado en BD:", data);
+        })
+        .catch(error => {
+            alert("Hubo un error al actualizar el estado. Revisa tu conexión.");
+            console.error(error);
+        });
 }
 
 /* ==========================================
    7. PREVENCIÓN DE DUPLICIDAD EN ENVÍO DE FORMULARIOS
    ========================================== */
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     let formularios = document.querySelectorAll('form');
     formularios.forEach(formulario => {
-        formulario.addEventListener('submit', function() {
+        formulario.addEventListener('submit', function () {
             let botonSubmit = this.querySelector('button[type="submit"]');
             // Solo desactivamos los botones que tengan texto (ignoramos los de actualizar estado rápido)
             if (botonSubmit && botonSubmit.innerText.trim() !== '') {
@@ -240,3 +243,65 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+/* ==========================================
+   8. SISTEMA DE CONFIRMACIÓN (NUEVO)
+   ========================================== */
+function abrirModalConfirmacion(mensaje, callbackAceptar, callbackCancelar) {
+    document.getElementById('textoConfirmacion').innerText = mensaje;
+    document.getElementById('modalConfirmacion').style.display = 'flex';
+
+    const btnAceptar = document.getElementById('btnAceptarConfirmacion');
+    const btnCancelar = document.getElementById('btnCancelarConfirmacion');
+
+    // Limpiamos eventos previos clonando los botones
+    let nuevoBtnAceptar = btnAceptar.cloneNode(true);
+    let nuevoBtnCancelar = btnCancelar.cloneNode(true);
+    btnAceptar.parentNode.replaceChild(nuevoBtnAceptar, btnAceptar);
+    btnCancelar.parentNode.replaceChild(nuevoBtnCancelar, btnCancelar);
+
+    nuevoBtnAceptar.addEventListener('click', function () {
+        document.getElementById('modalConfirmacion').style.display = 'none';
+        if (callbackAceptar) callbackAceptar();
+    });
+
+    nuevoBtnCancelar.addEventListener('click', function () {
+        document.getElementById('modalConfirmacion').style.display = 'none';
+        if (callbackCancelar) callbackCancelar();
+    });
+}
+
+// 8.1 Interceptar el guardado del Modal de Edición
+const formEditar = document.getElementById('formEditarCita');
+if (formEditar) {
+    formEditar.addEventListener('submit', function (e) {
+        e.preventDefault(); // Detenemos el envío automático
+        abrirModalConfirmacion(
+            "¿Estás seguro de guardar los cambios en esta cita?",
+            function () {
+                formEditar.submit(); // Si acepta, se envía
+            }
+        );
+    });
+}
+
+// 8.2 Interceptar el cambio de estado rápido en la tabla
+function confirmarCambioEstado(selectElement) {
+    const estadoAnterior = selectElement.getAttribute('data-estado-anterior');
+    const nuevoEstado = selectElement.value;
+    const form = selectElement.form;
+
+    abrirModalConfirmacion(
+        `¿Deseas cambiar el estado de la cita a "${nuevoEstado.toUpperCase()}"?`,
+        function () {
+            // Confirmado: enviamos el formulario y actualizamos la clase visual
+            selectElement.className = 'status-pill ' + nuevoEstado.replace(' ', '-');
+            selectElement.setAttribute('data-estado-anterior', nuevoEstado);
+            form.submit();
+        },
+        function () {
+            // Cancelado: regresamos el select a como estaba
+            selectElement.value = estadoAnterior;
+        }
+    );
+}

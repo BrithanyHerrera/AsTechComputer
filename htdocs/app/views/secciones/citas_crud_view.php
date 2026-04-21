@@ -1,9 +1,7 @@
 <?php
-/* CITAS_CRUD_VIEW.PHP - VERSIÓN INTEGRADA */
-/* Cambios realizados:
-   1. Mapeo exacto de JSON para evitar 'undefined' en los modales.
-   2. Integración del campo 'Estado' dentro del formulario de edición (POST).
-   3. Limpieza de la columna de estado en la tabla (ahora es solo visual).
+/* CITAS_CRUD_VIEW.PHP */
+/*
+Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de administración (CRUD) de citas para ASTECH COMPUTER. Su objetivo es tomar los datos provenientes del controlador (eventos de Google Calendar cruzados con la base de datos local) y mostrarlos en una tabla dinámica e interactiva. Incluye una barra de filtros superiores, botones de acción por cada registro, y un modal emergente que permite al administrador editar toda la información de una cita específica de manera cómoda. Se vincula externamente a hojas de estilo CSS y scripts de JavaScript para mantener una arquitectura limpia y responsiva.
 */
 ?>
 
@@ -68,11 +66,10 @@
                     $clase_estado = str_replace(' ', '-', $estado_actual);
                     $fecha_formato_filtro = date('Y-m-d', strtotime($start_dt));
 
-                    // Datos de respaldo para el JSON
                     $partes_nombre = explode(' ', $nombre_mostrar);
                     $nombre_f = $datos_db['nombre_cliente'] ?? array_shift($partes_nombre);
                     $apellido_f = $datos_db['apellido_cliente'] ?? implode(' ', $partes_nombre);
-                    ?>
+                ?>
 
                     <tr class="fila-registro" data-nombre="<?= strtolower(htmlspecialchars($nombre_mostrar)) ?>"
                         data-estado="<?= $clase_estado ?>" data-fecha="<?= $fecha_formato_filtro ?>">
@@ -100,7 +97,8 @@
                                 <input type="hidden" name="google_id" value="<?= $id_evento ?>">
 
                                 <select name="estado" class="status-pill <?= $clase_estado ?>"
-                                    onchange="this.className = 'status-pill ' + this.value; this.form.submit()"
+                                    data-estado-anterior="<?= $estado_actual ?>"
+                                    onchange="confirmarCambioEstado(this)"
                                     style="border: none; outline: none; cursor: pointer; font-weight: bold;">
                                     <option value="pendiente" <?= $estado_actual == 'pendiente' ? 'selected' : '' ?>
                                         style="background: #fff3cd; color: #856404;">Pendiente</option>
@@ -122,7 +120,7 @@
                                 "serie" => $datos_db['numero_serie'] ?? "N/V",
                                 "falla" => $datos_db['problema_reportado'] ?? "N/A",
                                 "whatsapp" => $datos_db['whatsapp'] ?? "No registrado",
-                                "estado" => ucfirst($estado_actual), /* <-- ¡ESTA LÍNEA ES NUEVA! */
+                                "estado" => ucfirst($estado_actual),
                                 "fecha" => date("d/m/Y", strtotime($start_dt)),
                                 "hora" => date("H:i", strtotime($start_dt))
                             ]), ENT_QUOTES, "UTF-8") ?>' onclick="abrirModalVer(this)">
@@ -201,12 +199,11 @@
         <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
         <h2><i class="fa-solid fa-edit"></i> Editar Información</h2>
 
-        <form method="POST">
+        <form method="POST" id="formEditarCita">
             <input type="hidden" name="accion" value="actualizar">
             <input type="hidden" id="m_google_id" name="modal_google_id">
             <input type="hidden" id="m_db_id" name="modal_db_id">
-
-            <div class="fila-form">
+            <input type="hidden" id="m_estado" name="estado"> <div class="fila-form">
                 <div class="grupo-form"><label>Nombre(s):</label><input type="text" id="m_nombre" name="nombre"
                         required></div>
                 <div class="grupo-form"><label>Apellido(s):</label><input type="text" id="m_apellido" name="apellido"
@@ -247,7 +244,6 @@
                 <select id="m_falla" name="falla" required>
                     <option value="">Seleccione un servicio...</option>
                     <?php
-                    // Reiniciamos el puntero por si acaso y recorremos los servicios
                     if ($servicios_res):
                         $servicios_res->data_seek(0);
                         while ($s = $servicios_res->fetch_assoc()): ?>
@@ -277,6 +273,17 @@
 
             <button type="submit" class="btn-guardar-cambios">Guardar Cambios</button>
         </form>
+    </div>
+</div>
+
+<div id="modalConfirmacion" class="modal-personalizado">
+    <div class="contenido-modal" style="max-width: 400px; text-align: center;">
+        <h2 style="color: #e17203;"><i class="fa-solid fa-triangle-exclamation"></i> Confirmación</h2>
+        <p id="textoConfirmacion" style="margin: 20px 0; font-size: 1.1rem; color: #444;"></p>
+        <div style="display: flex; gap: 15px; justify-content: center; margin-top: 25px;">
+            <button id="btnCancelarConfirmacion" class="btn-cancelar-conf" type="button">Cancelar</button>
+            <button id="btnAceptarConfirmacion" class="btn-aceptar-conf" type="button">Confirmar</button>
+        </div>
     </div>
 </div>
 

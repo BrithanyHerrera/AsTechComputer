@@ -62,7 +62,7 @@ foreach ($citas_expiradas as $cita_exp) {
     if (!empty($cita_exp['id_google_calendar'])) {
         try {
             $service->events->delete($calendarId, $cita_exp['id_google_calendar']);
-        } catch (Exception $e) {} // Ignoramos si ya no existe en Google
+        } catch (Exception $e) {} 
     }
     $modeloCitas->eliminarCitaLocal($cita_exp['id_cita']);
 }
@@ -97,13 +97,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     $id_marca      = $_POST['id_marca'];
     $id_tipo       = $_POST['id_tipo'];
     $falla         = $_POST['falla'];
-    $detalle_falla = $_POST['detalle_falla'] ?? ''; // NUEVO: Captura el detalle de la falla
+    $detalle_falla = $_POST['detalle_falla'] ?? '';
     $whatsapp      = $_POST['whatsapp'];
     $modelo        = $_POST['modelo'];
     $n_serie       = $_POST['n_serie'];
     $fecha         = $_POST['fecha'];
     $hora          = $_POST['hora'];
-    $estado        = $_POST['estado']; 
+    $estado        = $_POST['estado'] ?? ''; 
 
     try {
         // Se solicitan los nombres textuales al modelo para armar el resumen en Google
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 
         $nuevo_resumen = "SERVICIO: $nombre $apellido - $t_nom";
         
-        // NUEVO: Agregamos el detalle de la falla al evento de Google Calendar
+        // Agregamos el detalle de la falla al evento de Google Calendar
         $nueva_desc = "Marca: $m_nom\nModelo: $modelo\nNo. Serie: $n_serie\nFalla: $falla\nDetalles: $detalle_falla\nWhatsApp: $whatsapp";
 
         // Sincronización de los nuevos datos hacia Google Calendar
@@ -127,9 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 
         $service->events->update($calendarId, $id_google, $evento);
 
-        // Actualización persistente en la Base de Datos local
         if (!empty($id_db)) {
-            // NUEVO: Pasamos las 13 variables, incluyendo el $detalle_falla, hacia el modelo
             $modeloCitas->actualizarCitaCompleta($id_db, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado);
         }
         
