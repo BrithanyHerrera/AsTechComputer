@@ -32,8 +32,8 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                 <input type="date" id="filtroFechaInicio" onchange="filtrarTabla()">
                 <label>Hasta:</label>
                 <input type="date" id="filtroFechaFin" onchange="filtrarTabla()">
-                <button class="btn-limpiar" onclick="limpiarFiltros()" title="Limpiar filtros">
-                    <i class="fa-solid fa-rotate-left"></i>
+                <button type="button" class="btn-limpiar" onclick="limpiarFiltros()" title="Limpiar filtros">
+                    <i class="fa-solid fa-rotate-left"></i> Limpiar
                 </button>
             </div>
         </div>
@@ -122,6 +122,7 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                                 "modelo" => $datos_db['modelo'] ?? "N/A",
                                 "serie" => $datos_db['numero_serie'] ?? "N/V",
                                 "falla" => $datos_db['problema_reportado'] ?? "N/A",
+                                "detalle" => $datos_db['detalle_falla'] ?? "Ninguno",
                                 "whatsapp" => $datos_db['whatsapp'] ?? "No registrado",
                                 "estado" => ucfirst($estado_actual),
                                 "fecha" => date("d/m/Y", strtotime($start_dt)),
@@ -183,6 +184,9 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
             </div>
             <div class="detalle-item"><span>Falla Reportada</span>
                 <p id="v_falla"></p>
+            </div>
+            <div class="detalle-item"><span>Detalles Adicionales</span>
+                <p id="v_detalle"></p>
             </div>
             <div class="detalle-item"><span>Estado</span>
                 <p id="v_estado"></p>

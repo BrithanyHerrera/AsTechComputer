@@ -10,28 +10,37 @@ function filtrarTabla() {
     const busqueda = document.getElementById('buscadorGlobal').value.toLowerCase();
     const estado = document.getElementById('filtroEstado').value;
     
-    // MODIFICACIÓN: Capturamos ambas fechas
+    // Capturamos ambas fechas
     const fechaInicio = document.getElementById('filtroFechaInicio').value;
     const fechaFin = document.getElementById('filtroFechaFin').value;
     
     const filas = document.querySelectorAll('#tablaCitas .fila-registro');
 
+    // Convertimos las fechas ingresadas a timestamps (milisegundos) para una comparación matemática exacta
+    const tsInicio = fechaInicio ? new Date(fechaInicio + "T00:00:00").getTime() : null;
+    const tsFin = fechaFin ? new Date(fechaFin + "T23:59:59").getTime() : null;
+
     filas.forEach(fila => {
-        const txtNombre = fila.getAttribute('data-nombre');
-        const txtEstado = fila.getAttribute('data-estado');
-        const txtFecha = fila.getAttribute('data-fecha'); // Formato: YYYY-MM-DD
+        const txtNombre = fila.getAttribute('data-nombre') || "";
+        const txtEstado = fila.getAttribute('data-estado') || "";
+        const txtFecha = fila.getAttribute('data-fecha') || ""; // Formato: YYYY-MM-DD
 
         const coincideBusqueda = txtNombre.includes(busqueda);
         const coincideEstado = estado === 'todos' || txtEstado === estado;
         
-        // MODIFICACIÓN: Lógica para calcular si la fecha de la cita está dentro del rango
+        // Lógica matemática infalible para el rango de fechas
         let coincideFecha = true;
-        if (fechaInicio && fechaFin) {
-            coincideFecha = (txtFecha >= fechaInicio && txtFecha <= fechaFin);
-        } else if (fechaInicio) {
-            coincideFecha = (txtFecha >= fechaInicio);
-        } else if (fechaFin) {
-            coincideFecha = (txtFecha <= fechaFin);
+        if (txtFecha) {
+            // Creamos una fecha al mediodía para evitar problemas de zonas horarias
+            const tsFila = new Date(txtFecha + "T12:00:00").getTime(); 
+            
+            if (tsInicio && tsFin) {
+                coincideFecha = (tsFila >= tsInicio && tsFila <= tsFin);
+            } else if (tsInicio) {
+                coincideFecha = (tsFila >= tsInicio);
+            } else if (tsFin) {
+                coincideFecha = (tsFila <= tsFin);
+            }
         }
 
         if (coincideBusqueda && coincideEstado && coincideFecha) {
@@ -45,9 +54,10 @@ function filtrarTabla() {
 function limpiarFiltros() {
     document.getElementById('buscadorGlobal').value = '';
     document.getElementById('filtroEstado').value = 'todos';
-    // MODIFICACIÓN: Limpiamos ambos campos de fecha
     document.getElementById('filtroFechaInicio').value = '';
     document.getElementById('filtroFechaFin').value = '';
+    
+    // Ejecutamos la función para que la tabla vuelva a mostrar todo
     filtrarTabla();
 }
 
@@ -111,6 +121,9 @@ function abrirModalVer(boton) {
         document.getElementById('v_marca_modelo').innerText = `${datos.marcaTxt || 'N/A'} - ${datos.modelo || 'N/A'}`;
         document.getElementById('v_serie').innerText = datos.serie || 'N/A';
         document.getElementById('v_falla').innerText = datos.falla || 'N/A';
+        
+        document.getElementById('v_detalle').innerText = datos.detalle || 'Ninguno'; 
+        
         document.getElementById('v_estado').textContent = datos.estado || "No definido";
         document.getElementById('v_fecha').innerText = datos.fecha || 'N/A';
         document.getElementById('v_hora').innerText = datos.hora || 'N/A';
