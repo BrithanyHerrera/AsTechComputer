@@ -1,17 +1,18 @@
-<?php 
+<?php
 /**
- * VISTA: toolbar_view.php
+ * PÁGINA: Barra de Navegación (Toolbar) - As Tech Computer
+ * PROPÓSITO: Proporcionar una interfaz de navegación global y acceso rápido a los servicios y búsqueda.
+ * FUNCIONALIDADES: 
+ * - Menú principal con enlaces dinámicos a Contacto, Servicios y Agendamiento de citas.
+ * - Mega Menú interactivo que organiza los servicios por categorías (tipos) recuperados de la base de datos.
+ * - Sección de "Lo más reciente" dentro del menú para destacar los últimos servicios agregados.
+ * - Buscador integrado con tecnología de búsqueda en tiempo real y redirección automática al detalle del servicio.
+ * - Gestión dinámica de rutas mediante la variable '$ruta_prefijo' para asegurar la navegación entre diferentes niveles de carpetas.
  */
-/**
- * VISTA: toolbar_view.php
- */
-/**
- * VISTA: toolbar_view.php
- */
-/**
- * VISTA: toolbar_view.php
- */
+?>
 
+<?php 
+$ruta_img = "../../public/img/servicios/";
 if (isset($permitirAnaliticas) && $permitirAnaliticas): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-862PM8JVQD"></script>
     <script>
@@ -97,7 +98,7 @@ $resultRecientes = $conexion->query($queryRecientes);
         <a href="<?php echo $ruta_prefijo; ?>app/controllers/detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>" style="text-decoration: none; color: inherit;">
             <div class="tarjeta">
                 <span class="badge">Nuevo</span>
-                <img src="<?php echo $reciente['imagen_servicio']; ?>" alt="Servicio">
+                <img src="<?php echo $ruta_img . $reciente['imagen_servicio']; ?>" alt="Servicio"> 
                 <h4><?php echo $reciente['tipo_servicio']; ?></h4> </div>
         </a>
     <?php endwhile; ?>

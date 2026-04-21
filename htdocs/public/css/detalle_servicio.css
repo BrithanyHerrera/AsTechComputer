@@ -1,4 +1,4 @@
-/* Reset básico */
+
 *{
     
     margin: 0;
@@ -7,20 +7,18 @@
     font-family: 'Lato', sans-serif;
 }
 
-/* Fondo general */
 body{
     background: #f5f6fa;
     color: #333;
 }
 
-/* Contenedor principal */
+
 .detalle-container{
     max-width: 1100px;
     margin: 80px auto;
     padding: 20px;
 }
 
-/* Encabezado */
 .detalle-header{
     display: flex;
     gap: 30px;
@@ -28,7 +26,6 @@ body{
     margin-bottom: 40px;
 }
 
-/* Imagen */
 .detalle-img{
     width: 350px;
     height: 250px;
@@ -37,7 +34,6 @@ body{
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-/* Info principal */
 .detalle-info h1{
     font-size: 32px;
     margin-bottom: 10px;
@@ -45,7 +41,7 @@ body{
 
 .detalle-info .precio{
     font-size: 22px;
-    color:  #e17203; /* morado */
+    color:  #e17203; 
     font-weight: bold;
     margin-bottom: 15px;
 }
@@ -56,7 +52,6 @@ body{
     color: #555555;
 }
 
-/* Secciones (procedimiento, beneficios, etc.) */
 .detalle-seccion{
     background: #fff;
     padding: 25px;
@@ -70,7 +65,6 @@ body{
     transform: translateY(-3px);
 }
 
-/* Títulos de sección */
 .detalle-seccion h2{
     font-size: 23px;
     color:  #ce6801;
@@ -79,7 +73,7 @@ body{
 i{
     margin-right:5px;
 }
-/* Texto */
+
 .detalle-seccion p{
     line-height: 1.6;
     font-size: 15px;
@@ -93,23 +87,21 @@ i{
 }
 .indicaciones {
     margin-top:-50px;
-    grid-column: 2; /* Se va debajo de beneficios */
+    grid-column: 2; 
 
 }
 
-/* Procedimiento ocupa columna izquierda */
 .detalle-flex-row .detalle-seccion:nth-child(1) {
     grid-column: 1;
 }
 
-/* Beneficios arriba derecha */
 .detalle-flex-row .detalle-seccion:nth-child(2) {
     grid-column: 2;
 }
 
-/* Estilo para que el texto respete los saltos de línea y parezca lista */
+
 .detalle-seccion p {
-    line-height: 1.3; /* antes 1.6 */
+    line-height: 1.3;
     margin: 0;
 }
 .detalle-seccion p br {
@@ -117,7 +109,7 @@ i{
     display: block;
     content: "";
 }
-/* RESPONSIVO: Si la pantalla es pequeña (celular), se ponen uno abajo del otro */
+
 @media (max-width: 768px) {
     .detalle-flex-row {
         flex-direction: column;

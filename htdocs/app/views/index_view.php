@@ -29,7 +29,7 @@
                 <div class="hero-texto">
                    
                       <div class="hero-imagen">
-                    <img src="public/img/Isologotipo_horizontal color.png" alt="Logo Astech Computer">
+                    <img src="public/img/Isologotipo_horizontal_color.png" alt="Logo Astech Computer">
                 </div>
                     
                     <p class="destacado"> Confiabilidad, garantia y transparencia </p>
