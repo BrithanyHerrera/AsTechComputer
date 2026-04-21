@@ -96,6 +96,32 @@ body {
   margin-left: var(--ancho-sidebar);
   padding: 40px;
 }
+.flex-form-ayuda {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.campos-principales {
+    flex: 1.5;
+}
+.guia-url {
+    flex: 1;
+    background: #fff3cd;
+    border-left: 5px solid #ffc107;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    color: #856404;
+}
+.guia-url code {
+    display: block;
+    background: #fff;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #52073a;
+}
 /* Responsive: si la pantalla es pequeña, la fila se vuelve columna */
 @media (max-width: 600px) {
     .fila-input {

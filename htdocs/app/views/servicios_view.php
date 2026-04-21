@@ -1,3 +1,15 @@
+<?php
+/**
+ * PÁGINA: Vista de Catálogo de Servicios - As Tech Computer
+ * PROPÓSITO: Mostrar de forma visual y atractiva todos los servicios activos.
+ * FUNCIONALIDADES: 
+ * - Carrusel informativo de categorías principales.
+ * - Filtrado dinámico por tipo de servicio mediante parámetros GET.
+ * - Grid de tarjetas interactivas con efecto "hover" para mostrar descripciones.
+ * - Redirección detallada para agendar o conocer más sobre cada servicio.
+ */
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,7 +27,7 @@
 
 <?php
 
-
+    $ruta_img = "../../public/img/servicios/";
     $ruta_prefijo = "../../"; 
     include_once __DIR__ . "/fijos/loader_view.php";
     include __DIR__ . "/../controllers/toolbar_controller.php";
@@ -26,17 +38,9 @@
 </div>
 <?php
 require_once('../../app/config/conexion.db.php');
-$id_tipo = isset($_GET['id_tipo_servicio']) ? $_GET['id_tipo_servicio'] : null;
-
-if ($id_tipo) {
-    $query = "SELECT id_servicio, tipo_servicio, descripcion, precio, imagen_servicio
-              FROM servicios 
-              WHERE estado = 'activo' AND id_tipo_servicio = '$id_tipo'";
-} else {
-    $query = "SELECT id_servicio, tipo_servicio, descripcion, precio, imagen_servicio
-              FROM servicios 
-              WHERE estado = 'activo'";
-}
+$query = "SELECT id_servicio, tipo_servicio, descripcion, precio, imagen_servicio
+          FROM servicios 
+          WHERE estado = 'activo'";
 
 $resultado = mysqli_query($conexion, $query);
 ?>
@@ -70,7 +74,7 @@ $slides = [
 <div class="contenedor-servicios">
     <?php while($row = mysqli_fetch_assoc($resultado)): ?>
         <div class="card-servicio"  onclick="verServicio(<?php echo $row['id_servicio']; ?>)">
-            <img src="<?php echo $row['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
+            <img src="<?php echo $ruta_img . $row['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
             <button class="btn-ver-mas">Ver mas <i class="fa-solid fa-angles-right"></i></button>
             <div class="info-basica">
                 <h3><?php echo $row['tipo_servicio']; ?></h3>
@@ -145,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Función global para las cards
 function verServicio(id) {
-    window.location.href = "detalle_servicio.php?id=" + id;
+    window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
 }
 resultados.addEventListener("click", (e) => {
     if(e.target.closest(".resultado-item")){
@@ -184,7 +188,9 @@ window.addEventListener("click", (e) => {
 });
 
 function verServicio(id){
-    window.location.href = "detalle_servicio.php?id=" + id;
+    
+    window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
 }
+
 </script>
 </html>

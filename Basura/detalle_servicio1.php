@@ -1,4 +1,16 @@
 <?php
+/**
+ * PÁGINA: Detalle del Servicio - As Tech Computer
+ * PROPÓSITO: Proporcionar información específica y profunda sobre un servicio seleccionado para incentivar la conversión del cliente.
+ * FUNCIONALIDADES: 
+ * - Despliegue de datos técnicos: Procedimiento, beneficios, indicaciones y exclusiones del servicio.
+ * - Visualización dinámica del precio y descripción detallada recuperada de la base de datos.
+ * - Listado de métodos de pago activos configurados en el sistema.
+ * - Llamado a la acción (CTA) mediante el botón "Agendar cita" para canalizar la solicitud del cliente.
+ */
+?>
+
+<?php
 // 1. Incluir la conexión
 require_once('../../app/config/conexion.db.php');
 
@@ -44,11 +56,12 @@ if (!$servicio) {
 </head>
 
 <body>
-<?php $ruta_prefijo = "../../";   include __DIR__ . '/../controllers/toolbar_controller.php';?>
+
+<?php $ruta_prefijo = "../../";   include __DIR__ . '/../controllers/toolbar_controller.php';  $ruta_img = "../../public/img/servicios/";?>
 <div class="detalle-container">
 
     <div class="detalle-header">
-        <img src="<?php echo $servicio['imagen_servicio']; ?>" class="detalle-img">
+        <img src="<?php echo $ruta_img . $servicio['imagen_servicio']; ?>" class="detalle-img">
 
         <div class="detalle-info">
             <h1><?php echo $servicio['tipo_servicio']; ?></h1>
