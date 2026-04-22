@@ -75,7 +75,7 @@ $slides = [
     <?php while($row = mysqli_fetch_assoc($resultado)): ?>
         <div class="card-servicio"  onclick="verServicio(<?php echo $row['id_servicio']; ?>)">
             <img src="<?php echo $ruta_img . $row['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
-            <button class="btn-ver-mas">Ver mas <i class="fa-solid fa-angles-right"></i></button>
+            <button class="btn-ver-mas">Mas información<i class="fa-solid fa-angles-right"></i></button>
             <div class="info-basica">
                 <h3><?php echo $row['tipo_servicio']; ?></h3>
                 <span class="precio">$<?php echo number_format($row['precio'], 2); ?></span>
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Cambia cada 5 segundos
-    setInterval(nextSlide, 9000);
+    setInterval(nextSlide, 7000);
 
     // --- LÓGICA DEL BUSCADOR Y MODAL ---
     const resultados = document.getElementById("resultadosBusqueda");
