@@ -326,19 +326,35 @@ a{
     transform: translateY(-5px);
 }
 
-.btn-ver-mas {
-    background: #17a2b8;
-    color: white;
-    border: none;
-    padding: 8px 10px;
-    border-radius: 6px;
+.btn-ver-mas {  
+    align-items: right;
+    gap: 6px;
+
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #555;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.1);
+
+
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.25s ease;
+}
+
+.btn-ver-mas i {
+    font-size: 12px;
+    transition: transform 0.25s ease;
 }
 
 .btn-ver-mas:hover {
-    background: #138496;
+    color:#ff6811;
+    border-color: #ff6811;
+}
 
+.btn-ver-mas:hover i {
+    transform: translateX(4px);
 }
 
 .overlay-descripcion {
