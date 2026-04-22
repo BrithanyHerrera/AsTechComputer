@@ -34,7 +34,7 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
             <div class="fila-links">
                 <h4>Legal</h4>
                 <ul>
-                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/politica_privacidad_controller.php">Política de privacidad</a></li>
                     <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/terminos_y_condiciones_controller.php">Términos y Condiciones</a></li>
                     <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/politica_cookies_controller.php">Política de Cookies</a>
                     </li>
