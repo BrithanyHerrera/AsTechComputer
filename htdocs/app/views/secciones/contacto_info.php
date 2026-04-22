@@ -22,62 +22,77 @@ $resultado = $conexion->query($query);
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php
-                if ($resultado && $resultado->num_rows > 0) {
-                    while ($row = $resultado->fetch_assoc()) {
-                        ?>
-                        <tr>
-                            <td><?php echo $row['id_mensaje']; ?></td>
-                            <td><strong><?php echo htmlspecialchars($row['nombre']); ?></strong></td>
-                            <td><?php echo htmlspecialchars($row['correo']); ?></td>
-                            <td><?php echo htmlspecialchars($row['asunto']); ?></td>
-                            <td>
-                                <div style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="<?php echo htmlspecialchars($row['mensaje']); ?>">
-                                    <?php echo htmlspecialchars($row['mensaje']); ?>
-                                </div>
-                            </td>
-                      
-                            <td>
-                                
-                                    <?php echo date('d/m/Y', strtotime($row['fecha_envio'])); ?>
 
-                            </td>
-                            <td><span class="badge status-<?php echo $row['estado']; ?>">
-        <?php 
-            // Mapeo de nombres para mostrar texto bonito
-            $nombres_estado = [
-                'nuevo' => 'Nuevo',
-                'pendiente' => 'Pendiente de respuesta',
-                'respondido' => 'Respondido',
-                'finalizado' => 'Finalizado'
-            ];
-            echo $nombres_estado[$row['estado']];
-        ?>
-    </span></td>
-                            <td class="acciones">
-                                <button class="btn-mensaje" onclick="enviarCorreo(<?php echo htmlspecialchars(json_encode($row)); ?>)">
-    <i class="fa-solid fa-envelope"></i>
-</button>
-                                <button class="btn-eliminar" onclick="confirmarEliminarMensaje(<?php echo $row['id_mensaje']; ?>)">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                                 <button class="btn-editar" onclick="cambiarEstado('<?php echo $row['id_mensaje']; ?>', '<?php echo $row['estado']; ?>')" title="Cambiar Estado">
-    <i class="fa-solid fa-arrows-rotate"></i>
-</button>
-                            </td>
-                        </tr>
-                        <?php
-                    }
-                } else {
-                    echo "<tr><td colspan='7' style='text-align:center;'>No hay mensajes recibidos.</td></tr>";
-                }
-                ?>
+            <tbody>
+            <?php if ($resultado && $resultado->num_rows > 0): ?>
+                <?php while ($row = $resultado->fetch_assoc()): ?>
+
+                <tr>
+                    <td><?= $row['id_mensaje']; ?></td>
+
+                    <td><strong><?= htmlspecialchars($row['nombre']); ?></strong></td>
+
+                    <td><?= htmlspecialchars($row['correo']); ?></td>
+
+                    <td><?= htmlspecialchars($row['asunto']); ?></td>
+
+                    <td>
+                        <div style="max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"
+                             title="<?= htmlspecialchars($row['mensaje']); ?>">
+                            <?= htmlspecialchars($row['mensaje']); ?>
+                        </div>
+                    </td>
+
+                    <td>
+                        <?= date('d/m/Y', strtotime($row['fecha_envio'])); ?>
+                    </td>
+
+                    <td>
+                        <span class="b status<?= $row['estado']; ?>">
+                            <?php
+                                $nombres_estado = [
+                                    'nuevo' => 'Nuevo',
+                                    'pendiente' => 'Pendiente de respuesta',
+                                    'respondido' => 'Respondido',
+                                    'finalizado' => 'Finalizado'
+                                ];
+
+                                echo $nombres_estado[$row['estado']] ?? $row['estado'];
+                            ?>
+                        </span>
+                    </td>
+
+                    <td class="acciones">
+                        <button class="btn-mensaje"
+                            onclick='enviarCorreo(<?= json_encode($row); ?>)'>
+                            <i class="fa-solid fa-envelope"></i>
+                        </button>
+
+                        <button class="btn-eliminar"
+                            onclick="confirmarEliminarMensaje(<?= $row['id_mensaje']; ?>)">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+
+                        <button class="btn-editar"
+                            onclick="cambiarEstado('<?= $row['id_mensaje']; ?>', '<?= $row['estado']; ?>')">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                <?php endwhile; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="8" style="text-align:center;">
+                        No hay mensajes recibidos.
+                    </td>
+                </tr>
+            <?php endif; ?>
             </tbody>
+
         </table>
     </div>
 </div>
-
 
 <div id="modal-editar-estado" class="modal-formulario" style="display: none;">
     <div class="contenido-modal">
@@ -106,7 +121,7 @@ $resultado = $conexion->query($query);
 </div> 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-// Función para ver el mensaje completo
+
 function verMensaje(datos) {
     Swal.fire({
         title: 'Asunto: ' + datos.asunto,
@@ -136,13 +151,12 @@ Aquí puedes escribir tu respuesta...
 
 Saludos.`;
 
-    // Codificar para URL
     const url = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(correo)}&su=${encodeURIComponent(asunto)}&body=${encodeURIComponent(mensaje)}`;
 
-    // Abrir en nueva pestaña
+
     window.open(url, '_blank');
 }
-// Función para confirmar eliminación
+
 function confirmarEliminarMensaje(id) {
     Swal.fire({
         title: '¿Eliminar mensaje?',
@@ -189,7 +203,7 @@ function cambiarEstado(id, estadoActual) {
     }).then((result) => {
         if (result.isConfirmed) {
             const nuevoEstado = result.value;
-            // Redirección al proceso PHP
+
 window.location.href = `../controllers/mensaje_controller.php?id=${id}&estado=${nuevoEstado}`;        }
     });
 
