@@ -25,7 +25,7 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
             <div class="fila-links">
                 <h4>Empresa</h4>
                 <ul>
-                    <li><a href="#">Sobre Nosotros</a></li>
+                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/sobre_nosotros_controller.php">Sobre Nosotros</a></li>
                     <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/convenios_controller.php">Convenios</a>
                     </li>
                     <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/login_controller.php">Operaciones</a></li>
