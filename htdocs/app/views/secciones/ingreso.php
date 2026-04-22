@@ -4,6 +4,79 @@ if (session_status() === PHP_SESSION_NONE) {
 }require_once '../config/conexion.db.php'; 
 
 // ==========================================
+// 0. CONTROL DE MODO EDICIÓN
+// ==========================================
+// Si el técnico entra desde el menú izquierdo (URL limpia), borramos cualquier edición atrapada
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET['retorno']) && !isset($_GET['editar'])) {
+    unset($_SESSION['memoria_ingreso'], $_SESSION['modo_edicion'], $_SESSION['id_cliente_edicion'], $_SESSION['id_equipo_edicion'], $_SESSION['gabinete_original']);
+}
+
+// Si se recibe la orden de editar, extraemos todas las tablas de golpe
+if (isset($_GET['editar']) && !isset($_SESSION['modo_edicion'])) {
+    $folio_editar = $_GET['editar'];
+    
+    $sql = "SELECT o.*, c.*, e.*, s.*, m.recibir_promociones, m.es_primera_vez, m.id_tipo_uso, m.id_frecuencia_servicio, m.id_medio_contacto 
+            FROM ordenes_ingreso o
+            JOIN equipos e ON o.id_equipo = e.id_equipo
+            JOIN clientes c ON e.id_cliente = c.id_cliente
+            LEFT JOIN condiciones_servicio s ON o.folio = s.folio_orden
+            LEFT JOIN marketing m ON o.folio = m.folio_orden
+            WHERE o.folio = ?";
+    $stmt_ed = $conexion->prepare($sql);
+    $stmt_ed->bind_param("s", $folio_editar);
+    $stmt_ed->execute();
+    $db_data = $stmt_ed->get_result()->fetch_assoc();
+
+    if ($db_data) {
+        // Activamos los candados de edición
+        $_SESSION['modo_edicion'] = $folio_editar;
+        $_SESSION['id_cliente_edicion'] = $db_data['id_cliente'];
+        $_SESSION['id_equipo_edicion'] = $db_data['id_equipo'];
+        $_SESSION['gabinete_original'] = $db_data['id_gabinete'];
+
+        // Mapas inversos para los botones de radio
+        $m_uso = [1=>'estudio', 2=>'oficina', 3=>'disenio_edicion', 4=>'gaming'];
+        $m_frec = [1=>'1_vez_anio', 2=>'2-3_veces_anio', 3=>'mas_3_anio', 4=>'descompone'];
+        $m_orig = [1=>'recomendacion', 2=>'redes_sociales', 3=>'google_web', 4=>'otro'];
+
+        $_SESSION['memoria_ingreso'] = [
+            'nombre_cliente' => $db_data['nombre'],
+            'apellido_cliente' => $db_data['apellido'],
+            'telefono_cliente' => $db_data['telefono'],
+            'correo_cliente' => $db_data['correo'],
+            'fecha_ingreso' => date('Y-m-d', strtotime($db_data['fecha_ingreso'])),
+            'espacio_almacenamiento' => $db_data['id_gabinete'],
+            'folio' => $db_data['folio'],
+            'condicion' => explode(', ', $db_data['condicion_fisica']),
+            'accesorios' => explode(', ', $db_data['accesorios_entregados']),
+            'motivo_ingreso' => $db_data['descripcion_problema'],
+            'tecnico_asignado' => $db_data['id_tecnico'],
+            'observaciones_equipo' => $db_data['observaciones_recepcion'],
+            'autoriza_revision' => $db_data['autoriza_revision_costo'],
+            'tiempo_estimado' => $db_data['tiempo_estimado'],
+            'dudas_cliente' => $db_data['dudas_cliente'],
+            'tipo_equipo' => $db_data['id_tipo_equipo'],
+            'marca' => $db_data['id_marca'],
+            'modelo' => $db_data['modelo'],
+            'numero_serie' => $db_data['numero_serie'],
+            'primera_vez' => $db_data['es_primera_vez'],
+            'promociones' => $db_data['recibir_promociones'],
+            'claro_pago' => ($db_data['recordatorio_anticipo'] == 'si') ? 'on' : null,
+            'uso_equipo' => $m_uso[$db_data['id_tipo_uso']] ?? '',
+            'frecuencia' => $m_frec[$db_data['id_frecuencia_servicio']] ?? '',
+            'origen' => $m_orig[$db_data['id_medio_contacto']] ?? ''
+        ];
+        
+        $q_gab = $conexion->query("SELECT tipo_espacio FROM gabinetes WHERE id_gabinete = '{$db_data['id_gabinete']}'");
+        if($r = $q_gab->fetch_assoc()) $_SESSION['memoria_ingreso']['tipo_almacenamiento'] = $r['tipo_espacio'];
+
+        session_write_close(); // ← fuerza guardar la sesión antes del redirect
+        header("Location: administracion_controller.php?seccion=ingreso");
+        exit;
+    }
+}
+
+// ==========================================
 // 1. GUARDADO PROGRESIVO EN MEMORIA Y AUTOCARGA
 // ==========================================
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -52,7 +125,10 @@ if (isset($_POST['finalizar_registro'])) {
     $result_check = $stmt_check->get_result();
     $gabinete_actual = $result_check->fetch_assoc();
 
-    if (!$gabinete_actual || $gabinete_actual['estado'] !== 'disponible') {
+    $es_mismo_gabinete_original = isset($_SESSION['gabinete_original']) && 
+                               $_SESSION['gabinete_original'] === $espacio_elegido;
+
+    if (!$gabinete_actual || ($gabinete_actual['estado'] !== 'disponible' && !$es_mismo_gabinete_original)) {
         // Limpiar el espacio y folio inválidos de la sesión para que
         // el usuario tenga que elegir uno nuevo en el paso 2.
         unset($_SESSION['memoria_ingreso']['espacio_almacenamiento']);
@@ -82,54 +158,87 @@ if (isset($_POST['finalizar_registro'])) {
     $id_tecnico = $datos['tecnico_asignado'] ?? 1; 
 
     try {
-        // TABLA 1: CLIENTES
-        $stmt1 = $conexion->prepare("INSERT INTO clientes (nombre, apellido, telefono, correo) VALUES (?, ?, ?, ?)");
-        $stmt1->bind_param("ssss", $datos['nombre_cliente'], $datos['apellido_cliente'], $telefono, $datos['correo_cliente']);
-        $stmt1->execute();
-        $id_cliente = $conexion->insert_id;
+        $conexion->begin_transaction();
 
-        // TABLA 2: EQUIPOS
-        $stmt2 = $conexion->prepare("INSERT INTO equipos (id_cliente, id_marca, id_tipo_equipo, modelo, numero_serie) VALUES (?, ?, ?, ?, ?)");
-        $stmt2->bind_param("iiiss", $id_cliente, $id_marca, $id_tipo_equipo, $datos['modelo'], $datos['numero_serie']);
-        $stmt2->execute();
-        $id_equipo = $conexion->insert_id;
+        if (isset($_SESSION['modo_edicion'])) {
+            // ===============================================
+            // CAMINO B: ACTUALIZAR REGISTRO EXISTENTE
+            // ===============================================
+            $folio_edit = $_SESSION['modo_edicion'];
+            
+            $stmt1 = $conexion->prepare("UPDATE clientes SET nombre=?, apellido=?, telefono=?, correo=? WHERE id_cliente=?");
+            $stmt1->bind_param("ssssi", $datos['nombre_cliente'], $datos['apellido_cliente'], $telefono, $datos['correo_cliente'], $_SESSION['id_cliente_edicion']);
+            $stmt1->execute();
 
-        // TABLA 3: ORDENES DE INGRESO
-        $stmt3 = $conexion->prepare("INSERT INTO ordenes_ingreso (folio, id_equipo, id_tecnico, id_gabinete, fecha_ingreso, condicion_fisica, accesorios_entregados, descripcion_problema, observaciones_recepcion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt3->bind_param("siissssss", $datos['folio'], $id_equipo, $id_tecnico, $datos['espacio_almacenamiento'], $datos['fecha_ingreso'], $condicion_txt, $accesorios_txt, $datos['motivo_ingreso'], $datos['observaciones_equipo']);
-        $stmt3->execute();
+            $stmt2 = $conexion->prepare("UPDATE equipos SET id_marca=?, id_tipo_equipo=?, modelo=?, numero_serie=? WHERE id_equipo=?");
+            $stmt2->bind_param("iissi", $id_marca, $id_tipo_equipo, $datos['modelo'], $datos['numero_serie'], $_SESSION['id_equipo_edicion']);
+            $stmt2->execute();
 
-        // TABLA 4: CONDICIONES DE SERVICIO
-        $stmt4 = $conexion->prepare("INSERT INTO condiciones_servicio (folio_orden, autoriza_revision_costo, tiempo_estimado, recordatorio_anticipo, dudas_cliente) VALUES (?, ?, ?, ?, ?)");
-        $stmt4->bind_param("sssss", $datos['folio'], $datos['autoriza_revision'], $datos['tiempo_estimado'], $recordatorio_pago, $datos['dudas_cliente']);
-        $stmt4->execute();
+            $stmt3 = $conexion->prepare("UPDATE ordenes_ingreso SET id_tecnico=?, id_gabinete=?, fecha_ingreso=?, condicion_fisica=?, accesorios_entregados=?, descripcion_problema=?, observaciones_recepcion=? WHERE folio=?");
+            $stmt3->bind_param("isssssss", $id_tecnico, $datos['espacio_almacenamiento'], $datos['fecha_ingreso'], $condicion_txt, $accesorios_txt, $datos['motivo_ingreso'], $datos['observaciones_equipo'], $folio_edit);
+            $stmt3->execute();
 
-        // TABLA 5: MARKETING
-        $stmt5 = $conexion->prepare("INSERT INTO marketing (folio_orden, id_medio_contacto, recibir_promociones, id_tipo_uso, es_primera_vez, id_frecuencia_servicio) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt5->bind_param("sisisi", $datos['folio'], $id_origen, $datos['promociones'], $id_uso, $datos['primera_vez'], $id_frecuencia);
-        $stmt5->execute();
+            $stmt4 = $conexion->prepare("UPDATE condiciones_servicio SET autoriza_revision_costo=?, tiempo_estimado=?, recordatorio_anticipo=?, dudas_cliente=? WHERE folio_orden=?");
+            $stmt4->bind_param("sssss", $datos['autoriza_revision'], $datos['tiempo_estimado'], $recordatorio_pago, $datos['dudas_cliente'], $folio_edit);
+            $stmt4->execute();
 
-        // ACTUALIZAR ESTADO DEL GABINETE
-        $stmt6 = $conexion->prepare("UPDATE gabinetes SET estado = 'ocupado' WHERE id_gabinete = ?");
-        $stmt6->bind_param("s", $datos['espacio_almacenamiento']);
-        $stmt6->execute();
+            $stmt5 = $conexion->prepare("UPDATE marketing SET id_medio_contacto=?, recibir_promociones=?, id_tipo_uso=?, es_primera_vez=?, id_frecuencia_servicio=? WHERE folio_orden=?");
+            $stmt5->bind_param("isssis", $id_origen, $datos['promociones'], $id_uso, $datos['primera_vez'], $id_frecuencia, $folio_edit);
+            $stmt5->execute();
 
-        // 3. TODO SALIÓ BIEN: GUARDAMOS DEFINITIVAMENTE (Commit)
-        $conexion->commit();
+            // Si el técnico decidió cambiarlo de gabinete físico, liberamos el viejo y ocupamos el nuevo
+            if ($datos['espacio_almacenamiento'] !== $_SESSION['gabinete_original']) {
+                $conexion->query("UPDATE gabinetes SET estado = 'disponible' WHERE id_gabinete = '{$_SESSION['gabinete_original']}'");
+                $conexion->query("UPDATE gabinetes SET estado = 'ocupado' WHERE id_gabinete = '{$datos['espacio_almacenamiento']}'");
+            }
 
-        unset($_SESSION['memoria_ingreso']);
-        
-        // Creamos la alerta de éxito en la sesión y recargamos limpio
-        $_SESSION['mensaje_exito'] = "El equipo y el cliente han sido registrados correctamente en el sistema.";
-        header('Location: administracion_controller.php?seccion=ingreso');
-        exit;
+            $conexion->commit();
+            unset($_SESSION['memoria_ingreso'], $_SESSION['modo_edicion'], $_SESSION['id_cliente_edicion'], $_SESSION['id_equipo_edicion'], $_SESSION['gabinete_original']);
+            $_SESSION['mensaje_exito'] = "El registro ha sido actualizado a la perfección.";
+            header('Location: administracion_controller.php?seccion=registros_ingresados_crud_view');
+            exit;
+
+        } else {
+            // ===============================================
+            // CAMINO A: CREAR REGISTRO NUEVO (Tu código intacto)
+            // ===============================================
+            $stmt1 = $conexion->prepare("INSERT INTO clientes (nombre, apellido, telefono, correo) VALUES (?, ?, ?, ?)");
+            $stmt1->bind_param("ssss", $datos['nombre_cliente'], $datos['apellido_cliente'], $telefono, $datos['correo_cliente']);
+            $stmt1->execute();
+            $id_cliente = $conexion->insert_id;
+
+            $stmt2 = $conexion->prepare("INSERT INTO equipos (id_cliente, id_marca, id_tipo_equipo, modelo, numero_serie) VALUES (?, ?, ?, ?, ?)");
+            $stmt2->bind_param("iiiss", $id_cliente, $id_marca, $id_tipo_equipo, $datos['modelo'], $datos['numero_serie']);
+            $stmt2->execute();
+            $id_equipo = $conexion->insert_id;
+
+            $stmt3 = $conexion->prepare("INSERT INTO ordenes_ingreso (folio, id_equipo, id_tecnico, id_gabinete, fecha_ingreso, condicion_fisica, accesorios_entregados, descripcion_problema, observaciones_recepcion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt3->bind_param("siissssss", $datos['folio'], $id_equipo, $id_tecnico, $datos['espacio_almacenamiento'], $datos['fecha_ingreso'], $condicion_txt, $accesorios_txt, $datos['motivo_ingreso'], $datos['observaciones_equipo']);
+            $stmt3->execute();
+
+            $stmt4 = $conexion->prepare("INSERT INTO condiciones_servicio (folio_orden, autoriza_revision_costo, tiempo_estimado, recordatorio_anticipo, dudas_cliente) VALUES (?, ?, ?, ?, ?)");
+            $stmt4->bind_param("sssss", $datos['folio'], $datos['autoriza_revision'], $datos['tiempo_estimado'], $recordatorio_pago, $datos['dudas_cliente']);
+            $stmt4->execute();
+
+            $stmt5 = $conexion->prepare("INSERT INTO marketing (folio_orden, id_medio_contacto, recibir_promociones, id_tipo_uso, es_primera_vez, id_frecuencia_servicio) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt5->bind_param("sisisi", $datos['folio'], $id_origen, $datos['promociones'], $id_uso, $datos['primera_vez'], $id_frecuencia);
+            $stmt5->execute();
+
+            $stmt6 = $conexion->prepare("UPDATE gabinetes SET estado = 'ocupado' WHERE id_gabinete = ?");
+            $stmt6->bind_param("s", $datos['espacio_almacenamiento']);
+            $stmt6->execute();
+
+            $conexion->commit();
+            unset($_SESSION['memoria_ingreso']);
+            $_SESSION['mensaje_exito'] = "El equipo y el cliente han sido registrados correctamente en el sistema.";
+            header('Location: administracion_controller.php?seccion=ingreso');
+            exit;
+        }
 
     } catch (Exception $e) {
-        // FIX: Antes, el catch solo mostraba el alert pero sin exit,
-        // entonces $paso caía a 1 y el formulario regresaba al inicio.
-        // Ahora guardamos el error en sesión y redirigimos al paso 5.
+        $conexion->rollback();
         $_SESSION['error_db'] = "Error al guardar: " . $e->getMessage();
-        header('Location: administracion_controller.php?seccion=ingreso&retorno=5');
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?retorno=5');
         exit;
     }
 }
@@ -188,7 +297,16 @@ $json_citas = json_encode($citas_agendadas);
 // 'disponible' al momento de renderizar la página. Así el JS nunca
 // puede mostrar espacios ocupados porque simplemente no están en
 // el objeto espaciosDB que recibe.
-$query_gabinetes = $conexion->query("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' ORDER BY id_gabinete ASC");
+$gabinete_original_sesion = $_SESSION['gabinete_original'] ?? null;
+if ($gabinete_original_sesion) {
+    // En modo edición: incluir el gabinete original aunque esté "ocupado"
+    $stmt_gab = $conexion->prepare("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' OR id_gabinete = ? ORDER BY id_gabinete ASC");
+    $stmt_gab->bind_param("s", $gabinete_original_sesion);
+    $stmt_gab->execute();
+    $query_gabinetes = $stmt_gab->get_result();
+} else {
+    $query_gabinetes = $conexion->query("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' ORDER BY id_gabinete ASC");
+}
 $gabinetes_disponibles = [
     'laptop'                => [],
     'computadora_escritorio'=> [],
@@ -209,10 +327,14 @@ if ($paso == 2 && isset($_SESSION['memoria_ingreso']['espacio_almacenamiento']))
     $tipo_ses    = $_SESSION['memoria_ingreso']['tipo_almacenamiento'] ?? '';
     $espacio_ses = $_SESSION['memoria_ingreso']['espacio_almacenamiento'];
 
+    $es_gabinete_original = isset($_SESSION['gabinete_original']) && 
+                        $_SESSION['gabinete_original'] === $espacio_ses;
+
     $espacio_sigue_disponible =
-        $tipo_ses !== '' &&
+        $es_gabinete_original || // ← el gabinete propio siempre es válido al editar
+        ($tipo_ses !== '' &&
         isset($gabinetes_disponibles[$tipo_ses]) &&
-        in_array($espacio_ses, $gabinetes_disponibles[$tipo_ses]);
+        in_array($espacio_ses, $gabinetes_disponibles[$tipo_ses]));
 
     if (!$espacio_sigue_disponible) {
         unset($_SESSION['memoria_ingreso']['espacio_almacenamiento']);
@@ -276,6 +398,15 @@ if ($paso == 2 && isset($_SESSION['memoria_ingreso']['espacio_almacenamiento']))
   <div class="formulario">
     <form method="POST" action="">
       <?php if ($paso == 1): ?>
+
+        <div class="formulario">
+          <?php if(isset($_SESSION['modo_edicion'])): ?>
+            <div style="background:#e0e7ff; color:#3730a3; padding:10px; text-align:center; font-weight:bold; margin-bottom:15px; border-radius:8px; border:2px dashed #818cf8;">
+              <i class="fa-solid fa-pen-to-square"></i> MODO EDICIÓN ACTIVO: Folio <?php echo $_SESSION['modo_edicion']; ?>
+            </div>
+          <?php endif; ?>
+          <form method="POST" action="">
+
         <h1>Datos del cliente</h1>
         <div class="grupo-entrada" style="background: #eef2ff; border: 1px solid #c7d2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
           <label class="etiqueta-formulario" style="color: #4f46e5; font-weight: bold;">
@@ -599,6 +730,7 @@ if ($paso == 2 && isset($_SESSION['memoria_ingreso']['espacio_almacenamiento']))
       const espaciosDB = <?php echo isset($json_gabinetes) ? $json_gabinetes : '{}'; ?>;
       const relacionesEquipoMarca = <?php echo isset($json_relaciones) ? $json_relaciones : '{}'; ?>;
       const citasDB = <?php echo isset($json_citas) ? $json_citas : '{}'; ?>;
+      const modoEdicion = <?php echo isset($_SESSION['modo_edicion']) ? 'true' : 'false'; ?>;
       // PHP ya validó que estos valores siguen siendo consistentes con
       // los gabinetes disponibles. Si el espacio ya no estaba libre,
       // PHP lo limpió de sesión antes de llegar aquí.

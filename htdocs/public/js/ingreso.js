@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Función para unir la fecha con el espacio
     function actualizarFolio() {
         if (!inputFolio || !inputFecha) return;
+        // ESCUDO: Si estamos editando, el folio es sagrado y no se recalcula
+        if (typeof modoEdicion !== 'undefined' && modoEdicion) return; 
+
         const prefijo = formatearFechaFolio(inputFecha.value);
         const espacio = selectEspacio ? selectEspacio.value : "";
         

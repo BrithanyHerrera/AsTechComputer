@@ -88,7 +88,9 @@ if ($resultado && $resultado->num_rows > 0) { while ($fila = $resultado->fetch_a
                         <button class="btn-ver" onclick='verDetalles(<?= json_encode($datos_js) ?>)' title="Ver detalles"><i class="fa-solid fa-eye"></i></button>
                         
                         <?php if (!$esTecnico && $row['estado'] != 'entregado'): ?>
-                        <button class="btn-editar" onclick='editarRegistro(<?= json_encode($datos_js) ?>)' title="Editar"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <a href="administracion_controller.php?seccion=ingreso&editar=<?= $row['folio'] ?>" class="btn-editar" title="Editar" style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none;">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
                         <?php endif; ?>
                     </td>
                 </tr>
