@@ -327,25 +327,18 @@ a{
 }
 
 .btn-ver-mas {
-    padding: 5px 10px;
-    background: var(--naranja-principal);
-    color: #ffffff;
+    background: #17a2b8;
+    color: white;
     border: none;
-    border-radius: 20px;
-    font-weight: 700;
+    padding: 8px 10px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.8rem;
-    width:100px;
-    margin-top:10px;
-    margin-left:180px;
+    transition: 0.2s;
 }
 
 .btn-ver-mas:hover {
-    background: #45004e;
-    color: white;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-    transform: scale(1.05);
+    background: #138496;
+
 }
 
 .overlay-descripcion {

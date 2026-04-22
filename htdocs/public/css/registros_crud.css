@@ -115,21 +115,46 @@
 }
 
 .btn-ver {
-    background: #52073a;
+    background: #17a2b8;
     color: white;
     border: none;
-    padding: 8px;
+    padding: 8px 10px;
     border-radius: 6px;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-ver:hover {
+    background: #138496;
 }
 
 .btn-editar {
     background: #e17203;
     color: white;
     border: none;
-    padding: 8px;
+    padding: 8px 10px;
     border-radius: 6px;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-editar:hover {
+    background: #c66302;
+}
+
+.btn-eliminar {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.btn-eliminar:hover {
+    background: #c82333;
 }
 
 /* Modal */
