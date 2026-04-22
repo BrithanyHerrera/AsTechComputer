@@ -200,14 +200,6 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
         if (file_exists($ruta_secciones . "crud_contenedores.php")) { include $ruta_secciones . "crud_contenedores.php"; }
         break;
 
-      case 'acceso_denegado':
-        echo "<div style='text-align: center; margin-top: 50px;'>";
-        echo "<h1><i class='fa-solid fa-lock' style='color: #e17203; font-size: 3rem;'></i> Acceso Denegado</h1>";
-        echo "<p>Lo sentimos, Eduardo, pero este usuario no tiene permisos para esta sección.</p>";
-        echo "<a href='?seccion=dashboard' style='color: #52073a; font-weight: bold;'>Volver al Dashboard</a>";
-        echo "</div>";
-        break;
-
       default:
         echo "<h1>404</h1><p>Sección no encontrada.</p>";
         break;

@@ -12,18 +12,49 @@ if (!$usuario) { $usuario = ['nombre' => 'Usuario', 'apellido' => 'Desconocido',
 
 $es_admin = ($usuario['id_puesto'] == 3 || $usuario['id_puesto'] == 4);
 
-// Capturar los valores actuales de la URL para que los inputs no se borren visualmente
+// 1. Capturar los valores actuales de la URL
 $val_nombre = $_GET['filtro_nombre'] ?? '';
 $val_puesto = $_GET['filtro_puesto'] ?? 'todos';
-$val_fecha  = $_GET['filtro_fecha'] ?? '';
+$val_fecha_inicio = $_GET['filtro_fecha_inicio'] ?? '';
+$val_fecha_fin = $_GET['filtro_fecha_fin'] ?? '';
+$val_limite = isset($_GET['limite']) ? (int)$_GET['limite'] : 50;
 
-// La actividad la carga el controlador, pero si accedemos directo a la vista, usamos el modelo
+// 2. MAGIA DE ARQUITECTO: Ejecutar la búsqueda directamente en la vista
 if (!isset($actividad_reciente)) {
-    $actividad_reciente = $es_admin ? $modeloDashboard->obtenerConexiones(['nombre' => $val_nombre, 'puesto' => $val_puesto, 'fecha' => $val_fecha]) : [];
+    if ($es_admin) {
+        $filtros = [
+            'nombre'       => $val_nombre,
+            'puesto'       => $val_puesto,
+            'fecha_inicio' => $val_fecha_inicio,
+            'fecha_fin'    => $val_fecha_fin
+        ];
+        
+        $pagina_actual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+        if ($pagina_actual < 1) $pagina_actual = 1;
+        
+        $offset = ($pagina_actual - 1) * $val_limite;
+
+        // Calculamos cuántas páginas existen
+        $total_registros = $modeloDashboard->contarConexiones($filtros);
+        $total_paginas = ceil($total_registros / $val_limite);
+        if ($total_paginas < 1) $total_paginas = 1;
+
+        // Traemos la información real de la base de datos
+        $actividad_reciente = $modeloDashboard->obtenerConexiones($filtros, $val_limite, $offset);
+    } else {
+        $actividad_reciente = [];
+        $total_paginas = 1;
+        $pagina_actual = 1;
+    }
 }
+
+// 3. Constructor mágico de URLs para que los botones de paginación no pierdan los filtros
+$params_url = $_GET;
+unset($params_url['pagina']); 
+$url_base_paginacion = '?' . http_build_query($params_url) . '&pagina=';
 ?>
 
-<link rel="stylesheet" href="../../public/css/panel_info.css?v=2.0">
+<link rel="stylesheet" href="../../public/css/panel_info.css?v=3.0">
 
 <div class="contenedor-dashboard">
     <div class="pildora-usuario">
@@ -51,7 +82,7 @@ if (!isset($actividad_reciente)) {
                     <div class="filtro-grupo">
                         <label>Puesto:</label>
                         <select name="filtro_puesto" onchange="this.form.submit()">
-                            <option value="todos" <?= $val_puesto == 'todos' ? 'selected' : '' ?>>Todos los puestos</option>
+                            <option value="todos" <?= $val_puesto == 'todos' ? 'selected' : '' ?>>Todos</option>
                             <?php
                             $sql_p = "SELECT nombre_puesto FROM puestos ORDER BY nombre_puesto ASC";
                             $res_p = $conexion->query($sql_p);
@@ -67,15 +98,30 @@ if (!isset($actividad_reciente)) {
                     </div>
 
                     <div class="filtro-grupo">
-                        <label>Día:</label>
-                        <input type="date" name="filtro_fecha" value="<?= htmlspecialchars($val_fecha) ?>" onchange="this.form.submit()">
-                        
+                        <label>Desde:</label>
+                        <input type="date" name="filtro_fecha_inicio" value="<?= htmlspecialchars($val_fecha_inicio) ?>" onchange="this.form.submit()">
+                    </div>
+
+                    <div class="filtro-grupo">
+                        <label>Hasta:</label>
+                        <input type="date" name="filtro_fecha_fin" value="<?= htmlspecialchars($val_fecha_fin) ?>" onchange="this.form.submit()">
+                    </div>
+
+                    <div class="filtro-grupo">
+                        <label>Mostrar:</label>
+                        <select name="limite" onchange="this.form.submit()" style="width: 70px;">
+                            <option value="10" <?= $val_limite == 10 ? 'selected' : '' ?>>10</option>
+                            <option value="25" <?= $val_limite == 25 ? 'selected' : '' ?>>25</option>
+                            <option value="50" <?= $val_limite == 50 ? 'selected' : '' ?>>50</option>
+                            <option value="100" <?= $val_limite == 100 ? 'selected' : '' ?>>100</option>
+                        </select>
+
                         <button type="submit" class="btn-buscar" style="background: #e17203; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; margin-left: 5px;">
-                            Buscar
+                            Filtrar
                         </button>
 
                         <?php $url_limpia = isset($_GET['seccion']) ? "?seccion=" . htmlspecialchars($_GET['seccion']) : $_SERVER['PHP_SELF']; ?>
-                        <a href="<?= $url_limpia ?>" class="btn-limpiar" title="Limpiar filtros" style="margin-left: 5px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; box-sizing: border-box; height: 38px; width: 38px;">
+                        <a href="<?= $url_limpia ?>" class="btn-limpiar" title="Limpiar filtros" style="margin-left: 5px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; box-sizing: border-box; height: 38px; width: 38px; background: #f3f4f6; color: #4b5563; border-radius: 8px;">
                             <i class="fa-solid fa-rotate-left"></i>
                         </a>
                     </div>
@@ -109,9 +155,28 @@ if (!isset($actividad_reciente)) {
                     </tbody>
                 </table>
             </div>
+
+            <?php if ($total_paginas > 1): ?>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px; padding: 15px;">
+                <?php if ($pagina_actual > 1): ?>
+                    <a href="<?= $url_base_paginacion . ($pagina_actual - 1) ?>" style="padding: 8px 15px; background: #eef2ff; color: #4f46e5; border-radius: 6px; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-angle-left"></i> Anterior</a>
+                <?php else: ?>
+                    <span style="padding: 8px 15px; background: #f3f4f6; color: #9ca3af; border-radius: 6px; font-weight: bold;"><i class="fa-solid fa-angle-left"></i> Anterior</span>
+                <?php endif; ?>
+
+                <span style="font-size: 14px; color: #4b5563;">Página <strong><?= $pagina_actual ?></strong> de <strong><?= $total_paginas ?></strong></span>
+
+                <?php if ($pagina_actual < $total_paginas): ?>
+                    <a href="<?= $url_base_paginacion . ($pagina_actual + 1) ?>" style="padding: 8px 15px; background: #eef2ff; color: #4f46e5; border-radius: 6px; text-decoration: none; font-weight: bold;">Siguiente <i class="fa-solid fa-angle-right"></i></a>
+                <?php else: ?>
+                    <span style="padding: 8px 15px; background: #f3f4f6; color: #9ca3af; border-radius: 6px; font-weight: bold;">Siguiente <i class="fa-solid fa-angle-right"></i></span>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+
             <?php else: ?>
-                <div class="mensaje-vacio">
-                    <i class="fa-solid fa-search"></i>
+                <div class="mensaje-vacio" style="text-align: center; padding: 40px; color: #6b7280;">
+                    <i class="fa-solid fa-search" style="font-size: 30px; margin-bottom: 10px;"></i><br>
                     No se encontraron movimientos con esos filtros.
                 </div>
             <?php endif; ?>

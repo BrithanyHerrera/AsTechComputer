@@ -17,16 +17,28 @@ class DashboardController {
         $es_admin = ($usuario['id_puesto'] == 3 || $usuario['id_puesto'] == 4);
 
         $actividad_reciente = [];
+        $total_paginas = 1;
+        $pagina_actual = 1;
+
         if ($es_admin) {
-            // NUEVO: Capturar los filtros de la URL (si existen)
             $filtros = [
-                'nombre' => $_GET['filtro_nombre'] ?? '',
-                'puesto' => $_GET['filtro_puesto'] ?? '',
-                'fecha'  => $_GET['filtro_fecha'] ?? ''
+                'nombre'       => $_GET['filtro_nombre'] ?? '',
+                'puesto'       => $_GET['filtro_puesto'] ?? '',
+                'fecha_inicio' => $_GET['filtro_fecha_inicio'] ?? '',
+                'fecha_fin'    => $_GET['filtro_fecha_fin'] ?? ''
             ];
             
-            // Pasamos los filtros al modelo
-            $actividad_reciente = $this->model->obtenerConexiones($filtros);
+            // Lógica de Paginación
+            $limite = isset($_GET['limite']) ? (int)$_GET['limite'] : 50; // Por defecto 50
+            $pagina_actual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            if ($pagina_actual < 1) $pagina_actual = 1;
+            
+            $offset = ($pagina_actual - 1) * $limite;
+
+            $total_registros = $this->model->contarConexiones($filtros);
+            $total_paginas = ceil($total_registros / $limite);
+
+            $actividad_reciente = $this->model->obtenerConexiones($filtros, $limite, $offset);
         }
 
         require_once '../views/secciones/panel_info.php';

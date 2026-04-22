@@ -21,14 +21,11 @@ class DashboardModel {
         return $resultado;
     }
 
-    // NUEVO: Ahora recibe un arreglo con los filtros
-    public function obtenerConexiones($filtros = []) {
-        $sql = "SELECT b.fecha_hora, b.accion, b.detalle, e.nombre, e.apellido, p.nombre_puesto 
-                FROM bitacora_movimientos b 
-                JOIN empleados e ON b.id_empleado = e.id_empleado 
-                JOIN puestos p ON e.id_puesto = p.id_puesto 
-                WHERE 1=1"; // 1=1 es un truco para concatenar los AND fácilmente
-
+    // ==========================================
+    // FUNCIÓN INTERNA PARA CONSTRUIR LOS FILTROS
+    // ==========================================
+    private function construirFiltrosSQL($filtros) {
+        $sql = "";
         $tipos = "";
         $valores = [];
 
@@ -39,26 +36,53 @@ class DashboardModel {
             $valores[] = "%" . $filtros['nombre'] . "%";
             $valores[] = "%" . $filtros['nombre'] . "%";
         }
-
-        // Filtro por Puesto (Exacto)
+        
+        // Filtro por Puesto
         if (!empty($filtros['puesto']) && $filtros['puesto'] !== 'todos') {
             $sql .= " AND p.nombre_puesto = ?";
             $tipos .= "s";
             $valores[] = $filtros['puesto'];
         }
-
-        // Filtro por Fecha (Día exacto)
-        if (!empty($filtros['fecha'])) {
-            $sql .= " AND DATE(b.fecha_hora) = ?";
+        
+        // Filtro de Rango de Fechas (Desde)
+        if (!empty($filtros['fecha_inicio'])) {
+            $sql .= " AND DATE(b.fecha_hora) >= ?";
             $tipos .= "s";
-            $valores[] = $filtros['fecha'];
+            $valores[] = $filtros['fecha_inicio'];
+        }
+        
+        // Filtro de Rango de Fechas (Hasta)
+        if (!empty($filtros['fecha_fin'])) {
+            $sql .= " AND DATE(b.fecha_hora) <= ?";
+            $tipos .= "s";
+            $valores[] = $filtros['fecha_fin'];
         }
 
-        $sql .= " ORDER BY b.fecha_hora DESC LIMIT 500"; 
+        return ['sql' => $sql, 'tipos' => $tipos, 'valores' => $valores];
+    }
+
+    // ==========================================
+    // OBTENER LOS REGISTROS CON LÍMITE (PAGINACIÓN)
+    // ==========================================
+    public function obtenerConexiones($filtros = [], $limite = 50, $offset = 0) {
+        $base_sql = "SELECT b.fecha_hora, b.accion, b.detalle, e.nombre, e.apellido, p.nombre_puesto 
+                FROM bitacora_movimientos b 
+                JOIN empleados e ON b.id_empleado = e.id_empleado 
+                JOIN puestos p ON e.id_puesto = p.id_puesto 
+                WHERE 1=1";
+
+        // Traemos los filtros dinámicos
+        $f = $this->construirFiltrosSQL($filtros);
+        $sql = $base_sql . $f['sql'] . " ORDER BY b.fecha_hora DESC LIMIT ? OFFSET ?";
         
+        // Agregamos los parámetros para LIMIT y OFFSET ("ii" significa dos enteros)
+        $tipos = $f['tipos'] . "ii";
+        $valores = $f['valores'];
+        $valores[] = (int)$limite;
+        $valores[] = (int)$offset;
+
         $stmt = $this->conexion->prepare($sql);
         
-        // Si hay filtros, vinculamos los parámetros de forma segura
         if (!empty($tipos)) {
             $stmt->bind_param($tipos, ...$valores);
         }
@@ -73,7 +97,34 @@ class DashboardModel {
             }
         }
         $stmt->close();
+        
         return $conexiones;
+    }
+
+    // ==========================================
+    // CONTAR EL TOTAL DE REGISTROS (PARA SABER CUÁNTAS PÁGINAS SON)
+    // ==========================================
+    public function contarConexiones($filtros = []) {
+        $base_sql = "SELECT COUNT(*) as total 
+                FROM bitacora_movimientos b 
+                JOIN empleados e ON b.id_empleado = e.id_empleado 
+                JOIN puestos p ON e.id_puesto = p.id_puesto 
+                WHERE 1=1";
+
+        $f = $this->construirFiltrosSQL($filtros);
+        $sql = $base_sql . $f['sql'];
+
+        $stmt = $this->conexion->prepare($sql);
+        
+        if (!empty($f['tipos'])) {
+            $stmt->bind_param($f['tipos'], ...$f['valores']);
+        }
+        
+        $stmt->execute();
+        $resultado = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        
+        return $resultado['total'];
     }
 }
 ?>

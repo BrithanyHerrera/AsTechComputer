@@ -4,12 +4,31 @@ if (session_status() === PHP_SESSION_NONE) {
 }require_once '../config/conexion.db.php'; 
 
 // ==========================================
-// 1. GUARDADO PROGRESIVO EN MEMORIA
+// 1. GUARDADO PROGRESIVO EN MEMORIA Y AUTOCARGA
 // ==========================================
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Guardado normal de lo que el técnico escribió
     foreach ($_POST as $key => $value) {
         if ($key !== 'step' && $key !== 'finalizar_registro') {
             $_SESSION['memoria_ingreso'][$key] = $value;
+        }
+    }
+
+    // MAGIA DE ARQUITECTO: Si el técnico seleccionó una cita, extraemos todo de la base de datos 
+    // y lo inyectamos secretamente en la memoria para que aparezca en los Pasos 2 y 5.
+    if (isset($_POST['id_cita_importada']) && !empty($_POST['id_cita_importada'])) {
+        $id_cita = (int)$_POST['id_cita_importada'];
+        $stmt_cita = $conexion->prepare("SELECT * FROM citas_web WHERE id_cita = ?");
+        $stmt_cita->bind_param("i", $id_cita);
+        $stmt_cita->execute();
+        $cita_bd = $stmt_cita->get_result()->fetch_assoc();
+
+        if ($cita_bd) {
+            $_SESSION['memoria_ingreso']['motivo_ingreso'] = $cita_bd['problema_reportado'] . ($cita_bd['detalle_falla'] ? ' - ' . $cita_bd['detalle_falla'] : '');
+            $_SESSION['memoria_ingreso']['tipo_equipo'] = $cita_bd['id_tipo_equipo'];
+            $_SESSION['memoria_ingreso']['marca'] = $cita_bd['id_marca'];
+            $_SESSION['memoria_ingreso']['modelo'] = $cita_bd['modelo'];
+            $_SESSION['memoria_ingreso']['numero_serie'] = $cita_bd['numero_serie'];
         }
     }
 }
@@ -20,12 +39,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (isset($_POST['finalizar_registro'])) {
     $datos = $_SESSION['memoria_ingreso'];
 
+    // ----------------------------------------------------------
+    // FIX: VALIDAR QUE EL GABINETE SIGUE DISPONIBLE ANTES DE
+    // INTENTAR CUALQUIER INSERT. Si ya está ocupado, volver al
+    // paso 2 con un mensaje de error claro en lugar de fallar
+    // silenciosamente y regresar al inicio del formulario.
+    // ----------------------------------------------------------
+    $espacio_elegido = $datos['espacio_almacenamiento'] ?? '';
+    $stmt_check = $conexion->prepare("SELECT estado FROM gabinetes WHERE id_gabinete = ?");
+    $stmt_check->bind_param("s", $espacio_elegido);
+    $stmt_check->execute();
+    $result_check = $stmt_check->get_result();
+    $gabinete_actual = $result_check->fetch_assoc();
+
+    if (!$gabinete_actual || $gabinete_actual['estado'] !== 'disponible') {
+        // Limpiar el espacio y folio inválidos de la sesión para que
+        // el usuario tenga que elegir uno nuevo en el paso 2.
+        unset($_SESSION['memoria_ingreso']['espacio_almacenamiento']);
+        unset($_SESSION['memoria_ingreso']['folio']);
+        unset($_SESSION['memoria_ingreso']['tipo_almacenamiento']);
+        $_SESSION['error_espacio'] = "El espacio <strong>{$espacio_elegido}</strong> ya no está disponible (fue asignado a otro equipo). Elige otro espacio.";
+        header('Location: administracion_controller.php?seccion=ingreso&retorno=2');
+        exit;
+    }
+
     $condicion_txt = isset($datos['condicion']) ? implode(", ", $datos['condicion']) : 'Ninguna';
     $accesorios_txt = isset($datos['accesorios']) ? implode(", ", $datos['accesorios']) : 'Ninguno';
     $telefono = $datos['telefono_cliente'] ?? '';
     $recordatorio_pago = isset($datos['claro_pago']) ? 'si' : 'no';
 
-    // Estos mapeos se quedan porque siguen usando botones de radio (texto a ID)
     $map_uso = ['estudio'=>1, 'oficina'=>2, 'disenio_edicion'=>3, 'gaming'=>4];
     $id_uso = $map_uso[$datos['uso_equipo']] ?? 5; 
 
@@ -35,7 +77,6 @@ if (isset($_POST['finalizar_registro'])) {
     $map_origen = ['recomendacion'=>1, 'redes_sociales'=>2, 'google_web'=>3, 'cartel'=>4, 'cucosta'=>4, 'recurrente'=>4];
     $id_origen = $map_origen[$datos['origen']] ?? 4;
 
-    // NUEVO: Asignación directa de IDs desde los select
     $id_tipo_equipo = $datos['tipo_equipo']; 
     $id_marca = $datos['marca'];             
     $id_tecnico = $datos['tecnico_asignado'] ?? 1; 
@@ -47,7 +88,7 @@ if (isset($_POST['finalizar_registro'])) {
         $stmt1->execute();
         $id_cliente = $conexion->insert_id;
 
-        // TABLA 2: EQUIPOS (Actualizado con tu nueva consulta)
+        // TABLA 2: EQUIPOS
         $stmt2 = $conexion->prepare("INSERT INTO equipos (id_cliente, id_marca, id_tipo_equipo, modelo, numero_serie) VALUES (?, ?, ?, ?, ?)");
         $stmt2->bind_param("iiiss", $id_cliente, $id_marca, $id_tipo_equipo, $datos['modelo'], $datos['numero_serie']);
         $stmt2->execute();
@@ -68,44 +109,53 @@ if (isset($_POST['finalizar_registro'])) {
         $stmt5->bind_param("sisisi", $datos['folio'], $id_origen, $datos['promociones'], $id_uso, $datos['primera_vez'], $id_frecuencia);
         $stmt5->execute();
 
-        // ==========================================
-        // 6. ACTUALIZAR ESTADO DEL GABINETE
-        // ==========================================
+        // ACTUALIZAR ESTADO DEL GABINETE
         $stmt6 = $conexion->prepare("UPDATE gabinetes SET estado = 'ocupado' WHERE id_gabinete = ?");
         $stmt6->bind_param("s", $datos['espacio_almacenamiento']);
         $stmt6->execute();
 
-        // Limpiamos memoria y terminamos
+        // 3. TODO SALIÓ BIEN: GUARDAMOS DEFINITIVAMENTE (Commit)
+        $conexion->commit();
+
         unset($_SESSION['memoria_ingreso']);
         
-        $ruta_actual = $_SERVER['PHP_SELF'];
-        echo "<script>alert('¡Registro completado! El equipo y el cliente han sido guardados en la base de datos.'); window.location.href='$ruta_actual';</script>";
+        // Creamos la alerta de éxito en la sesión y recargamos limpio
+        $_SESSION['mensaje_exito'] = "El equipo y el cliente han sido registrados correctamente en el sistema.";
+        header('Location: administracion_controller.php?seccion=ingreso');
         exit;
 
     } catch (Exception $e) {
-        echo "<script>alert('Error de Base de Datos: " . $e->getMessage() . "');</script>";
+        // FIX: Antes, el catch solo mostraba el alert pero sin exit,
+        // entonces $paso caía a 1 y el formulario regresaba al inicio.
+        // Ahora guardamos el error en sesión y redirigimos al paso 5.
+        $_SESSION['error_db'] = "Error al guardar: " . $e->getMessage();
+        header('Location: administracion_controller.php?seccion=ingreso&retorno=5');
+        exit;
     }
 }
 
 // ==========================================
 // 3. CONTROL DE LA NAVEGACIÓN (PASOS)
+// FIX: Leer el parámetro GET 'retorno' para los redirects de error,
+// ya que header('Location:...) no puede ir acompañado de un POST.
 // ==========================================
-$paso = isset($_POST['step']) ? (int) $_POST['step'] : 1;
+if (isset($_GET['retorno'])) {
+    $paso = (int) $_GET['retorno'];
+} elseif (isset($_POST['step'])) {
+    $paso = (int) $_POST['step'];
+} else {
+    $paso = 1;
+}
 if ($paso < 1) $paso = 1;
 if ($paso > 5) $paso = 5;
 
 // ==========================================
-// 4. CONSULTAS DINÁMICAS (TÉCNICOS Y GABINETES)
+// 4. CONSULTAS DINÁMICAS
 // ==========================================
 $query_tecnicos = $conexion->query("SELECT id_empleado, nombre, apellido FROM empleados WHERE id_puesto = 1");
+$query_marcas   = $conexion->query("SELECT id_marca, marca FROM marcas ORDER BY marca ASC");
+$query_tipos    = $conexion->query("SELECT id_tipo_equipo, tipo FROM tipos_equipo ORDER BY tipo ASC");
 
-// Nueva consulta para Marcas
-$query_marcas = $conexion->query("SELECT id_marca, marca FROM marcas ORDER BY marca ASC");
-
-// Nueva consulta para Tipos de Equipo
-$query_tipos = $conexion->query("SELECT id_tipo_equipo, tipo FROM tipos_equipo ORDER BY tipo ASC");
-
-// Consulta de Relaciones Equipo-Marca
 $query_relaciones = $conexion->query("SELECT id_tipo_equipo, id_marca FROM relacion_equipo_marca");
 $relaciones = [];
 if ($query_relaciones) {
@@ -115,11 +165,34 @@ if ($query_relaciones) {
 }
 $json_relaciones = json_encode($relaciones);
 
-// Consulta de gabinetes (la que ya tenías...)
-$query_gabinetes = $conexion->query("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' ORDER BY id_gabinete ASC");$gabinetes_disponibles = [
-    'laptop' => [],
-    'computadora_escritorio' => [],
-    'otro' => [] 
+// ==========================================
+// CONSULTA DE CITAS PENDIENTES (Para autollenado)
+// Traemos las citas desde ayer en adelante
+// ==========================================
+$query_citas = $conexion->query("
+    SELECT id_cita, nombre_cliente, apellido_cliente, whatsapp, id_tipo_equipo, id_marca, modelo, numero_serie, problema_reportado, detalle_falla, fecha_cita, hora_cita 
+    FROM citas_web 
+    WHERE fecha_cita >= CURDATE() - INTERVAL 1 DAY 
+    ORDER BY fecha_cita ASC, hora_cita ASC
+");
+
+$citas_agendadas = [];
+if ($query_citas) {
+    while ($row = $query_citas->fetch_assoc()) {
+        $citas_agendadas[$row['id_cita']] = $row;
+    }
+}
+$json_citas = json_encode($citas_agendadas);
+
+// FIX: Esta consulta siempre trae SOLO los gabinetes con estado
+// 'disponible' al momento de renderizar la página. Así el JS nunca
+// puede mostrar espacios ocupados porque simplemente no están en
+// el objeto espaciosDB que recibe.
+$query_gabinetes = $conexion->query("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' ORDER BY id_gabinete ASC");
+$gabinetes_disponibles = [
+    'laptop'                => [],
+    'computadora_escritorio'=> [],
+    'otro'                  => [],
 ];
 if ($query_gabinetes) {
     while ($row = $query_gabinetes->fetch_assoc()) {
@@ -127,6 +200,32 @@ if ($query_gabinetes) {
     }
 }
 $json_gabinetes = json_encode($gabinetes_disponibles);
+
+// FIX: Al renderizar el paso 2, verificar que el espacio guardado en
+// sesión todavía exista en la lista de disponibles. Si ya fue ocupado
+// por otro registro, lo limpiamos ANTES de pintar el formulario, para
+// que el select dinámico quede vacío y se muestre el mensaje de aviso.
+if ($paso == 2 && isset($_SESSION['memoria_ingreso']['espacio_almacenamiento'])) {
+    $tipo_ses    = $_SESSION['memoria_ingreso']['tipo_almacenamiento'] ?? '';
+    $espacio_ses = $_SESSION['memoria_ingreso']['espacio_almacenamiento'];
+
+    $espacio_sigue_disponible =
+        $tipo_ses !== '' &&
+        isset($gabinetes_disponibles[$tipo_ses]) &&
+        in_array($espacio_ses, $gabinetes_disponibles[$tipo_ses]);
+
+    if (!$espacio_sigue_disponible) {
+        unset($_SESSION['memoria_ingreso']['espacio_almacenamiento']);
+        unset($_SESSION['memoria_ingreso']['folio']);
+        // Solo limpiamos el tipo si ese tipo ya no tiene espacios libres
+        if (empty($gabinetes_disponibles[$tipo_ses])) {
+            unset($_SESSION['memoria_ingreso']['tipo_almacenamiento']);
+        }
+        if (!isset($_SESSION['error_espacio'])) {
+            $_SESSION['error_espacio'] = "El espacio que tenías seleccionado ya no está disponible. Por favor, elige otro.";
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -140,6 +239,7 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
   <link rel="stylesheet" href="../../public/css/toolbar.css">
   <link rel="icon" href="../../public/img/logoATC.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -177,6 +277,25 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
     <form method="POST" action="">
       <?php if ($paso == 1): ?>
         <h1>Datos del cliente</h1>
+        <div class="grupo-entrada" style="background: #eef2ff; border: 1px solid #c7d2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+          <label class="etiqueta-formulario" style="color: #4f46e5; font-weight: bold;">
+            <i class="fas fa-calendar-check"></i> ¿El cliente tiene cita previa?
+          </label>
+          <select id="importar_cita" name="id_cita_importada" class="campo-texto" style="border-color: #a5b4fc; cursor: pointer;">
+            <option value="">No, es un cliente sin cita (Llenado manual)</option>
+            <?php
+            if ($query_citas && $query_citas->num_rows > 0) {
+                $query_citas->data_seek(0);
+                while ($cita = $query_citas->fetch_assoc()) {
+                    $fecha_formt = date("d/m/Y", strtotime($cita['fecha_cita']));
+                    $hora_formt = date("H:i", strtotime($cita['hora_cita']));
+                    echo '<option value="' . $cita['id_cita'] . '">' . htmlspecialchars($cita['nombre_cliente'] . ' ' . $cita['apellido_cliente']) . ' - ' . $fecha_formt . ' a las ' . $hora_formt . '</option>';
+                }
+            }
+            ?>
+          </select>
+        </div>
+        
         <div class="fila-doble">
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Nombre</label>
@@ -186,7 +305,6 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
             <label class="etiqueta-formulario">Apellido</label>
             <input type="text" name="apellido_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['apellido_cliente'] ?? ''; ?>" required>
           </div>
-
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Número de telefono</label>
             <div class="input-icon-wrapper">
@@ -206,11 +324,19 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
 
       <?php elseif ($paso == 2): ?>
         <h1>Revisión física y control interno</h1>
+
+        <?php if (isset($_SESSION['error_espacio'])): ?>
+          <div class="mensaje-error" style="background:#fee2e2;border:1px solid #f87171;color:#b91c1c;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:0.9rem;">
+            <i class="fas fa-triangle-exclamation"></i>
+            <?php echo $_SESSION['error_espacio']; unset($_SESSION['error_espacio']); ?>
+          </div>
+        <?php endif; ?>
+
         <div class="fila-doble" style="max-height: none; grid-template-columns: 1fr 1fr;">
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Fecha de ingreso</label>
             <p class="nota-formulario">Fecha en la que se entregó el dispositivo</p>
-            <input type="date" name="fecha_ingreso" id="fecha_ingreso" class="campo-texto" value="<?php echo date('Y-m-d'); ?>" required>
+            <input type="date" name="fecha_ingreso" id="fecha_ingreso" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['fecha_ingreso'] ?? date('Y-m-d'); ?>" required>
           </div>
 
           <div class="grupo-entrada">
@@ -218,9 +344,9 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
             <p class="nota-formulario">Define si usará nomenclatura numérica o de letras</p>
             <select name="tipo_almacenamiento" id="tipo_almacenamiento" class="campo-texto" required>
               <option value="">Seleccione tipo...</option>
-              <option value="laptop">Laptop (Numéricos)</option>
-              <option value="computadora_escritorio">PC de Escritorio (Letras)</option>
-              <option value="otro">Consola (Letras)</option>
+              <option value="laptop" <?php echo (isset($_SESSION['memoria_ingreso']['tipo_almacenamiento']) && $_SESSION['memoria_ingreso']['tipo_almacenamiento'] == 'laptop') ? 'selected' : ''; ?>>Laptop (Numéricos)</option>
+              <option value="computadora_escritorio" <?php echo (isset($_SESSION['memoria_ingreso']['tipo_almacenamiento']) && $_SESSION['memoria_ingreso']['tipo_almacenamiento'] == 'computadora_escritorio') ? 'selected' : ''; ?>>PC de Escritorio (Letras)</option>
+              <option value="otro" <?php echo (isset($_SESSION['memoria_ingreso']['tipo_almacenamiento']) && $_SESSION['memoria_ingreso']['tipo_almacenamiento'] == 'otro') ? 'selected' : ''; ?>>Consola (Letras)</option>
             </select>
           </div>
 
@@ -235,7 +361,7 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Folio</label>
             <p class="nota-formulario">Formato: DDMMAAAA-Espacio</p>
-            <input type="text" name="folio" id="folio_auto" class="campo-texto" readonly required>
+            <input type="text" name="folio" id="folio_auto" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['folio'] ?? ''; ?>" readonly required>
           </div>
         </div>
 
@@ -243,13 +369,13 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
           <label class="etiqueta-formulario">Condición física al ingreso</label>
           <p class="nota-formulario">Condición (problemas) que presentaba el dispositivo al ser entregado</p>
           <div class="plano-checkboxs">
-            <label class="check-item"><input type="checkbox" name="condicion[]" value="enciende"> Enciende correctamente</label>
-            <label class="check-item"><input type="checkbox" name="condicion[]" value="pantalla_rota"> Pantalla rota o dañada</label>
-            <label class="check-item"><input type="checkbox" name="condicion[]" value="rayones"> Rayones o golpes visibles</label>
-            <label class="check-item"><input type="checkbox" name="condicion[]" value="sucio"> Sucio / con polvo</label>
-            <label class="check-item"><input type="checkbox" name="condicion[]" value="faltan_piezas"> Falta de piezas / tornillos</label>
-            <label class="check-item"><input type="checkbox" name="condicion[]" value="no_enciende"> No enciende</label>
-            <label class="check-item"><input type="checkbox" name="condicion[]" value="desarmado"> Desarmado</label>
+            <label class="check-item"><input type="checkbox" name="condicion[]" value="enciende" <?php echo (isset($_SESSION['memoria_ingreso']['condicion']) && in_array('enciende', (array)$_SESSION['memoria_ingreso']['condicion'])) ? 'checked' : ''; ?>> Enciende correctamente</label>
+            <label class="check-item"><input type="checkbox" name="condicion[]" value="pantalla_rota" <?php echo (isset($_SESSION['memoria_ingreso']['condicion']) && in_array('pantalla_rota', (array)$_SESSION['memoria_ingreso']['condicion'])) ? 'checked' : ''; ?>> Pantalla rota o dañada</label>
+            <label class="check-item"><input type="checkbox" name="condicion[]" value="rayones" <?php echo (isset($_SESSION['memoria_ingreso']['condicion']) && in_array('rayones', (array)$_SESSION['memoria_ingreso']['condicion'])) ? 'checked' : ''; ?>> Rayones o golpes visibles</label>
+            <label class="check-item"><input type="checkbox" name="condicion[]" value="sucio" <?php echo (isset($_SESSION['memoria_ingreso']['condicion']) && in_array('sucio', (array)$_SESSION['memoria_ingreso']['condicion'])) ? 'checked' : ''; ?>> Sucio / con polvo</label>
+            <label class="check-item"><input type="checkbox" name="condicion[]" value="faltan_piezas" <?php echo (isset($_SESSION['memoria_ingreso']['condicion']) && in_array('faltan_piezas', (array)$_SESSION['memoria_ingreso']['condicion'])) ? 'checked' : ''; ?>> Falta de piezas / tornillos</label>
+            <label class="check-item"><input type="checkbox" name="condicion[]" value="no_enciende" <?php echo (isset($_SESSION['memoria_ingreso']['condicion']) && in_array('no_enciende', (array)$_SESSION['memoria_ingreso']['condicion'])) ? 'checked' : ''; ?>> No enciende</label>
+            <label class="check-item"><input type="checkbox" name="condicion[]" value="desarmado" <?php echo (isset($_SESSION['memoria_ingreso']['condicion']) && in_array('desarmado', (array)$_SESSION['memoria_ingreso']['condicion'])) ? 'checked' : ''; ?>> Desarmado</label>
           </div>
         </div>
 
@@ -257,17 +383,17 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
           <label class="etiqueta-formulario">Accesorios entregados</label>
           <p class="nota-formulario">Que otras cosas se entregaron A PARTE del equipo</p>
           <div class="plano-checkboxs">
-            <label class="check-item"><input type="checkbox" name="accesorios[]" value="cargador"> Cargador</label>
-            <label class="check-item"><input type="checkbox" name="accesorios[]" value="mouse"> Mouse</label>
-            <label class="check-item"><input type="checkbox" name="accesorios[]" value="cable_poder"> Cable de poder</label>
-            <label class="check-item"><input type="checkbox" name="accesorios[]" value="funda"> Funda</label>
+            <label class="check-item"><input type="checkbox" name="accesorios[]" value="cargador" <?php echo (isset($_SESSION['memoria_ingreso']['accesorios']) && in_array('cargador', (array)$_SESSION['memoria_ingreso']['accesorios'])) ? 'checked' : ''; ?>> Cargador</label>
+            <label class="check-item"><input type="checkbox" name="accesorios[]" value="mouse" <?php echo (isset($_SESSION['memoria_ingreso']['accesorios']) && in_array('mouse', (array)$_SESSION['memoria_ingreso']['accesorios'])) ? 'checked' : ''; ?>> Mouse</label>
+            <label class="check-item"><input type="checkbox" name="accesorios[]" value="cable_poder" <?php echo (isset($_SESSION['memoria_ingreso']['accesorios']) && in_array('cable_poder', (array)$_SESSION['memoria_ingreso']['accesorios'])) ? 'checked' : ''; ?>> Cable de poder</label>
+            <label class="check-item"><input type="checkbox" name="accesorios[]" value="funda" <?php echo (isset($_SESSION['memoria_ingreso']['accesorios']) && in_array('funda', (array)$_SESSION['memoria_ingreso']['accesorios'])) ? 'checked' : ''; ?>> Funda</label>
           </div>
         </div>
 
         <div class="grupo-entrada">
           <label class="etiqueta-formulario">Descripción del problema o motivo de ingreso</label>
           <p class="nota-formulario">Que problemas son los que presenta su equipo</p>
-          <textarea name="motivo_ingreso" class="campo-texto" rows="3" required></textarea>
+          <textarea name="motivo_ingreso" class="campo-texto" rows="3" required><?php echo htmlspecialchars($_SESSION['memoria_ingreso']['motivo_ingreso'] ?? ''); ?></textarea>
         </div>
 
         <div class="grupo-entrada">
@@ -279,7 +405,8 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
             if ($query_tecnicos && $query_tecnicos->num_rows > 0) {
                 $query_tecnicos->data_seek(0); 
                 while ($tecnico = $query_tecnicos->fetch_assoc()) {
-                    echo '<option value="' . $tecnico['id_empleado'] . '">' . htmlspecialchars($tecnico['nombre'] . ' ' . $tecnico['apellido']) . '</option>';
+                    $selected = (isset($_SESSION['memoria_ingreso']['tecnico_asignado']) && $_SESSION['memoria_ingreso']['tecnico_asignado'] == $tecnico['id_empleado']) ? 'selected' : '';
+                    echo '<option value="' . $tecnico['id_empleado'] . '" ' . $selected . '>' . htmlspecialchars($tecnico['nombre'] . ' ' . $tecnico['apellido']) . '</option>';
                 }
             }
             ?>
@@ -289,11 +416,11 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
         <div class="grupo-entrada">
           <label class="etiqueta-formulario">Observaciones del equipo</label>
           <p class="nota-formulario">Observaciones de recepción: fallas, detalles de funcionamiento, características únicas.</p>
-          <textarea name="observaciones_equipo" class="campo-texto" rows="3" required></textarea>
+          <textarea name="observaciones_equipo" class="campo-texto" rows="3" required><?php echo htmlspecialchars($_SESSION['memoria_ingreso']['observaciones_equipo'] ?? ''); ?></textarea>
         </div>
 
         <div class="form-acciones">
-          <button type="submit" name="step" value="1" class="boton-anterior">Anterior</button>
+          <button type="submit" name="step" value="1" class="boton-anterior" formnovalidate>Anterior</button>
           <button type="submit" name="step" value="3" class="boton-sig">Siguiente</button>
         </div>
 
@@ -335,7 +462,7 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
         </div>
 
         <div class="form-acciones">
-          <button type="submit" name="step" value="2" class="boton-anterior">Anterior</button>
+          <button type="submit" name="step" value="2" class="boton-anterior" formnovalidate>Anterior</button>
           <button type="submit" name="step" value="4" class="boton-sig">Siguiente</button>
         </div>
 
@@ -397,12 +524,20 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
         </div>
 
         <div class="form-acciones">
-          <button type="submit" name="step" value="3" class="boton-anterior">Anterior</button>
+          <button type="submit" name="step" value="3" class="boton-anterior" formnovalidate>Anterior</button>
           <button type="submit" name="step" value="5" class="boton-sig">Siguiente</button>
         </div>
+
       <?php elseif ($paso == 5): ?>
         <h1>Información esencial del equipo</h1>
         <p class="nota-formulario" style="text-align: center;">Esta sección se puede llenar en ausencia del cliente</p>
+
+        <?php if (isset($_SESSION['error_db'])): ?>
+          <div class="mensaje-error" style="background:#fee2e2;border:1px solid #f87171;color:#b91c1c;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:0.9rem;">
+            <i class="fas fa-triangle-exclamation"></i>
+            <?php echo $_SESSION['error_db']; unset($_SESSION['error_db']); ?>
+          </div>
+        <?php endif; ?>
 
         <div class="grupo-entrada">
           <label class="etiqueta-formulario">Tipo de equipo</label>
@@ -453,7 +588,7 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
         </div>
 
         <div class="form-acciones">
-          <button type="submit" name="step" value="4" class="boton-anterior">Anterior</button>
+          <button type="submit" name="step" value="4" class="boton-anterior" formnovalidate>Anterior</button>
           <button type="submit" name="finalizar_registro" class="boton-sig" style="width: 200px;">Finalizar Registro</button>
         </div>
       <?php endif; ?>
@@ -463,7 +598,26 @@ $json_gabinetes = json_encode($gabinetes_disponibles);
   <script>
       const espaciosDB = <?php echo isset($json_gabinetes) ? $json_gabinetes : '{}'; ?>;
       const relacionesEquipoMarca = <?php echo isset($json_relaciones) ? $json_relaciones : '{}'; ?>;
+      const citasDB = <?php echo isset($json_citas) ? $json_citas : '{}'; ?>;
+      // PHP ya validó que estos valores siguen siendo consistentes con
+      // los gabinetes disponibles. Si el espacio ya no estaba libre,
+      // PHP lo limpió de sesión antes de llegar aquí.
+      const savedTipoAlmacenamiento = "<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['tipo_almacenamiento'] ?? ''); ?>";
+      const savedEspacioAlmacenamiento = "<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['espacio_almacenamiento'] ?? ''); ?>";
   </script>
+
+  <?php if (isset($_SESSION['mensaje_exito'])): ?>
+    <script>
+      Swal.fire({
+        title: '¡Registro Exitoso!',
+        text: '<?php echo $_SESSION['mensaje_exito']; ?>',
+        icon: 'success',
+        confirmButtonColor: '#4f46e5', /* Color del botón (puedes poner el azul de tu marca) */
+        confirmButtonText: 'Aceptar',
+        allowOutsideClick: false /* Obliga al técnico a darle clic en Aceptar */
+      });
+    </script>
+  <?php unset($_SESSION['mensaje_exito']); endif; ?>
   
   <script src="../../public/js/ingreso.js"></script>
 </body>
