@@ -1,3 +1,10 @@
+<script>
+/* POLITICA_SERVICIOS_VIEW.PHP */
+/*
+Este archivo actúa como la Vista (View) encargada de desplegar la Política de Prestación de Servicios de ASTECH COMPUTER. Su objetivo es informar claramente a los clientes sobre los procesos operativos de la empresa: desde la recepción de los equipos y la emisión de diagnósticos/presupuestos, hasta las reglas sobre garantías, refacciones y abandono de dispositivos. Diseñado con una estructura modular, este archivo incorpora las hojas de estilo corporativas y se integra armónicamente con la barra de navegación (Toolbar) y el pie de página (Footer).
+*/
+</script>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

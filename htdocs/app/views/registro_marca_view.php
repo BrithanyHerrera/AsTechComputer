@@ -1,3 +1,10 @@
+<script>
+/* REGISTRO_MARCA_VIEW.PHP */
+/*
+Este archivo representa la Vista (View) encargada de exhibir la información legal referente a la titularidad y derechos de propiedad intelectual de la marca "AsTech Computer". Su objetivo es dotar de certeza jurídica y confianza a la plataforma mediante la publicación estructurada de los datos registrales emitidos por el IMPI (Instituto Mexicano de la Propiedad Industrial). Adicionalmente, incluye advertencias explícitas sobre las restricciones comerciales y el uso indebido de los activos de identidad visual de la empresa.
+*/
+</script>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
