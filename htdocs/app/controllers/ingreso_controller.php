@@ -76,10 +76,6 @@ if (isset($_GET['editar']) && !isset($_SESSION['modo_edicion'])) {
 
         $r_gab = $model->obtenerTipoGabinete($db_data['id_gabinete']);
         if ($r_gab) $_SESSION['memoria_ingreso']['tipo_almacenamiento'] = $r_gab['tipo_espacio'];
-
-        session_write_close(); // ← fuerza guardar la sesión antes del redirect
-        header("Location: administracion_controller.php?seccion=ingreso");
-        exit;
     }
 }
 
@@ -129,47 +125,37 @@ if (isset($_POST['finalizar_registro'])) {
                                   $_SESSION['gabinete_original'] === $espacio_elegido;
 
     if (!$gabinete_actual || ($gabinete_actual['estado'] !== 'disponible' && !$es_mismo_gabinete_original)) {
-        // Limpiar el espacio y folio inválidos de la sesión para que
-        // el usuario tenga que elegir uno nuevo en el paso 2.
-        unset($_SESSION['memoria_ingreso']['espacio_almacenamiento']);
-        unset($_SESSION['memoria_ingreso']['folio']);
-        unset($_SESSION['memoria_ingreso']['tipo_almacenamiento']);
-        $_SESSION['error_espacio'] = "El espacio <strong>{$espacio_elegido}</strong> ya no está disponible (fue asignado a otro equipo). Elige otro espacio.";
-        header('Location: administracion_controller.php?seccion=ingreso&retorno=2');
+        unset($_SESSION['memoria_ingreso']['espacio_almacenamiento'], $_SESSION['memoria_ingreso']['folio'], $_SESSION['memoria_ingreso']['tipo_almacenamiento']);
+        $_SESSION['error_espacio'] = "El espacio <strong>{$espacio_elegido}</strong> ya no está disponible. Elige otro espacio.";
+        
+        // REDIRECCIÓN LIMPIA JS
+        echo "<script>window.location.href = 'administracion_controller.php?seccion=ingreso&retorno=2';</script>";
         exit;
     }
 
     try {
         if (isset($_SESSION['modo_edicion'])) {
-            // ===============================================
-            // CAMINO B: ACTUALIZAR REGISTRO EXISTENTE
-            // ===============================================
             $model->actualizarRegistro(
-                $datos,
-                $_SESSION['modo_edicion'],
-                $_SESSION['id_cliente_edicion'],
-                $_SESSION['id_equipo_edicion'],
-                $_SESSION['gabinete_original']
+                $datos, $_SESSION['modo_edicion'], $_SESSION['id_cliente_edicion'], $_SESSION['id_equipo_edicion'], $_SESSION['gabinete_original']
             );
             unset($_SESSION['memoria_ingreso'], $_SESSION['modo_edicion'], $_SESSION['id_cliente_edicion'], $_SESSION['id_equipo_edicion'], $_SESSION['gabinete_original']);
-            $_SESSION['mensaje_exito'] = "El registro ha sido actualizado a la perfección.";
-            header('Location: administracion_controller.php?seccion=registros_ingresados_crud_view');
+            
+            // REDIRECCIÓN A LA TABLA CON ESTATUS "success_edit"
+            echo "<script>window.location.href = 'administracion_controller.php?seccion=registros_ingresados_crud_view&status=success_edit';</script>";
             exit;
 
         } else {
-            // ===============================================
-            // CAMINO A: CREAR REGISTRO NUEVO
-            // ===============================================
             $model->crearRegistro($datos);
             unset($_SESSION['memoria_ingreso']);
-            $_SESSION['mensaje_exito'] = "El equipo y el cliente han sido registrados correctamente en el sistema.";
-            header('Location: administracion_controller.php?seccion=ingreso');
+            
+            // REDIRECCIÓN A INGRESO CON ESTATUS "success"
+            echo "<script>window.location.href = 'administracion_controller.php?seccion=ingreso&status=success';</script>";
             exit;
         }
 
     } catch (Exception $e) {
         $_SESSION['error_db'] = "Error al guardar: " . $e->getMessage();
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?retorno=5');
+        echo "<script>window.location.href = 'administracion_controller.php?seccion=ingreso&retorno=5';</script>";
         exit;
     }
 }

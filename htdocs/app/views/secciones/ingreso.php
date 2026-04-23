@@ -398,17 +398,72 @@ require_once 'ingreso_controller.php';
 
   <?php if (isset($_SESSION['mensaje_exito'])): ?>
     <script>
-      Swal.fire({
-        title: '¡Registro Exitoso!',
-        text: '<?php echo $_SESSION['mensaje_exito']; ?>',
-        icon: 'success',
-        confirmButtonColor: '#4f46e5', /* Color del botón (puedes poner el azul de tu marca) */
-        confirmButtonText: 'Aceptar',
-        allowOutsideClick: false /* Obliga al técnico a darle clic en Aceptar */
-      });
-    </script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+
+        if (status === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registro Exitoso!',
+                text: 'El equipo y el cliente han sido registrados correctamente en el sistema.',
+                confirmButtonColor: '#4f46e5', /* Azul de tu botón */
+                allowOutsideClick: false
+            }).then(() => {
+                // Limpiamos la URL para no perder la sección ni recargar a lo tonto
+                window.history.replaceState({}, document.title, window.location.pathname + "?seccion=ingreso");
+            });
+        }
+    });
+  </script>
   <?php unset($_SESSION['mensaje_exito']); endif; ?>
   
   <script src="../../public/js/ingreso.js"></script>
+
+  <script>
+    (function() {
+        // Leemos la URL inmediatamente
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+
+        if (status === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registro Exitoso!',
+                text: 'El equipo y el cliente han sido registrados correctamente en el sistema.',
+                confirmButtonColor: '#4f46e5', /* Azul de tu botón */
+                allowOutsideClick: false
+            }).then(() => {
+                // Limpiamos la URL para dejarla limpia
+                window.history.replaceState({}, document.title, window.location.pathname + "?seccion=ingreso");
+            });
+        }
+    })();
+  </script>
+
+  <script>
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // 1. Si acabamos de guardar (status=success), mostramos la alerta verde
+        if (urlParams.get('status') === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registro Exitoso!',
+                text: 'El equipo y el cliente han sido registrados correctamente.',
+                confirmButtonColor: '#4f46e5'
+            }).then(() => {
+                window.history.replaceState({}, document.title, 'administracion_controller.php?seccion=ingreso');
+            });
+        }
+
+        // 2. MAGIA: Si estamos editando, limpiamos la URL silenciosamente 
+        // para que si el técnico recarga la página, los datos sigan ahí.
+        if (urlParams.has('editar')) {
+            window.history.replaceState({}, document.title, 'administracion_controller.php?seccion=ingreso');
+        }
+    })();
+  </script>
+  
 </body>
 </html>
