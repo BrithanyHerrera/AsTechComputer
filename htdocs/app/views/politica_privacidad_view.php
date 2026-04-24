@@ -16,7 +16,7 @@ Este archivo representa la Vista (View) destinada a exhibir el Aviso de Privacid
     <link rel="stylesheet" href="../../public/css/static.css">
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
-    <link rel="stylesheet" href="../../public/css/politica_cookies.css">
+    <link rel="stylesheet" href="../../public/css/info_legal.css">
 </head>
 
 <body style="background-color: #f4f4f4;">

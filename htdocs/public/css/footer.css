@@ -1,4 +1,11 @@
-/* --- FOOTER --- */
+/* FOOTER.CSS */
+/*
+Este archivo de estilo se enfoca exclusivamente en la presentación visual del Pie de Página (Footer) y el botón flotante de WhatsApp. Define colores robustos (blindados con !important), la cuadrícula (grid) para alinear los enlaces de navegación, los efectos de transición o "hover" y la adaptación para dispositivos móviles (responsive design).
+*/
+
+/* =========================================
+   1. RESET Y CONFIGURACIÓN BASE DEL FOOTER
+   ========================================= */
 html, body {
     margin: 0;
     padding: 0;
@@ -12,6 +19,9 @@ html, body {
     width: 100%;
 }
 
+/* =========================================
+   2. ESTRUCTURA DE COLUMNAS (GRID)
+   ========================================= */
 .contenedor-pie {
     max-width: 1200px;
     margin: 0 auto;
@@ -21,6 +31,9 @@ html, body {
     align-items: start; 
 }
 
+/* =========================================
+   3. ESTILOS DE ENLACES Y TEXTOS
+   ========================================= */
 .fila-links h4 {
     color: #fff !important; /* Blindaje para los títulos de las columnas */
     margin-bottom: 25px;
@@ -49,6 +62,9 @@ html, body {
     color: var(--color-naranja, #e17203) !important; 
 }
 
+/* =========================================
+   4. REDES SOCIALES E ÍCONOS
+   ========================================= */
 .redes-sociales ul {
     display: flex;
     gap: 15px;
@@ -67,6 +83,9 @@ html, body {
     color: var(--color-naranja, #e17203) !important;
 }
 
+/* =========================================
+   5. BARRA DE DERECHOS Y COPYRIGHT
+   ========================================= */
 .barra-derechos {
     text-align: center;
     margin-top: 60px;
@@ -76,9 +95,9 @@ html, body {
     font-size: 0.85rem;
 }
 
-/* =========================================================
-(RESPONSIVE DESIGN)
-   ========================================================= */
+/* =========================================
+   6. DISEÑO RESPONSIVO (MÓVILES)
+   ========================================= */
 @media (max-width: 900px) {
     .contenedor-pie {
         grid-template-columns: 1fr; 
@@ -96,7 +115,9 @@ html, body {
     }
 }
 
-/* --- BOTÓN FLOTANTE DE WHATSAPP --- */
+/* =========================================
+   7. BOTÓN FLOTANTE DE CONTACTO (WHATSAPP)
+   ========================================= */
 .btn-whatsapp-flotante {
     position: fixed;
     bottom: 30px;    

@@ -1,7 +1,7 @@
 <script>
 /* REGISTRO_MARCA_VIEW.PHP */
 /*
-Este archivo representa la Vista (View) encargada de exhibir la información legal referente a la titularidad y derechos de propiedad intelectual de la marca "AsTech Computer". Su objetivo es dotar de certeza jurídica y confianza a la plataforma mediante la publicación estructurada de los datos registrales emitidos por el IMPI (Instituto Mexicano de la Propiedad Industrial). Adicionalmente, incluye advertencias explícitas sobre las restricciones comerciales y el uso indebido de los activos de identidad visual de la empresa.
+Este archivo representa la Vista (View) encargada de exhibir la información legal referente a la titularidad y los derechos de propiedad intelectual de la marca "AsTech Computer". Su objetivo principal es dotar de certeza jurídica a la empresa frente a clientes y socios, mostrando de forma estructurada los datos registrales emitidos por el IMPI. Adicionalmente, incorpora un botón para la descarga directa del título oficial en formato PDF y define las cláusulas restrictivas sobre el uso indebido de la identidad gráfica. Mantiene el diseño modular al incluir la barra de navegación y el pie de página del sistema.
 */
 </script>
 
@@ -17,7 +17,7 @@ Este archivo representa la Vista (View) encargada de exhibir la información leg
     <link rel="stylesheet" href="../../public/css/static.css">    
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
-    <link rel="stylesheet" href="../../public/css/politica_cookies.css">
+    <link rel="stylesheet" href="../../public/css/info_legal.css">
 </head>
 
 <body style="background-color: #f4f4f4;">
@@ -33,49 +33,55 @@ Este archivo representa la Vista (View) encargada de exhibir la información leg
 
             <p>En <strong>AsTech Computer</strong> operamos bajo los más estrictos estándares de legalidad y formalidad. Para brindar total certeza jurídica a nuestros clientes, socios comerciales y proveedores, presentamos los datos oficiales que acreditan la propiedad exclusiva de nuestra marca.</p>
 
-            <div style="background: #ffffff; border: 2px solid var(--purpura-oscuro); border-radius: 12px; padding: 45px 30px; margin: 40px 0; box-shadow: 0 15px 35px rgba(82, 7, 58, 0.08); text-align: center; position: relative; overflow: hidden;">
+            <div style="background: #ffffff; border: 2px solid var(--purpura-oscuro, #52073a); border-radius: 12px; padding: 45px 30px; margin: 40px 0; box-shadow: 0 15px 35px rgba(82, 7, 58, 0.08); text-align: center; position: relative; overflow: hidden;">
                 
                 <i class="fa-solid fa-shield-check" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 250px; color: rgba(225, 114, 3, 0.04); z-index: 0;"></i>
 
                 <div style="position: relative; z-index: 1;">
                     <img src="../../public/img/logoATC.png" alt="Logo AsTech" style="max-width: 140px; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
-                    <h2 style="color: var(--purpura-oscuro); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 35px; font-weight: 900;">AsTech Computer®</h2>
+                    <h2 style="color: var(--purpura-oscuro, #52073a); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 35px; font-weight: 900;">AsTech Computer®</h2>
 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; text-align: left; max-width: 600px; margin: 0 auto; background: #fbfbfd; padding: 30px; border-radius: 8px; border-left: 5px solid var(--naranja-principal);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; text-align: left; max-width: 600px; margin: 0 auto; background: #fbfbfd; padding: 30px; border-radius: 8px; border-left: 5px solid var(--naranja-principal, #e17203);">
                         
                         <div>
                             <p style="font-size: 0.85rem; color: #888; margin: 0; text-transform: uppercase; font-weight: 700;">Titular de la Marca:</p>
-                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">[Nombre Completo del Dueño o Razón Social]</p>
+                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">Ferdán Alejandro Garrigos Rojas</p>
                         </div>
                         
                         <div>
                             <p style="font-size: 0.85rem; color: #888; margin: 0; text-transform: uppercase; font-weight: 700;">Número de Registro:</p>
-                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">[Ej. 2489153]</p>
+                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">2934794</p>
                         </div>
                         
                         <div>
                             <p style="font-size: 0.85rem; color: #888; margin: 0; text-transform: uppercase; font-weight: 700;">Clase NIZA:</p>
-                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">[Ej. Clase 37 - Instalación y reparación de hardware]</p>
+                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">Clase 37 - Mantenimiento y reparación de hardware</p>
                         </div>
                         
                         <div>
                             <p style="font-size: 0.85rem; color: #888; margin: 0; text-transform: uppercase; font-weight: 700;">Expediente:</p>
-                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">[Ej. 2026/0014852]</p>
+                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">3228481</p>
                         </div>
                         
                         <div>
-                            <p style="font-size: 0.85rem; color: #888; margin: 0; text-transform: uppercase; font-weight: 700;">Fecha de Concesión:</p>
-                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">[Día] de [Mes] de [Año]</p>
+                            <p style="font-size: 0.85rem; color: #888; margin: 0; text-transform: uppercase; font-weight: 700;">Fecha de Presentación:</p>
+                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">03 de Septiembre de 2024</p>
                         </div>
                         
                         <div>
                             <p style="font-size: 0.85rem; color: #888; margin: 0; text-transform: uppercase; font-weight: 700;">Vigencia (10 Años):</p>
-                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">[Día] de [Mes] de [Año + 10]</p>
+                            <p style="font-weight: bold; margin: 5px 0 0; color: #1d1d1f;">14 de Octubre de 2035</p>
                         </div>
 
                     </div>
 
-                    <p style="margin-top: 35px; font-size: 0.85rem; color: #86868b; font-style: italic;"><i class="fa-solid fa-circle-info" style="color: var(--naranja-principal);"></i> Este documento es una representación digital informativa de los datos asentados en el título original expedido por las autoridades competentes.</p>
+                    <div style="margin-top: 35px;">
+                        <a href="../../public/docs/M625 Título de registro.pdf" download="M625 Título de registro.pdf" class="btn-descargar-pdf">
+                            <i class="fa-solid fa-file-pdf" style="font-size: 1.2rem;"></i> Descargar Título Oficial (PDF)
+                        </a>
+                    </div>
+
+                    <p style="margin-top: 25px; font-size: 0.85rem; color: #86868b; font-style: italic;"><i class="fa-solid fa-circle-info" style="color: var(--naranja-principal, #e17203);"></i> Este documento es una representación digital informativa de los datos asentados en el título original expedido por las autoridades competentes.</p>
                 </div>
             </div>
 
