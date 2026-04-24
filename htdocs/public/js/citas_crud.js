@@ -9,31 +9,24 @@ Este archivo concentra toda la lógica interactiva del lado del cliente (Fronten
 function filtrarTabla() {
     const busqueda = document.getElementById('buscadorGlobal').value.toLowerCase();
     const estado = document.getElementById('filtroEstado').value;
-    
-    // Capturamos ambas fechas
     const fechaInicio = document.getElementById('filtroFechaInicio').value;
     const fechaFin = document.getElementById('filtroFechaFin').value;
-    
     const filas = document.querySelectorAll('#tablaCitas .fila-registro');
 
-    // Convertimos las fechas ingresadas a timestamps (milisegundos) para una comparación matemática exacta
     const tsInicio = fechaInicio ? new Date(fechaInicio + "T00:00:00").getTime() : null;
     const tsFin = fechaFin ? new Date(fechaFin + "T23:59:59").getTime() : null;
 
     filas.forEach(fila => {
         const txtNombre = fila.getAttribute('data-nombre') || "";
         const txtEstado = fila.getAttribute('data-estado') || "";
-        const txtFecha = fila.getAttribute('data-fecha') || ""; // Formato: YYYY-MM-DD
+        const txtFecha = fila.getAttribute('data-fecha') || ""; 
 
         const coincideBusqueda = txtNombre.includes(busqueda);
         const coincideEstado = estado === 'todos' || txtEstado === estado;
         
-        // Lógica matemática infalible para el rango de fechas
         let coincideFecha = true;
         if (txtFecha) {
-            // Creamos una fecha al mediodía para evitar problemas de zonas horarias
             const tsFila = new Date(txtFecha + "T12:00:00").getTime(); 
-            
             if (tsInicio && tsFin) {
                 coincideFecha = (tsFila >= tsInicio && tsFila <= tsFin);
             } else if (tsInicio) {
@@ -43,11 +36,7 @@ function filtrarTabla() {
             }
         }
 
-        if (coincideBusqueda && coincideEstado && coincideFecha) {
-            fila.style.display = '';
-        } else {
-            fila.style.display = 'none';
-        }
+        fila.style.display = (coincideBusqueda && coincideEstado && coincideFecha) ? '' : 'none';
     });
 }
 
@@ -56,8 +45,6 @@ function limpiarFiltros() {
     document.getElementById('filtroEstado').value = 'todos';
     document.getElementById('filtroFechaInicio').value = '';
     document.getElementById('filtroFechaFin').value = '';
-    
-    // Ejecutamos la función para que la tabla vuelva a mostrar todo
     filtrarTabla();
 }
 
@@ -82,26 +69,18 @@ function generarHorarios(fechaElegida, horaPreseleccionada) {
             let opt = document.createElement('option');
             opt.value = hora;
             opt.textContent = hora;
-            if (hora === horaPreseleccionada) {
-                opt.selected = true;
-            }
+            if (hora === horaPreseleccionada) opt.selected = true;
             selectorHora.appendChild(opt);
         }
     });
 }
 
-// Oyente para cuando el usuario cambia la fecha en el modal de edición
 const inputFecha = document.getElementById('m_fecha');
 if (inputFecha) {
     inputFecha.addEventListener('change', function() {
         const fechaOriginal = this.getAttribute('data-fecha-orig');
         const horaOriginal = document.getElementById('m_hora').getAttribute('data-hora-orig');
-        
-        if (this.value === fechaOriginal) {
-            generarHorarios(this.value, horaOriginal);
-        } else {
-            generarHorarios(this.value, null);
-        }
+        generarHorarios(this.value, (this.value === fechaOriginal) ? horaOriginal : null);
     });
 }
 
@@ -110,223 +89,173 @@ if (inputFecha) {
    ========================================== */
 function abrirModalVer(boton) {
     try {
-        let jsonString = boton.getAttribute('data-cita');
-        let datos = JSON.parse(jsonString);
-
+        let datos = JSON.parse(boton.getAttribute('data-cita'));
         document.getElementById('modalVer').style.display = 'flex';
-
         document.getElementById('v_cliente').innerText = `${datos.nombre} ${datos.apellido}`;
         document.getElementById('v_wa').innerText = datos.whatsapp || 'No registrado';
         document.getElementById('v_dispositivo').innerText = datos.tipoTxt || 'N/A';
         document.getElementById('v_marca_modelo').innerText = `${datos.marcaTxt || 'N/A'} - ${datos.modelo || 'N/A'}`;
         document.getElementById('v_serie').innerText = datos.serie || 'N/A';
         document.getElementById('v_falla').innerText = datos.falla || 'N/A';
-        
         document.getElementById('v_detalle').innerText = datos.detalle || 'Ninguno'; 
-        
         document.getElementById('v_estado').textContent = datos.estado || "No definido";
         document.getElementById('v_fecha').innerText = datos.fecha || 'N/A';
         document.getElementById('v_hora').innerText = datos.hora || 'N/A';
-
-    } catch (error) {
-        console.error("Error al cargar modal de detalles:", error);
-    }
+    } catch (error) { console.error("Error modal detalles:", error); }
 }
 
-function cerrarModalVer() {
-    document.getElementById('modalVer').style.display = 'none';
-}
+function cerrarModalVer() { document.getElementById('modalVer').style.display = 'none'; }
 
 /* ==========================================
    4. CONTROLADORES DE LA VENTANA MODAL (EDICIÓN)
    ========================================== */
 function abrirModalEditar(boton) {
     try {
-        // Obtenemos los datos en formato JSON desde el botón
-        let jsonString = boton.getAttribute('data-cita');
-        let datos = JSON.parse(jsonString);
-
-        // Mostramos el modal de edición
+        let datos = JSON.parse(boton.getAttribute('data-cita'));
         document.getElementById('modalEditar').style.display = 'flex';
 
-        // Función auxiliar para acortar la escritura
-        const asignarValor = (id, valor) => {
-            let elemento = document.getElementById(id);
-            if (elemento) elemento.value = valor || '';
-        };
+        const asignar = (id, val) => { if (document.getElementById(id)) document.getElementById(id).value = val || ''; };
+        asignar('m_google_id', datos.googleId);
+        asignar('m_db_id', datos.dbId);
+        asignar('m_nombre', datos.nombre);
+        asignar('m_apellido', datos.apellido);
+        asignar('m_wa', datos.whatsapp);
+        asignar('m_serie', datos.serie);
+        asignar('m_modelo', datos.modelo);
+        asignar('m_detalle', datos.detalle); 
 
-        // Asignamos los valores de texto simples
-        asignarValor('m_google_id', datos.googleId);
-        asignarValor('m_db_id', datos.dbId);
-        asignarValor('m_nombre', datos.nombre);
-        asignarValor('m_apellido', datos.apellido);
-        asignarValor('m_wa', datos.whatsapp);
-        asignarValor('m_serie', datos.serie);
-        asignarValor('m_modelo', datos.modelo);
-        asignarValor('m_detalle', datos.detalle); 
-
-        // Asignamos la fecha y guardamos registro de cuál era la original
         let elFecha = document.getElementById('m_fecha');
         if (elFecha) {
             elFecha.value = datos.fecha || '';
             elFecha.setAttribute('data-fecha-orig', datos.fecha || '');
         }
+        if (document.getElementById('m_tipo')) document.getElementById('m_tipo').value = datos.idTipo || '';
+        if (document.getElementById('m_marca')) document.getElementById('m_marca').value = datos.idMarca || '';
 
-        // Select: Estado
-        let elEstado = document.getElementById('m_estado');
-        if (elEstado && datos.estado) elEstado.value = datos.estado;
-
-        // Select: Tipo de equipo
-        let elTipo = document.getElementById('m_tipo');
-        if (elTipo && datos.idTipo) elTipo.value = datos.idTipo;
-
-        // Select: Marca
-        let elMarca = document.getElementById('m_marca');
-        if (elMarca && datos.idMarca) elMarca.value = datos.idMarca;
-
-        // Select: Falla
         let selectFalla = document.getElementById('m_falla');
         if (selectFalla && datos.falla) {
-            let existeOpcion = Array.from(selectFalla.options).some(opt => opt.value === datos.falla);
-            selectFalla.value = existeOpcion ? datos.falla : 'Otro';
+            let existe = Array.from(selectFalla.options).some(opt => opt.value === datos.falla);
+            selectFalla.value = existe ? datos.falla : 'Otro';
         }
 
-        // Select: Hora (Generamos las horas disponibles y pre-seleccionamos la actual)
         let selectHora = document.getElementById('m_hora');
         if (selectHora) {
             selectHora.setAttribute('data-hora-orig', datos.hora || '');
             selectHora.innerHTML = `<option value="${datos.hora}" selected>${datos.hora}</option>`;
             generarHorarios(datos.fecha, datos.hora);
         }
-
-    } catch (error) {
-        console.error("Error al procesar JSON para edición:", error);
-    }
+    } catch (error) { console.error("Error modal edición:", error); }
 }
 
-function cerrarModal() { 
-    document.getElementById('modalEditar').style.display = 'none'; 
-}
+function cerrarModal() { document.getElementById('modalEditar').style.display = 'none'; }
 
-/* ==========================================
-   5. OYENTE DE CLIC EN EL ÁREA EXTERIOR DE MODALES
-   ========================================== */
+/* Cierre de modales al dar clic fuera */
 window.onclick = function (e) { 
-    const modalEdicion = document.getElementById('modalEditar');
-    const modalVisualizacion = document.getElementById('modalVer');
-    const modalConfirmacion = document.getElementById('modalConfirmacion');
-
-    if (e.target === modalEdicion) {
-        cerrarModal(); 
-    } else if (e.target === modalVisualizacion) {
-        cerrarModalVer();
-    } else if (e.target === modalConfirmacion) {
-        modalConfirmacion.style.display = 'none';
+    if (e.target.classList.contains('modal-personalizado')) {
+        e.target.style.display = 'none';
     }
 }
 
 /* ==========================================
-   6. ACTUALIZACIÓN RÁPIDA DE ESTADOS MEDIANTE AJAX
+   5. INTERCEPTAR GUARDADO DE EDICIÓN (SWEETALERT)
    ========================================== */
-function cambiarEstadoCita(idCitaDB, selectElement) {
-    const nuevoEstado = selectElement.value;
-    
-    selectElement.className = 'status-pill ' + nuevoEstado.toLowerCase().replace(' ', '-');
-    selectElement.closest('tr').setAttribute('data-estado', nuevoEstado.toLowerCase().replace(' ', '-'));
-    
-    fetch('?seccion=citas', { 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `accion=actualizar_estado_rapido&id_cita=${idCitaDB}&nuevo_estado=${encodeURIComponent(nuevoEstado)}`
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log("Estado actualizado en BD:", data);
-    })
-    .catch(error => {
-        alert("Hubo un error al actualizar el estado. Revisa tu conexión.");
-        console.error(error);
-    });
-}
-
-/* ==========================================
-   7. PREVENCIÓN DE DUPLICIDAD EN ENVÍO DE FORMULARIOS
-   ========================================== */
-document.addEventListener("DOMContentLoaded", function() {
-    let formularios = document.querySelectorAll('form');
-    formularios.forEach(formulario => {
-        formulario.addEventListener('submit', function() {
-            let botonSubmit = this.querySelector('button[type="submit"]');
-            if (botonSubmit && botonSubmit.innerText.trim() !== '') {
-                botonSubmit.disabled = true;
-                botonSubmit.style.opacity = '0.7';
-                botonSubmit.style.cursor = 'not-allowed';
-                botonSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Procesando...';
-            }
-        });
-    });
-});
-
-/* ==========================================
-   8. SISTEMA DE CONFIRMACIÓN (MODALES)
-   ========================================== */
-function abrirModalConfirmacion(mensaje, callbackAceptar, callbackCancelar) {
-    document.getElementById('textoConfirmacion').innerText = mensaje;
-    document.getElementById('modalConfirmacion').style.display = 'flex';
-    
-    const btnAceptar = document.getElementById('btnAceptarConfirmacion');
-    const btnCancelar = document.getElementById('btnCancelarConfirmacion');
-    
-    // Limpiamos eventos previos clonando los botones
-    let nuevoBtnAceptar = btnAceptar.cloneNode(true);
-    let nuevoBtnCancelar = btnCancelar.cloneNode(true);
-    btnAceptar.parentNode.replaceChild(nuevoBtnAceptar, btnAceptar);
-    btnCancelar.parentNode.replaceChild(nuevoBtnCancelar, btnCancelar);
-    
-    nuevoBtnAceptar.addEventListener('click', function() {
-        document.getElementById('modalConfirmacion').style.display = 'none';
-        if(callbackAceptar) callbackAceptar();
-    });
-    
-    nuevoBtnCancelar.addEventListener('click', function() {
-        document.getElementById('modalConfirmacion').style.display = 'none';
-        if(callbackCancelar) callbackCancelar();
-    });
-}
-
-// 8.1 Interceptar el guardado del Modal de Edición
 const formEditar = document.getElementById('formEditarCita');
 if (formEditar) {
     formEditar.addEventListener('submit', function(e) {
-        e.preventDefault(); // Detenemos el envío automático
-        abrirModalConfirmacion(
-            "¿Estás seguro de guardar los cambios en esta cita?", 
-            function() {
-                formEditar.submit(); // Si acepta, se envía
+        e.preventDefault();
+        
+        Swal.fire({
+            title: '¿Guardar cambios?',
+            text: "Se actualizará la información del cliente y la cita.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#e17203',
+            cancelButtonColor: '#52073a',
+            confirmButtonText: 'Sí, guardar',
+            cancelButtonText: 'Regresar',
+            backdrop: `rgba(0,0,0,0.5)`,
+            
+            didOpen: () => {
+                document.querySelector('.swal2-container').style.zIndex = '9999999';
             }
-        );
+            
+        }).then((result) => {
+            if (result.isConfirmed) {
+                formEditar.submit();
+            }
+        });
     });
 }
 
-// 8.2 Interceptar el cambio de estado rápido en la tabla
+/* ==========================================
+   6. CAMBIO DE ESTADO RÁPIDO (SWEETALERT)
+   ========================================== */
 function confirmarCambioEstado(selectElement) {
     const estadoAnterior = selectElement.getAttribute('data-estado-anterior');
     const nuevoEstado = selectElement.value;
     const form = selectElement.form;
     
-    abrirModalConfirmacion(
-        `¿Deseas cambiar el estado de la cita a "${nuevoEstado.toUpperCase()}"?`,
-        function() {
-            // Confirmado: enviamos el formulario y actualizamos la clase visual
-            selectElement.className = 'status-pill ' + nuevoEstado.replace(' ', '-');
-            selectElement.setAttribute('data-estado-anterior', nuevoEstado);
-            form.submit();
-        },
-        function() {
-            // Cancelado: regresamos el select a como estaba
-            selectElement.value = estadoAnterior;
+    if (nuevoEstado === 'cancelada') {
+        Swal.fire({
+            title: 'Motivo de cancelación',
+            input: 'textarea',
+            inputPlaceholder: 'Explica brevemente por qué se cancela...',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e17203',
+            cancelButtonColor: '#52073a',
+            confirmButtonText: 'Confirmar Cancelación',
+            cancelButtonText: 'Regresar',
+            backdrop: `rgba(0,0,0,0.5)`,
+            inputValidator: (value) => {
+                if (!value) return 'Debes escribir una razón.';
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let inputRazon = document.createElement("input");
+                inputRazon.type = "hidden"; name = "razon_cancelacion";
+                inputRazon.name = "razon_cancelacion"; inputRazon.value = result.value;
+                form.appendChild(inputRazon);
+                form.submit();
+            } else { selectElement.value = estadoAnterior; }
+        });
+    } else {
+        Swal.fire({
+            title: '¿Cambiar estado?',
+            text: `La cita pasará a estar "${nuevoEstado.toUpperCase()}".`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#e17203',
+            cancelButtonColor: '#52073a',
+            confirmButtonText: 'Sí, cambiar',
+            cancelButtonText: 'Cancelar',
+            backdrop: `rgba(0,0,0,0.5)`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            } else { selectElement.value = estadoAnterior; }
+        });
+    }
+}
+
+/* ==========================================
+   7. ELIMINACIÓN DE CITA (SWEETALERT)
+   ========================================== */
+function confirmarEliminacion(event, urlDestino) {
+    event.preventDefault(); 
+    Swal.fire({
+        title: '¿Eliminar cita?',
+        text: "Esta acción es permanente y no se podrá recuperar.",
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#e17203',
+        cancelButtonColor: '#52073a',
+        confirmButtonText: 'Sí, eliminar ahora',
+        cancelButtonText: 'No, conservar',
+        backdrop: `rgba(0,0,0,0.5)`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = urlDestino;
         }
-    );
+    });
 }

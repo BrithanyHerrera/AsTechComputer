@@ -151,7 +151,7 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
 
                             <a href="?seccion=citas&delete_id=<?= $id_evento ?>&db_id=<?= $datos_db['id_cita'] ?? '' ?>"
                                 class="btn-eliminar" title="Eliminar"
-                                onclick="return confirm('¿Estás seguro de eliminar esta cita?')">
+                                onclick="confirmarEliminacion(event, this.href)">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>
@@ -328,4 +328,5 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
     </script>
 <?php endif; ?>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../public/js/citas_crud.js"></script>
