@@ -199,3 +199,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // 1. Mostrar la alerta de éxito unificada
+    // Revisamos si la URL dice 'status=success' O si PHP detectó la sesión 'mensaje_exito'
+    if (urlParams.get('status') === 'success' || typeof registroExitoso !== 'undefined' && registroExitoso) {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Registro Exitoso!',
+            text: 'El equipo y el cliente han sido registrados correctamente en el sistema.',
+            confirmButtonColor: '#4f46e5',
+            allowOutsideClick: false
+        }).then(() => {
+            // Limpiamos la URL para no perder la sección ni recargar alertas infinitas
+            window.history.replaceState({}, document.title, window.location.pathname + "?seccion=ingreso");
+        });
+    }
+
+    // 2. Limpiar la URL silenciosamente si estamos en modo edición
+    if (urlParams.has('editar')) {
+        window.history.replaceState({}, document.title, window.location.pathname + "?seccion=ingreso");
+    }
+});

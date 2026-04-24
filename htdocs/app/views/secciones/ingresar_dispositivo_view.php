@@ -2,11 +2,8 @@
 // =============================================================
 // ingresar_dispositivo_view.php — La Vista
 // Solo dibuja el HTML. Todas las variables que necesita
-// ($paso, $query_tecnicos, $citas_agendadas, etc.) vienen
-// ya preparadas por el controlador. No toca la base de datos
-// ni hace redirecciones.
+// vienen ya preparadas por el controlador.
 // =============================================================
-require_once 'ingreso_controller.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -63,7 +60,6 @@ require_once 'ingreso_controller.php';
               <i class="fa-solid fa-pen-to-square"></i> MODO EDICIÓN ACTIVO: Folio <?php echo $_SESSION['modo_edicion']; ?>
             </div>
           <?php endif; ?>
-          <form method="POST" action="">
 
         <h1>Datos del cliente</h1>
         <div class="grupo-entrada" style="background: #eef2ff; border: 1px solid #c7d2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
@@ -109,6 +105,7 @@ require_once 'ingreso_controller.php';
           </div>
         </div>
         <button type="submit" class="boton-siguiente" name="step" value="2">Siguiente <i class="fa-solid fa-angle-right"></i></button>
+        </div>
 
       <?php elseif ($paso == 2): ?>
         <h1>Revisión física y control interno</h1>
@@ -388,81 +385,17 @@ require_once 'ingreso_controller.php';
       const relacionesEquipoMarca = <?php echo isset($json_relaciones) ? $json_relaciones : '{}'; ?>;
       const citasDB = <?php echo isset($json_citas) ? $json_citas : '{}'; ?>;
       const modoEdicion = <?php echo isset($_SESSION['modo_edicion']) ? 'true' : 'false'; ?>;
-      // PHP ya validó que estos valores siguen siendo consistentes con
-      // los gabinetes disponibles. Si el espacio ya no estaba libre,
-      // PHP lo limpió de sesión antes de llegar aquí.
       const savedTipoAlmacenamiento = "<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['tipo_almacenamiento'] ?? ''); ?>";
       const savedEspacioAlmacenamiento = "<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['espacio_almacenamiento'] ?? ''); ?>";
+      
+      <?php 
+        // Si el controlador guardó un mensaje de éxito, le avisamos a JS de forma elegante
+        echo isset($_SESSION['mensaje_exito']) ? "const registroExitoso = true;" : "const registroExitoso = false;"; 
+        unset($_SESSION['mensaje_exito']); 
+      ?>
   </script>
 
-  <?php if (isset($_SESSION['mensaje_exito'])): ?>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('status');
+  <script src="../../public/js/ingresar_dispositivo.js"></script>
 
-        if (status === 'success') {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Registro Exitoso!',
-                text: 'El equipo y el cliente han sido registrados correctamente en el sistema.',
-                confirmButtonColor: '#4f46e5', /* Azul de tu botón */
-                allowOutsideClick: false
-            }).then(() => {
-                // Limpiamos la URL para no perder la sección ni recargar a lo tonto
-                window.history.replaceState({}, document.title, window.location.pathname + "?seccion=ingreso");
-            });
-        }
-    });
-  </script>
-  <?php unset($_SESSION['mensaje_exito']); endif; ?>
-  
-  <script src="../../public/js/ingresar_dipositivo.js"></script>
-
-  <script>
-    (function() {
-        // Leemos la URL inmediatamente
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('status');
-
-        if (status === 'success') {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Registro Exitoso!',
-                text: 'El equipo y el cliente han sido registrados correctamente en el sistema.',
-                confirmButtonColor: '#4f46e5', /* Azul de tu botón */
-                allowOutsideClick: false
-            }).then(() => {
-                // Limpiamos la URL para dejarla limpia
-                window.history.replaceState({}, document.title, window.location.pathname + "?seccion=ingreso");
-            });
-        }
-    })();
-  </script>
-
-  <script>
-    (function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        
-        // 1. Si acabamos de guardar (status=success), mostramos la alerta verde
-        if (urlParams.get('status') === 'success') {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Registro Exitoso!',
-                text: 'El equipo y el cliente han sido registrados correctamente.',
-                confirmButtonColor: '#4f46e5'
-            }).then(() => {
-                window.history.replaceState({}, document.title, 'administracion_controller.php?seccion=ingreso');
-            });
-        }
-
-        // 2. MAGIA: Si estamos editando, limpiamos la URL silenciosamente 
-        // para que si el técnico recarga la página, los datos sigan ahí.
-        if (urlParams.has('editar')) {
-            window.history.replaceState({}, document.title, 'administracion_controller.php?seccion=ingreso');
-        }
-    })();
-  </script>
-  
 </body>
 </html>

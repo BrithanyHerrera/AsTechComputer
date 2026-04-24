@@ -1,6 +1,7 @@
 <?php
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // 1. SEGURIDAD: Si no hay sesión, nadie pasa
 if (!isset($_SESSION['id_puesto'])) {
     header("Location: ../../index.php"); 
