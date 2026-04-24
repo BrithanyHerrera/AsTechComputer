@@ -1,11 +1,11 @@
 <?php
 // ========================================================
 // CONTROLADOR: registros_controller.php
-// UBICACIÓN: app/controllers/registros_crud_controller.php
+// UBICACIÓN: app/controllers/dispositivos_ingresados_crud_controller.php
 // ========================================================
 
 require_once dirname(__DIR__) . '/config/conexion.db.php';
-require_once dirname(__DIR__) . '/models/registros_crud_model.php';
+require_once dirname(__DIR__) . '/models/dispositivos_ingresados_crud_model.php';
 
 $modeloRegistros = new RegistrosModel($conexion);
 $accion = $_GET['accion'] ?? '';

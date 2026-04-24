@@ -107,14 +107,14 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
       </li>
       <li>
         <a href="?seccion=ingreso" class="<?= $seccion_actual == 'ingreso' ? 'activo' : '' ?>">
-          <i class="fa-solid fa-file"></i> Ingresar servicio
+          <i class="fa-solid fa-file"></i> Ingresar dispositivo
         </a>
       </li>
       <?php endif; ?>
 
       <li>
         <a href="?seccion=registros_ingresados_crud_view" class="<?= $seccion_actual == 'registros_ingresados_crud_view' ? 'activo' : '' ?>">
-          <i class="fa-solid fa-save"></i> Registros Ingresados
+          <i class="fa-solid fa-save"></i> Dispositivos Ingresados
         </a>
       </li>
 
@@ -182,12 +182,12 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
 
       case 'ingreso':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
-        if (file_exists($ruta_secciones . "ingreso.php")) { include $ruta_secciones . "ingreso.php"; }
+        if (file_exists($ruta_secciones . "ingresar_dispositivo_view.php")) { include $ruta_secciones . "ingresar_dispositivo_view.php"; }
         break;
 
       case 'registros_ingresados_crud_view':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
-        if (file_exists($ruta_secciones . "registros_ingresados_crud_view.php")) { include $ruta_secciones . "registros_ingresados_crud_view.php"; }
+        if (file_exists($ruta_secciones . "dispositivos_ingresados_crud_view.php")) { include $ruta_secciones . "dispositivos_ingresados_crud_view.php"; }
         break;
 
       case 'empleado':

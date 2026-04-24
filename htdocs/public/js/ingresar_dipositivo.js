@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectImportar = document.getElementById('importar_cita');
     
     // Recuperamos el JSON de citas que PHP imprimió en la página
-    // Nota: Necesitas asegurarte de imprimir const citasDB = <?php echo $json_citas; ?>; en tu ingreso.php dentro del <script>
+    // Nota: Necesitas asegurarte de imprimir const citasDB = <?php echo $json_citas; ?>; en tu ingresar_dispositivo_view.php dentro del <script>
     
     if (selectImportar && typeof citasDB !== 'undefined') {
         selectImportar.addEventListener('change', function() {

@@ -13,7 +13,7 @@ if ($resultado && $resultado->num_rows > 0) { while ($fila = $resultado->fetch_a
 
 <div class="contenedor-ingresos">
     <div class="encabezado-crud">
-        <h1><i class="fa-solid fa-microchip"></i> Registros Ingresados </h1>
+        <h1><i class="fa-solid fa-microchip"></i> Dispositivos Ingresados </h1>
         <div class="barra-filtros">
             <div class="filtro-grupo">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -130,7 +130,7 @@ if ($resultado && $resultado->num_rows > 0) { while ($fila = $resultado->fetch_a
     <div class="contenido-modal">
         <span class="cerrar-modal" onclick="cerrarModalEditar()">&times;</span>
         <h2 style="color: #e17203; margin-bottom: 20px;"><i class="fa-solid fa-pen-to-square"></i> Editar Registro</h2>
-        <form action="../controllers/registros_crud_controller.php?accion=editar" method="POST">
+        <form action="../controllers/dispositivos_ingresados_crud_controller.php?accion=editar" method="POST">
             <input type="hidden" name="folio" id="edit_folio">
             <input type="hidden" name="id_cliente" id="edit_id_cliente">
             
@@ -188,7 +188,7 @@ if ($resultado && $resultado->num_rows > 0) { while ($fila = $resultado->fetch_a
         </h2>
         <p style="margin-top: 15px; font-size: 1.1rem;">¿Estás seguro de marcar el folio <strong id="txt_folio_entregar" class="badge-folio"></strong> como ENTREGADO al cliente?</p>
         
-        <form action="../controllers/registros_crud_controller.php?accion=entregar" method="POST">
+        <form action="../controllers/dispositivos_ingresados_crud_controller.php?accion=entregar" method="POST">
             <input type="hidden" id="input_folio_entregar" name="folio">
             <input type="hidden" id="input_gabinete_entregar" name="id_gabinete">
             <button type="submit" style="width: 100%; background: #28a745; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 15px;">

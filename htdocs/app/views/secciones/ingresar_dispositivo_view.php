@@ -1,6 +1,6 @@
 <?php
 // =============================================================
-// ingreso.php — La Vista
+// ingresar_dispositivo_view.php — La Vista
 // Solo dibuja el HTML. Todas las variables que necesita
 // ($paso, $query_tecnicos, $citas_agendadas, etc.) vienen
 // ya preparadas por el controlador. No toca la base de datos
@@ -14,7 +14,6 @@ require_once 'ingreso_controller.php';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>As Tech Computer - Registro de Ingreso</title>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../public/css/ingreso.css">
   <link rel="stylesheet" href="../../public/css/toolbar.css">
@@ -418,7 +417,7 @@ require_once 'ingreso_controller.php';
   </script>
   <?php unset($_SESSION['mensaje_exito']); endif; ?>
   
-  <script src="../../public/js/ingreso.js"></script>
+  <script src="../../public/js/ingresar_dipositivo.js"></script>
 
   <script>
     (function() {
