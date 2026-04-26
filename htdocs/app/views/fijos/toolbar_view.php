@@ -61,10 +61,15 @@ $resultRecientes = $conexion->query($queryRecientes);
 
     <nav class="menu">
         <ul>
-            <li class="botones"><a href="< href="<?= BASE_URL ?>contacto_controller.php">Contacto</a></li>
-            <li class="servicios-hover botones">
-                <a href=" href="<?= BASE_URL ?>servicios_controller.php" class="btn-servicios">Servicios</a>
-                
+       <li class="botones">
+  
+    <a href="<?= BASE_URL ?>app/controllers/contacto_controller.php">Contacto</a>
+
+</li>
+
+<li class="servicios-hover botones">
+    <a href="<?= BASE_URL ?>app/controllers/servicios_controller.php" class="btn-servicios">Servicios</a>
+</li>
                 <div class="mega-menu">
                     <div class="mega-menu-content">
                         <div class="menu-izquierda">
@@ -107,7 +112,7 @@ $resultRecientes = $conexion->query($queryRecientes);
                     </div>
                 </div>
             </li>
-            <li class="botones"><a href="<?php echo $ruta_prefijo; ?>citas_cliente_controller.php">Agendar cita</a></li>
+            <li class="botones"><a href="<?php echo $ruta_prefijo; ?>app/controllers/citas_cliente_controller.php">Agendar cita</a></li>
             <li class="botones">
                 <a href="javascript:void(0);" id="btnBuscador" class="enlace-opcion-serv" onclick="abrirBuscador()">
                     <i class="fa-solid fa-magnifying-glass"></i>

@@ -13,8 +13,8 @@ html, body {
 }
 
 .pie-pagina {
-    background-color: #1d1d1f !important; /* Blindaje de fondo oscuro */
-    color: #f5f5f7 !important;            /* Blindaje de texto claro */
+    background-color: #1d1d1f !important;
+    color: #f5f5f7 !important;           
     padding: 80px 20px 30px;
     width: 100%;
 }
@@ -35,7 +35,7 @@ html, body {
    3. ESTILOS DE ENLACES Y TEXTOS
    ========================================= */
 .fila-links h4 {
-    color: #fff !important; /* Blindaje para los títulos de las columnas */
+    color: #fff !important;
     margin-bottom: 25px;
     font-size: 1rem;
     font-weight: 700;
@@ -51,13 +51,12 @@ html, body {
 }
 
 .fila-links a {
-    color: #a1a1a6 !important; /* Blindaje para los enlaces (gris claro) */
+    color: #a1a1a6 !important;
     text-decoration: none;
     transition: color 0.3s ease;
     font-size: 0.95rem;
 }
 
-/* El toque de tu marca al pasar el mouse */
 .fila-links a:hover {
     color: var(--color-naranja, #e17203) !important; 
 }
@@ -75,7 +74,7 @@ html, body {
 
 .redes-sociales i {
     font-size: 24px;
-    color: #a1a1a6 !important; /* Blindaje para los íconos */
+    color: #a1a1a6 !important;
     transition: color 0.3s ease;
     cursor: pointer;
 }
@@ -92,7 +91,7 @@ html, body {
     margin-top: 60px;
     padding-top: 30px;
     border-top: 1px solid #424245;
-    color: #a1a1a6 !important; /* Blindaje para el texto de copyright */
+    color: #a1a1a6 !important;
     font-size: 0.85rem;
 }
 

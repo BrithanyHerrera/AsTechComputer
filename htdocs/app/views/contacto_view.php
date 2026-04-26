@@ -23,9 +23,10 @@ Este archivo representa la Vista (View) exclusiva para la sección de contacto d
 
 <body>
     <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
-    
+
     <?php
     $ruta_prefijo = "../../"; 
+        require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 

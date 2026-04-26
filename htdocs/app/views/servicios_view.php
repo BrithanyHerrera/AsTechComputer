@@ -26,7 +26,7 @@
 <body>
 
 <?php
-
+require_once __DIR__ . "/../config/config.php"; // Carga el config
     $ruta_img = "../../public/img/servicios/";
     $ruta_prefijo = "../../"; 
     include_once __DIR__ . "/fijos/loader_view.php";
@@ -142,11 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    window.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            modal.style.display = "none";
-        }
-    });
+   
 });
 
 // Función global para las cards
@@ -181,11 +177,7 @@ cerrar.addEventListener("click", () => {
 });
 
 // cerrar dando click afuera
-window.addEventListener("click", (e) => {
-    if(e.target === modal){
-        modal.style.display = "none";
-    }
-});
+
     }
 });
 

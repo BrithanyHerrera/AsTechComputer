@@ -181,10 +181,29 @@ class IngresoModel {
         $id_marca       = $datos['marca'];
         $id_tecnico     = $datos['tecnico_asignado'] ?? 1;
 
-        $stmt1 = $this->conexion->prepare("INSERT INTO clientes (nombre, apellido, telefono, correo) VALUES (?, ?, ?, ?)");
-        $stmt1->bind_param("ssss", $datos['nombre_cliente'], $datos['apellido_cliente'], $telefono, $datos['correo_cliente']);
-        $stmt1->execute();
-        $id_cliente = $this->conexion->insert_id;
+        // 1. Verificar si el cliente ya existe (Buscamos por Nombre, Apellido y Teléfono)
+        $stmt_check_cliente = $this->conexion->prepare("SELECT id_cliente FROM clientes WHERE nombre = ? AND apellido = ? AND telefono = ? LIMIT 1");
+        $stmt_check_cliente->bind_param("sss", $datos['nombre_cliente'], $datos['apellido_cliente'], $telefono);
+        $stmt_check_cliente->execute();
+        $resultado_cliente = $stmt_check_cliente->get_result();
+
+        if ($resultado_cliente->num_rows > 0) {
+            // EL CLIENTE YA EXISTE: Reciclamos su ID para no duplicarlo
+            $fila_cliente = $resultado_cliente->fetch_assoc();
+            $id_cliente = $fila_cliente['id_cliente'];
+            
+            // Actualizamos su correo por si en esta nueva visita dio uno diferente
+            $stmt_update_correo = $this->conexion->prepare("UPDATE clientes SET correo = ? WHERE id_cliente = ?");
+            $stmt_update_correo->bind_param("si", $datos['correo_cliente'], $id_cliente);
+            $stmt_update_correo->execute();
+            
+        } else {
+            // ES UN CLIENTE NUEVO: Lo insertamos de cero
+            $stmt1 = $this->conexion->prepare("INSERT INTO clientes (nombre, apellido, telefono, correo) VALUES (?, ?, ?, ?)");
+            $stmt1->bind_param("ssss", $datos['nombre_cliente'], $datos['apellido_cliente'], $telefono, $datos['correo_cliente']);
+            $stmt1->execute();
+            $id_cliente = $this->conexion->insert_id;
+        }
 
         $stmt2 = $this->conexion->prepare("INSERT INTO equipos (id_cliente, id_marca, id_tipo_equipo, modelo, numero_serie) VALUES (?, ?, ?, ?, ?)");
         $stmt2->bind_param("iiiss", $id_cliente, $id_marca, $id_tipo_equipo, $datos['modelo'], $datos['numero_serie']);

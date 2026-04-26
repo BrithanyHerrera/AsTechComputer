@@ -1,3 +1,5 @@
+
+
 <script>
 /* FOOTER_VIEW.PHP */
 /*
@@ -27,7 +29,7 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
                 <ul>
 
                     <li><a href="<?php echo $ruta_prefijo; ?>sobre_nosotros_controller.php">Sobre Nosotros</a></li>
-                    <li><a href="<?php echo $ruta_prefijo; ?>convenios_controller.php">Convenios</a>
+                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/convenios_controller.php">Convenios</a>
 
                     <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/registro_marca_controller.php">Registro de marca</a></li>
                     <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/sobre_nosotros_controller.php">Sobre Nosotros</a></li>
