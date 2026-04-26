@@ -16,6 +16,7 @@
  * - Inclusión de loader inicial para mejorar la experiencia de carga.
  * - Uso de recursos externos como Google Fonts y Font Awesome para mejorar el diseño visual.
  */
+
 ?>
 
 <!DOCTYPE html>
@@ -29,19 +30,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" href="<?= $base_url ?>public/img/Astech ICO.ico" type="image/x-icon">
-    <link rel="stylesheet" href="<?= $base_url ?>public/css/toolbar.css">
-    <link rel="stylesheet" href="<?= $base_url ?>public/css/footer.css">
-    <link rel="stylesheet" href="<?= $base_url ?>public/css/index.css">
+    <link rel="icon" href="<?= BASE_URL ?>public/img/Astech ICO.ico" type="image/x-icon">
+    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/toolbar.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/footer.css">
+   <link rel="stylesheet" href="<?= BASE_URL ?>public/css/index.css">
 </head>
 
 <body>
+    
     <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
 
     <?php 
     $ruta_prefijo = "";
-
-  include $base_url . "app/controllers/toolbar_controller.php";
+   
+include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 
     <main>
@@ -50,7 +52,7 @@
                 <div class="hero-texto">
                    
                       <div class="hero-imagen">
-                    <img src="<?= $base_url ?>public/img/logo_horizontal.png" alt="Logo Astech Computer">
+                    <img src="<?= BASE_URL ?>public/img/logo_horizontal.png" alt="Logo Astech Computer">
                 </div>
                     
                     <p class="destacado"> Confiabilidad, garantia y transparencia </p>
@@ -71,7 +73,7 @@
                    <p><?= htmlspecialchars($info['quienes_somos']) ?></p>
                 </div>
                 <div class="imagen-about">
-                    <img src="<?= $base_url ?>public/img/trabajado.JPG" alt="Trabajo en Astech">
+                    <img src="<?= BASE_URL ?>public/img/trabajado.JPG" alt="Trabajo en Astech">
                 </div>
             </div>
         </section>
@@ -81,7 +83,7 @@
                 <h2 class="titulo-seccion">Nuestros Servicios</h2>
                 <div class="grid-cards">
                     <div class="astech-card">
-                        <img src="<?= $base_url ?>public/img/diagnostico.jpg" alt="Diagnóstico">
+                        <img src="<?= BASE_URL ?>public/img/diagnostico.jpg" alt="Diagnóstico">
                         <div class="astech-card-body">
                             <h3>Diagnóstico</h3>
                             <p>Revisión profunda para identificar el origen exacto de la falla en tu equipo.</p>
@@ -89,7 +91,7 @@
                         </div>
                     </div>
                     <div class="astech-card">
-                        <img src="<?= $base_url ?>public/img/manten.jpg" alt="Mantenimiento">
+                        <img src="<?= BASE_URL ?>public/img/manten.jpg" alt="Mantenimiento">
                         <div class="astech-card-body">
                             <h3>Mantenimiento</h3>
                             <p>Limpieza física y optimización de software para máxima velocidad.</p>
@@ -97,7 +99,7 @@
                         </div>
                     </div>
                     <div class="astech-card">
-                        <img src="<?= $base_url ?>public/img/reparacion.jpg" alt="Reparación">
+                        <img src="<?= BASE_URL ?>public/img/reparacion.jpg" alt="Reparación">
                         <div class="astech-card-body">
                             <h3>Reparación</h3>
                             <p>Sustitución de piezas y microelectrónica con garantía extendida.</p>
@@ -114,14 +116,14 @@
 
                 <div class="grid-cards" style="margin-bottom: 60px;">
                     <div class="astech-card">
-                        <img src="<?= $base_url ?>public/img/mision.png" alt="Misión">
+                        <img src="<?= BASE_URL ?>public/img/mision.png" alt="Misión">
                         <div class="astech-card-body">
                             <h3>Nuestra Misión</h3>
                             <p><?= htmlspecialchars($info['mision']) ?></p>
                         </div>
                     </div>
                     <div class="astech-card">
-                        <img src="<?= $base_url ?>public/img/vision.png" alt="Visión">
+                        <img src="<?= BASE_URL ?>public/img/vision.png" alt="Visión">
                         <div class="astech-card-body">
                             <h3>Nuestra Visión</h3>
                             <p><?= htmlspecialchars($info['vision']) ?></p>
@@ -157,13 +159,13 @@
         <section class="seccion-ceo">
             <div class="caja-ceo">
                 <div class="ceo-texto">
-                    <img src="<?= $base_url ?>public/img/Iso.png" alt="Logo" style="width: 60px; margin-bottom: 20px;">
+                    <img src="<?= BASE_URL ?>public/img/Iso.png" alt="Logo" style="width: 60px; margin-bottom: 20px;">
                     <blockquote><?= htmlspecialchars($info['frase_fundador']) ?></blockquote>
                     <p style="font-weight: 700; font-size: 1.2rem;">Ferdán Garrigos</p>
                     <p style="color: var(--color-texto-secundario);">Fundador & CEO</p>
                 </div>
                 <div class="ceo-img">
-                    <img src="<?= $base_url ?>public/img/ceoo.png" alt="CEO de Astech Computer">
+                    <img src="<?= BASE_URL ?>public/img/ceoo.png" alt="CEO de Astech Computer">
                 </div>
             </div>
         </section>

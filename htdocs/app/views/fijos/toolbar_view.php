@@ -55,15 +55,15 @@ $resultRecientes = $conexion->query($queryRecientes);
 <header class="navbar">
     <div class="logo">
         <a href="<?php echo $ruta_prefijo; ?>index_controller.php">
-            <img src="<?php echo $ruta_prefijo; ?>../../public/img/LogoHD.png" class="logo-superior" alt="Logo">
+            <img src="<?= BASE_URL ?>public/img/LogoHD.png" class="logo-superior" alt="Logo">
         </a>
     </div>
 
     <nav class="menu">
         <ul>
-            <li class="botones"><a href="<?php echo $ruta_prefijo; ?>contacto_controller.php">Contacto</a></li>
+            <li class="botones"><a href="< href="<?= BASE_URL ?>contacto_controller.php">Contacto</a></li>
             <li class="servicios-hover botones">
-                <a href="<?php echo $ruta_prefijo; ?>servicios_controller.php" class="btn-servicios">Servicios</a>
+                <a href=" href="<?= BASE_URL ?>servicios_controller.php" class="btn-servicios">Servicios</a>
                 
                 <div class="mega-menu">
                     <div class="mega-menu-content">
@@ -82,7 +82,7 @@ $resultRecientes = $conexion->query($queryRecientes);
                                     $id_actual = $tipo['id_tipo_servicio'];
                                      if(isset($serviciosPorTipo[$id_actual])):
                                      foreach($serviciosPorTipo[$id_actual] as $srv): ?>
-                                <a href="<?php echo $ruta_prefijo; ?>app/controllers/detalle_servicio.php?id=<?php echo $srv['id_servicio']; ?>">
+                                <a href="<?php echo $ruta_prefijo; ?>detalle_servicio.php?id=<?php echo $srv['id_servicio']; ?>">
                                 <?php echo $srv['tipo_servicio']; ?>
                                  </a>
                                  <?php endforeach; endif; ?>
