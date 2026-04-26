@@ -45,7 +45,6 @@
     ?>
 
     <main>
-        <h1>HOLA BRITHANY</h1>
         <section class="hero-wrapper">
             <div class="hero-astech">
                 <div class="hero-texto">
