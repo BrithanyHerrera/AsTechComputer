@@ -50,7 +50,11 @@
     
     <?php
     $ruta_prefijo = "../../../"; 
+ 
+    require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
+   
+
     ?>
     
     <section class="seccion-convenios">

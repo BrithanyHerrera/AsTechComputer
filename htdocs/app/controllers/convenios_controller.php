@@ -9,4 +9,5 @@
 
 // Por ahora, simplemente cargamos la vista
 require_once dirname(__DIR__) . '/views/convenios_view.php';
+require_once __DIR__ . "/../config/config.php"; 
 ?>

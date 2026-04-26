@@ -23,6 +23,7 @@ Este archivo representa la Vista (View) encargada de exhibir la información leg
 <body style="background-color: #f4f4f4;">
     <?php
     $ruta_prefijo = "../../../"; 
+    require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 

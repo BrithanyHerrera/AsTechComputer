@@ -25,6 +25,7 @@ Este archivo actúa como la Vista (View) encargada de mostrar el documento ofici
 
     <?php
     $ruta_prefijo = "../../../"; 
+    require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 

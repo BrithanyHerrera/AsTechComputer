@@ -11,7 +11,7 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
 <footer class="pie-pagina">
     <div class="contenedor-pie">
         <div class="seccion-logo">
-            <img src="<?php echo $ruta_prefijo; ?>../../public/img/logoATC.png" alt="AS TECH Logo"
+            <img src="<?php echo BASE_URL; ?>public/img/logoATC.png" alt="AS TECH Logo"
                 style="width: 160px; filter: brightness(0) invert(1);">
         </div>
         <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px;">
@@ -28,25 +28,24 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
                 <h4>Empresa</h4>
                 <ul>
 
-                    <li><a href="<?php echo $ruta_prefijo; ?>sobre_nosotros_controller.php">Sobre Nosotros</a></li>
-                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/convenios_controller.php">Convenios</a>
+                    <li><a href="<?php echo BASE_URL; ?>app/controllers/sobre_nosotros_controller.php">Sobre Nosotros</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>app/controllers/convenios_controller.php">Convenios</a>
 
-                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/registro_marca_controller.php">Registro de marca</a></li>
-                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/sobre_nosotros_controller.php">Sobre Nosotros</a></li>
-                   <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/convenios_controller.php">Convenios</a>
+                    <li><a href="<?php echo BASE_URL; ?>app/controllers/registro_marca_controller.php">Registro de marca</a></li>
+
 
                     </li>
-                    <li><a href="<?php echo $ruta_prefijo; ?>login_controller.php">Operaciones</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>app/controllers/login_controller.php">Operaciones</a></li>
                 </ul>
             </div>
             <div class="fila-links">
                 <h4>Legal</h4>
                 <ul>
 
-                    <li><a href="<?php echo $ruta_prefijo; ?>politica_privacidad_controller.php">Política de privacidad</a></li>
-                    <li><a href="<?php echo $ruta_prefijo; ?>terminos_y_condiciones_controller.php">Términos y Condiciones</a></li>
-                    <li><a href="<?php echo $ruta_prefijo; ?>politica_cookies_controller.php">Política de Cookies</a>
-                    <li><a href="<?php echo $ruta_prefijo; ?>politica_servicios_controller.php">Política de servicios</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>app/controllers/politica_privacidad_controller.php">Política de privacidad</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>app/controllers/terminos_y_condiciones_controller.php">Términos y Condiciones</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>app/controllers/politica_cookies_controller.php">Política de Cookies</a>
+                    <li><a href="<?php echo BASE_URL; ?>app/controllers/politica_servicios_controller.php">Política de servicios</a></li>
 
                     </li>
                 </ul>

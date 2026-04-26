@@ -22,6 +22,7 @@ Este archivo actúa como la Vista (View) encargada de desplegar la Política de 
 
 <body style="background-color: #f4f4f4;">
     <?php
+    require_once __DIR__ . "/../config/config.php"; 
     $ruta_prefijo = "../../../"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>

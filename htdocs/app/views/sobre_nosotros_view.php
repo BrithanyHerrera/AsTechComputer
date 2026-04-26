@@ -26,6 +26,7 @@ Este archivo representa la Vista (View) encargada de mostrar la identidad corpor
 <body style="background-color: #f9f9fb;">
 
     <?php
+    require_once __DIR__ . "/../config/config.php"; 
     $ruta_prefijo = "../../../";
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>

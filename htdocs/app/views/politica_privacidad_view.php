@@ -23,6 +23,7 @@ Este archivo representa la Vista (View) destinada a exhibir el Aviso de Privacid
 
     <?php
     $ruta_prefijo = "../../../"; 
+    require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 
