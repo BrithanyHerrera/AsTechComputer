@@ -38,7 +38,7 @@
 </div>
 <?php
 require_once('../../app/config/conexion.db.php');
-$query = "SELECT id_servicio, tipo_servicio, descripcion, precio, imagen_servicio
+$query = "SELECT id_servicio, codigo_servicio, tipo_servicio, descripcion, precio, imagen_servicio
           FROM servicios 
           WHERE estado = 'activo'";
 
@@ -76,10 +76,12 @@ $slides = [
         <div class="card-servicio"  onclick="verServicio(<?php echo $row['id_servicio']; ?>)">
             <img src="<?php echo $ruta_img . $row['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
             <button class="btn-ver-mas">Mas información<i class="fa-solid fa-angles-right"></i></button>
-            <div class="info-basica">
-                <h3><?php echo $row['tipo_servicio']; ?></h3>
-                <span class="precio">$<?php echo number_format($row['precio'], 2); ?></span>
-            </div>
+<div class="info-basica">
+    <span class="codigo-tag"><?php echo $row['codigo_servicio']; ?></span>
+    
+    <h3><?php echo $row['tipo_servicio']; ?></h3>
+    <span class="precio">$<?php echo number_format($row['precio'], 2); ?></span>
+</div>
 
             <div class="overlay-descripcion">
                 <h3><?php echo $row['tipo_servicio']; ?></h3>

@@ -1,3 +1,26 @@
+<?php
+/**
+ * PÁGINA: Login - Panel de Control As Tech Computer
+ * PROPÓSITO: Permitir el acceso seguro de usuarios al sistema administrativo mediante autenticación.
+ * FUNCIONALIDADES:
+ * - Estructura HTML responsive con integración de estilos personalizados (login.css, toolbar.css).
+ * - Uso de recursos externos:
+ *      • Google Fonts (tipografía Lato).
+ *      • Font Awesome (iconos).
+ * - Inclusión de loader inicial para mejorar la experiencia de carga.
+ * - Diseño dividido en dos secciones:
+ *      • Lado visual con imagen representativa, overlay y botón de regreso al inicio.
+ *      • Lado formulario para autenticación del usuario.
+ * - Formulario de inicio de sesión con método POST:
+ *      • Campo de usuario.
+ *      • Campo de contraseña.
+ *      • Botón de envío para ingresar al sistema.
+ * - Validación básica mediante atributos HTML (required).
+ * - Visualización dinámica de mensajes de error provenientes de PHP.
+ * - Protección contra XSS mediante uso de htmlspecialchars en mensajes.
+ * - Integración de archivo JavaScript (login.js) para manejo de interacciones adicionales.
+ */
+ ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,7 +40,7 @@
   <div class="tarjeta-login">
     
     <div class="lado-imagen">
-      <a href="../../index.php" style="text-decoration: none;">
+      <a href="index_controller.php" style="text-decoration: none;">
         <button type="button" class="boton-regresar">
              <i class="fa-solid fa-arrow-left"></i> Regresar      
         </button>

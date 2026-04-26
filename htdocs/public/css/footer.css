@@ -50,6 +50,7 @@ html, body {
 }
 
 .redes-sociales ul {
+    margin-top:25px;
     display: flex;
     gap: 15px;
     list-style: none;

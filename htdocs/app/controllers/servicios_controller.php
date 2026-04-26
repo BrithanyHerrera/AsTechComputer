@@ -50,66 +50,6 @@ if ($id_tipo == 1) {
     $datos_header['precio'] = "Desde: $500 pesos";
     $datos_header['imagen'] = "../../public/img/DomicilioGranFond.png";
 }
-
-// --- PROCESAMIENTO DE ACCIONES ---
-
-// AGREGAR
-if ($accion == 'agregar' && $_SERVER["REQUEST_METHOD"] == "POST") {
-    $datos = [
-        'tipo_servicio'    => $_POST['tipo_servicio'] ?? '',
-        'id_tipo_servicio' => $_POST['id_tipo_servicio'] ?? '',
-        'descripcion'      => $_POST['descripcion'] ?? '',
-        'imagen_servicio'  => $_POST['imagen_servicio'] ?? '',
-        'tiempo_estimado'  => $_POST['tiempo_estimado'] ?? '',
-        'precio'           => $_POST['precio'] ?? 0,
-        'estado'           => $_POST['estado'] ?? 'activo'
-    ];
-
-    if (empty($datos['tipo_servicio']) || empty($datos['precio'])) {
-        header("Location: ../views/administracion_view.php?seccion=servicios&status=error&msg=campos_vacios");
-    } else {
-        try {
-            if ($modelo->agregarServicio($datos)) {
-                header("Location: ../views/administracion_view.php?seccion=servicios&status=success");
-            }
-        } catch (Exception $e) {
-            header("Location: ../views/administracion_view.php?seccion=servicios&status=error");
-        }
-    }
-    exit();
-}
-
-// EDITAR
-if ($accion == 'editar' && $_SERVER["REQUEST_METHOD"] == "POST") {
-    $datos = $_POST;
-    try {
-        if ($modelo->editarServicio($datos)) {
-            header("Location: ../views/administracion_view.php?seccion=servicios&status=success");
-        }
-    } catch (Exception $e) {
-        header("Location: ../views/administracion_view.php?seccion=servicios&status=error");
-    }
-    exit();
-}
-
-// ELIMINAR
-if ($accion == 'eliminar' && isset($_GET['id'])) {
-    if ($modelo->eliminarServicio($_GET['id'])) {
-        header("Location: ../views/administracion_view.php?seccion=servicios&status=success");
-    }
-    exit();
-}
-
-// BUSCAR
-if ($accion == 'buscar') {
-    $q = $_GET['q'] ?? '';
-    $resultado = $modelo->buscarServicios($q);
-    while ($row = $resultado->fetch_assoc()) {
-        echo "<div class='resultado-item'><strong>{$row['tipo_servicio']}</strong><br>$ {$row['precio']}</div>";
-    }
-    exit();
-}
-
 // --- CARGA DE VISTA ---
 // Si no hay acción (carga normal de la página de servicios al público)
 $lista_servicios = $modeloServicios->obtenerServicios($id_tipo);

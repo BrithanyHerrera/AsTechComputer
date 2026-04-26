@@ -5,6 +5,18 @@ body{
 .usuario{
 margin-top:1%;
 }
+.seccion-form {
+    display: none;
+}
+
+.seccion-form.activa {
+    display: block;
+}
+
+.btn-tab.activo {
+    background-color: #6c63ff;
+    color: #fff;
+}
 .usuario p{
     width:200px;
     height: 60%;
@@ -164,10 +176,12 @@ h2{
     box-shadow: 0 0 5px rgba(82, 7, 58, 0.2);
     background-color: #fff;
 }
-
+#modal-editar-servicio textarea{
+    min-height:120px;
+}
 .grupo-input textarea {
     resize: vertical; 
-    min-height: 80px;
+    min-height: 60px;
 }
 h3{
   text-align:center;
@@ -323,6 +337,65 @@ h3{
     background-color: #e8f5e9; 
     color: #1b5e20;
     border: 1px solid #c8e6c9;
+}
+/* Contenedor del buscador */
+.buscador-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+.buscador-form {
+    display: flex;
+    align-items: center;
+    background: #EAEFEF;
+    border-radius: 30px;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 60%;
+    max-width: 500px;
+}
+
+/* Input */
+.buscador-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    border-radius: 30px;
+    font-size: 14px;
+    background: transparent;
+}
+
+/* Botón */
+.buscador-btn {
+    background: #420034; /* morado suave */
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+.buscador-btn:hover {
+    background: #910074; /* morado oscuro */
+    transform: scale(1.05);
+}
+
+/* Focus en input */
+.buscador-input:focus {
+    background: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .buscador-form {
+        width: 90%;
+    }
 }
 
 @media (max-width: 600px) {

@@ -1,3 +1,23 @@
+<?php
+/**
+ * PÁGINA: Página Principal (Inicio) - As Tech Computer
+ * PROPÓSITO: Presentar la identidad de la empresa, sus servicios principales y generar confianza en el usuario.
+ * FUNCIONALIDADES: 
+ * - Sección "Hero" con imagen, eslogan y accesos rápidos (agendar cita y más información).
+ * - Integración dinámica de barra de navegación (toolbar) y footer mediante controladores.
+ * - Sección informativa "¿Quiénes somos?" con descripción e imagen representativa.
+ * - Visualización de servicios principales mediante tarjetas interactivas (Diagnóstico, Mantenimiento, Reparación).
+ * - Presentación de la filosofía empresarial: misión, visión y valores corporativos.
+ * - Sección destacada del CEO con mensaje institucional y branding.
+ * - Sistema de gestión de cookies con:
+ *      • Banner de consentimiento.
+ *      • Opciones de aceptar, rechazar o configurar cookies.
+ *      • Modal de configuración detallada por tipo de cookies.
+ * - Inclusión de loader inicial para mejorar la experiencia de carga.
+ * - Uso de recursos externos como Google Fonts y Font Awesome para mejorar el diseño visual.
+ */
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,10 +29,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" href="public/img/Astech ICO.ico" type="image/x-icon">
-    <link rel="stylesheet" href="public/css/toolbar.css">
-    <link rel="stylesheet" href="public/css/footer.css">
-    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="icon" href="<?= $base_url ?>public/img/Astech ICO.ico" type="image/x-icon">
+    <link rel="stylesheet" href="<?= $base_url ?>public/css/toolbar.css">
+    <link rel="stylesheet" href="<?= $base_url ?>public/css/footer.css">
+    <link rel="stylesheet" href="<?= $base_url ?>public/css/index.css">
 </head>
 
 <body>
@@ -20,7 +40,8 @@
 
     <?php 
     $ruta_prefijo = "";
-    include "app/controllers/toolbar_controller.php"; 
+
+  include $base_url . "app/controllers/toolbar_controller.php";
     ?>
 
     <main>
@@ -29,7 +50,7 @@
                 <div class="hero-texto">
                    
                       <div class="hero-imagen">
-                    <img src="public/img/Isologotipo_horizontal_color.png" alt="Logo Astech Computer">
+                    <img src="<?= $base_url ?>public/img/logo_horizontal.png" alt="Logo Astech Computer">
                 </div>
                     
                     <p class="destacado"> Confiabilidad, garantia y transparencia </p>
@@ -47,13 +68,10 @@
             <div class="grid-about">
                 <div class="texto-about">
                     <h2>¿Quiénes somos?</h2>
-                    <p>Somos una empresa humana y amigable, guiada por los valores de integridad y transparencia para
-                        brindar a nuestros clientes servicios de reparación y mantenimiento de calidad.</p>
-                    <p>Nuestro compromiso es garantizar que tu tecnología siempre funcione a la perfección, asegurando
-                        tu información y extendiendo la vida útil de tus equipos.</p>
+                   <p><?= htmlspecialchars($info['quienes_somos']) ?></p>
                 </div>
                 <div class="imagen-about">
-                    <img src="public/img/trabajado.JPG" alt="Trabajo en Astech">
+                    <img src="<?= $base_url ?>public/img/trabajado.JPG" alt="Trabajo en Astech">
                 </div>
             </div>
         </section>
@@ -63,7 +81,7 @@
                 <h2 class="titulo-seccion">Nuestros Servicios</h2>
                 <div class="grid-cards">
                     <div class="astech-card">
-                        <img src="public/img/diagnostico.jpg" alt="Diagnóstico">
+                        <img src="<?= $base_url ?>public/img/diagnostico.jpg" alt="Diagnóstico">
                         <div class="astech-card-body">
                             <h3>Diagnóstico</h3>
                             <p>Revisión profunda para identificar el origen exacto de la falla en tu equipo.</p>
@@ -71,7 +89,7 @@
                         </div>
                     </div>
                     <div class="astech-card">
-                        <img src="public/img/manten.jpg" alt="Mantenimiento">
+                        <img src="<?= $base_url ?>public/img/manten.jpg" alt="Mantenimiento">
                         <div class="astech-card-body">
                             <h3>Mantenimiento</h3>
                             <p>Limpieza física y optimización de software para máxima velocidad.</p>
@@ -79,7 +97,7 @@
                         </div>
                     </div>
                     <div class="astech-card">
-                        <img src="public/img/reparacion.jpg" alt="Reparación">
+                        <img src="<?= $base_url ?>public/img/reparacion.jpg" alt="Reparación">
                         <div class="astech-card-body">
                             <h3>Reparación</h3>
                             <p>Sustitución de piezas y microelectrónica con garantía extendida.</p>
@@ -96,27 +114,17 @@
 
                 <div class="grid-cards" style="margin-bottom: 60px;">
                     <div class="astech-card">
-                        <img src="public/img/mision.png" alt="Misión">
+                        <img src="<?= $base_url ?>public/img/mision.png" alt="Misión">
                         <div class="astech-card-body">
                             <h3>Nuestra Misión</h3>
-                            <p>Brindamos una experiencia integral a nuestros clientes con servicios de reparación,
-                                mantenimiento, asesoría computacional y soporte a MiPymes de la región, garantizando la
-                                privacidad de datos y ofreciendo garantía en todos nuestros servicios, con principios de
-                                transparencia, honestidad y respeto para cumplir las expectativas y brindar soluciones
-                                confiables y vanguardistas.</p>
+                            <p><?= htmlspecialchars($info['mision']) ?></p>
                         </div>
                     </div>
                     <div class="astech-card">
-                        <img src="public/img/vision.png" alt="Visión">
+                        <img src="<?= $base_url ?>public/img/vision.png" alt="Visión">
                         <div class="astech-card-body">
                             <h3>Nuestra Visión</h3>
-                            <p>En AsTech Computer soñamos con un 2030 donde seamos la empresa de servicios tecnológicos
-                                de referencia en Puerto Vallarta, reconocida por nuestra excelencia, compromiso,
-                                innovación y la confianza que nos brinda nuestra comunidad.</p>
-                            <p>Creceremos junto a nuestros clientes y aliados estratégicos, compartiendo una misma
-                                visión de futuro: desarrollar talento local, promover la tecnología responsable y
-                                generar un impacto positivo en nuestro entorno.
-                            </p>
+                            <p><?= htmlspecialchars($info['vision']) ?></p>
                         </div>
                     </div>
                 </div>
@@ -149,14 +157,13 @@
         <section class="seccion-ceo">
             <div class="caja-ceo">
                 <div class="ceo-texto">
-                    <img src="public/img/Iso.png" alt="Logo" style="width: 60px; margin-bottom: 20px;">
-                    <blockquote>“En nuestra empresa tratamos cada equipo como si fuera propio, porque sabemos que ahí
-                        está tu trabajo, tus recuerdos y tu información.”</blockquote>
+                    <img src="<?= $base_url ?>public/img/Iso.png" alt="Logo" style="width: 60px; margin-bottom: 20px;">
+                    <blockquote><?= htmlspecialchars($info['frase_fundador']) ?></blockquote>
                     <p style="font-weight: 700; font-size: 1.2rem;">Ferdán Garrigos</p>
                     <p style="color: var(--color-texto-secundario);">Fundador & CEO</p>
                 </div>
                 <div class="ceo-img">
-                    <img src="public/img/ceoo.png" alt="CEO de Astech Computer">
+                    <img src="<?= $base_url ?>public/img/ceoo.png" alt="CEO de Astech Computer">
                 </div>
             </div>
         </section>
@@ -164,7 +171,7 @@
 
     <?php 
     $ruta_prefijo = "";
-    include "app/controllers/footer_controller.php"; 
+   include __DIR__ . "/../controllers/footer_controller.php";
     ?>
 
     <div id="overlay-bloqueo" class="overlay-cookies"></div>

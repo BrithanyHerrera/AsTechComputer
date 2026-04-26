@@ -1,3 +1,28 @@
+<?php
+/**
+ * PÁGINA: Términos y Condiciones - As Tech Computer
+ * PROPÓSITO: Informar a los usuarios sobre las políticas, responsabilidades y condiciones legales 
+ *            relacionadas con el uso de los servicios ofrecidos por la empresa.
+ * FUNCIONALIDADES:
+ * - Estructura HTML responsive con estilos personalizados (static.css, toolbar.css, footer.css, politica_cookies.css).
+ * - Integración de recursos externos:
+ *      • Google Fonts (tipografía Lato).
+ *      • Font Awesome (iconografía).
+ * - Inclusión dinámica de la barra de navegación (toolbar) y footer mediante controladores.
+ * - Presentación estructurada de los términos y condiciones del servicio:
+ *      • Fecha de última actualización.
+ *      • Condiciones de diagnóstico y presupuestos.
+ *      • Políticas de aprobación y pagos.
+ *      • Responsabilidad del cliente sobre copias de seguridad.
+ *      • Garantías de servicios y componentes.
+ *      • Políticas sobre abandono de equipos.
+ *      • Tiempos de entrega estimados.
+ *      • Posibilidad de modificaciones futuras de los términos.
+ * - Uso de encabezados, párrafos y listas para organizar la información legal.
+ * - Contenido editable con secciones preparadas para personalización según necesidades del negocio.
+ */
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

@@ -18,7 +18,7 @@
 
 }
 
-.logo img { height: 50px; 
+.logo img { height: 40px; 
 margin-top:10px;}
 
 .menu ul {
@@ -34,6 +34,9 @@ margin-top:10px;}
     color: #333;
     font-weight: 600;
     transition: color 0.3s;
+}
+.menu a:hover{
+    color: #54015f;
 }
 
 
@@ -211,8 +214,8 @@ margin-top:10px;}
 }
 .botones a:hover{
      transition: max-height 0.3s ease, opacity 0.3s ease;
-     color: #e17203;
-     text-decoration: underline;
+     color: #910079;
+     text-decoration: underline #ff6811;
     
 }
 /*buscador*/

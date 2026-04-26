@@ -1,3 +1,22 @@
+<?
+/**
+ * PÁGINA: Estadísticas - As Tech Computer
+ * PROPÓSITO: Visualizar datos clave del negocio mediante gráficas interactivas para apoyar la toma de decisiones.
+ * FUNCIONALIDADES:
+ * - Estructura HTML responsive con estilos personalizados (dashboard.css).
+ * - Inclusión de loader inicial para mejorar la experiencia de carga.
+ * - Integración de la librería Chart.js para la generación de gráficas dinámicas.
+ * - Presentación de dos métricas principales en tarjetas visuales:
+ *      • Distribución de equipos (gráfica tipo dona).
+ *      • Efectividad de marketing (gráfica de barras).
+ * - Uso de datos dinámicos provenientes de PHP:
+ *      • $datosDispositivos (etiquetas y totales).
+ *      • $datosMarketing (etiquetas y totales).
+ * - Conversión de datos PHP a formato JSON para su uso en JavaScript.
+ * - Personalización de colores corporativos en las gráficas.
+ * - Diseño en grid adaptable para organizar las visualizaciones.
+ */
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

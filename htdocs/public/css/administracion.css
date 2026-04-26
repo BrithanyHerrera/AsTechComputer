@@ -97,7 +97,7 @@ body {
   padding: 40px;
 }
 .flex-form-ayuda {
-    display: flex;
+   
     gap: 20px;
     align-items: flex-start;
 }
@@ -105,22 +105,26 @@ body {
     flex: 1.5;
 }
 .guia-url {
-    flex: 1;
     background: #fff3cd;
-    border-left: 5px solid #ffc107;
+    border-left: 5px solid #ffb007;
     padding: 15px;
     border-radius: 8px;
     font-size: 0.85em;
     color: #856404;
+margin-bottom: 10px;
+    gap: 8px; /* Espacio uniforme entre el texto y el código */
 }
+
 .guia-url code {
-    display: block;
+    display: block; /* Fuerza a que el código inicie en una nueva línea */
     background: #fff;
-    padding: 5px;
-    margin-top: 5px;
+    padding: 8px;
     border-radius: 4px;
     font-weight: bold;
     color: #52073a;
+    width: fit-content; /* El fondo blanco solo cubrirá el ancho del texto */
+    border: 1px solid #ffeeba; /* Un borde sutil para que resalte más */
+    word-break: break-all; /* Por si el código es muy largo, que no se desborde */
 }
 /* Responsive: si la pantalla es pequeña, la fila se vuelve columna */
 @media (max-width: 600px) {

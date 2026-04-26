@@ -7,7 +7,24 @@ if (!isset($conexion)) {
 ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+
 <div class="contenedor-crud">
+    <div class="buscador-container">
+<form method="GET" class="buscador-form">
+    <input type="hidden" name="seccion" value="servicios">
+
+    <input 
+        type="text" 
+        name="busqueda" 
+        class="buscador-input"
+        placeholder="Buscar servicio..."
+        value="<?= htmlspecialchars($_GET['busqueda'] ?? '') ?>"
+    >
+
+    <button type="submit" class="buscador-btn">Buscar</button>
+    </div>
+</form>
     <div class="encabezado-seccion">
         <button class="boton-primario" onclick="abrirFormulario()">
             <i class="fa-solid fa-plus"></i> Nuevo Servicio
@@ -17,10 +34,14 @@ if (!isset($conexion)) {
     <div class="contenido-modal modal-purpura">
     
         <h3>Registrar Nuevo Servicio</h3>
-        <form action="../controllers/servicios_controller.php?accion=agregar" method="POST">
+        <form action="../controllers/servicios_crud_controller.php?accion=agregar" method="POST">
             <div class="grupo-input">
                 <label>Nombre del Servicio:</label>
                 <input type="text" name="tipo_servicio" required placeholder="Ej. Reparación de Laptop">
+            </div>
+            <div class="grupo-input">
+                <label>Codigo</label>
+                <input type="text" name="codigo_servicio" required placeholder="Ej. AG-001">
             </div>
             <div class="grupo-input">
     <label> Tipo de Servicio:</label>
@@ -40,6 +61,24 @@ if (!isset($conexion)) {
                 <label>Descripción:</label>
                 <textarea name="descripcion" required></textarea>
             </div>
+            <div class="grupo-input">
+                <label>Procedimiento:</label>
+                <textarea name="procedimiento" required></textarea>
+            </div>
+             <div class="grupo-input">
+                <label>Beneficios:</label>
+                <textarea name="beneficios" required></textarea>
+            </div>
+             <div class="grupo-input">
+                <label>Indicaciones:</label>
+                <textarea name="indicaciones" required></textarea>
+            </div>
+             <div class="grupo-input">
+                <label>Exclusiones:</label>
+                <textarea name="exclusiones" required></textarea>
+            </div>
+                    
+         
         
           <div class="flex-form-ayuda">
     <div class="campos-principales">
@@ -98,22 +137,55 @@ if (!isset($conexion)) {
                 <tr>
                      <tr>
 <?php
-// Consulta limpia para tu estructura actual
-$query = "SELECT 
-            s.id_servicio,
-            s.tipo_servicio,
-            s.descripcion,
-              s.procedimiento,
-    s.indicaciones,
-    s.exclusiones,
-            s.imagen_servicio,
-            s.tiempo_estimado,
-            s.precio,
-            s.estado,
-            t.nombre_tipo
-          FROM servicios s
-          LEFT JOIN tipos_servicios t 
-          ON s.id_tipo_servicio = t.id_tipo_servicio";
+$busqueda = $_GET['busqueda'] ?? '';
+
+if (!empty($busqueda)) {
+
+    $like = "%" . $conexion->real_escape_string($busqueda) . "%";
+
+    $query = "SELECT 
+                s.id_servicio,
+                s.tipo_servicio,
+                s.descripcion,
+                s.procedimiento,
+                s.beneficios,
+                s.indicaciones,
+                s.exclusiones,
+                s.imagen_servicio,
+                s.tiempo_estimado,
+                s.precio,
+                s.estado,
+                t.nombre_tipo
+              FROM servicios s
+              LEFT JOIN tipos_servicios t 
+              ON s.id_tipo_servicio = t.id_tipo_servicio
+              WHERE s.tipo_servicio LIKE '$like'
+              OR s.codigo_servicio LIKE '$like'
+              OR s.descripcion LIKE '$like'
+              OR s.procedimiento LIKE '$like'
+              OR s.beneficios LIKE '$like'
+              OR s.indicaciones LIKE '$like'
+              OR s.exclusiones LIKE '$like'";
+
+} else {
+
+    $query = "SELECT 
+                s.id_servicio,
+                s.tipo_servicio,
+                s.descripcion,
+                s.procedimiento,
+                s.beneficios,
+                s.indicaciones,
+                s.exclusiones,
+                s.imagen_servicio,
+                s.tiempo_estimado,
+                s.precio,
+                s.estado,
+                t.nombre_tipo
+              FROM servicios s
+              LEFT JOIN tipos_servicios t 
+              ON s.id_tipo_servicio = t.id_tipo_servicio";
+}
 $resultado = $conexion->query($query);
 
 if (!$resultado) {
@@ -160,7 +232,7 @@ if (!$resultado) {
  
         <h3><i class="fa-solid fa-pen-to-square"></i> Editar Servicio</h3>
         
-        <form action="../controllers/servicios_controller.php?accion=editar" method="POST" id="form-editar">
+        <form action="../controllers/servicios_crud_controller.php?accion=editar" method="POST" id="form-editar">
             <input type="hidden" name="id_servicio" id="edit-id">
 
             <div class="grupo-input">
@@ -183,6 +255,22 @@ if (!$resultado) {
             <div class="grupo-input">
                 <label>Descripción:</label>
                 <textarea name="descripcion" id="edit-descripcion" required></textarea>
+            </div>
+            <div class="grupo-input">
+                <label>Procedimiento:</label>
+               <textarea name="procedimiento" id="edit-procedimiento"></textarea>
+            </div>
+            <div class="grupo-input">
+                <label>Beneficios:</label>
+               <textarea name="beneficios" id="edit-beneficios"></textarea>
+            </div>
+            <div class="grupo-input">
+                <label>Indicaciones:</label>
+                <textarea name="indicaciones" id="edit-indicaciones"></textarea>
+            </div>
+             <div class="grupo-input">
+                <label>Exclusiones:</label>
+               <textarea name="exclusiones" id="edit-exclusiones"></textarea>
             </div>
             <div class="flex-form-ayuda">
     <div class="campos-principales">
@@ -235,141 +323,11 @@ if (!$resultado) {
 
             <div><strong>Descripción:</strong> <p id="v_descripcion" style="background:#f4f4f4; padding:10px; border-radius:5px; margin:5px 0;"></p></div>
             <div><strong>Procedimiento:</strong> <p id="v_procedimiento" style="background:#f4f4f4; padding:10px; border-radius:5px; margin:5px 0; white-space:pre-wrap;"></p></div>
+             <div><strong>Beneficios:</strong> <p id="v_beneficios" style="background:#f4f4f4; padding:10px; border-radius:5px; margin:5px 0; white-space:pre-wrap;"></p></div>
             <div><strong>Indicaciones:</strong> <p id="v_indicaciones" style="background:#f4f4f4; padding:10px; border-radius:5px; margin:5px 0; white-space:pre-wrap;"></p></div>
             <div><strong>Exclusiones:</strong> <p id="v_exclusiones" style="background:#f4f4f4; padding:10px; border-radius:5px; margin:5px 0; white-space:pre-wrap;"></p></div>
         </div>
     </div>
 </div>
+<script src="../../public/js/servicios_crud.js"></script>
 
-<script>
-    function convertirABase64(idHidden, idInput) {
-    const elementoFile = document.getElementById(idInput);
-    if (!elementoFile || !elementoFile.files[0]) return;
-
-    const archivo = elementoFile.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = function() {
-        document.getElementById(idHidden).value = reader.result;
-        console.log("Imagen cargada en: " + idHidden);
-    };
-
-    reader.readAsDataURL(archivo);
-}
-
-function abrirFormulario() {
-    document.getElementById('formulario-servicio').style.display = 'block';
-}
-function cerrarFormulario() {
-    document.getElementById('formulario-servicio').style.display = 'none';
-}
-// Cerrar modal al hacer clic fuera
-window.onclick = function(event) {
-    if (event.target == document.getElementById('formulario-servicio')) {
-        cerrarFormulario();
-    }
-}
-
-function confirmarEliminacion(id) {
-    Swal.fire({
-        title: '¿Eliminar servicio?',
-        text: "Esta acción no se puede deshacer.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#52073a',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Enviamos la petición al controlador unificado
-            window.location.href = `../controllers/servicios_controller.php?accion=eliminar&id=${id}`;
-        }
-    });
-}
-
-
-function abrirEditarServicio(event, datos) {
-    const modal = document.getElementById('modal-editar-servicio');
-
-    document.getElementById('edit-id').value = datos.id_servicio;
-    document.getElementById('edit-tipo').value = datos.tipo_servicio;
-    document.getElementById('edit-descripcion').value = datos.descripcion;
-    document.getElementById('edit-precio').value = datos.precio;
-    document.getElementById('edit-tiempo').value = datos.tiempo_estimado;
-    document.getElementById('edit-estado').value = datos.estado;
-    document.getElementById('edit-tipo-servicio').value = datos.id_tipo_servicio;
-    
-    // CAMBIO CLAVE: Asignar el nombre del archivo al input de texto
-    document.getElementById('edit-imagen').value = datos.imagen_servicio;
-
-    modal.style.display = 'block';
-}
-function cerrarModalEditar() {
-    document.getElementById('modal-editar-servicio').style.display = 'none';
-}
-function cerrarModalEditar() {
-    document.getElementById('modal-editar-servicio').style.display = 'none';
-}
-// Detectar parámetros en la URL al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-
-    if (status === 'success') {
-        Swal.fire({
-            icon: 'success',
-            title: '¡Actualizado!',
-            text: 'Los datos del servicio se guardaron correctamente.',
-            confirmButtonColor: '#52073a' // Tu color púrpura
-        });
-    } 
-    else if (status === 'duplicate') {
-        Swal.fire({
-            icon: 'error',
-            title: 'Dato Duplicado',
-            text: 'El correo o nombre de usuario ya está registrado por otro servicio.',
-            confirmButtonColor: '#52073a'
-        });
-    } 
-    else if (status === 'error') {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Ocurrió un problema al procesar la solicitud.',
-            confirmButtonColor: '#52073a'
-        });
-    }
-    
-
-    // Limpiar la URL para que no repita la alerta al recargar
-    window.history.replaceState({}, document.title, window.location.pathname);
-});
-function abrirModalVerServicio(datos) {
-    const modal = document.getElementById('modalVerServicio');
-    const rutaImg = "../../public/img/servicios/";
-
-    document.getElementById('v_imagen').src = rutaImg + (datos.imagen_servicio || 'default.png');
-    document.getElementById('v_descripcion').textContent = datos.descripcion || 'N/A';
-    document.getElementById('v_procedimiento').textContent = datos.procedimiento || 'No especificado';
-    document.getElementById('v_indicaciones').textContent = datos.indicaciones || 'No especificado';
-    document.getElementById('v_exclusiones').textContent = datos.exclusiones || 'No especificado';
-
-    modal.style.display = 'block';
-}
-
-function cerrarModalVerServicio() {
-    document.getElementById('modalVerServicio').style.display = 'none';
-}
-
-window.onclick = function(event) {
-    const modalVer = document.getElementById('modalVerServicio');
-    const modalForm = document.getElementById('formulario-servicio');
-    const modalEdit = document.getElementById('modal-editar-servicio');
-    
-    // Solo cierra si el clic es en el contenedor oscuro (el target es el modal mismo)
-    if (event.target == modalVer) cerrarModalVerServicio();
-    if (event.target == modalForm) cerrarFormulario();
-    if (event.target == modalEdit) cerrarModalEditar();
-}
-</script>

@@ -54,16 +54,16 @@ $resultRecientes = $conexion->query($queryRecientes);
 
 <header class="navbar">
     <div class="logo">
-        <a href="<?php echo $ruta_prefijo; ?>index.php">
-            <img src="<?php echo $ruta_prefijo; ?>public/img/Isologotipo_horizontal_color.png" class="logo-superior" alt="Logo">
+        <a href="<?php echo $ruta_prefijo; ?>index_controller.php">
+            <img src="<?php echo $ruta_prefijo; ?>../../public/img/LogoHD.png" class="logo-superior" alt="Logo">
         </a>
     </div>
 
     <nav class="menu">
         <ul>
-            <li class="botones"><a href="<?php echo $ruta_prefijo; ?>app/controllers/contacto_controller.php">Contacto</a></li>
+            <li class="botones"><a href="<?php echo $ruta_prefijo; ?>contacto_controller.php">Contacto</a></li>
             <li class="servicios-hover botones">
-                <a href="<?php echo $ruta_prefijo; ?>app/controllers/servicios_controller.php" class="btn-servicios">Servicios</a>
+                <a href="<?php echo $ruta_prefijo; ?>servicios_controller.php" class="btn-servicios">Servicios</a>
                 
                 <div class="mega-menu">
                     <div class="mega-menu-content">
@@ -95,7 +95,7 @@ $resultRecientes = $conexion->query($queryRecientes);
                             <p class="label-recientes">Lo más reciente</p>
                              <div class="grid-recientes">
     <?php while($reciente = $resultRecientes->fetch_assoc()): ?>
-        <a href="<?php echo $ruta_prefijo; ?>app/controllers/detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>" style="text-decoration: none; color: inherit;">
+        <a href="<?php echo $ruta_prefijo; ?>detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>" style="text-decoration: none; color: inherit;">
             <div class="tarjeta">
                 <span class="badge">Nuevo</span>
                 <img src="<?php echo $ruta_img . $reciente['imagen_servicio']; ?>" alt="Servicio"> 
@@ -107,7 +107,7 @@ $resultRecientes = $conexion->query($queryRecientes);
                     </div>
                 </div>
             </li>
-            <li class="botones"><a href="<?php echo $ruta_prefijo; ?>app/controllers/citas_cliente_controller.php">Agendar cita</a></li>
+            <li class="botones"><a href="<?php echo $ruta_prefijo; ?>citas_cliente_controller.php">Agendar cita</a></li>
             <li class="botones">
                 <a href="javascript:void(0);" id="btnBuscador" class="enlace-opcion-serv" onclick="abrirBuscador()">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -151,7 +151,7 @@ $resultRecientes = $conexion->query($queryRecientes);
             }
 
             // IMPORTANTE: Verifica que la ruta al controlador de búsqueda sea correcta
-            fetch("<?php echo $ruta_prefijo; ?>app/controllers/buscar_servicio.php?q=" + valor)
+            fetch("<?php echo $ruta_prefijo; ?>buscar_servicio.php?q=" + valor)
                 .then(res => res.text())
                 .then(data => {
                     resultadosDiv.innerHTML = data;
