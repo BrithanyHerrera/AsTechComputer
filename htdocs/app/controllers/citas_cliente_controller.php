@@ -82,7 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $token = $_ENV['META_WA_TOKEN'];
                 $phone_id = $_ENV['META_PHONE_ID'];
                 
-                $telefono_destino = "52" . ltrim($whatsapp, '+'); 
+                // 1. CORRECCIÓN VITAL: Agregamos el "521" obligatorio para México en Meta
+                $telefono_destino = "521" . ltrim($whatsapp, '+'); 
 
                 $url = "https://graph.facebook.com/v25.0/" . $phone_id . "/messages";
 
@@ -91,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     "to" => $telefono_destino,
                     "type" => "template",
                     "template" => [
-                        "name" => "confirmacion_cita_astech", 
+                        "name" => "confirmacion_cita_v2", 
                         "language" => [ "code" => "es_MX" ],  
                         "components" => [
                             [
@@ -120,10 +121,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $curl = curl_init();
                 curl_setopt_array($curl, $options);
                 $response = curl_exec($curl);
+                $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
                 curl_close($curl);
 
-            } catch (Exception $e) { }
+                // 2. CORRECCIÓN VITAL: Si Meta dice que no (error 400 o distinto a 200), lanzamos el error
+                if ($http_status != 200) {
+                    throw new Exception("Meta rechazó el mensaje: " . $response);
+                }
 
+            } catch (Exception $e) { 
+                // Trampa de errores desactivada. 
+                // Si WhatsApp falla por alguna razón externa, el sistema lo ignora en silencio 
+                // para no interrumpir la experiencia del cliente.
+            }
+
+            // La variable de éxito se ejecuta sin importar lo que pase con WhatsApp
             $exito = true;
         }
     } catch (Exception $e) {

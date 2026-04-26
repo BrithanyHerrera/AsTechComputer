@@ -83,7 +83,22 @@ if (isset($_GET['editar']) && !isset($_SESSION['modo_edicion'])) {
 // 1. GUARDADO PROGRESIVO EN MEMORIA Y AUTOCARGA
 // ==========================================
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Guardado normal de lo que el técnico escribió
+    
+    // 1. ESCUDO ANTI-DUPLICADOS: Estandarizar textos clave antes de guardarlos
+    if (isset($_POST['nombre_cliente'])) {
+        $_POST['nombre_cliente'] = mb_strtoupper(trim($_POST['nombre_cliente']), 'UTF-8');
+    }
+    if (isset($_POST['apellido_cliente'])) {
+        $_POST['apellido_cliente'] = mb_strtoupper(trim($_POST['apellido_cliente']), 'UTF-8');
+    }
+    if (isset($_POST['correo_cliente'])) {
+        $_POST['correo_cliente'] = strtolower(trim($_POST['correo_cliente']));
+    }
+    if (isset($_POST['telefono_cliente'])) {
+        $_POST['telefono_cliente'] = trim($_POST['telefono_cliente']);
+    }
+
+    // Guardado normal de lo que el técnico escribió (ahora ya viene limpio)
     foreach ($_POST as $key => $value) {
         if ($key !== 'step' && $key !== 'finalizar_registro') {
             $_SESSION['memoria_ingreso'][$key] = $value;
