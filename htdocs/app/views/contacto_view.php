@@ -39,12 +39,14 @@ Este archivo representa la Vista (View) exclusiva para la sección de contacto d
             <form action="" method="POST">
                 <div class="form-group">
                     <label>Nombre Completo</label>
-                    <input type="text" name="nombre" required>
+                    <input type="text" name="nombre" required 
+               pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" 
+               oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
                 </div>
                 <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" name="email" required>
-                </div>
+        <label>Correo Electrónico</label>
+        <input type="email" name="email" required>
+    </div>
                 <div class="form-group">
                     <label>Asunto</label>
                     <textarea name="asunto" rows="1" required></textarea>
@@ -66,13 +68,16 @@ Este archivo representa la Vista (View) exclusiva para la sección de contacto d
                     width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
             <h3>Redes Sociales</h3>
-            <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-square-whatsapp"></i></a>
-                <a href="#"><i class="fa-brands fa-square-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-square-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="#"><i class="fa-brands fa-square-youtube"></i></a>
-            </div>
+         
+   
+    <div class="social-icons">
+        <a href="https://wa.me/523221234567" target="_blank"><i class="fa-brands fa-square-whatsapp"></i></a>
+        <a href="https://www.instagram.com/astech_computer" target="_blank"><i class="fa-brands fa-square-instagram"></i></a>
+        <a href="https://www.facebook.com/AstechComputer" target="_blank"><i class="fa-brands fa-square-facebook"></i></a>
+        <a href="https://www.tiktok.com/@astechcomputer" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.youtube.com/@astechcomputer" target="_blank"><i class="fa-brands fa-square-youtube"></i></a>
+    </div>
+</section>
         </section>
     </div>
 
@@ -92,3 +97,33 @@ Este archivo representa la Vista (View) exclusiva para la sección de contacto d
 </body>
 
 </html>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const status = "<?php echo $status; ?>";
+        
+        if (status === "success") {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Enviado!',
+                text: 'Tu mensaje ha sido recibido con éxito.',
+                confirmButtonColor: '#3085d6'
+            });
+        } else if (status === "wait") {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Espera un momento',
+                text: 'Ya enviaste un mensaje recientemente. Por favor, espera 5 minutos.',
+                confirmButtonColor: '#f39c12'
+            });
+        } else if (status === "error") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo enviar el mensaje. Intenta más tarde.',
+                confirmButtonColor: '#d33'
+            });
+        }
+    });
+</script>
