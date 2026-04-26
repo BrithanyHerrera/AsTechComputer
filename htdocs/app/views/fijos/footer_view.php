@@ -54,10 +54,22 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
         <div class="redes-sociales">
             <h4>Síguenos</h4>
             <ul>
-                <li><i class="fa-brands fa-whatsapp"></i></li>
-                <li><i class="fa-brands fa-instagram"></i></li>
-                <li><i class="fa-brands fa-facebook"></i></li>
-                <li><i class="fa-brands fa-tiktok"></i></li>
+                <a href="https://www.facebook.com/astechcomputer" target="_blank">
+        <i class="fa-brands fa-facebook"></i>
+    </a>
+
+    <a href="https://www.instagram.com/astechcomputer" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <a href="https://www.tiktok.com/@astechcomputer" target="_blank">
+        <i class="fa-brands fa-tiktok"></i>
+    </a>
+
+    <a href="https://www.youtube.com/@astechcomputer" target="_blank">
+        <i class="fa-brands fa-youtube"></i>
+    </a>
+
             </ul>
         </div>
         <a href="https://wa.me/523221234567?text=Hola,%20vengo%20de%20la%20página%20web%20y%20necesito%20soporte%20técnico."

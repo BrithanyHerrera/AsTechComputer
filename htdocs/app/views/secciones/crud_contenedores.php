@@ -93,7 +93,7 @@ if (!isset($conexion)) {
                             <td>{$tipo_limpio}</td>
                             <td><strong>{$folio_mostrar}</strong></td>
                             <td>
-                                <span class='badge status-{$estado}'>
+                                <span class='b status-{$estado}'>
                                     " . ucfirst($estado) . "
                                 </span>
                             </td>

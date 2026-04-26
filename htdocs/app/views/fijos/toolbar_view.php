@@ -54,18 +54,15 @@ $resultRecientes = $conexion->query($queryRecientes);
 
 <header class="navbar">
     <div class="logo">
-        <a href="<?php echo $ruta_prefijo; ?>index_controller.php">
+        <a href="<?= BASE_URL ?>Index.php">
             <img src="<?= BASE_URL ?>public/img/LogoHD.png" class="logo-superior" alt="Logo">
         </a>
     </div>
 
     <nav class="menu">
         <ul>
-       <li class="botones">
-  
-    <a href="<?= BASE_URL ?>app/controllers/contacto_controller.php">Contacto</a>
-
-</li>
+           <li class="botones"><a href="<?= BASE_URL ?>Index.php">Inicio</a></li>
+       <li class="botones"><a href="<?= BASE_URL ?>app/controllers/contacto_controller.php">Contacto</a></li>
 
 <li class="servicios-hover botones">
     <a href="<?= BASE_URL ?>app/controllers/servicios_controller.php" class="btn-servicios">Servicios</a>
