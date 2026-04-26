@@ -1,0 +1,91 @@
+/* INFO_LEGAL.CSS */
+/*
+Este archivo centraliza la hoja de estilos dedicada exclusivamente a la presentación de los documentos oficiales y normativos de la empresa (como la Política de Privacidad, Términos y Condiciones, Registro de Marca y Política de Cookies). Su propósito es garantizar una lectura cómoda y profesional mediante márgenes amplios, una jerarquía visual clara (utilizando los colores corporativos naranja y púrpura para los encabezados), y definir los efectos de interacción (hover) del botón destinado a la descarga de archivos PDF legales.
+*/
+
+/* =========================================
+   1. CONTENEDOR PRINCIPAL Y TIPOGRAFÍA BASE
+   ========================================= */
+.seccion-legal {
+    padding: 120px 20px 60px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fff;
+    font-family: 'Lato', sans-serif;
+}
+
+/* =========================================
+   2. JERARQUÍA VISUAL DE ENCABEZADOS
+   ========================================= */
+.seccion-legal h1 {
+    color: #52073a;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    border-bottom: 3px solid #e06c00;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.seccion-legal h3 {
+    color: #e06c00;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+/* =========================================
+   3. FORMATO DE LECTURA (PÁRRAFOS Y LISTAS)
+   ========================================= */
+.seccion-legal p {
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+}
+
+.seccion-legal ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    color: #444;
+    line-height: 1.8;
+}
+
+.seccion-legal li {
+    margin-bottom: 10px;
+}
+
+.seccion-legal strong {
+    color: #333;
+}
+
+.fecha-actualizacion {
+    font-style: italic;
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    display: block;
+}
+
+/* =========================================
+   4. BOTONES DE ACCIÓN LEGAL (DESCARGA DE PDF)
+   ========================================= */
+.btn-descargar-pdf {
+    background-color: #e17203;
+    color: #ffffff;
+    padding: 12px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(225, 114, 3, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-descargar-pdf:hover {
+    background-color: #52073a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(82, 7, 58, 0.4);
+    color: #ffffff;
+}

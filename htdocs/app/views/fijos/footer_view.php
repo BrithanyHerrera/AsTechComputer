@@ -25,8 +25,14 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
             <div class="fila-links">
                 <h4>Empresa</h4>
                 <ul>
+
                     <li><a href="<?php echo $ruta_prefijo; ?>sobre_nosotros_controller.php">Sobre Nosotros</a></li>
                     <li><a href="<?php echo $ruta_prefijo; ?>convenios_controller.php">Convenios</a>
+
+                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/registro_marca_controller.php">Registro de marca</a></li>
+                    <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/sobre_nosotros_controller.php">Sobre Nosotros</a></li>
+                   <li><a href="<?php echo $ruta_prefijo; ?>app/controllers/convenios_controller.php">Convenios</a>
+
                     </li>
                     <li><a href="<?php echo $ruta_prefijo; ?>login_controller.php">Operaciones</a></li>
                 </ul>
@@ -34,9 +40,12 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
             <div class="fila-links">
                 <h4>Legal</h4>
                 <ul>
+
                     <li><a href="<?php echo $ruta_prefijo; ?>politica_privacidad_controller.php">Política de privacidad</a></li>
                     <li><a href="<?php echo $ruta_prefijo; ?>terminos_y_condiciones_controller.php">Términos y Condiciones</a></li>
                     <li><a href="<?php echo $ruta_prefijo; ?>politica_cookies_controller.php">Política de Cookies</a>
+                    <li><a href="<?php echo $ruta_prefijo; ?>politica_servicios_controller.php">Política de servicios</a></li>
+
                     </li>
                 </ul>
             </div>

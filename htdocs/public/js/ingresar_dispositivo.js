@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Función para unir la fecha con el espacio
     function actualizarFolio() {
         if (!inputFolio || !inputFecha) return;
+        // ESCUDO: Si estamos editando, el folio es sagrado y no se recalcula
+        if (typeof modoEdicion !== 'undefined' && modoEdicion) return; 
+
         const prefijo = formatearFechaFolio(inputFecha.value);
         const espacio = selectEspacio ? selectEspacio.value : "";
         
@@ -137,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectImportar = document.getElementById('importar_cita');
     
     // Recuperamos el JSON de citas que PHP imprimió en la página
-    // Nota: Necesitas asegurarte de imprimir const citasDB = <?php echo $json_citas; ?>; en tu ingreso.php dentro del <script>
+    // Nota: Necesitas asegurarte de imprimir const citasDB = <?php echo $json_citas; ?>; en tu ingresar_dispositivo_view.php dentro del <script>
     
     if (selectImportar && typeof citasDB !== 'undefined') {
         selectImportar.addEventListener('change', function() {
@@ -194,5 +197,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // 1. Mostrar la alerta de éxito unificada
+    // Revisamos si la URL dice 'status=success' O si PHP detectó la sesión 'mensaje_exito'
+    if (urlParams.get('status') === 'success' || typeof registroExitoso !== 'undefined' && registroExitoso) {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Registro Exitoso!',
+            text: 'El equipo y el cliente han sido registrados correctamente en el sistema.',
+            confirmButtonColor: '#4f46e5',
+            allowOutsideClick: false
+        }).then(() => {
+            // Limpiamos la URL para no perder la sección ni recargar alertas infinitas
+            window.history.replaceState({}, document.title, window.location.pathname + "?seccion=ingreso");
+        });
+    }
+
+    // 2. Limpiar la URL silenciosamente si estamos en modo edición
+    if (urlParams.has('editar')) {
+        window.history.replaceState({}, document.title, window.location.pathname + "?seccion=ingreso");
     }
 });

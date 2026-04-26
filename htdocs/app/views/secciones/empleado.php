@@ -21,37 +21,60 @@ while ($fila = $queryPuestos->fetch_assoc()) {
         <div class="contenido-modal">
             <span class="cerrar" onclick="cerrarFormulario()">&times;</span>
             <h3>Registrar Nuevo Empleado</h3>
-            <form action="../controllers/empleado_controller.php?accion=agregar" method="POST">
+            <form action="../controllers/empleado_controller.php?accion=agregar" method="POST" onsubmit="confirmarAccion(event, this, '¿Estás seguro de registrar a este nuevo empleado?')">
+                
                 <div class="grupo-input">
                     <label>Nombre:</label>
-                    <input type="text" name="nombre" required placeholder="Ej. Carlos">
+                    <input type="text" name="nombre" placeholder="Ej. Carlos" required
+                           pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                           title="Solo se permiten letras y espacios." 
+                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
                 </div>
+                
                 <div class="grupo-input">
                     <label>Apellido:</label>
-                    <input type="text" name="apellido" required placeholder="Ej. Martinez">
+                    <input type="text" name="apellido" placeholder="Ej. Martinez" required
+                           pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                           title="Solo se permiten letras y espacios." 
+                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
                 </div>
+                
                 <div class="grupo-input">
-                    <label>Telefono:</label>
-                    <input type="text" name="telefono">
+                    <label>Teléfono:</label>
+                    <input type="tel" name="telefono" placeholder="3221234567" required
+                           pattern="[0-9]{10}" maxlength="10" 
+                           title="Debe contener exactamente 10 números."
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
+                
                 <div class="grupo-input">
-                    <label>Correo electronico:</label>
-                    <input type="email" name="correo" required placeholder="carlos@astech.com">
+                    <label>Correo electrónico:</label>
+                    <input type="email" name="correo" placeholder="carlos@astech.com" required
+                           pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                           oninput="this.value = this.value.replace(/\s/g, '')" 
+                           title="Ingresa un correo válido con dominio (ejemplo: usuario@dominio.com)">
                 </div>
+                
                 <div class="grupo-input">
                     <label>Nombre Usuario:</label>
-                    <input type="text" name="nombre_usuario" required placeholder="carlos-01">
+                    <input type="text" name="nombre_usuario" placeholder="carlos-01" required
+                           pattern="[a-zA-Z0-9\-_]+" 
+                           title="Solo letras, números, guiones y guiones bajos. Sin espacios."
+                           oninput="this.value = this.value.replace(/[^a-zA-Z0-9\-_]/g, '')">
                 </div>
+                
                 <div class="grupo-input">
                     <label>Contraseña</label>
-                    <input type="password" name="contrasena" required placeholder="***********">
+                    <input type="password" name="contrasena" placeholder="***********" required minlength="8">
                 </div>
+                
                 <div class="grupo-input">
                     <label>Puesto:</label>
                     <select name="id_puesto" required>
                         <?php echo $listaPuestos; ?>
                     </select>
                 </div>
+                
                 <div class="botones-form">
                     <button type="submit" class="btn-guardar">Guardar Empleado</button>
                     <button type="button" class="btn-cancelar" onclick="cerrarFormulario()">Cancelar</button>
@@ -104,31 +127,49 @@ while ($fila = $queryPuestos->fetch_assoc()) {
         <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
         <h3><i class="fa-solid fa-user-pen"></i> Editar Empleado</h3>
 
-        <form action="../controllers/empleado_controller.php?accion=editar" method="POST" id="form-editar">
+        <form action="../controllers/empleado_controller.php?accion=editar" method="POST" id="form-editar" onsubmit="confirmarAccion(event, this, '¿Estás seguro de guardar los cambios de este empleado?')">
             <input type="hidden" name="id_empleado" id="edit-id">
 
             <div class="grupo-input">
                 <label>Nombre:</label>
-                <input type="text" name="nombre" id="edit-nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
-                    title="Solo se permiten letras y espacios."
-                    oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>>
+                <input type="text" name="nombre" id="edit-nombre" required
+                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                       title="Solo se permiten letras y espacios."
+                       oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
             </div>
+            
             <div class="grupo-input">
                 <label>Apellido:</label>
-                <input type="text" name="apellido" id="edit-apellido" required>
+                <input type="text" name="apellido" id="edit-apellido" required
+                       pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                       title="Solo se permiten letras y espacios."
+                       oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
             </div>
+            
             <div class="grupo-input">
                 <label>Teléfono:</label>
-                <input type="text" name="telefono" id="edit-telefono">
+                <input type="tel" name="telefono" id="edit-telefono" required
+                       pattern="[0-9]{10}" maxlength="10" 
+                       title="Debe contener exactamente 10 números."
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             </div>
+            
             <div class="grupo-input">
                 <label>Correo electrónico:</label>
-                <input type="email" name="correo" id="edit-correo" required>
+                <input type="email" name="correo" id="edit-correo" required
+                       pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                       oninput="this.value = this.value.replace(/\s/g, '')"
+                       title="Ingresa un correo válido con dominio (ejemplo: usuario@dominio.com)">
             </div>
+            
             <div class="grupo-input">
                 <label>Nombre Usuario:</label>
-                <input type="text" name="nombre_usuario" id="edit-usuario" required>
+                <input type="text" name="nombre_usuario" id="edit-usuario" required
+                       pattern="[a-zA-Z0-9\-_]+" 
+                       title="Solo letras, números, guiones y guiones bajos. Sin espacios."
+                       oninput="this.value = this.value.replace(/[^a-zA-Z0-9\-_]/g, '')">
             </div>
+            
             <div class="grupo-input">
                 <label>Puesto:</label>
                 <select name="id_puesto" id="edit-puesto" required>
@@ -141,7 +182,7 @@ while ($fila = $queryPuestos->fetch_assoc()) {
                     style="background: #fdf2f8; padding: 10px; border-radius: 5px; border-left: 4px solid #8e44ad; margin-top: 15px;">
                     <label style="color: #4a148c; font-weight: bold;"><i class="fa-solid fa-shield-halved"></i> Cambio de
                         Contraseña (Solo Admin)</label>
-                    <input type="password" name="contrasena" placeholder="Deja en blanco para no modificar">
+                    <input type="password" name="contrasena" placeholder="Deja en blanco para no modificar" minlength="8">
                 </div>
             <?php endif; ?>
 
@@ -152,6 +193,13 @@ while ($fila = $queryPuestos->fetch_assoc()) {
         </form>
     </div>
 </div>
+
+<style>
+    /* Forzar que las alertas de SweetAlert estén por encima de los modales de la página */
+    .swal2-container {
+        z-index: 999999 !important;
+    }
+</style>
 
 <script>
     function abrirFormulario() {
@@ -167,9 +215,21 @@ while ($fila = $queryPuestos->fetch_assoc()) {
         }
     }
     function confirmarEliminacion(id) {
-        if (confirm("¿Estás seguro de eliminar a este empleado?")) {
-            window.location.href = `../controllers/empleado_controller.php?accion=eliminar&id=${id}`;
-        }
+        Swal.fire({
+            title: '¿Eliminar empleado?',
+            text: "Esta acción es permanente y no se puede deshacer.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, hacemos la redirección
+                window.location.href = `../controllers/empleado_controller.php?accion=eliminar&id=${id}`;
+            }
+        });
     }
     function abrirEditar(datos) {
         // Llenar los campos
@@ -187,6 +247,27 @@ while ($fila = $queryPuestos->fetch_assoc()) {
 
     function cerrarModalEditar() {
         document.getElementById('modal-editar-empleado').style.display = 'none';
+    }
+
+    // Función interceptora para confirmar antes de enviar cualquier formulario
+    function confirmarAccion(event, formulario, mensaje) {
+        event.preventDefault(); // Detenemos el envío automático del formulario
+        
+        Swal.fire({
+            title: '¿Confirmar acción?',
+            text: mensaje,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#52073a', // Tu color institucional
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, continuar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario da clic en "Sí", enviamos el formulario a PHP
+                formulario.submit();
+            }
+        });
     }
 
     document.addEventListener('DOMContentLoaded', function () {
