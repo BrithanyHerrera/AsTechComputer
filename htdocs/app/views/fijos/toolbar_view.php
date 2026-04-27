@@ -8,7 +8,8 @@
  * - Sección de "Lo más reciente" dentro del menú para destacar los últimos servicios agregados.
  * - Buscador integrado con tecnología de búsqueda en tiempo real y redirección automática al detalle del servicio.
  * - Gestión dinámica de rutas mediante la variable '$ruta_prefijo' para asegurar la navegación entre diferentes niveles de carpetas.
- */
+ *
+*/
 ?>
 <?php
 require_once __DIR__ . "/../../config/config.php";
