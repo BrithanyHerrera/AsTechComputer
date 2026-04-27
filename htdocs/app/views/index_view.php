@@ -39,9 +39,10 @@
 <body>
     
     <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
-
+      
     <?php 
     $ruta_prefijo = "";
+    $ruta_img = "../../public/img/servicios/";
    
 include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>

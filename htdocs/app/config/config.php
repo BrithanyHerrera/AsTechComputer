@@ -1,13 +1,10 @@
 <?php
-
 $protocolo = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $host = $_SERVER['HTTP_HOST'];
 
-// Detecta automáticamente la carpeta del proyecto
-$script = $_SERVER['SCRIPT_NAME']; 
-$path = str_replace(basename($script), '', $script);
+// Detecta solo la raíz del proyecto (htdocs)
+$base = dirname($_SERVER['SCRIPT_NAME']);
+$base = explode('/app', $base)[0]; // corta en /app
 
-define('BASE_URL', $protocolo . '://' . $host . $path);
-
-
+define('BASE_URL', $protocolo . '://' . $host . $base . '/');
 ?>

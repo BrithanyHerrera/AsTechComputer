@@ -33,6 +33,18 @@
  * - Organización modular del código para facilitar mantenimiento y escalabilidad.
  */
 ?>
+<?php 
+include_once __DIR__ . "/fijos/loader_view.php";
+ ?>
+    
+    <?php
+    $ruta_prefijo = "../../../"; 
+ 
+    require_once __DIR__ . "/../config/config.php"; 
+    include __DIR__ . "/../controllers/toolbar_controller.php";
+   
+
+    ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -46,16 +58,7 @@
     <link rel="stylesheet" href="../../public/css/convenios.css">
 </head>
 <body>
-    <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
     
-    <?php
-    $ruta_prefijo = "../../../"; 
- 
-    require_once __DIR__ . "/../config/config.php"; 
-    include __DIR__ . "/../controllers/toolbar_controller.php";
-   
-
-    ?>
     
     <section class="seccion-convenios">
         <h1 class="titulo-convenios">Convenios</h1>

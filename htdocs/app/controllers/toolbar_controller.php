@@ -22,7 +22,8 @@ if (isset($_COOKIE['astech_preferencias_cookies'])) {
         $permitirAnaliticas = true;
     }
 }
-
+        require_once __DIR__ . "/../config/config.php"; 
 // 4. Cargamos la vista de la barra de navegación
 require dirname(__DIR__) . '/views/fijos/toolbar_view.php';
+
 ?>

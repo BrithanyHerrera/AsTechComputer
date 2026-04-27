@@ -1,3 +1,12 @@
+    <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
+    
+    <?php
+        require_once __DIR__ . "/../config/config.php"; 
+
+    include __DIR__ . "/../controllers/toolbar_controller.php";
+
+    ?>
+
 <script>
     /* MAS_INFO_VIEW.PHP */
     /*
@@ -24,6 +33,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
     <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
 
     <?php
@@ -31,6 +41,8 @@
 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
+=======
+>>>>>>> bd5263182dc0d2cd624ddf1c4f79bf2708dc3aef
 
 
     <div class="main-container">

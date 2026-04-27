@@ -1,4 +1,5 @@
 <?php
+        require_once __DIR__ . "/../config/config.php"; 
 include __DIR__ . "../../config/conexion.db.php";
 
 $q = isset($_GET['q']) ? $_GET['q'] : '';

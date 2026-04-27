@@ -9,7 +9,9 @@ Este archivo opera como el Controlador (Controller) principal para el flujo de a
    ======================================================== */
 // Se utiliza dirname() para establecer una ruta absoluta hacia las librerías de Composer.
 // Esto permite utilizar las APIs de Google y la lectura de variables de entorno (.env) de forma segura.
+        require_once __DIR__ . "/../config/config.php"; 
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
+
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
