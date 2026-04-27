@@ -3,7 +3,7 @@
 // CONTROLADOR: contacto_controller.php
 // UBICACIÓN: app/controllers/contacto_controller.php
 // ========================================================
-
+        require_once __DIR__ . "/../config/config.php"; 
 
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/contacto_model.php';

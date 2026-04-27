@@ -10,9 +10,12 @@
  * - Gestión dinámica de rutas mediante la variable '$ruta_prefijo' para asegurar la navegación entre diferentes niveles de carpetas.
  */
 ?>
+<?php
+require_once __DIR__ . "/../../config/config.php";
+?>
 
 <?php 
-$ruta_img = "../../public/img/servicios/";
+$ruta_img = BASE_URL . "public/img/servicios/";
 if (isset($permitirAnaliticas) && $permitirAnaliticas): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-862PM8JVQD"></script>
     <script>
@@ -26,6 +29,7 @@ if (isset($permitirAnaliticas) && $permitirAnaliticas): ?>
 <?php
 if (!isset($conexion)) {
     require_once __DIR__ . "/../../config/conexion.db.php";
+
 }
 
 // 1. Obtener tipos de servicios
@@ -66,7 +70,7 @@ $resultRecientes = $conexion->query($queryRecientes);
 
 <li class="servicios-hover botones">
     <a href="<?= BASE_URL ?>app/controllers/servicios_controller.php" class="btn-servicios">Servicios</a>
-</li>
+
                 <div class="mega-menu">
                     <div class="mega-menu-content">
                         <div class="menu-izquierda">
@@ -84,7 +88,7 @@ $resultRecientes = $conexion->query($queryRecientes);
                                     $id_actual = $tipo['id_tipo_servicio'];
                                      if(isset($serviciosPorTipo[$id_actual])):
                                      foreach($serviciosPorTipo[$id_actual] as $srv): ?>
-                                <a href="<?php echo $ruta_prefijo; ?>detalle_servicio.php?id=<?php echo $srv['id_servicio']; ?>">
+                                <a href="<?= BASE_URL ?>detalle_servicio.php?id=<?php echo $srv['id_servicio']; ?>">
                                 <?php echo $srv['tipo_servicio']; ?>
                                  </a>
                                  <?php endforeach; endif; ?>
@@ -97,7 +101,7 @@ $resultRecientes = $conexion->query($queryRecientes);
                             <p class="label-recientes">Lo más reciente</p>
                              <div class="grid-recientes">
     <?php while($reciente = $resultRecientes->fetch_assoc()): ?>
-        <a href="<?php echo $ruta_prefijo; ?>detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>" style="text-decoration: none; color: inherit;">
+        <a href="<?= BASE_URL ?>detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>" style="text-decoration: none; color: inherit;">
             <div class="tarjeta">
                 <span class="badge">Nuevo</span>
                 <img src="<?php echo $ruta_img . $reciente['imagen_servicio']; ?>" alt="Servicio"> 
@@ -109,7 +113,7 @@ $resultRecientes = $conexion->query($queryRecientes);
                     </div>
                 </div>
             </li>
-            <li class="botones"><a href="<?php echo $ruta_prefijo; ?>app/controllers/citas_cliente_controller.php">Agendar cita</a></li>
+            <li class="botones"><a href="<?= BASE_URL ?>app/controllers/citas_cliente_controller.php">Agendar cita</a></li>
             <li class="botones">
                 <a href="javascript:void(0);" id="btnBuscador" class="enlace-opcion-serv" onclick="abrirBuscador()">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -153,7 +157,7 @@ $resultRecientes = $conexion->query($queryRecientes);
             }
 
             // IMPORTANTE: Verifica que la ruta al controlador de búsqueda sea correcta
-            fetch("<?php echo $ruta_prefijo; ?>buscar_servicio.php?q=" + valor)
+            fetch("<?= BASE_URL ?>app/controllers/buscar_servicio.php?q=" + valor)
                 .then(res => res.text())
                 .then(data => {
                     resultadosDiv.innerHTML = data;
@@ -175,7 +179,7 @@ $resultRecientes = $conexion->query($queryRecientes);
                 if(id) {
                     // Redirigimos a la página de detalle con el ID correspondiente
                     // Ajustamos la ruta para que siempre use detalle_servicio.php en la raíz
-                    window.location.href = "<?php echo $ruta_prefijo; ?>detalle_servicio.php?id=" + id;
+                    window.location.href = "<?= BASE_URL ?>detalle_servicio.php?id=" + id;
                 }
             }
         });
@@ -207,6 +211,6 @@ $resultRecientes = $conexion->query($queryRecientes);
 
 function verServicio(id){
     // Usamos la variable PHP $ruta_prefijo para que la ruta sea siempre absoluta desde la raíz
-    window.location.href = "<?php echo $ruta_prefijo; ?>detalle_servicio.php?id=" + id;
+    window.location.href = "<?= BASE_URL ?>detalle_servicio.php?id=" + id;
 }
 </script>

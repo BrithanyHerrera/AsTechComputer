@@ -3,7 +3,7 @@
 // CONTROLADOR: login_controller.php
 // UBICACIÓN: app/controllers/login_controller.php
 // ========================================================
-
+        require_once __DIR__ . "/../config/config.php"; 
 // 1. Iniciamos la sesión
 session_start();
 

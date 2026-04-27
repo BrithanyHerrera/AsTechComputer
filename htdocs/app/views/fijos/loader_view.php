@@ -1,7 +1,7 @@
 <div id="pantalla-carga">
     <div class="loader-astech">
         <div class="circulo"></div>
-        <img src="<?php echo $ruta_prefijo ?? '../../'; ?>public/img/Iso.png" alt="Cargando..." class="logo-loader">
+        <img src="<?php echo BASE_URL; ?>public/img/Iso.png" alt="Cargando..." class="logo-loader">
     </div>
     <p class="texto-carga">Cargando sistema...</p>
 </div>

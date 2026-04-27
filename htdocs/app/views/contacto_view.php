@@ -4,6 +4,14 @@
 Este archivo representa la Vista (View) exclusiva para la sección de contacto de la plataforma. Su función es estructurar la interfaz gráfica mediante la cual los usuarios pueden enviar mensajes directos al taller. Adicionalmente, despliega la ubicación física a través de un mapa interactivo y muestra los accesos a las redes sociales. A nivel técnico, recibe la variable $status desde su respectivo controlador para inicializar los scripts de notificaciones (alertas) en el navegador del cliente, integrándose finalmente con las secciones globales de navegación y pie de página.
 */
 </script>
+<?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
+
+    <?php
+ 
+        require_once __DIR__ . "/../config/config.php"; 
+    include __DIR__ . "/../controllers/toolbar_controller.php";
+    ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -22,14 +30,7 @@ Este archivo representa la Vista (View) exclusiva para la sección de contacto d
 </head>
 
 <body>
-    <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
-
-    <?php
-    $ruta_prefijo = "../../"; 
-        require_once __DIR__ . "/../config/config.php"; 
-    include __DIR__ . "/../controllers/toolbar_controller.php";
-    ?>
-
+    
     <div class="main-container">
         <section class="form-section">
             <center>
