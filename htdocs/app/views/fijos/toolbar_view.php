@@ -89,7 +89,7 @@ $resultRecientes = $conexion->query($queryRecientes);
                                     $id_actual = $tipo['id_tipo_servicio'];
                                      if(isset($serviciosPorTipo[$id_actual])):
                                      foreach($serviciosPorTipo[$id_actual] as $srv): ?>
-                                <a href="<?= BASE_URL ?>detalle_servicio.php?id=<?php echo $srv['id_servicio']; ?>">
+                                <a href="<?= BASE_URL ?>app/controllers/detalle_servicio_controller.php?id=<?php echo $srv['id_servicio']; ?>">
                                 <?php echo $srv['tipo_servicio']; ?>
                                  </a>
                                  <?php endforeach; endif; ?>
