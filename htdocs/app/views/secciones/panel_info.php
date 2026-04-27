@@ -54,7 +54,7 @@ unset($params_url['pagina']);
 $url_base_paginacion = '?' . http_build_query($params_url) . '&pagina=';
 ?>
 
-<link rel="stylesheet" href="../../public/css/panel_info.css?v=3.0">
+<link rel="stylesheet" href="../../public/css/panel_info.css?v=3.1">
 
 <div class="contenedor-dashboard">
     <div class="pildora-usuario">
@@ -75,8 +75,11 @@ $url_base_paginacion = '?' . http_build_query($params_url) . '&pagina=';
 
                 <div class="barra-filtros">
                     <div class="filtro-grupo buscador">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" name="filtro_nombre" placeholder="Buscar empleado..." value="<?= htmlspecialchars($val_nombre) ?>">
+                        <label>Buscar Empleado:</label>
+                        <div class="input-con-icono">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" name="filtro_nombre" placeholder="Nombre o apellido..." value="<?= htmlspecialchars($val_nombre) ?>">
+                        </div>
                     </div>
                     
                     <div class="filtro-grupo">
@@ -109,19 +112,21 @@ $url_base_paginacion = '?' . http_build_query($params_url) . '&pagina=';
 
                     <div class="filtro-grupo">
                         <label>Mostrar:</label>
-                        <select name="limite" onchange="this.form.submit()" style="width: 70px;">
+                        <select name="limite" onchange="this.form.submit()">
                             <option value="10" <?= $val_limite == 10 ? 'selected' : '' ?>>10</option>
                             <option value="25" <?= $val_limite == 25 ? 'selected' : '' ?>>25</option>
                             <option value="50" <?= $val_limite == 50 ? 'selected' : '' ?>>50</option>
                             <option value="100" <?= $val_limite == 100 ? 'selected' : '' ?>>100</option>
                         </select>
+                    </div>
 
-                        <button type="submit" class="btn-buscar" style="background: #e17203; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; margin-left: 5px;">
-                            Filtrar
+                    <div class="filtro-acciones">
+                        <button type="submit" class="btn-buscar">
+                            <i class="fa-solid fa-filter"></i> Filtrar
                         </button>
-
+                        
                         <?php $url_limpia = isset($_GET['seccion']) ? "?seccion=" . htmlspecialchars($_GET['seccion']) : $_SERVER['PHP_SELF']; ?>
-                        <a href="<?= $url_limpia ?>" class="btn-limpiar" title="Limpiar filtros" style="margin-left: 5px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; box-sizing: border-box; height: 38px; width: 38px; background: #f3f4f6; color: #4b5563; border-radius: 8px;">
+                        <a href="<?= $url_limpia ?>" class="btn-limpiar" title="Limpiar filtros">
                             <i class="fa-solid fa-rotate-left"></i>
                         </a>
                     </div>
