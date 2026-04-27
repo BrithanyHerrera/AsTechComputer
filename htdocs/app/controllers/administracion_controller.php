@@ -8,6 +8,7 @@ Este archivo actúa como el Controlador Maestro (Front Controller) del panel de 
    GESTIÓN DE ENRUTAMIENTO PRINCIPAL (GET)
    ======================================================== */
 /*
+
 El sistema captura el parámetro 'seccion' a través de la URL (método GET).
 Si no se especifica ninguna ruta, establece 'dashboard' como valor 
 predeterminado para garantizar la carga correcta del panel de inicio.
