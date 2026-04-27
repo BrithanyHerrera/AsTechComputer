@@ -1,44 +1,336 @@
-/* ========================================================
-   ESTILOS: panel_info.css
-   UBICACIÓN: public/css/panel_info.css
-   ======================================================== */
-.contenedor-dashboard { padding: 30px; background-color: #f7f7f7; min-height: 100vh; font-family: 'Lato', sans-serif; }
-.bitacora-panel { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-.titulo-panel { color: #52073a; border-bottom: 2px solid #e17203; padding-bottom: 10px; margin-bottom: 20px; }
+/* PANEL_INFO.CSS */
+/*
+Este archivo concentra la hoja de estilos encargada de la presentación visual de la bitácora o panel de registros administrativos. Su característica más destacada es la implementación de un sistema avanzado de CSS Grid para la barra de filtros, lo cual garantiza una alineación milimétrica entre las cajas de texto, los selectores y los botones. Además, define el diseño adaptable (responsivo) de la tabla de datos, las tarjetas contenedoras y las etiquetas de colores (pills) que permiten identificar visualmente los diferentes roles de usuario dentro del sistema.
+*/
 
-/* Píldora de Usuario Superior */
-.pildora-usuario { display: inline-flex; align-items: center; background-color: #bba8b4; border-radius: 30px; padding: 5px 20px 5px 5px; margin-bottom: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-.icono-usuario { background-color: #52073a; color: #ffffff; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 16px; }
-.texto-usuario { color: #000000; font-weight: 600; font-size: 16px; }
+/* ==========================================
+   1. CONTENEDORES PRINCIPALES Y TARJETAS
+   ========================================== */
+.contenedor-dashboard {
+   padding: 30px;
+   background-color: #f7f7f7;
+   min-height: 100vh;
+   font-family: 'Lato', sans-serif;
+}
 
-/* Barra de Filtros (Estilo As Tech) */
-.barra-filtros { display: flex; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: flex-end; border: 1px solid #eee; }
-.filtro-grupo { display: flex; flex-direction: column; gap: 5px; flex-grow: 1; }
-.filtro-grupo.buscador { flex-direction: row; align-items: center; background: white; border: 1px solid #ddd; border-radius: 8px; padding: 0 10px; flex-grow: 2; }
-.filtro-grupo.buscador input { border: none; width: 100%; box-shadow: none; outline: none;}
-.filtro-grupo label { font-weight: bold; color: #555; font-size: 0.85rem; }
-.filtro-grupo input, .filtro-grupo select { padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-size: 0.9rem; width: 100%; box-sizing: border-box; }
-.btn-limpiar { background: #666; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; height: 38px; }
-.btn-limpiar:hover { background: #333; }
+.bitacora-panel {
+   background: #fff;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
 
-/* Tabla Estilizada */
-.tabla-responsiva { width: 100%; overflow-x: auto; }
-.tabla-admin { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; min-width: 800px; }
-.tabla-admin th { background-color: #52073a; color: white; padding: 12px; }
-.tabla-admin th:first-child { border-radius: 5px 0 0 0; }
-.tabla-admin th:last-child { border-radius: 0 5px 0 0; }
-.tabla-admin td { padding: 12px; border-bottom: 1px solid #eaeaea; }
-.fila-panel-info:hover { background-color: #fdfafc !important; }
-.td-detalle { color: #444; word-wrap: break-word; max-width: 300px; }
+.titulo-panel {
+   color: #52073a;
+   border-bottom: 2px solid #e17203;
+   padding-bottom: 10px;
+   margin-bottom: 20px;
+}
 
-/* Elementos visuales de la tabla */
-.badge-accion { background-color: #f0f0f0; border: 1px solid #ddd; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; color: #333; }
-.mensaje-vacio { padding: 20px; text-align: center; color: #666; font-style: italic; background: #f9f9f9; border-radius: 5px; }
-.mensaje-vacio i { font-size: 24px; color: #ccc; margin-bottom: 10px; display: block; }
+/* ==========================================
+   2. IDENTIFICADOR VISUAL DE USUARIO (PILL)
+   ========================================== */
+.pildora-usuario {
+   display: inline-flex;
+   align-items: center;
+   background-color: #bba8b4;
+   border-radius: 30px;
+   padding: 5px 20px 5px 5px;
+   margin-bottom: 30px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-/* Status Pills (Colores de Puestos) */
-.status-pill { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
-.rol-administrador { background: #e17203; color: white; } 
-.rol-gerente { background: #4a148c; color: white; } 
-.rol-recepcion { background: #cce5ff; color: #004085; }
-.rol-tecnico { background: #e2e3e5; color: #383d41; }
+.icono-usuario {
+   background-color: #52073a;
+   color: #ffffff;
+   width: 35px;
+   height: 35px;
+   border-radius: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-right: 10px;
+   font-size: 16px;
+}
+
+.texto-usuario {
+   color: #000000;
+   font-weight: 600;
+   font-size: 16px;
+}
+
+/* ==========================================
+   3. BARRA DE FILTROS AVANZADA (CSS GRID)
+   ========================================== */
+.barra-filtros {
+   display: grid;
+   grid-template-columns: 2.5fr 1.5fr 1fr 1fr 80px auto;
+   gap: 15px;
+   background: #fdfdfd;
+   padding: 20px;
+   border-radius: 10px;
+   margin-bottom: 25px;
+   border: 1px solid #eaeaea;
+   align-items: flex-end;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.filtro-grupo {
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+}
+
+.filtro-grupo label {
+   font-weight: 700;
+   color: #52073a;
+   font-size: 0.80rem;
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+}
+
+/* ==========================================
+   4. CAJAS DE TEXTO Y SELECTORES
+   ========================================== */
+.filtro-grupo input,
+.filtro-grupo select {
+   height: 42px;
+   padding: 0 12px;
+   border: 1px solid #ddd;
+   border-radius: 8px;
+   outline: none;
+   font-size: 0.9rem;
+   width: 100%;
+   box-sizing: border-box;
+   background-color: #fff;
+   transition: all 0.3s ease;
+   font-family: 'Lato', sans-serif;
+}
+
+.filtro-grupo input:focus,
+.filtro-grupo select:focus {
+   border-color: #e17203;
+   box-shadow: 0 0 0 3px rgba(225, 114, 3, 0.1);
+}
+
+.input-con-icono {
+   position: relative;
+   width: 100%;
+}
+
+.input-con-icono i {
+   position: absolute;
+   left: 14px;
+   top: 50%;
+   transform: translateY(-50%);
+   color: #999;
+   font-size: 0.9rem;
+}
+
+.input-con-icono input {
+   padding-left: 38px;
+}
+
+/* ==========================================
+   5. BOTONES DE ACCIÓN (BUSCAR Y LIMPIAR)
+   ========================================== */
+.filtro-acciones {
+   display: flex;
+   gap: 10px;
+   height: 42px;
+}
+
+.btn-buscar {
+   background: #e17203;
+   color: white;
+   border: none;
+   padding: 0 20px;
+   border-radius: 8px;
+   cursor: pointer;
+   font-weight: bold;
+   font-size: 0.9rem;
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+   transition: background 0.3s ease, transform 0.2s ease;
+   height: 100%;
+}
+
+.btn-buscar:hover {
+   background: #c76402;
+}
+
+.btn-buscar:active {
+   transform: scale(0.96);
+}
+
+.btn-limpiar {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   text-decoration: none;
+   box-sizing: border-box;
+   height: 42px;
+   width: 42px;
+   background: #f3f4f6;
+   color: #4b5563;
+   border-radius: 8px;
+   border: 1px solid #e5e7eb;
+   transition: all 0.3s ease;
+}
+
+.btn-limpiar:hover {
+   background: #e5e7eb;
+   color: #1f2937;
+}
+
+/* ==========================================
+   6. DISEÑO RESPONSIVO (MEDIA QUERIES)
+   ========================================== */
+@media (max-width: 1150px) {
+   .barra-filtros {
+      grid-template-columns: 1fr 1fr 1fr;
+   }
+
+   .filtro-grupo.buscador {
+      grid-column: span 3;
+   }
+
+   .filtro-acciones {
+      grid-column: span 3;
+      justify-content: flex-end;
+   }
+}
+
+@media (max-width: 768px) {
+   .barra-filtros {
+      grid-template-columns: 1fr 1fr;
+   }
+
+   .filtro-grupo.buscador,
+   .filtro-acciones {
+      grid-column: span 2;
+   }
+}
+
+@media (max-width: 480px) {
+   .barra-filtros {
+      grid-template-columns: 1fr;
+   }
+
+   .filtro-grupo.buscador,
+   .filtro-acciones {
+      grid-column: span 1;
+   }
+
+   .filtro-acciones {
+      width: 100%;
+   }
+
+   .btn-buscar {
+      flex-grow: 1;
+      justify-content: center;
+   }
+}
+
+/* ==========================================
+   7. TABLA RESPONSIVA DE REGISTROS
+   ========================================== */
+.tabla-responsiva {
+   width: 100%;
+   overflow-x: auto;
+}
+
+.tabla-admin {
+   width: 100%;
+   border-collapse: collapse;
+   font-size: 14px;
+   text-align: left;
+   min-width: 800px;
+}
+
+.tabla-admin th {
+   background-color: #52073a;
+   color: white;
+   padding: 12px;
+}
+
+.tabla-admin th:first-child {
+   border-radius: 5px 0 0 0;
+}
+
+.tabla-admin th:last-child {
+   border-radius: 0 5px 0 0;
+}
+
+.tabla-admin td {
+   padding: 12px;
+   border-bottom: 1px solid #eaeaea;
+}
+
+.fila-panel-info:hover {
+   background-color: #fdfafc !important;
+}
+
+.td-detalle {
+   color: #444;
+   word-wrap: break-word;
+   max-width: 300px;
+}
+
+.badge-accion {
+   background-color: #f0f0f0;
+   border: 1px solid #ddd;
+   padding: 4px 8px;
+   border-radius: 4px;
+   font-weight: bold;
+   font-size: 0.85em;
+   color: #333;
+}
+
+.mensaje-vacio {
+   padding: 20px;
+   text-align: center;
+   color: #666;
+   font-style: italic;
+   background: #f9f9f9;
+   border-radius: 5px;
+}
+
+.mensaje-vacio i {
+   font-size: 24px;
+   color: #ccc;
+   margin-bottom: 10px;
+   display: block;
+}
+
+/* ==========================================
+   8. ETIQUETAS DE ROL (STATUS PILLS)
+   ========================================== */
+.status-pill {
+   padding: 5px 12px;
+   border-radius: 20px;
+   font-size: 0.75rem;
+   font-weight: bold;
+   text-transform: uppercase;
+}
+
+.rol-administrador {
+   background: #e17203;
+   color: white;
+}
+
+.rol-gerente {
+   background: #4a148c;
+   color: white;
+}
+
+.rol-recepcion {
+   background: #cce5ff;
+   color: #004085;
+}
+
+.rol-tecnico {
+   background: #e2e3e5;
+   color: #383d41;
+}
