@@ -1,3 +1,3 @@
 <?php
-define('BASE_URL', 'http://localhost:3000/htdocs/');
+define('BASE_URL', '/htdocs/');
 ?>
