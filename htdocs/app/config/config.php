@@ -7,4 +7,5 @@ $base = dirname($_SERVER['SCRIPT_NAME']);
 $base = explode('/app', $base)[0]; // corta en /app
 
 define('BASE_URL', $protocolo . '://' . $host . $base . '/');
+
 ?>

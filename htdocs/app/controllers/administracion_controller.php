@@ -1,4 +1,5 @@
 <?php
+ require_once __DIR__ . "/../config/config.php"; 
 /* ADMINISTRACION_CONTROLLER.PHP */
 /*
 Este archivo actúa como el Controlador Maestro (Front Controller) del panel de administración. Su responsabilidad dentro del patrón arquitectónico MVC es centralizar el enrutamiento del sistema. Captura la solicitud del usuario mediante la URL, ejecuta en segundo plano los controladores secundarios (para preparar datos como registros de base de datos o variables de estado) y, finalmente, despliega la Vista Maestra, inyectándole toda la información previamente procesada de manera limpia y segura.
