@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reseñas de Clientes | As Tech Computer</title>
-    <link rel="icon" href="../../public/img/logoATC.ico" type="image/x-icon">
+    <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -25,9 +25,10 @@
 
 <body>
     <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
-    
+
     <?php
-    $ruta_prefijo = "../../../";
+    $ruta_prefijo = "";
+
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 

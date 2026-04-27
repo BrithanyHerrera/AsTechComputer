@@ -38,7 +38,10 @@ if ($respuesta !== false) {
 /* ==========================================
    4. INTEGRACIÓN DEL MODELO DE CONTACTO Y BASE DE DATOS
    ========================================== */
-// Se requiere la conexión a la base de datos y el modelo correspondiente
+// 1. Cargamos las variables globales de configuración (BASE_URL)
+require_once dirname(__DIR__) . '/config/config.php';
+
+// 2. Se requiere la conexión a la base de datos y el modelo correspondiente
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/contacto_model.php';
 
