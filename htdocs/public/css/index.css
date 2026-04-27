@@ -72,7 +72,7 @@ body {
 .hero-wrapper {
     width: 100%;
     min-height: 90vh;
-    background: url("../img/fondo_INDEX.png") center center / cover no-repeat;
+    background: url("../img/fondo_INDEX (4).png") center center / cover no-repeat;
     position: relative;
     display: flex;
     align-items: center;
@@ -144,8 +144,41 @@ body {
 .hero-astech p.destacado {
     font-size: 1.8rem;
     font-weight: 400;
-    color: var(--color-texto-secundario);
-    margin-bottom: 35px;
+    color: #696969de;
+    margin-bottom: 15px;
+}
+.hero-wrapper {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    animation: heroEnter 0.9s ease-out forwards;
+}
+
+/* Aplica la animación a los hijos también (sin delay individual) */
+.hero-astech,
+.hero-texto,
+.hero-imagen,
+.hero-botones,
+.destacado {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: heroChildEnter 0.9s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+/* Keyframes contenedor */
+@keyframes heroEnter {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Keyframes elementos internos */
+@keyframes heroChildEnter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* =========================================
@@ -159,7 +192,7 @@ body {
 }
 
 .btn-comprar {
-    background-color:  #570152;
+    background-color: var(--color-primario);
     color: white;
     padding: 5px 30px;
     border-radius: 30px;
@@ -175,7 +208,7 @@ body {
 }
 
 .enlace-mas {
-    color: var(--color-texto);
+    color: #444;
     text-decoration: none;
     font-weight: 700;
     font-size: 1.05rem;
@@ -195,7 +228,7 @@ body {
 .hero-imagen {
     flex: 0.8;
     display: flex;
-
+margin-top:60px;
     animation: fadeIn 1.5s ease forwards;
 margin-left:140px;
 }
@@ -205,7 +238,7 @@ margin-left:140px;
     max-width: 600px;
     filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.08));
     transition: transform 0.5s ease;
-    margin-bottom: 15px;
+    margin-bottom: -10px;
 
 
 }
@@ -417,6 +450,7 @@ margin-left:140px;
     }
     .hero-botones {
         justify-content: center;
+        margin-top:-80px;
     }
     .grid-about,
     .caja-ceo,
