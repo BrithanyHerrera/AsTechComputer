@@ -34,13 +34,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-  <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
-  
+  <?php 
+  include_once __DIR__ . "/fijos/loader_view.php"; 
+  require_once __DIR__ . "/../config/config.php"; 
+  ?>
+
 <div class="pantalla-login">
   <div class="tarjeta-login">
     
     <div class="lado-imagen">
-      <a href="index_controller.php" style="text-decoration: none;">
+      <a href="../../index.php" style="text-decoration: none;">
         <button type="button" class="boton-regresar">
              <i class="fa-solid fa-arrow-left"></i> Regresar      
         </button>

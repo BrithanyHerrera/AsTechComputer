@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 22-04-2026 a las 07:10:26
+-- Tiempo de generación: 27-04-2026 a las 03:03:03
 -- Versión del servidor: 11.8.6-MariaDB-log
 -- Versión de PHP: 7.2.34
 
@@ -67,7 +67,19 @@ INSERT INTO `bitacora_logins` (`id_login`, `id_empleado`, `fecha_hora`, `direcci
 (26, 1, '2026-04-21 07:22:56', '2806:102e:18:1fbd:52:3aa7:5bc3:366f'),
 (27, 1, '2026-04-21 07:40:47', '2806:102e:18:1fbd:52:3aa7:5bc3:366f'),
 (28, 1, '2026-04-21 16:27:28', '2806:102e:18:1fbd:52:3aa7:5bc3:366f'),
-(29, 1, '2026-04-22 05:27:18', '2806:102e:18:1fbd:793a:7e2b:f28:ce55');
+(29, 1, '2026-04-22 05:27:18', '2806:102e:18:1fbd:793a:7e2b:f28:ce55'),
+(30, 1, '2026-04-22 16:35:10', '2806:102e:18:1fbd:a02d:fc0:ee0e:3ed7'),
+(31, 1, '2026-04-22 18:02:39', '2806:102e:18:571f:4d21:8744:ed8c:2849'),
+(32, 1, '2026-04-22 20:53:09', '201.116.196.141'),
+(33, 1, '2026-04-22 21:10:50', '201.116.196.141'),
+(34, 1, '2026-04-22 21:23:21', '201.116.196.141'),
+(35, 1, '2026-04-22 22:42:28', '201.116.196.141'),
+(36, 1, '2026-04-22 23:14:12', '201.116.196.141'),
+(37, 1, '2026-04-23 05:11:46', '2806:102e:18:1fbd:55e5:159d:a5b0:23c4'),
+(38, 1, '2026-04-23 16:10:37', '2806:102e:18:1fbd:110c:3e27:30c3:921a'),
+(39, 1, '2026-04-24 04:57:06', '189.178.235.37'),
+(40, 1, '2026-04-26 22:55:08', '189.178.235.37'),
+(41, 1, '2026-04-27 01:29:48', '189.178.250.243');
 
 -- --------------------------------------------------------
 
@@ -478,7 +490,195 @@ INSERT INTO `bitacora_movimientos` (`id_movimiento`, `id_empleado`, `accion`, `d
 (388, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 06:36:34'),
 (389, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 06:46:52'),
 (390, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 06:46:53'),
-(391, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 06:46:57');
+(391, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 06:46:57'),
+(392, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 07:11:03'),
+(393, 1, 'Navegación', 'Ingresó a la sección: ESTADISTICAS', '2026-04-22 07:32:41'),
+(394, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-22 07:32:42'),
+(395, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-22 07:32:44'),
+(396, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-22 07:32:45'),
+(397, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-22 07:32:47'),
+(398, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 07:32:56'),
+(399, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 07:33:03'),
+(400, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 16:35:10'),
+(401, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 18:02:39'),
+(402, 1, 'Navegación', 'Ingresó a la sección: ESTADISTICAS', '2026-04-22 18:02:48'),
+(403, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-22 18:02:58'),
+(404, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-22 18:03:03'),
+(405, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-22 18:03:04'),
+(406, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-22 18:03:12'),
+(407, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 18:03:15'),
+(408, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 18:03:27'),
+(409, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-22 18:03:39'),
+(410, 1, 'Navegación', 'Ingresó a la sección: CONTENEDOR', '2026-04-22 18:03:39'),
+(411, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 18:04:41'),
+(412, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 20:53:09'),
+(413, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 20:53:11'),
+(414, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 20:53:13'),
+(415, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 20:53:18'),
+(416, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 20:53:23'),
+(417, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 20:53:26'),
+(418, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 20:53:28'),
+(419, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 20:53:30'),
+(420, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 20:53:55'),
+(421, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 20:53:56'),
+(422, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:03:34'),
+(423, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 21:10:51'),
+(424, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:10:53'),
+(425, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:10:55'),
+(426, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:10:57'),
+(427, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:11:02'),
+(428, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:11:05'),
+(429, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:11:07'),
+(430, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:11:08'),
+(431, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:11:13'),
+(432, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:11:16'),
+(433, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:11:41'),
+(434, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:11:48'),
+(435, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:12:13'),
+(436, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:12:19'),
+(437, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:12:23'),
+(438, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:12:25'),
+(439, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 21:23:21'),
+(440, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:23:24'),
+(441, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:23:25'),
+(442, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:23:29'),
+(443, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:24:02'),
+(444, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:24:04'),
+(445, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:24:06'),
+(446, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:24:09'),
+(447, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:24:40'),
+(448, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 21:24:42'),
+(449, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 21:24:50'),
+(450, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 22:42:28'),
+(451, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-22 22:42:31'),
+(452, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 22:42:32'),
+(453, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 22:42:34'),
+(454, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 22:42:44'),
+(455, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 22:43:20'),
+(456, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 22:43:25'),
+(457, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 22:44:37'),
+(458, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 22:44:45'),
+(459, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 22:44:51'),
+(460, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 23:01:52'),
+(461, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 23:14:12'),
+(462, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 23:14:14'),
+(463, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-22 23:14:17'),
+(464, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 23:14:18'),
+(465, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 23:14:21'),
+(466, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 23:15:33'),
+(467, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 23:15:34'),
+(468, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 23:15:37'),
+(469, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 23:15:41'),
+(470, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 23:16:23'),
+(471, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 23:16:27'),
+(472, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 23:18:04'),
+(473, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 23:18:07'),
+(474, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 23:18:09'),
+(475, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-22 23:19:26'),
+(476, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-22 23:19:30'),
+(477, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-22 23:19:32'),
+(478, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-23 05:11:46'),
+(479, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-23 05:11:48'),
+(480, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:11:49'),
+(481, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 05:11:51'),
+(482, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:11:52'),
+(483, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 05:13:32'),
+(484, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:13:35'),
+(485, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 05:14:01'),
+(486, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:14:02'),
+(487, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 05:14:05'),
+(488, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:14:14'),
+(489, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 05:14:17'),
+(490, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:14:21'),
+(491, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 05:15:08'),
+(492, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:15:09'),
+(493, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 05:15:12'),
+(494, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:15:22'),
+(495, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-23 05:49:50'),
+(496, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 05:49:53'),
+(497, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:49:55'),
+(498, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 05:50:12'),
+(499, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 05:50:14'),
+(500, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-23 06:14:34'),
+(501, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-23 06:14:38'),
+(502, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 06:14:39'),
+(503, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 06:14:41'),
+(504, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 06:14:56'),
+(505, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 06:14:58'),
+(506, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 06:15:02'),
+(507, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 06:15:03'),
+(508, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-23 06:58:27'),
+(509, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-23 06:58:30'),
+(510, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-23 07:02:23'),
+(511, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-23 07:02:25'),
+(512, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-23 07:05:07'),
+(513, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-23 07:05:08'),
+(514, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:05:16'),
+(515, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-23 07:05:18'),
+(516, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:05:25'),
+(517, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:05:33'),
+(518, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:14:17'),
+(519, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-23 07:14:19'),
+(520, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-23 07:33:05'),
+(521, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:33:07'),
+(522, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:33:10'),
+(523, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:33:27'),
+(524, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:33:29'),
+(525, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:34:21'),
+(526, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:34:26'),
+(527, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:34:29'),
+(528, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:34:56'),
+(529, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:34:58'),
+(530, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:35:01'),
+(531, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:35:03'),
+(532, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:35:48'),
+(533, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:36:01'),
+(534, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:37:29'),
+(535, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-23 07:39:57'),
+(536, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:39:59'),
+(537, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:40:45'),
+(538, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:40:47'),
+(539, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:40:52'),
+(540, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:41:31'),
+(541, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:45:40'),
+(542, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:45:42'),
+(543, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:46:00'),
+(544, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:46:21'),
+(545, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:47:00'),
+(546, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-23 07:50:20'),
+(547, 1, 'Navegación', 'Ingresó a la sección: ESTADISTICAS', '2026-04-23 07:50:22'),
+(548, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-23 07:50:24'),
+(549, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-23 07:50:27'),
+(550, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:50:30'),
+(551, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 07:50:32'),
+(552, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-23 07:50:33'),
+(553, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 07:50:35'),
+(554, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-23 16:10:37'),
+(555, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-23 16:11:18'),
+(556, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 16:11:20'),
+(557, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 16:12:24'),
+(558, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-23 16:12:29'),
+(559, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-23 16:12:58'),
+(560, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-24 04:57:06'),
+(561, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-24 04:57:09'),
+(562, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-24 04:58:49'),
+(563, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-24 04:58:50'),
+(564, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-24 04:59:26'),
+(565, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-24 04:59:31'),
+(566, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-24 04:59:34'),
+(567, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-24 04:59:55'),
+(568, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-24 04:59:57'),
+(569, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-24 04:59:59'),
+(570, 1, 'Navegación', 'Ingresó a la sección: ACCESO_DENEGADO', '2026-04-24 05:00:01'),
+(571, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-24 05:00:05'),
+(572, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-26 22:55:09'),
+(573, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-26 22:55:12'),
+(574, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 01:29:48'),
+(575, 1, 'Navegación', 'Ingresó a la sección: ESTADISTICAS', '2026-04-27 01:29:51'),
+(576, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-27 01:29:52'),
+(577, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-27 01:29:53'),
+(578, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 01:29:54'),
+(579, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 01:57:42');
 
 -- --------------------------------------------------------
 
@@ -530,7 +730,15 @@ INSERT INTO `citas_web` (`id_cita`, `id_google_calendar`, `nombre_cliente`, `ape
 (7, 'lna1bgagmvc8933c2mapi2taks', 'Jose Eduardo', 'Flores Frausto', '3331342222', 5, NULL, 4, NULL, '2345', 'sn', 'Mantenimiento preventivo para Equipos portátiles de alto rendimiento', 'no sirve', '2026-05-01', '10:00:00', '2026-04-20 00:14:52', 'pendiente'),
 (8, 'c3fkl7lv0ls5qpsem3f6auvecs', 'ferdan', 'carrillo', '3222362505', 3, NULL, 5, NULL, '', NULL, 'Reparación de sistema de bisagras (Laptops de alto rendimiento)', '', '2026-05-30', '13:00:00', '2026-04-21 03:33:47', 'pendiente'),
 (9, 'pqeou40ctd0aba2vgbkcg2v9n4', '5', '2', '3223344556', 4, NULL, 1, NULL, '', NULL, 'Mantenimiento preventivo de alto rendimiento para equipos portátiles con metal liquido', '', '2026-04-25', '13:20:00', '2026-04-21 07:22:26', 'pendiente'),
-(10, '4m58cn1fmifdoec2rcfm1vb0q4', 'Ferdán Alejandro', 'Garrigós Rojas', '3222362505', 1, NULL, 3, NULL, 'asdf', '', 'Mantenimiento preventivo para gabinetes mid tower', 'si', '2026-04-22', '13:40:00', '2026-04-21 16:39:10', 'pendiente');
+(10, '4m58cn1fmifdoec2rcfm1vb0q4', 'Ferdán Alejandro', 'Garrigós Rojas', '3222362505', 1, NULL, 3, NULL, 'asdf', '', 'Mantenimiento preventivo para gabinetes mid tower', 'si', '2026-04-22', '13:40:00', '2026-04-21 16:39:10', 'pendiente'),
+(11, 'tevtcpdqavrts20gad37donn0s', 'Jose Eduardo', 'Flores Frausto', '3221014500', 5, NULL, 10, NULL, 'switch', NULL, 'Diagnóstico básico de computo', '', '2026-04-25', '13:00:00', '2026-04-22 16:13:44', 'pendiente'),
+(12, 'n0nbufipvgfcb3g71fna7bmofk', 'Jose Eduardo', 'Flores Frausto', '3221014500', 1, NULL, 6, NULL, 'asus', NULL, 'Reemplazo de tarjeta gráfica', '', '2026-04-25', '10:20:00', '2026-04-22 16:17:16', 'pendiente'),
+(13, 'bmls8e5qsn790129k547m91bog', 'Jose Eduardo', 'Flores Frausto', '3221014500', 5, NULL, 9, NULL, '2345', NULL, 'Reemplazo de tarjeta gráfica', '', '2026-04-25', '15:20:00', '2026-04-22 16:31:31', 'pendiente'),
+(14, '4aonp6058u5540sg1sbjl3p9uc', 'Jose Eduardo', 'Flores Frausto', '3221014500', 1, NULL, 2, NULL, 'sony', NULL, 'Instalación de Microsoft Office 2019 con clave de producto', 'esta sucia', '2026-04-30', '14:20:00', '2026-04-23 16:15:40', 'pendiente'),
+(15, '6d58ivp5poho43cqej2uvbadco', 'Jose Eduardo', 'Flores Frausto', '3331342222', 5, NULL, 10, NULL, 'xbox', NULL, 'Instalación de Microsoft Office 2016 con clave de producto original', 'esta sucia', '2026-05-31', '13:20:00', '2026-04-23 16:24:18', 'pendiente'),
+(16, 'tac44kp3hs2boaidch5jrdaib8', 'Jose Eduardo', 'Flores Frausto', '3221014500', 5, NULL, 10, NULL, 'xbox', NULL, 'Instalación de Microsoft Office 2016 con clave de producto original', 'esta sucia', '2026-05-30', '14:00:00', '2026-04-23 16:25:32', 'pendiente'),
+(17, 'uq3289atqvcduhm778plo84tr0', 'Jose Eduardo', 'Flores Frausto', '3221014500', 5, NULL, 9, NULL, 'xbox', NULL, 'Instalación de Microsoft Office 2019 con clave de producto', '', '2026-04-27', '14:00:00', '2026-04-23 16:44:41', 'pendiente'),
+(18, 'rbisvefggc1hjn17go9r1ljp8k', 'Jose Eduardo', 'Flores Frausto', '3221014500', 5, NULL, 9, NULL, 'xbox', NULL, 'Instalación de Microsoft Office 2019 con clave de producto', '', '2026-04-28', '14:00:00', '2026-04-23 16:48:17', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -551,19 +759,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nombre`, `apellido`, `telefono`, `correo`) VALUES
-(1, 'Jose Eduardo', 'Flores Frausto', '3221014500', 'floresfraustoj4@gmail.com'),
-(2, 'dsad', 'asdsa', 'asd', 'dasda@hotmasi.com'),
-(3, '77', '22', '3331342222', 'xetav89674@bmoar.com'),
-(4, 'Jose Eduardo', 'Flores Frausto', '3331342222', 'xetav89674@bmoar.com'),
-(5, 'Jose Eduardo', 'Flores Frausto', '3331342222', 'xetav89674@bmoar.com'),
-(6, 'pedro', 'pica', '2222222222', 'a@zee'),
-(7, 'pedro', 'pica', '2222222222', 'a@zee'),
-(8, 'pedro', 'pica', '2222222222', 'a@zee'),
-(9, 'Jose Eduardo', 'Flores Frausto', '3331342222', 'celex67067@donumart.com'),
-(10, 'tito', 'lopez', '3331342223', 'celex67067@donumart.com'),
-(11, 'tito', 'lopez', '3331342223', 'celex67067@donumart.com'),
-(12, 'Jose Eduardo', 'Flores Frausto', '3331342222', 'celex67067@donumart.com'),
-(13, 'pedro', 'picapiedra', '3331342222', 'celex67067@donumart.com');
+(1, 'Jose Eduardo', 'Flores Frausto', '3331342222', 'celex67067@donumart.com');
 
 -- --------------------------------------------------------
 
@@ -585,15 +781,8 @@ CREATE TABLE `condiciones_servicio` (
 --
 
 INSERT INTO `condiciones_servicio` (`id_condicion`, `folio_orden`, `autoriza_revision_costo`, `tiempo_estimado`, `recordatorio_anticipo`, `dudas_cliente`) VALUES
-(1, '24042026-10', 'si', '1', 'si', 'ninguna'),
-(2, '18042026-12', 'si', '6', 'si', 'hnmkasjdl'),
-(3, '21042026-10', 'si', '4444', 'no', 'no'),
-(4, '21042026-A', 'si', '2', 'si', ''),
-(5, '21042026-J', 'no', '1', 'si', ''),
-(6, '21042026-10', 'si', '1', 'si', ''),
-(7, '21042026-11', 'si', '1', 'si', ''),
-(8, '22042026-10', 'si', '1', 'si', 'ninguna'),
-(9, '22042026-12', 'si', '2', 'si', 'nignuna');
+(1, '23042026-10', 'no', '1', 'si', ''),
+(2, '26042026-11', 'no', '1', 'si', '');
 
 -- --------------------------------------------------------
 
@@ -662,19 +851,8 @@ CREATE TABLE `equipos` (
 --
 
 INSERT INTO `equipos` (`id_equipo`, `id_cliente`, `id_marca`, `id_tipo_equipo`, `marca_otro`, `tipo_equipo_otro`, `modelo`, `numero_serie`) VALUES
-(1, 1, 5, 1, NULL, NULL, 'vivobook', 'sn'),
-(2, 2, 3, 1, NULL, NULL, 'jkljkljkl', '457456456546'),
-(3, 3, 0, 3, NULL, NULL, '', ''),
-(4, 4, 3, 3, NULL, NULL, 'pc', 'dsf'),
-(5, 5, 3, 3, NULL, NULL, 'pc', 'dsf'),
-(6, 6, 5, 3, NULL, NULL, 'nv', '1234'),
-(7, 7, 5, 3, NULL, NULL, 'nv', '1234'),
-(8, 8, 5, 3, NULL, NULL, 'nv', '1234'),
-(9, 9, 5, 3, NULL, NULL, 'ss', 'sn'),
-(10, 10, 6, 3, NULL, NULL, 'ss', 'sn'),
-(11, 11, 6, 3, NULL, NULL, 'ss', 'sn'),
-(12, 12, 9, 5, NULL, NULL, 'xbox', '2345'),
-(13, 13, 4, 1, NULL, NULL, 'nv', 'nc');
+(1, 1, 6, 3, NULL, NULL, 'vivobook', '2345'),
+(2, 1, 2, 3, NULL, NULL, 'pc', 'sn');
 
 -- --------------------------------------------------------
 
@@ -718,7 +896,7 @@ CREATE TABLE `gabinetes` (
 INSERT INTO `gabinetes` (`id_gabinete`, `tipo_espacio`, `estado`) VALUES
 ('10', 'laptop', 'ocupado'),
 ('11', 'laptop', 'ocupado'),
-('12', 'laptop', 'ocupado'),
+('12', 'laptop', 'disponible'),
 ('A', 'computadora_escritorio', 'disponible'),
 ('B', 'computadora_escritorio', 'disponible'),
 ('C', 'computadora_escritorio', 'disponible'),
@@ -740,6 +918,13 @@ CREATE TABLE `informacion_index` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `informacion_index`
+--
+
+INSERT INTO `informacion_index` (`id`, `quienes_somos`, `mision`, `vision`, `frase_fundador`, `fecha_creacion`, `fecha_actualizacion`) VALUES
+(1, 'Somos una empresa humana y amigable, guiada por los valores de integridad y transparencia para brindar a nuestros clientes servicios de reparación y mantenimiento de calidad. Nuestro compromiso es garantizar que tu tecnología siempre funcione a la perfección.', '\"Brindamos una experiencia integral a nuestros clientes con servicios de reparación, mantenimiento, asesoría computacional y soporte a MiPymes de la región, garantizando la privacidad de datos y ofreciendo garantía en todos nuestros servicios, con principios de transparencia, honestidad y respeto para cumplir las expectativas y brindar soluciones confiables y vanguardistas.\"', '\"En AsTech Computer soñamos con un 2030 donde seamos la empresa de servicios tecnológicos de referencia en Puerto Vallarta, reconocida por nuestra excelencia, compromiso, innovación y la confianza que nos brinda nuestra comunidad.</p>\r\n                    <p>Creceremos junto a nuestros clientes y aliados estratégicos, compartiendo una misma visión de futuro: desarrollar talento local, promover la tecnología responsable y generar un impacto positivo en nuestro entorno.\"', '“En nuestra empresa tratamos cada equipo como si fuera propio, porque sabemos que ahí está tu trabajo, tus recuerdos y tu información.\"', '0000-00-00 00:00:00', '2026-04-26 07:10:35');
 
 -- --------------------------------------------------------
 
@@ -794,14 +979,8 @@ CREATE TABLE `marketing` (
 --
 
 INSERT INTO `marketing` (`id_encuesta`, `folio_orden`, `id_medio_contacto`, `medio_contacto_otro`, `recibir_promociones`, `id_tipo_uso`, `tipo_uso_otro`, `es_primera_vez`, `id_frecuencia_servicio`, `frecuencia_servicio_otro`) VALUES
-(1, '24042026-10', 3, NULL, 'si por whatsapp', 1, NULL, 'si', 1, NULL),
-(2, '18042026-12', 3, NULL, 'si por correo', 1, NULL, 'si', 1, NULL),
-(3, '21042026-A', 3, NULL, 'si por whatsapp', 3, NULL, 'si', 1, NULL),
-(4, '21042026-J', 4, NULL, 'si por correo', 4, NULL, 'no', 2, NULL),
-(5, '21042026-10', 4, NULL, 'si por whatsapp', 1, NULL, 'no', 3, NULL),
-(6, '21042026-11', 4, NULL, 'ambos', 3, NULL, 'si', 1, NULL),
-(7, '22042026-10', 4, NULL, 'si por whatsapp', 1, NULL, 'si', 3, NULL),
-(8, '22042026-12', 3, NULL, 'si por whatsapp', 3, NULL, 'si', 1, NULL);
+(1, '23042026-10', 4, 'recurrente', 'si por correo', 2, NULL, 'no', 4, NULL),
+(2, '26042026-11', 4, 'cucosta', 'si por whatsapp', 3, NULL, 'si', 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -839,6 +1018,13 @@ CREATE TABLE `mensajes_contacto` (
   `fecha_envio` timestamp NULL DEFAULT current_timestamp(),
   `estado` enum('nuevo','pendiente','respondido','finalizado') DEFAULT 'nuevo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `mensajes_contacto`
+--
+
+INSERT INTO `mensajes_contacto` (`id_mensaje`, `nombre`, `correo`, `asunto`, `mensaje`, `fecha_envio`, `estado`) VALUES
+(1, 'Allen Bell', 'allen.bell3456@gmail.com', 'Hi,\r\n\r\nI recently came across your website and noticed a few areas where improvements could significantly enhance your visibility on Google.\r\n\r\nWith a', 'Hi,\r\n\r\nI recently came across your website and noticed a few areas where improvements could significantly enhance your visibility on Google.\r\n\r\nWith a well-planned SEO strategy, you can attract more relevant traffic, improve your search rankings, and generate higher-quality inquiries for your business.\r\n\r\nI’d be glad to share insights on how we can strengthen your online presence, along with details of my SEO services and pricing.\r\n\r\nLet me know a convenient time to connect.\r\n\r\nRegards,\r\n\r\nAllen', '2026-04-22 12:24:21', 'nuevo');
 
 -- --------------------------------------------------------
 
@@ -878,10 +1064,8 @@ CREATE TABLE `ordenes_ingreso` (
 --
 
 INSERT INTO `ordenes_ingreso` (`folio`, `id_equipo`, `id_tecnico`, `id_gabinete`, `fecha_ingreso`, `condicion_fisica`, `accesorios_entregados`, `descripcion_problema`, `observaciones_recepcion`, `estado`, `fecha_entrega`) VALUES
-('21042026-10', 9, 2, '10', '2026-04-21 00:00:00', 'desarmado', 'cargador', 'nose', 'nose', 'entregado', '2026-04-21 19:43:20'),
-('21042026-11', 11, 2, '11', '2026-04-21 00:00:00', 'desarmado', 'cargador', 'dd', 's', 'recibido', NULL),
-('22042026-10', 12, 2, '10', '2026-04-22 00:00:00', 'enciende', 'cargador', 'MANTENIMIENTO PREVENTIVO PARA EQUIPOS PORTáTILES DE ALTO RENDIMIENTO: esta sucia', 'ninguna', 'recibido', NULL),
-('22042026-12', 13, 2, '12', '2026-04-22 00:00:00', 'desarmado', 'cargador', 'MANTENIMIENTO PREVENTIVO PARA EQUIPOS PORTáTILES DE ALTO RENDIMIENTO: esta sucia', 'ninguna', 'recibido', NULL);
+('23042026-10', 1, 2, '10', '2026-04-23 00:00:00', 'faltan_piezas', 'cargador', 'MANTENIMIENTO PREVENTIVO PARA EQUIPOS PORTáTILES DE ALTO RENDIMIENTO: esta sucia', 'niguna', 'recibido', NULL),
+('26042026-11', 2, 2, '11', '2026-04-26 00:00:00', 'enciende', 'cable_poder', 'ninguno', 'ninguna', 'recibido', NULL);
 
 -- --------------------------------------------------------
 
@@ -984,8 +1168,8 @@ INSERT INTO `relacion_equipo_marca` (`id_marca`, `id_tipo_equipo`) VALUES
 
 CREATE TABLE `servicios` (
   `id_servicio` int(11) NOT NULL,
+  `codigo_servicio` varchar(30) DEFAULT NULL,
   `id_tipo_servicio` int(11) DEFAULT NULL,
-  `imagen_servicio` varchar(255) DEFAULT NULL,
   `tipo_servicio` varchar(100) NOT NULL,
   `descripcion` mediumtext NOT NULL,
   `procedimiento` text NOT NULL,
@@ -994,36 +1178,37 @@ CREATE TABLE `servicios` (
   `exclusiones` text NOT NULL,
   `tiempo_estimado` varchar(100) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
-  `estado` enum('activo','inactivo') DEFAULT 'activo'
+  `estado` enum('activo','inactivo') DEFAULT 'activo',
+  `imagen_servicio` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `servicios`
 --
 
-INSERT INTO `servicios` (`id_servicio`, `id_tipo_servicio`, `imagen_servicio`, `tipo_servicio`, `descripcion`, `procedimiento`, `beneficios`, `indicaciones`, `exclusiones`, `tiempo_estimado`, `precio`, `estado`) VALUES
-(1, 1, 'Miniaturas_500px_Preventivo_Portatil_AR.png', 'Mantenimiento preventivo para equipos portátiles de alto rendimiento', 'Mantén tu laptop gamer y de trabajo en optima condición. El mantenimiento preventivo es clave para prolongar la vida útil de tu equipo, prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel con insumos de alto rendimiento de la marca THERMAL GRIZZLY.', 'Durante el servicio se realiza:\r\n\r\n∆ Revisión de los componentes electrónicos y sus conexiones. \r\n\r\n∆ Usamos herramientas y productos especializados para limpiar a fondo los componentes eléctricos y electrónicos. \r\n\r\n∆ Limpiamos a profundidad los ventiladores y el disipador para optimizar el flujo de aire y evitar que la temperatura afecte el rendimiento.\r\n\r\n∆ Reemplazamos la pasta térmica del procesador (CPU) y del procesador de gráficos (GPU) con una de alta calidad. Esto mejora drásticamente la disipación del calor.\r\n\r\n∆ Sustituimos los pads termicos de chipset, reguladores de voltaje (VRM) y memorias de video (Vram) para una transferencia de calor óptima.\r\n\r\nTu laptop lucirá impecable, libre de polvo y suciedad. ', '\r\nBeneficios de traer tu equipo con nosotros \r\n\r\n✓ Ahorro de tiempo y esfuerzo al contar con atención profesional.\r\n✓ Uso de herramientas y repuestos de alta calidad.\r\n✓ Seguimiento puntual del estado de tu servicio.\r\n✓ Garantía en todos nuestros servicios respaldada por procedimientos estandarizados y apoyo con manuales de servicio', 'Respaldo de información: Aunque el proceso es físico, siempre recomendamos tener una copia de seguridad de tus archivos importantes.', '*Importante* \r\nEste precio no incluye refacciones \r\n', '1 día hábil', 1450.00, 'activo'),
-(2, 1, 'Miniaturas_500px_Preventivo_Portatil_Ofi.png', 'Mantenimiento preventivo para equipos portátiles de oficina', 'Mantén tu laptop en optima condición. Nuestro servicio de mantenimiento preventivo completo ayuda a prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel sin interrupciones.', '∆ Desensamble parcial del equipo.\n∆ Limpieza interna con aire comprimido y brochas antiestáticas.\n∆ Limpieza de ventiladores y disipadores.\n∆ Revisión de puertos, teclado y batería.\n∆ Aplicación de pasta térmica si es necesario.', '✓ Mejora el rendimiento general.\n✓ Previene sobrecalentamiento.\n✓ Prolonga la vida útil del equipo.\n✓ Reduce fallas inesperadas.', 'Se recomienda respaldar la información antes del servicio.', 'No incluye refacciones ni reparación de componentes dañados.', '1 día hábil', 690.00, 'activo'),
-(3, 1, 'Miniaturas_500px_Preventivo_Mid.png', 'Mantenimiento preventivo para gabinetes mid tower', 'Tu PC merece un cuidado completo. Este servicio esta diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo.', '∆ Limpieza interna completa del gabinete.\n∆ Limpieza de ventiladores, fuente de poder y disipadores.\n∆ Organización de cableado.\n∆ Revisión de temperaturas.', '✓ Mejor flujo de aire.\n✓ Menor temperatura de operación.\n✓ Mayor estabilidad del sistema.', 'Apagar correctamente el equipo antes del servicio.', 'No incluye cambio de piezas dañadas.', '1 día hábil', 920.00, 'activo'),
-(4, 1, 'Miniaturas_500px_Diagnostico_Gab_Ofi.png', 'Mantenimiento preventivo para gabinetes de oficina', 'Tu PC de oficina merece un cuidado completo. Este servicio está diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo. Realizamos una limpieza profunda y optimizamos el flujo de aire para asegurar que tu gabinete funcione al 100%.', '∆ Limpieza básica interna.\n∆ Eliminación de polvo en componentes.\n∆ Revisión de conexiones.\n∆ Verificación de funcionamiento general.', '✓ Previene fallas comunes.\n✓ Mejora el desempeño básico.', 'Equipo debe entregarse con cables y accesorios.', 'No incluye mantenimiento profundo ni refacciones.', '1 día hábil', 680.00, 'activo'),
-(5, 1, 'Miniaturas_500px_Preventivo_FullTower.png', 'Mantenimiento preventivo para gabinetes full tower', 'Tu PC merece un cuidado completo. Este servicio está diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo. Realizamos una limpieza profunda y optimizamos el flujo de aire para asegurar que tu gabinete funcione al 100% y que tus componentes se mantengan a la temperatura ideal.', '∆ Limpieza profunda de gabinete full tower.\n∆ Mantenimiento de múltiples ventiladores.\n∆ Revisión de GPU, CPU y fuente.\n∆ Ordenamiento de cableado.', '✓ Optimiza equipos de alto consumo.\n✓ Reduce temperaturas críticas.', 'Respaldar información importante.', 'No incluye upgrades de hardware.', '1 día hábil.', 1490.00, 'activo'),
-(6, 1, 'Miniaturas_500px_Metal_Liquido_.png', 'Mantenimiento preventivo de alto rendimiento para equipos portátiles con metal liquido', 'Mantén tu laptop de alto rendimiento en óptimas condiciones. El mantenimiento preventivo es clave para prolongar la vida útil de tu equipo, prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel.', '∆ Limpieza especializada de alto rendimiento.\n∆ Aplicación de metal líquido en CPU/GPU.\n∆ Sustitución de pads térmicos.\n∆ Pruebas de temperatura.', '✓ Máxima disipación de calor.\n✓ Mejor rendimiento en gaming y diseño.', 'Equipo debe ser compatible con metal líquido.', 'No aplica para equipos de oficina estándar.', '1 día hábil.', 2180.00, 'activo'),
-(7, 2, 'Miniaturas_500px_Reparacion_Bisagras_AR.png', 'Reparación de sistema de bisagras (Laptops de alto rendimiento)', 'Las bisagras de tu laptop, con el uso constante, suelen aflojarse o romperse, dañando los anclajes internos, la carcasa y poniendo en riesgo la pantalla. Nuestro servicio busca devolverle estabilidad al equipo y prevenir que el daño avance. ', '∆ Desensamble de pantalla.\n∆ Reparación o reemplazo de bisagras.\n∆ Ajuste estructural.\n∆ Reensamble completo.', '✓ Evita daño en pantalla.\n✓ Mejora apertura y cierre.', 'No forzar el equipo antes de reparación.', 'No incluye cambio de carcasa.', '1 día hábil. Sujeto a disponibilidad de refacciones. ', 570.00, 'activo'),
-(8, 2, 'Miniaturas_500px_Reemplazo_Almacenamiento.png', 'Instalación de unidad de almacenamiento', 'Realizamos el reemplazo seguro de discos duros (HDD) o unidades de estado sólido (SSD) para mejorar la capacidad y velocidad de tu equipo', '∆ Instalación de HDD o SSD.\n∆ Configuración en BIOS.\n∆ Formateo si aplica.\n∆ Pruebas de funcionamiento.', '✓ Mayor almacenamiento.\n✓ Mejora de velocidad (SSD).', 'Elegir capacidad adecuada.', 'No incluye sistema operativo.', '1 día hábil. Sujeto a disponibilidad de refacciones.', 450.00, 'activo'),
-(9, 2, 'Miniaturas_500px_Reemplazo_Teclado.png', 'Reemplazo de teclado para portátiles de oficina', 'Los teclados pueden presentar fallas en las teclas, pérdida de sensibilidad o desgaste estético. Nuestro servicio de reemplazo devuelve la funcionalidad', '∆ Desensamble de teclado.\n∆ Instalación de nuevo teclado.\n∆ Pruebas de funcionamiento.', '✓ Recupera funcionalidad del equipo.', 'Confirmar compatibilidad del modelo.', 'No incluye daños en tarjeta madre.', '1 día hábil. Sujeto a disponibilidad de refacciones.', 890.00, 'activo'),
-(10, 2, 'Miniaturas_500px_Reemplazo_Ventiladores.png', 'Reemplazo de ventiladores', 'Con el tiempo y uso, los ventiladores de enfriamiento pueden desgastarse o llenarse de polvo hasta terminar de averiarse o fallar lo que reduce la circulación de aire y provoca sobrecalentamiento.', '∆ Retiro de ventiladores dañados.\n∆ Instalación de nuevos ventiladores.\n∆ Pruebas de flujo de aire.', '✓ Reduce sobrecalentamiento.', 'Seleccionar ventiladores compatibles.', 'No incluye mantenimiento adicional.', '1 día hábil. Sujeto a disponibilidad de refacciones.', 260.00, 'activo'),
-(11, 2, 'Miniaturas_500px_ReemplazoRAM2-3-4.png', 'Reemplazo de Memoria RAM DDR2/3/4', 'La memoria RAM puede quedarse corta o presentar fallas que vuelven lento el equipo. Nuestro servicio de reemplazo o ampliación mejora el rendimiento y la capacidad de respuesta de tu computadora.', '∆ Instalación de módulos RAM.\n∆ Configuración automática.\n∆ Pruebas de estabilidad.', '✓ Mejora el rendimiento multitarea.', 'Verificar compatibilidad.', 'No incluye actualización de BIOS.', '1 día hábil. Sujeto a disponibilidad de refacciones.', 330.00, 'activo'),
-(12, 3, 'Miniaturas_500px_Office_2016.png', 'Instalación de Microsoft Office 2016 con clave de producto original', '¿Necesitas activar, instalar o reinstalar Microsoft Office 2016 en tu equipo? Nosotros nos encargamos del proceso, asegurando que tu suite de productividad quede perfectamente configurada y lista para usar.? Este servicio es ideal para garantizar un funcionamiento óptimo y evitar problemas de compatibilidad.', '∆ Instalación de Office.\n∆ Activación con clave original.\n∆ Configuración inicial.', '✓ Software legal y funcional.', 'Requiere conexión a internet.', 'No incluye capacitación.', '1 día hábil.', 699.00, 'activo'),
-(13, 3, 'Miniaturas_500px_Windows_10.png', 'Clave de producto Windows 10 Professional', 'Obtén tu clave de producto original de Windows 10 para activar tu sistema operativo de forma legal y permanente.Una clave original es tu garantía para recibir todas las actualizaciones de seguridad y acceder a las funcionalidades completas que ofrece Microsoft.', '∆ Activación de Windows.\n∆ Configuración del sistema.', '✓ Sistema operativo original.', 'Requiere versión compatible.', 'No incluye instalación.', '1 día hábil.', 499.00, 'activo'),
-(14, 3, 'Miniaturas_500px_Office_2019.png', 'Instalación de Microsoft Office 2019 con clave de producto', '¿Necesitas activar, instalar o reinstalar Microsoft Office 2019 en tu equipo? Nosotros nos encargamos del proceso, asegurando que tu suite de productividad quede perfectamente configurada y lista para usar.? Este servicio es ideal para garantizar un funcionamiento óptimo y evitar problemas de compatibilidad.', '∆ Instalación de Office 2019.\n∆ Activación.\n∆ Configuración.', '✓ Acceso a herramientas profesionales.', 'Internet requerido.', 'No incluye soporte extendido.', '1 día hábil.', 930.00, 'activo'),
-(15, 3, 'Miniaturas_500px_Windows_11.png', 'Clave de producto Windows 11 Professional', 'Obtén tu clave de producto original de Windows 11 para activar tu sistema operativo de forma legal y permanente.🫱🏽‍🫲🏼 Una clave original es tu garantía para recibir todas las actualizaciones de seguridad y acceder a las funcionalidades completas que ofrece Microsoft.', '∆ Activación de Windows 11.\n∆ Configuración inicial.', '✓ Sistema actualizado.', 'Equipo compatible.', 'No incluye instalación.', '1 día hábil.', 699.00, 'activo'),
-(16, 3, 'Miniaturas_500px_Reinstalacion_de_sistema.png', 'Reinstalación de sistema operativo con respaldo de información', 'Realizamos la instalación del sistema operativo de tu computadora, asegurando que tus archivos importantes se respalden y se restauren correctamente.', '∆ Respaldo de información.\n∆ Formateo.\n∆ Instalación de sistema.\n∆ Restauración de datos.', '✓ Sistema limpio.\n✓ Recuperación de archivos.', 'Tiempo depende del respaldo.', 'No incluye software adicional.', '1 día hábil.', 520.00, 'activo'),
-(17, 4, 'Miniaturas_500px_Recoleccion_Motocicleta.png', 'Servicio de recolección y entrega a domicilio (1 traslado)', 'Ofrecemos un servicio seguro y rápido para recoger y entregar tu equipo portátil (Laptop) directamente en tu domicilio o negocio mediante transporte en motocicleta.', '∆ Recolección del equipo.\n∆ Traslado seguro.\n∆ Entrega posterior.', '✓ Comodidad para el cliente.', 'Confirmar dirección.', 'No incluye servicio técnico.', '1 dia', 75.00, 'activo'),
-(18, 4, 'Miniaturas_500px_Recoleccion_Automovil.png', 'Servicio de recolección y entrega a domicilio Automovil (1 traslado)', 'Ofrecemos un servicio seguro y confiable para recoger y entregar tu equipo de cómputo directamente en tu domicilio o negocio mediante transporte en automóvil, ideal para uno o varios equipos de mayor tamaño o volumen. ', '∆ Recolección en automóvil.\n∆ Transporte seguro.\n∆ Entrega.', '✓ Mayor cobertura.', 'Coordinar horario.', 'No incluye diagnóstico.', '1 dia ', 150.00, 'activo'),
-(19, 5, 'Miniaturas_500px_Asistencia_Remota.png', 'Servicio de asistencia remota', '¿Tienes un problema de software y necesitas una solución rápida sin salir de casa? 🏠 Nuestro servicio de asistencia remota te conecta con un técnico experto que puede resolver fallas comunes de forma segura y eficiente a través de internet.', '∆ Conexión remota.\n∆ Diagnóstico.\n∆ Solución de software.', '✓ Atención inmediata.', 'Requiere internet.', 'No aplica para fallas físicas.', '1 día hábil.', 460.00, 'activo'),
-(20, 5, 'Miniaturas_500px_Recuperacion_De_Info.png', 'Servicio de recuperación de información con software especializado', 'Cuando tu información corre riesgo por fallas en la unidad de almacenamiento, realizamos la recuperación de datos de HDD, SSD, USB o tarjetas de memoria, utilizando herramientas y software profesional para proteger y rescatar tu información importante.', '∆ Escaneo con software especializado.\n∆ Recuperación de archivos.\n∆ Validación.', '✓ Recupera información perdida.', 'Evitar usar el equipo.', 'No garantiza recuperación total.', '1 día hábil.', 750.00, 'activo'),
-(21, 5, 'Miniaturas_500px_Diagnostico_Basico.png', 'Diagnóstico básico de computo', '¿Tu equipo no enciende, está lento o presenta un problema general y no sabes por qué? Nuestro diagnóstico básico es el primer paso para identificar la causa de la falla. Realizamos una revisión completa para determinar si el origen del problema es de software, de hardware o dar seguimiento a un problema para así poder ofrecerte la solución adecuada.🛠️\r\n', '∆ Revisión general.\n∆ Pruebas básicas.\n∆ Informe técnico.', '✓ Identificación de fallas.', 'Describir el problema.', 'No incluye reparación.', '1 día hábil.', 560.00, 'activo'),
-(65, NULL, 'Miniaturas_500px_Reemplazo_Tarjeta_Grafica.png', 'Reemplazo de tarjeta gráfica', 'Con el tiempo, las tarjetas gráficas pueden fallar o quedarse cortas frente a las nuevas exigencias de rendimiento. Nuestro servicio de reemplazo permite restaurar el funcionamiento de tu computadora o actualizarla con un modelo más potente.', '∆ Retiro de GPU.\n∆ Instalación de nueva tarjeta.\n∆ Configuración y pruebas.', '✓ Mejora gráfica.', 'Fuente compatible requerida.', 'No incluye drivers avanzados.', '1dia habil, sujeto a disponibilidad de refacciones', 450.00, 'activo');
+INSERT INTO `servicios` (`id_servicio`, `codigo_servicio`, `id_tipo_servicio`, `tipo_servicio`, `descripcion`, `procedimiento`, `beneficios`, `indicaciones`, `exclusiones`, `tiempo_estimado`, `precio`, `estado`, `imagen_servicio`) VALUES
+(1, 'MLA-002', 1, 'Mantenimiento preventivo para equipos portátiles de alto rendimiento', 'Mantén tu laptop gamer y de trabajo en optima condición. El mantenimiento preventivo es clave para prolongar la vida útil de tu equipo, prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel con insumos de alto rendimiento de la marca THERMAL GRIZZLY.', 'Durante el servicio se realiza:\r\n\r\n∆ Revisión de los componentes electrónicos y sus conexiones. \r\n\r\n∆ Usamos herramientas y productos especializados para limpiar a fondo los componentes eléctricos y electrónicos. \r\n\r\n∆ Limpiamos a profundidad los ventiladores y el disipador para optimizar el flujo de aire y evitar que la temperatura afecte el rendimiento.\r\n\r\n∆ Reemplazamos la pasta térmica del procesador (CPU) y del procesador de gráficos (GPU) con una de alta calidad. Esto mejora drásticamente la disipación del calor.\r\n\r\n∆ Sustituimos los pads termicos de chipset, reguladores de voltaje (VRM) y memorias de video (Vram) para una transferencia de calor óptima.\r\n\r\nTu laptop lucirá impecable, libre de polvo y suciedad. ', '\r\nBeneficios de traer tu equipo con nosotros \r\n\r\n✓ Ahorro de tiempo y esfuerzo al contar con atención profesional.\r\n✓ Uso de herramientas y repuestos de alta calidad.\r\n✓ Seguimiento puntual del estado de tu servicio.\r\n✓ Garantía en todos nuestros servicios respaldada por procedimientos estandarizados y apoyo con manuales de servicio', 'Respaldo de información: Aunque el proceso es físico, siempre recomendamos tener una copia de seguridad de tus archivos importantes.', '*Importante* \r\nEste precio no incluye refacciones \r\n', '1 día hábil', 1450.00, 'activo', 'Miniaturas_500px_Preventivo_Portatil_AR.png'),
+(2, 'MLO-001', 1, 'Mantenimiento preventivo para equipos portátiles de oficina', 'Mantén tu laptop en optima condición. Nuestro servicio de mantenimiento preventivo completo ayuda a prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel sin interrupciones.', '∆ Desensamble parcial del equipo.\n∆ Limpieza interna con aire comprimido y brochas antiestáticas.\n∆ Limpieza de ventiladores y disipadores.\n∆ Revisión de puertos, teclado y batería.\n∆ Aplicación de pasta térmica si es necesario.', '✓ Mejora el rendimiento general.\n✓ Previene sobrecalentamiento.\n✓ Prolonga la vida útil del equipo.\n✓ Reduce fallas inesperadas.', 'Se recomienda respaldar la información antes del servicio.', 'No incluye refacciones ni reparación de componentes dañados.', '1 día hábil', 690.00, 'activo', 'Miniaturas_500px_Preventivo_Portatil_Ofi.png'),
+(3, 'MG-003', 1, 'Mantenimiento preventivo para gabinetes mid tower', 'Tu PC merece un cuidado completo. Este servicio esta diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo.', '∆ Limpieza interna completa del gabinete.\n∆ Limpieza de ventiladores, fuente de poder y disipadores.\n∆ Organización de cableado.\n∆ Revisión de temperaturas.', '✓ Mejor flujo de aire.\n✓ Menor temperatura de operación.\n✓ Mayor estabilidad del sistema.', 'Apagar correctamente el equipo antes del servicio.', 'No incluye cambio de piezas dañadas.', '1 día hábil', 920.00, 'activo', 'Miniaturas_500px_Preventivo_Mid.png'),
+(4, 'MG-001', 1, 'Mantenimiento preventivo para gabinetes de oficina', 'Tu PC de oficina merece un cuidado completo. Este servicio está diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo. Realizamos una limpieza profunda y optimizamos el flujo de aire para asegurar que tu gabinete funcione al 100%.', '∆ Limpieza básica interna.\n∆ Eliminación de polvo en componentes.\n∆ Revisión de conexiones.\n∆ Verificación de funcionamiento general.', '✓ Previene fallas comunes.\n✓ Mejora el desempeño básico.', 'Equipo debe entregarse con cables y accesorios.', 'No incluye mantenimiento profundo ni refacciones.', '1 día hábil', 680.00, 'activo', 'Miniaturas_500px_Diagnostico_Gab_Ofi.png'),
+(5, 'MG-002', 1, 'Mantenimiento preventivo para gabinetes full tower', 'Tu PC merece un cuidado completo. Este servicio está diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo. Realizamos una limpieza profunda y optimizamos el flujo de aire para asegurar que tu gabinete funcione al 100% y que tus componentes se mantengan a la temperatura ideal.', '∆ Limpieza profunda de gabinete full tower.\n∆ Mantenimiento de múltiples ventiladores.\n∆ Revisión de GPU, CPU y fuente.\n∆ Ordenamiento de cableado.', '✓ Optimiza equipos de alto consumo.\n✓ Reduce temperaturas críticas.', 'Respaldar información importante.', 'No incluye upgrades de hardware.', '1 día hábil.', 1490.00, 'activo', 'Miniaturas_500px_Preventivo_FullTower.png'),
+(6, 'MLA-001', 1, 'Mantenimiento preventivo de alto rendimiento para equipos portátiles con metal liquido', 'Mantén tu laptop de alto rendimiento en óptimas condiciones. El mantenimiento preventivo es clave para prolongar la vida útil de tu equipo, prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel.', '∆ Limpieza especializada de alto rendimiento.\n∆ Aplicación de metal líquido en CPU/GPU.\n∆ Sustitución de pads térmicos.\n∆ Pruebas de temperatura.', '✓ Máxima disipación de calor.\n✓ Mejor rendimiento en gaming y diseño.', 'Equipo debe ser compatible con metal líquido.', 'No aplica para equipos de oficina estándar.', '1 día hábil.', 2180.00, 'activo', 'Miniaturas_500px_Metal_Liquido_.png'),
+(7, 'RRLA-004', 2, 'Reparación de sistema de bisagras (Laptops de alto rendimiento)', 'Las bisagras de tu laptop, con el uso constante, suelen aflojarse o romperse, dañando los anclajes internos, la carcasa y poniendo en riesgo la pantalla. Nuestro servicio busca devolverle estabilidad al equipo y prevenir que el daño avance. ', '∆ Desensamble de pantalla.\n∆ Reparación o reemplazo de bisagras.\n∆ Ajuste estructural.\n∆ Reensamble completo.', '✓ Evita daño en pantalla.\n✓ Mejora apertura y cierre.', 'No forzar el equipo antes de reparación.', 'No incluye cambio de carcasa.', '1 día hábil. Sujeto a disponibilidad de refacciones. ', 570.00, 'activo', 'Miniaturas_500px_Reparacion_Bisagras_AR.png'),
+(8, 'RRT-003', 2, 'Reemplazo de unidad de almacenamiento', 'Realizamos el reemplazo seguro de discos duros (HDD) o unidades de estado sólido (SSD) para mejorar la capacidad y velocidad de tu equipo', '∆ Instalación de HDD o SSD.\n∆ Configuración en BIOS.\n∆ Formateo si aplica.\n∆ Pruebas de funcionamiento.', '✓ Mayor almacenamiento.\n✓ Mejora de velocidad (SSD).', 'Elegir capacidad adecuada.', 'No incluye sistema operativo.', '1 día hábil. Sujeto a disponibilidad de refacciones.', 450.00, 'activo', 'Miniaturas_500px_Reemplazo_Almacenamiento.png'),
+(9, 'RRL-002', 2, 'Reemplazo de teclado para portátiles de oficina', 'Los teclados pueden presentar fallas en las teclas, pérdida de sensibilidad o desgaste estético. Nuestro servicio de reemplazo devuelve la funcionalidad', '∆ Desensamble de teclado.\n∆ Instalación de nuevo teclado.\n∆ Pruebas de funcionamiento.', '✓ Recupera funcionalidad del equipo.', 'Confirmar compatibilidad del modelo.', 'No incluye daños en tarjeta madre.', '1 día hábil. Sujeto a disponibilidad de refacciones.', 890.00, 'activo', 'Miniaturas_500px_Reemplazo_Teclado.png'),
+(10, 'RRT-004', 2, 'Reemplazo de ventiladores', 'Con el tiempo y uso, los ventiladores de enfriamiento pueden desgastarse o llenarse de polvo hasta terminar de averiarse o fallar lo que reduce la circulación de aire y provoca sobrecalentamiento.', '∆ Retiro de ventiladores dañados.\n∆ Instalación de nuevos ventiladores.\n∆ Pruebas de flujo de aire.', '✓ Reduce sobrecalentamiento.', 'Seleccionar ventiladores compatibles.', 'No incluye mantenimiento adicional.', '1 día hábil. Sujeto a disponibilidad de refacciones.', 260.00, 'activo', 'Miniaturas_500px_Reemplazo_Ventiladores.png'),
+(11, 'RRT-001', 2, 'Reemplazo de Memoria RAM DDR2/3/4', 'La memoria RAM puede quedarse corta o presentar fallas que vuelven lento el equipo. Nuestro servicio de reemplazo o ampliación mejora el rendimiento y la capacidad de respuesta de tu computadora.', '∆ Instalación de módulos RAM.\n∆ Configuración automática.\n∆ Pruebas de estabilidad.', '✓ Mejora el rendimiento multitarea.', 'Verificar compatibilidad.', 'No incluye actualización de BIOS.', '1 día hábil. Sujeto a disponibilidad de refacciones.', 330.00, 'activo', 'Miniaturas_500px_ReemplazoRAM2-3-4.png'),
+(12, 'IST-003', 3, 'Instalación de Microsoft Office 2016 con clave de producto original', '¿Necesitas activar, instalar o reinstalar Microsoft Office 2016 en tu equipo? Nosotros nos encargamos del proceso, asegurando que tu suite de productividad quede perfectamente configurada y lista para usar.? Este servicio es ideal para garantizar un funcionamiento óptimo y evitar problemas de compatibilidad.', '∆ Instalación de Office.\n∆ Activación con clave original.\n∆ Configuración inicial.', '✓ Software legal y funcional.', 'Requiere conexión a internet.', 'No incluye capacitación.', '1 día hábil.', 699.00, 'activo', 'Miniaturas_500px_Office_2016.png'),
+(13, 'IST-002', 3, 'Clave de producto Windows 10 Professional', 'Obtén tu clave de producto original de Windows 10 para activar tu sistema operativo de forma legal y permanente.Una clave original es tu garantía para recibir todas las actualizaciones de seguridad y acceder a las funcionalidades completas que ofrece Microsoft.', '∆ Activación de Windows.\n∆ Configuración del sistema.', '✓ Sistema operativo original.', 'Requiere versión compatible.', 'No incluye instalación.', '1 día hábil.', 499.00, 'activo', 'Miniaturas_500px_Windows_10.png'),
+(14, 'IST-004', 3, 'Instalación de Microsoft Office 2019 con clave de producto', '¿Necesitas activar, instalar o reinstalar Microsoft Office 2019 en tu equipo? Nosotros nos encargamos del proceso, asegurando que tu suite de productividad quede perfectamente configurada y lista para usar.? Este servicio es ideal para garantizar un funcionamiento óptimo y evitar problemas de compatibilidad.', '∆ Instalación de Office 2019.\n∆ Activación.\n∆ Configuración.', '✓ Acceso a herramientas profesionales.', 'Internet requerido.', 'No incluye soporte extendido.', '1 día hábil.', 930.00, 'activo', 'Miniaturas_500px_Office_2019.png'),
+(15, 'IST-002', 3, 'Clave de producto Windows 11 Professional', 'Obtén tu clave de producto original de Windows 11 para activar tu sistema operativo de forma legal y permanente.🫱🏽‍🫲🏼 Una clave original es tu garantía para recibir todas las actualizaciones de seguridad y acceder a las funcionalidades completas que ofrece Microsoft.', '∆ Activación de Windows 11.\n∆ Configuración inicial.', '✓ Sistema actualizado.', 'Equipo compatible.', 'No incluye instalación.', '1 día hábil.', 699.00, 'activo', 'Miniaturas_500px_Windows_11.png'),
+(16, 'IST-009', 3, 'Reinstalación de sistema operativo con respaldo de información', 'Realizamos la instalación del sistema operativo de tu computadora, asegurando que tus archivos importantes se respalden y se restauren correctamente.', '∆ Respaldo de información.\n∆ Formateo.\n∆ Instalación de sistema.\n∆ Restauración de datos.', '✓ Sistema limpio.\n✓ Recuperación de archivos.', 'Tiempo depende del respaldo.', 'No incluye software adicional.', '1 día hábil.', 520.00, 'activo', 'Miniaturas_500px_Reinstalacion_de_sistema.png'),
+(17, 'TL-001', 4, 'Servicio de recolección y entrega a domicilio (1 traslado)', 'Ofrecemos un servicio seguro y rápido para recoger y entregar tu equipo portátil (Laptop) directamente en tu domicilio o negocio mediante transporte en motocicleta.', '∆ Recolección del equipo.\n∆ Traslado seguro.\n∆ Entrega posterior.', '✓ Comodidad para el cliente.', 'Confirmar dirección.', 'No incluye servicio técnico.', '1 dia', 75.00, 'activo', 'Miniaturas_500px_Recoleccion_Motocicleta.png'),
+(18, 'TG-001', 4, 'Servicio de recolección y entrega a domicilio Automovil (1 traslado)', 'Ofrecemos un servicio seguro y confiable para recoger y entregar tu equipo de cómputo directamente en tu domicilio o negocio mediante transporte en automóvil, ideal para uno o varios equipos de mayor tamaño o volumen. ', '∆ Recolección en automóvil.\n∆ Transporte seguro.\n∆ Entrega.', '✓ Mayor cobertura.', 'Coordinar horario.', 'No incluye diagnóstico.', '1 dia ', 150.00, 'activo', 'Miniaturas_500px_Recoleccion_Automovil.png'),
+(19, 'AT-001', 5, 'Servicio de asistencia remota', '¿Tienes un problema de software y necesitas una solución rápida sin salir de casa? 🏠 Nuestro servicio de asistencia remota te conecta con un técnico experto que puede resolver fallas comunes de forma segura y eficiente a través de internet.', '∆ Conexión remota.\n∆ Diagnóstico.\n∆ Solución de software.', '✓ Atención inmediata.', 'Requiere internet.', 'No aplica para fallas físicas.', '1 día hábil.', 460.00, 'activo', 'Miniaturas_500px_Asistencia_Remota.png'),
+(20, 'SET-001', 5, 'Servicio de recuperación de información con software especializado', 'Cuando tu información corre riesgo por fallas en la unidad de almacenamiento, realizamos la recuperación de datos de HDD, SSD, USB o tarjetas de memoria, utilizando herramientas y software profesional para proteger y rescatar tu información importante.', '∆ Escaneo con software especializado.\n∆ Recuperación de archivos.\n∆ Validación.', '✓ Recupera información perdida.', 'Evitar usar el equipo.', 'No garantiza recuperación total.', '1 día hábil.', 750.00, 'activo', 'Miniaturas_500px_Recuperacion_De_Info.png'),
+(21, 'DLG-001', 5, 'Diagnóstico básico de  equipo de computo', '¿Tu equipo no enciende, está lento o presenta un problema general y no sabes por qué? Nuestro diagnóstico básico es el primer paso para identificar la causa de la falla. Realizamos una revisión completa para determinar si el origen del problema es de software, de hardware o dar seguimiento a un problema para así poder ofrecerte la solución adecuada.🛠️\r\n', '∆ Revisión general.\n∆ Pruebas básicas.\n∆ Informe técnico.', '✓ Identificación de fallas.', 'Describir el problema.', 'No incluye reparación.', '1 día hábil.', 560.00, 'activo', 'Miniaturas_500px_Diagnostico_Basico.png'),
+(65, 'RRG-005', NULL, 'Reemplazo de tarjeta gráfica', 'Con el tiempo, las tarjetas gráficas pueden fallar o quedarse cortas frente a las nuevas exigencias de rendimiento. Nuestro servicio de reemplazo permite restaurar el funcionamiento de tu computadora o actualizarla con un modelo más potente.', '∆ Retiro de GPU.\n∆ Instalación de nueva tarjeta.\n∆ Configuración y pruebas.', '✓ Mejora gráfica.', 'Fuente compatible requerida.', 'No incluye drivers avanzados.', '1dia habil, sujeto a disponibilidad de refacciones', 450.00, 'activo', 'Miniaturas_500px_Reemplazo_Tarjeta_Grafica.png');
 
 -- --------------------------------------------------------
 
@@ -1221,7 +1406,8 @@ ALTER TABLE `relacion_equipo_marca`
 -- Indices de la tabla `servicios`
 --
 ALTER TABLE `servicios`
-  ADD PRIMARY KEY (`id_servicio`);
+  ADD PRIMARY KEY (`id_servicio`),
+  ADD KEY `id_tipo_servicio` (`id_tipo_servicio`);
 
 --
 -- Indices de la tabla `tipos_equipo`
@@ -1249,13 +1435,13 @@ ALTER TABLE `tipos_uso`
 -- AUTO_INCREMENT de la tabla `bitacora_logins`
 --
 ALTER TABLE `bitacora_logins`
-  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora_movimientos`
 --
 ALTER TABLE `bitacora_movimientos`
-  MODIFY `id_movimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=392;
+  MODIFY `id_movimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=580;
 
 --
 -- AUTO_INCREMENT de la tabla `causas_servicio`
@@ -1267,19 +1453,19 @@ ALTER TABLE `causas_servicio`
 -- AUTO_INCREMENT de la tabla `citas_web`
 --
 ALTER TABLE `citas_web`
-  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `condiciones_servicio`
 --
 ALTER TABLE `condiciones_servicio`
-  MODIFY `id_condicion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_condicion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `directorio_socios`
@@ -1291,13 +1477,13 @@ ALTER TABLE `directorio_socios`
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `frecuencias_servicio`
@@ -1309,7 +1495,7 @@ ALTER TABLE `frecuencias_servicio`
 -- AUTO_INCREMENT de la tabla `informacion_index`
 --
 ALTER TABLE `informacion_index`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
@@ -1321,7 +1507,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `marketing`
 --
 ALTER TABLE `marketing`
-  MODIFY `id_encuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_encuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `medios_contacto`
@@ -1333,7 +1519,7 @@ ALTER TABLE `medios_contacto`
 -- AUTO_INCREMENT de la tabla `mensajes_contacto`
 --
 ALTER TABLE `mensajes_contacto`
-  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `metodos_pago`
@@ -1351,7 +1537,7 @@ ALTER TABLE `puestos`
 -- AUTO_INCREMENT de la tabla `servicios`
 --
 ALTER TABLE `servicios`
-  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_equipo`
