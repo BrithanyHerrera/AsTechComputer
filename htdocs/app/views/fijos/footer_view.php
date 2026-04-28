@@ -52,11 +52,11 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
         <div class="redes-sociales">
             <h4>Síguenos</h4>
             <ul>
-                <a href="https://www.facebook.com/astechcomputer" target="_blank">
+                <a href="https://www.facebook.com/AstechComputer" target="_blank">
         <i class="fa-brands fa-facebook"></i>
     </a>
 
-    <a href="https://www.instagram.com/astechcomputer" target="_blank">
+    <a href="https://www.instagram.com/AsTechComputer" target="_blank">
         <i class="fa-brands fa-instagram"></i>
     </a>
 
@@ -64,13 +64,13 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
         <i class="fa-brands fa-tiktok"></i>
     </a>
 
-    <a href="https://www.youtube.com/@astechcomputer" target="_blank">
+    <a href="https://www.youtube.com/@Astech_Computer" target="_blank">
         <i class="fa-brands fa-youtube"></i>
     </a>
 
             </ul>
         </div>
-        <a href="https://wa.me/523221234567?text=Hola,%20vengo%20de%20la%20página%20web%20y%20necesito%20soporte%20técnico."
+        <a href="https://wa.me/523222362505?text=Hola,%20vengo%20de%20la%20página%20web%20y%20necesito%20soporte%20técnico."
             class="btn-whatsapp-flotante" target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-whatsapp"></i>
         </a>

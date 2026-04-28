@@ -69,11 +69,11 @@ Este archivo representa la Vista (View) exclusiva para la sección de contacto d
          
    
     <div class="social-icons">
-        <a href="https://wa.me/523221234567" target="_blank"><i class="fa-brands fa-square-whatsapp"></i></a>
-        <a href="https://www.instagram.com/astech_computer" target="_blank"><i class="fa-brands fa-square-instagram"></i></a>
+        <a href="https://wa.me/523222362505" target="_blank"><i class="fa-brands fa-square-whatsapp"></i></a>
+        <a href="https://www.instagram.com/AsTechComputer" target="_blank"><i class="fa-brands fa-square-instagram"></i></a>
         <a href="https://www.facebook.com/AstechComputer" target="_blank"><i class="fa-brands fa-square-facebook"></i></a>
         <a href="https://www.tiktok.com/@astechcomputer" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="https://www.youtube.com/@astechcomputer" target="_blank"><i class="fa-brands fa-square-youtube"></i></a>
+        <a href="https://www.youtube.com/@Astech_Computer" target="_blank"><i class="fa-brands fa-square-youtube"></i></a>
     </div>
 </section>
         </section>

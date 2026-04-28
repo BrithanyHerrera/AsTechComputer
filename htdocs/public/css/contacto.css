@@ -1,204 +1,203 @@
-/* CONTACTO.CSS */
-/*
-Este archivo define las hojas de estilo en cascada (CSS) específicas para la sección de contacto de ASTECH COMPUTER. Su propósito principal es estructurar visualmente el formulario de envío de mensajes, la columna de información (que incluye el mapa interactivo de ubicación) y el bloque de redes sociales. Controla la paleta de colores corporativa, establece el diseño de cuadrícula (grid) para alinear los elementos en pantallas grandes y aplica las reglas de diseño responsivo para garantizar su correcta visualización en dispositivos móviles.
-*/
+/* =========================================
+   CONTACTO.CSS - Estilos Globales
+   ========================================= */
 
-/* ==========================================
-   1. VARIABLES GLOBALES Y PALETA DE COLORES
-   ========================================== */
 :root {
-    --naranja-principal: #e17203;
-    --purpura-oscuro: #52073a;
-    --blanco-puro: #FFFFFF;
-    --negro-texto: #000000;
-    --gris-suave: #656464b2;
-    --fondo-minimalista: rgba(224, 224, 224, 0.562);
-}
-/* ==========================================
-   2. ESTILOS GENERALES (CUERPO Y TÍTULOS)
-   ========================================== */
-h1 {
-    color: var(--naranja-principal);
-    margin: -10px;
+    --naranja: #e17203;
+     --purpura-oscuro: #52073a;
+    --naranja-hover: #c56502;
+    --gris-oscuro: #333333;
+    --gris-medio: #666666;
+    --gris-claro: #f4f4f4;
+    --blanco: #ffffff;
+    --borde: #dddddd;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--fondo-minimalista);
-    margin: 0;
+    background-color: var(--blanco);
+    color: var(--gris-oscuro);
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
 }
 
-/* ==========================================
-   3. CONTENEDOR PRINCIPAL (GRID LAYOUT)
-   ========================================== */
+/* Contenedor Principal */
 .main-container {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    background: #fff;
-    margin: 30px auto 80px auto;
-    width: 80%;
     max-width: 1200px;
-    min-height: 500px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.288);
+    margin: 50px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 0 20px;
+    animation: fadeIn 0.8s ease-in-out;
+    
 }
 
-/* ==========================================
-   4. ESTILOS DEL FORMULARIO Y CONTROLES
-   ========================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+h3 {
+    color: var(--gris-oscuro);
+    border-left: 4px solid var(--naranja);
+    padding-left: 15px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* =========================================
+   SECCIÓN DEL FORMULARIO
+   ========================================= */
 .form-section {
-    padding: 40px;
+    flex: 1;
+    min-width: 300px;
+    background: var(--blanco);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  
 }
-
-.logo-box {
-    text-align: center;
-    margin-bottom: 30px;
+.form-section h1 {
+    color: var(--purpura-oscuro);
+    font-weight: 900;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
 }
-
-.logo-box img {
-    max-width: 100px;
-    height: auto;
+.form-section h1::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Centra la línea */
+    width: 80px;                /* Ancho de la línea */
+    height: 2px;                /* Grosor de la línea */
+    background-color: var(--naranja);
+            /* Puntas redondeadas */
 }
-
 .form-group {
     margin-bottom: 20px;
 }
 
-label {
+.form-group label {
     display: block;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 8px;
-    color: var(--purpura-oscuro);
+    color: var(--gris-medio);
 }
 
-input,
-textarea {
+.form-group input, 
+.form-group textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
+    border: 1px solid var(--borde);
+    border-radius: 5px;
     font-size: 1rem;
-    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    transition: all 0.3s ease;
 }
 
-/* ==========================================
-   5. BOTONES DE ACCIÓN Y SUS ESTADOS
-   ========================================== */
+.form-group input:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--naranja);
+    box-shadow: 0 0 8px rgba(225, 114, 3, 0.2);
+}
+
+/* Botón de envío */
 .boton-submit {
-    background-color: var(--purpura-oscuro); 
-    color: var(--blanco-puro);
-    border: none;
-    padding: 15px;
     width: 100%;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
+    background-color: var(--naranja);
+    color: var(--blanco);
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 10px;
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .boton-submit:hover {
-    background-color: var(--negro-texto); 
-    transform: translateY(-4px); 
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    background-color: var(--naranja-hover);
+    transform: translateY(-2px);
 }
 
 .boton-submit:active {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
 }
 
-/* ==========================================
-   6. SECCIÓN DE INFORMACIÓN Y MAPA DE UBICACIÓN
-   ========================================== */
+/* =========================================
+   SECCIÓN DE INFORMACIÓN Y MAPA
+   ========================================= */
 .info-section {
-    background: var(--naranja-principal);
-    color: white;
-    padding: 40px;
+    flex: 0.8;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
 }
 
+.info-section p {
+    margin-bottom: 20px;
+    color: var(--gris-medio);
+}
+
+.info-section i {
+    color: var(--purpura-oscuro);
+    margin-right: 10px;
+      transition: all 0.3s ease;
+}
+.info-section i:hover{
+  color: var(--naranja);
+    transform: scale(1.1);
+}
+
+/* Contenedor del Mapa */
 .map-container {
     width: 100%;
-    height: 250px;
-    border-radius: 12px;
+    height: 300px;
+    border-radius: 10px;
     overflow: hidden;
-    margin: 20px 0;
+    margin-bottom: 30px;
+    border: 1px solid var(--borde);
+    background-color: var(--gris-claro);
 }
 
-.info-section {
-    position: relative;
-    padding-bottom: 60px;
-}
-
-/* ==========================================
-   7. ICONOS DE REDES SOCIALES E INTERACCIONES
-   ========================================== */
+/* Redes Sociales */
 .social-icons {
-    position: absolute;
-    top: 500px;
-    right: 100px;
     display: flex;
-    gap: 15px;
-    background: white;
-    padding: 10px 20px;
-    border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    z-index: 10;
+    gap: 20px;
+    justify-content: flex-start;
+    color: #52073a;
 }
 
 .social-icons a {
-    text-decoration: none;
-    transition: transform 0.3s ease;
+    color: var(--gris-medio);
+    font-size: 2.5rem; /* Tamaño de los iconos */
+    transition: all 0.3s ease;
 }
 
-.social-icons i {
-    font-size: 28px;
-    color: #52073a;
-    display: block;
-}
 
-.social-icons a:hover {
-    transform: translateY(-5px);
-}
 
-.fa-square-whatsapp:hover {
-    color: #25D366;
-}
-
-.fa-square-instagram:hover {
-    color: #E1306C;
-}
-
-.fa-square-facebook:hover {
-    color: #1877F2;
-}
-
-.fa-tiktok:hover {
-    color: #000000;
-}
-
-.fa-square-youtube:hover {
-    color: #FF0000;
-}
-
-/* ==========================================
-   8. ADAPTABILIDAD A DISPOSITIVOS MÓVILES (RESPONSIVE)
-   ========================================== */
-@media (max-width: 768px) {
-    .social-icons {
-        position: static;
-        margin: 20px auto;
-        justify-content: center;
-        box-shadow: none;
-    }
-}
-
+/* =========================================
+   RESPONSIVE (Móviles)
+   ========================================= */
 @media (max-width: 768px) {
     .main-container {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .form-section, .info-section {
+        flex: none;
+        width: 100%;
     }
 }

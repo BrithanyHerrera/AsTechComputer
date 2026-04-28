@@ -74,7 +74,19 @@ $slides = [
     </div>
 </div>
 <div class="contenedor-servicios">
+    <?php
+// Obtenemos el ID más alto de todos los servicios para tener una referencia
+$max_id = 0;
+foreach ($servicios_agrupados as $seccion) {
+    foreach ($seccion as $s) {
+        if ($s['id_servicio'] > $max_id) $max_id = $s['id_servicio'];
+    }
+}
+// Definimos que los últimos 5 IDs registrados se consideren "Nuevos"
+$umbral_novedad = 4; 
+?>
     <?php if (!empty($servicios_agrupados)): ?>
+        
         <?php foreach ($servicios_agrupados as $titulo_seccion => $lista_servicios): ?>
             
             <!-- HEADER DE SECCIÓN -->
@@ -88,7 +100,9 @@ $slides = [
                 <?php foreach ($lista_servicios as $servicio): ?>
                     
                     <div class="card-servicio" onclick="verServicio(<?php echo $servicio['id_servicio']; ?>)">
-                        
+                        <?php if ($servicio['id_servicio'] > ($max_id - $umbral_novedad)): ?>
+            <span class="badge-nuevo">¡ N u e v o !</span>
+        <?php endif; ?>
                         <!-- IMAGEN (no la tenías en el primero) -->
                         <img src="<?php echo $ruta_img . $servicio['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
 
