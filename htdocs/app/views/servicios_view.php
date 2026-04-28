@@ -64,31 +64,68 @@ $slides = [
                     <h1><?php echo $slide['t']; ?></h1>
                     <h2><?php echo $slide['s']; ?></h2>
                     <p><?php echo $slide['p']; ?></p>
-                    <button class="boton-servicio">Agendar cita</button>
-                    <a href="#" class="link-info">Más información <i class="fa-solid fa-angle-right"></i></a>
+                                <a href="citas_cliente_controller.php" class="boton-servicio">
+  Agendar cita
+</a>
+                    <a href="mas_info_controller.php" class="link-info">Más información <i class="fa-solid fa-angle-right"></i></a>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
 </div>
 <div class="contenedor-servicios">
-    <?php while($row = mysqli_fetch_assoc($resultado)): ?>
-        <div class="card-servicio"  onclick="verServicio(<?php echo $row['id_servicio']; ?>)">
-            <img src="<?php echo $ruta_img . $row['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
-            <button class="btn-ver-mas">Mas información<i class="fa-solid fa-angles-right"></i></button>
-<div class="info-basica">
-    <span class="codigo-tag"><?php echo $row['codigo_servicio']; ?></span>
-    
-    <h3><?php echo $row['tipo_servicio']; ?></h3>
-    <span class="precio">$<?php echo number_format($row['precio'], 2); ?></span>
-</div>
-
-            <div class="overlay-descripcion">
-                <h3><?php echo $row['tipo_servicio']; ?></h3>
-                <p><?php echo $row['descripcion']; ?></p>
+    <?php if (!empty($servicios_agrupados)): ?>
+        <?php foreach ($servicios_agrupados as $titulo_seccion => $lista_servicios): ?>
+            
+            <!-- HEADER DE SECCIÓN -->
+            <div class="seccion-header">
+                <h2 class="titulo-categoria"><?php echo $titulo_seccion; ?></h2>
+                <hr class="linea-separadora">
             </div>
-        </div>
-    <?php endwhile; ?>
+
+            <!-- GRID DE TARJETAS -->
+            <div class="servicios-grid">
+                <?php foreach ($lista_servicios as $servicio): ?>
+                    
+                    <div class="card-servicio" onclick="verServicio(<?php echo $servicio['id_servicio']; ?>)">
+                        
+                        <!-- IMAGEN (no la tenías en el primero) -->
+                        <img src="<?php echo $ruta_img . $servicio['imagen_servicio']; ?>" alt="Servicio" class="imagen-url">
+
+                        <!-- BOTÓN -->
+                        <button class="btn-ver-mas">
+                            Más información <i class="fa-solid fa-angles-right"></i>
+                        </button>
+
+                        <!-- INFO BÁSICA -->
+                        <div class="info-basica">
+                            
+                            <h3><?php echo $servicio['tipo_servicio']; ?></h3>
+                             <span class="precio">
+    <?php 
+        echo ($servicio['precio'] > 0) 
+            ? '$' . number_format($servicio['precio'], 2) 
+            : 'Bajo cotización'; 
+    ?>
+</span>
+<span class="codigo-tag"><?php echo $servicio['codigo_servicio']; ?></span>
+                        </div>
+
+                        <!-- OVERLAY (clave para tu efecto) -->
+                        <div class="overlay-descripcion">
+                            <h3><?php echo $servicio['tipo_servicio']; ?></h3>
+                            <p><?php echo $servicio['descripcion']; ?></p>
+                        </div>
+
+                    </div>
+
+                <?php endforeach; ?>
+            </div>
+            
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No se encontraron servicios disponibles.</p>
+    <?php endif; ?>
 </div>
 <div id="modalServicio" class="modal">
     <div class="modal-contenido">
@@ -183,6 +220,59 @@ cerrar.addEventListener("click", () => {
 
 function verServicio(id){
     
+    window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("modalServicio");
+    const contenidoModal = document.getElementById("contenidoModal");
+    const cerrar = document.querySelector(".cerrar");
+    const resultados = document.getElementById("resultados"); // <-- Esto evita el ReferenceError
+
+    // Manejar clics en los resultados de búsqueda (si existen)
+    if (resultados) {
+        resultados.addEventListener("click", (e) => {
+            const item = e.target.closest(".resultado-item");
+            if (item) {
+                let id = item.getAttribute("data-id");
+                cargarDetalleServicio(id);
+            }
+        });
+    }
+
+    // Cerrar modal
+    if (cerrar) {
+        cerrar.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+    }
+
+    // Cerrar modal al hacer clic fuera
+    window.addEventListener("click", (event) => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+
+// Función global para cargar el servicio (usada por las cards y el buscador)
+function cargarDetalleServicio(id) {
+    const modal = document.getElementById("modalServicio");
+    const contenidoModal = document.getElementById("contenidoModal");
+
+    fetch("acciones/obtener_servicio.php?id=" + id)
+        .then(res => res.text())
+        .then(data => {
+            if (contenidoModal && modal) {
+                contenidoModal.innerHTML = data;
+                modal.style.display = "block";
+            }
+        })
+        .catch(err => console.error("Error al cargar servicio:", err));
+}
+
+// Función para redirección de cards (si prefieres ir a otra página en lugar de modal)
+function verServicio(id) {
     window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
 }
 

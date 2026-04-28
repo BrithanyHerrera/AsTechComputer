@@ -35,7 +35,9 @@ $ruta_img = "../../public/img/servicios/";
             <p class="precio">$<?php echo $servicio['precio']; ?></p>
             <p class="descripcion"><?php echo $servicio['descripcion']; ?></p>
 
-            <a href="#" class="btn-agendar">Agendar cita</a>
+            <a href="citas_cliente_controller.php" class="btn-agendar">
+  Agendar cita
+</a>
         </div>
     </div>
 <div class="detalle-flex-row"> 

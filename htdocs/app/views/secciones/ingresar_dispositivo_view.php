@@ -151,9 +151,9 @@
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Espacio disponible</label>
             <p class="nota-formulario">Lugar físico donde se guardará el equipo</p>
-            <select name="espacio_almacenamiento" id="espacio_almacenamiento" class="campo-texto" required>
-              <option value="">Primero elija tipo...</option>
-            </select>
+           <select name="espacio_almacenamiento" id="espacio_almacenamiento" class="campo-texto" required>
+    <option value="">Primero elija tipo...</option>
+  </select>
           </div>
 
           <div class="grupo-entrada">

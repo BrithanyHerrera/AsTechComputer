@@ -270,4 +270,34 @@ if ($paso == 2 && isset($_SESSION['memoria_ingreso']['espacio_almacenamiento']))
             $_SESSION['error_espacio'] = "El espacio que tenías seleccionado ya no está disponible. Por favor, elige otro.";
         }
     }
+    $gabinete_original_sesion = $_SESSION['gabinete_original'] ?? null;
+$query_gabinetes = $model->obtenerGabinetesDisponibles($gabinete_original_sesion);
+
+$gabinetes_disponibles = [
+    'laptop'                 => [],
+    'computadora_escritorio' => [],
+    'otro'                   => [],
+];
+
+if ($query_gabinetes) {
+    while ($row = $query_gabinetes->fetch_assoc()) {
+        $gabinetes_disponibles[$row['tipo_espacio']][] = $row['id_gabinete'];
+    }
+}
+$json_gabinetes = json_encode($gabinetes_disponibles);
+
+if (isset($_POST['finalizar_registro'])) {
+    $datos = $_SESSION['memoria_ingreso'];
+    try {
+        if (isset($_SESSION['modo_edicion'])) {
+            $model->actualizarRegistro($datos, $_SESSION['modo_edicion'], $_SESSION['id_cliente_edicion'], $_SESSION['id_equipo_edicion'], $_SESSION['gabinete_original']);
+        } else {
+            $model->crearRegistro($datos);
+        }
+        echo "<script>window.location.href = 'administracion_controller.php?seccion=ingreso&status=success';</script>";
+        exit;
+    } catch (Exception $e) {
+        $_SESSION['error_db'] = $e->getMessage();
+    }
+}
 }

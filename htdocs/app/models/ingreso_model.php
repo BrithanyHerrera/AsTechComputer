@@ -95,15 +95,7 @@ class IngresoModel {
     // En modo edición incluye también el gabinete original aunque
     // esté "ocupado", para que el técnico pueda mantenerlo.
     // ----------------------------------------------------------
-    public function obtenerGabinetesDisponibles($gabinete_original = null) {
-        if ($gabinete_original) {
-            $stmt = $this->conexion->prepare("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' OR id_gabinete = ? ORDER BY id_gabinete ASC");
-            $stmt->bind_param("s", $gabinete_original);
-            $stmt->execute();
-            return $stmt->get_result();
-        }
-        return $this->conexion->query("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' ORDER BY id_gabinete ASC");
-    }
+
 
     // ----------------------------------------------------------
     // ESCRITURA: Actualiza un registro existente en las 5 tablas
@@ -228,4 +220,20 @@ class IngresoModel {
 
         $this->conexion->commit();
     }
+
+    public function obtenerGabinetesDisponibles($gabinete_original = null) {
+    if ($gabinete_original) {
+        $stmt = $this->conexion->prepare("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' OR id_gabinete = ? ORDER BY id_gabinete ASC");
+        $stmt->bind_param("s", $gabinete_original);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+    return $this->conexion->query("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' ORDER BY id_gabinete ASC");
+}
+
+public function actualizarEstadoGabinete($id_gabinete, $estado) {
+    $stmt = $this->conexion->prepare("UPDATE gabinetes SET estado = ? WHERE id_gabinete = ?");
+    $stmt->bind_param("ss", $estado, $id_gabinete);
+    return $stmt->execute();
+}
 }

@@ -65,4 +65,29 @@ window.addEventListener("click", (e) => {
     if(e.target === modal) {
         modal.style.display = "none";
     }
+
+
+    // ... tu código anterior ...
+
+    const resultados = document.getElementById("resultados"); // <-- Asegúrate de obtener la referencia
+
+    if (resultados) { // <-- Validación crucial para evitar el ReferenceError
+        resultados.addEventListener("click", (e) => {
+            const item = e.target.closest(".resultado-item");
+            if (item) {
+                let id = item.getAttribute("data-id");
+                // Tu lógica de fetch aquí...
+                fetch("acciones/obtener_servicio.php?id=" + id)
+                    .then(res => res.text())
+                    .then(data => {
+                        const contenidoModal = document.getElementById("contenidoModal");
+                        const modal = document.getElementById("modalServicio");
+                        if (contenidoModal && modal) {
+                            contenidoModal.innerHTML = data;
+                            modal.style.display = "block";
+                        }
+                    });
+            }
+        });
+    }
 });

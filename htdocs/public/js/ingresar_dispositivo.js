@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectEspacio = document.getElementById('espacio_almacenamiento');
     const inputFolio = document.getElementById('folio_auto');
 
+
     // Función para convertir fecha YYYY-MM-DD a DDMMAAAA (Ej. 2026-03-13 -> 13032026)
     function formatearFechaFolio(fechaStr) {
         if (!fechaStr) return "";
@@ -222,4 +223,17 @@ document.addEventListener('DOMContentLoaded', function () {
     if (urlParams.has('editar')) {
         window.history.replaceState({}, document.title, window.location.pathname + "?seccion=ingreso");
     }
+    selectTipo.addEventListener('change', function() {
+        const tipo = this.value;
+        selectEspacio.innerHTML = '<option value="">Seleccione espacio...</option>';
+        
+        if (espaciosDB[tipo]) {
+            espaciosDB[tipo].forEach(id => {
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = id;
+                selectEspacio.appendChild(option);
+            });
+        }
+    });
 });

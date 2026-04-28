@@ -53,5 +53,33 @@ if ($id_tipo == 1) {
 // --- CARGA DE VISTA ---
 // Si no hay acción (carga normal de la página de servicios al público)
 $lista_servicios = $modeloServicios->obtenerServicios($id_tipo);
+
+
+// ... (código anterior de carga de modelos)
+
+// Obtener todos los servicios
+$todos_los_servicios = $modelo->obtenerServicios($id_tipo);
+
+// Agrupamos los servicios por su categoría
+$servicios_agrupados = [];
+foreach ($todos_los_servicios as $servicio) {
+    // Usamos el campo 'id_tipo_servicio' o si tuvieras el nombre de la categoría mejor
+    // Para este ejemplo asumiremos que quieres el nombre de la sección
+    $seccion = $servicio['id_tipo_servicio']; 
+    
+    // Mapeo amigable de nombres de sección según tu lógica de IDs
+    $nombres_secciones = [
+        1 => "Mantenimiento preventivo",
+        2 => "Reparación y Reemplazo",
+        3 => "Instalación de Software",
+        4 => "Servicios de entrega",
+        5 => "Servicios Especializados"
+    ];
+    
+    $nombre_final = $nombres_secciones[$seccion] ?? "Otros Servicios";
+    $servicios_agrupados[$nombre_final][] = $servicio;
+}
+
+// Ahora pasamos $servicios_agrupados a la vista
 require_once dirname(__DIR__) . '/views/servicios_view.php';
 ?>
