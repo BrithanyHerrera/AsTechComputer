@@ -1,5 +1,3 @@
-
-
 <script>
 /* FOOTER_VIEW.PHP */
 /*

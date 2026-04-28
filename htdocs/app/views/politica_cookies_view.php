@@ -15,7 +15,6 @@ Este archivo actúa como la Vista (View) encargada de mostrar el documento ofici
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="../../public/img/Astech%20ICO.ico" type="image/x-icon">    
-    <link rel="stylesheet" href="../../public/css/static.css">    
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/info_legal.css">
@@ -79,7 +78,7 @@ Este archivo actúa como la Vista (View) encargada de mostrar el documento ofici
             
             <p>De forma adicional, usted puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de las opciones del navegador de Internet instalado en su dispositivo (Chrome, Safari, Firefox, Edge, etc.).</p>
             
-            <p>Tenga en cuenta que, en caso de rechazar o no permitir la instalación de las cookies necesarias/técnicas desde su navegador, es muy probable que no pueda acceder a nuestros servicios <strong>(como el agendamiento de citas, el formulario de contacto directo o el acceso al panel administrativo para empleados)</strong> o que la página deje de funcionar correctamente.</p>
+            <p>Tenga en cuenta que, en caso de rechazar o no permitir la instalación de las cookies necesarias/técnicas desde su navegador, es muy probable que no pueda acceder a nuestros servicios <strong>(como el agendamiento de citas y el formulario de contacto directo)</strong> o que la página deje de funcionar correctamente.</p>
 
             <h3>Modificación y vigencia</h3>
             <p>Astech Computer podrá modificar esta Política de Cookies en función de nuevas exigencias reglamentarias, legislativas o con la finalidad de adaptar dicha política a las instrucciones dictadas por las autoridades competentes en protección de datos. Recomendamos su revisión periódica.</p>

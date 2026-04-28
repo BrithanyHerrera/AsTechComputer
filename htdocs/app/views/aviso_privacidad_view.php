@@ -9,11 +9,10 @@ Este archivo representa la Vista (View) destinada a exhibir el Aviso de Privacid
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidad - AsTech Computer</title>
+    <title>Aviso de Privacidad - AsTech Computer</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="../../public/img/Astech%20ICO.ico" type="image/x-icon">    
-    <link rel="stylesheet" href="../../public/css/static.css">
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/info_legal.css">
@@ -22,7 +21,7 @@ Este archivo representa la Vista (View) destinada a exhibir el Aviso de Privacid
 <body style="background-color: #f4f4f4;">
 
     <?php
-    $ruta_prefijo = "../../../"; 
+    $ruta_prefijo = "../../../";
     require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>

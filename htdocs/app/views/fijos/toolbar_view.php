@@ -30,7 +30,6 @@ if (isset($permitirAnaliticas) && $permitirAnaliticas): ?>
 <?php
 if (!isset($conexion)) {
     require_once __DIR__ . "/../../config/conexion.db.php";
-
 }
 
 // 1. Obtener tipos de servicios
@@ -64,13 +63,17 @@ $resultRecientes = $conexion->query($queryRecientes);
         </a>
     </div>
 
-    <nav class="menu">
-        <ul>
-           <li class="botones"><a href="<?= BASE_URL ?>Index.php">Inicio</a></li>
-       <li class="botones"><a href="<?= BASE_URL ?>app/controllers/contacto_controller.php">Contacto</a></li>
+    <div class="menu-toggle" id="mobile-menu">
+        <i class="fa-solid fa-bars"></i>
+    </div>
 
-<li class="servicios-hover botones">
-    <a href="<?= BASE_URL ?>app/controllers/servicios_controller.php" class="btn-servicios">Servicios</a>
+    <nav class="menu">
+        <ul id="nav-links">
+            <li class="botones"><a href="<?= BASE_URL ?>Index.php">Inicio</a></li>
+            <li class="botones"><a href="<?= BASE_URL ?>app/controllers/contacto_controller.php">Contacto</a></li>
+
+            <li class="servicios-hover botones">
+                <a href="<?= BASE_URL ?>app/controllers/servicios_controller.php" class="btn-servicios">Servicios <i class="fa-solid fa-chevron-down hidden-desktop"></i></a>
 
                 <div class="mega-menu">
                     <div class="mega-menu-content">
@@ -84,16 +87,16 @@ $resultRecientes = $conexion->query($queryRecientes);
                                         <?php echo $tipo['nombre_tipo']; ?>
                                         <i class="fa-solid fa-chevron-down"></i>
                                     </button>
-                                <div class="submenu-desplegable">
-                                 <?php 
-                                    $id_actual = $tipo['id_tipo_servicio'];
-                                     if(isset($serviciosPorTipo[$id_actual])):
-                                     foreach($serviciosPorTipo[$id_actual] as $srv): ?>
-                                <a href="<?= BASE_URL ?>app/controllers/detalle_servicio_controller.php?id=<?php echo $srv['id_servicio']; ?>">
-                                <?php echo $srv['tipo_servicio']; ?>
-                                 </a>
-                                 <?php endforeach; endif; ?>
-                                </div>
+                                    <div class="submenu-desplegable">
+                                     <?php 
+                                        $id_actual = $tipo['id_tipo_servicio'];
+                                         if(isset($serviciosPorTipo[$id_actual])):
+                                         foreach($serviciosPorTipo[$id_actual] as $srv): ?>
+                                        <a href="<?= BASE_URL ?>app/controllers/detalle_servicio_controller.php?id=<?php echo $srv['id_servicio']; ?>">
+                                        <?php echo $srv['tipo_servicio']; ?>
+                                         </a>
+                                         <?php endforeach; endif; ?>
+                                    </div>
                                 </div>
                             <?php endwhile; ?>
                         </div>
@@ -101,15 +104,16 @@ $resultRecientes = $conexion->query($queryRecientes);
                         <div class="menu-derecha">
                             <p class="label-recientes">Lo más reciente</p>
                              <div class="grid-recientes">
-    <?php while($reciente = $resultRecientes->fetch_assoc()): ?>
-        <a href="<?= BASE_URL ?>detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>" style="text-decoration: none; color: inherit;">
-            <div class="tarjeta">
-                <span class="badge">Nuevo</span>
-                <img src="<?php echo $ruta_img . $reciente['imagen_servicio']; ?>" alt="Servicio"> 
-                <h4><?php echo $reciente['tipo_servicio']; ?></h4> </div>
-        </a>
-    <?php endwhile; ?>
-</div>                           
+                                <?php while($reciente = $resultRecientes->fetch_assoc()): ?>
+                                    <a href="<?= BASE_URL ?>detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>" style="text-decoration: none; color: inherit;">
+                                        <div class="tarjeta">
+                                            <span class="badge">Nuevo</span>
+                                            <img src="<?php echo $ruta_img . $reciente['imagen_servicio']; ?>" alt="Servicio"> 
+                                            <h4><?php echo $reciente['tipo_servicio']; ?></h4> 
+                                        </div>
+                                    </a>
+                                <?php endwhile; ?>
+                            </div>                           
                         </div>
                     </div>
                 </div>
@@ -133,7 +137,48 @@ $resultRecientes = $conexion->query($queryRecientes);
 
 <script>
 (function() {
-    // Selectores
+    // Selectores del menú móvil
+    const mobileMenuBtn = document.getElementById("mobile-menu");
+    const navLinks = document.getElementById("nav-links");
+    const serviciosHover = document.querySelector(".servicios-hover");
+
+    // Lógica para Menú Móvil
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener("click", function() {
+            navLinks.classList.toggle("active");
+            
+            // Cambiar ícono de hamburguesa a "X"
+            const icon = mobileMenuBtn.querySelector("i");
+            if (navLinks.classList.contains("active")) {
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-xmark");
+            } else {
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
+            }
+        });
+    }
+
+    // Desplegar Mega Menú en móvil al tocar "Servicios"
+    if (serviciosHover) {
+        const enlaceServicios = serviciosHover.querySelector('.btn-servicios');
+        
+        enlaceServicios.addEventListener("click", function(e) {
+            // Solo prevenimos la redirección y abrimos el acordeón si estamos en móvil (<992px)
+            if (window.innerWidth <= 992) {
+                e.preventDefault(); 
+                serviciosHover.classList.toggle("active");
+                
+                // Rotar la flechita
+                const flecha = this.querySelector('.hidden-desktop');
+                if(flecha) {
+                    flecha.style.transform = serviciosHover.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                }
+            }
+        });
+    }
+
+    // Selectores del Buscador
     const buscadorContainer = document.getElementById('contenedorBuscador');
     const inputBusqueda = document.getElementById('inputBuscador');
     const resultadosDiv = document.getElementById('resultadosBusqueda');
@@ -146,6 +191,10 @@ $resultRecientes = $conexion->query($queryRecientes);
                 setTimeout(() => inputBusqueda.focus(), 300);
             }
         }
+        // Cerrar menú móvil si estaba abierto al abrir el buscador
+        if(navLinks && navLinks.classList.contains('active')){
+            mobileMenuBtn.click();
+        }
     };
 
     // 2. Lógica de búsqueda en tiempo real
@@ -157,7 +206,6 @@ $resultRecientes = $conexion->query($queryRecientes);
                 return;
             }
 
-            // IMPORTANTE: Verifica que la ruta al controlador de búsqueda sea correcta
             fetch("<?= BASE_URL ?>app/controllers/buscar_servicio.php?q=" + valor)
                 .then(res => res.text())
                 .then(data => {
@@ -167,19 +215,13 @@ $resultRecientes = $conexion->query($queryRecientes);
         });
     }
 
-    // 3. LOGICA CLAVE: Click en un resultado para ir al detalle
+    // 3. Click en un resultado para ir al detalle
     if (resultadosDiv) {
         resultadosDiv.addEventListener("click", (e) => {
-            // Buscamos el elemento con la clase .resultado-item más cercano al click
             const item = e.target.closest(".resultado-item");
-            
             if(item){
-                // Obtenemos el ID que el controlador puso en el atributo data-id
                 let id = item.getAttribute("data-id");
-                
                 if(id) {
-                    // Redirigimos a la página de detalle con el ID correspondiente
-                    // Ajustamos la ruta para que siempre use detalle_servicio.php en la raíz
                     window.location.href = "<?= BASE_URL ?>detalle_servicio.php?id=" + id;
                 }
             }
@@ -211,7 +253,6 @@ $resultRecientes = $conexion->query($queryRecientes);
 })();
 
 function verServicio(id){
-    // Usamos la variable PHP $ruta_prefijo para que la ruta sea siempre absoluta desde la raíz
     window.location.href = "<?= BASE_URL ?>detalle_servicio.php?id=" + id;
 }
 </script>
