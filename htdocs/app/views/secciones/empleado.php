@@ -1,14 +1,7 @@
 <?php
-// Subimos dos niveles para salir de 'secciones' y 'views', luego entramos a 'config'
-include __DIR__ . "/../../config/conexion.db.php";
-
-// Obtenemos los puestos directamente de la base de datos de manera dinámica
-$queryPuestos = $conexion->query("SELECT * FROM puestos ORDER BY id_puesto ASC");
-$listaPuestos = "";
-while ($fila = $queryPuestos->fetch_assoc()) {
-    $listaPuestos .= "<option value='{$fila['id_puesto']}'>{$fila['nombre_puesto']}</option>";
-}
+require_once __DIR__ . "/../../controllers/empleado_controller.php";
 ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="contenedor-crud">
     <div class="encabezado-seccion">
@@ -71,7 +64,9 @@ while ($fila = $queryPuestos->fetch_assoc()) {
                 <div class="grupo-input">
                     <label>Puesto:</label>
                     <select name="id_puesto" required>
-                        <?php echo $listaPuestos; ?>
+                        <?php foreach ($puestos as $fila): ?>
+                            <option value="<?= $fila['id_puesto'] ?>"><?= $fila['nombre_puesto'] ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 
@@ -98,25 +93,22 @@ while ($fila = $queryPuestos->fetch_assoc()) {
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $resultado = $conexion->query("SELECT e.*, p.nombre_puesto FROM empleados e JOIN puestos p ON e.id_puesto = p.id_puesto");
-
-                while ($row = $resultado->fetch_assoc()) {
-                    echo "<tr>
-                            <td>{$row['id_empleado']}</td>
-                            <td><strong>{$row['nombre']}</strong></td>
-                            <td>{$row['apellido']}</td>
-                            <td>{$row['telefono']}</td>
-                            <td>{$row['correo']}</td>
-                            <td>{$row['nombre_usuario']}</td>
-                            <td>{$row['nombre_puesto']}</td> <td class='acciones'>
-                                <button class='btn-editar' onclick='abrirEditar(" . json_encode($row) . ")'><i class='fa-solid fa-pen-to-square'></i></button>
-                                <button class='btn-eliminar' onclick='confirmarEliminacion({$row['id_empleado']})'><i class='fa-solid fa-trash'></i></button>
-                                <button class='btn-contactar'><i class='fa-brands fa-whatsapp'></i></button>
-                            </td>
-                          </tr>";
-                }
-                ?>
+                <?php while ($row = $resultado->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= $row['id_empleado'] ?></td>
+                        <td><strong><?= $row['nombre'] ?></strong></td>
+                        <td><?= $row['apellido'] ?></td>
+                        <td><?= $row['telefono'] ?></td>
+                        <td><?= $row['correo'] ?></td>
+                        <td><?= $row['nombre_usuario'] ?></td>
+                        <td><?= $row['nombre_puesto'] ?></td>
+                        <td class='acciones'>
+                            <button class='btn-editar' onclick='abrirEditar(<?= json_encode($row) ?>)'><i class='fa-solid fa-pen-to-square'></i></button>
+                            <button class='btn-eliminar' onclick='confirmarEliminacion(<?= $row['id_empleado'] ?>)'><i class='fa-solid fa-trash'></i></button>
+                            <button class='btn-contactar'><i class='fa-brands fa-whatsapp'></i></button>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
             </tbody>
         </table>
     </div>
@@ -173,7 +165,9 @@ while ($fila = $queryPuestos->fetch_assoc()) {
             <div class="grupo-input">
                 <label>Puesto:</label>
                 <select name="id_puesto" id="edit-puesto" required>
-                    <?php echo $listaPuestos; ?>
+                    <?php foreach ($puestos as $fila): ?>
+                        <option value="<?= $fila['id_puesto'] ?>"><?= $fila['nombre_puesto'] ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 
@@ -195,99 +189,9 @@ while ($fila = $queryPuestos->fetch_assoc()) {
 </div>
 
 <style>
-    /* Forzar que las alertas de SweetAlert estén por encima de los modales de la página */
     .swal2-container {
         z-index: 999999 !important;
     }
 </style>
 
-<script>
-    function abrirFormulario() {
-        document.getElementById('formulario-empleado').style.display = 'flex';
-    }
-    function cerrarFormulario() {
-        document.getElementById('formulario-empleado').style.display = 'none';
-    }
-    // Cerrar modal al hacer clic fuera
-    window.onclick = function (event) {
-        if (event.target == document.getElementById('formulario-empleado')) {
-            cerrarFormulario();
-        }
-    }
-    function confirmarEliminacion(id) {
-        Swal.fire({
-            title: '¿Eliminar empleado?',
-            text: "Esta acción es permanente y no se puede deshacer.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Si el usuario confirma, hacemos la redirección
-                window.location.href = `../controllers/empleado_controller.php?accion=eliminar&id=${id}`;
-            }
-        });
-    }
-    function abrirEditar(datos) {
-        // Llenar los campos
-        document.getElementById('edit-id').value = datos.id_empleado;
-        document.getElementById('edit-nombre').value = datos.nombre;
-        document.getElementById('edit-apellido').value = datos.apellido;
-        document.getElementById('edit-telefono').value = datos.telefono;
-        document.getElementById('edit-correo').value = datos.correo;
-        document.getElementById('edit-usuario').value = datos.nombre_usuario;
-        document.getElementById('edit-puesto').value = datos.id_puesto;
-
-        // Mostrar el modal
-        document.getElementById('modal-editar-empleado').style.display = 'flex';
-    }
-
-    function cerrarModalEditar() {
-        document.getElementById('modal-editar-empleado').style.display = 'none';
-    }
-
-    // Función interceptora para confirmar antes de enviar cualquier formulario
-    function confirmarAccion(event, formulario, mensaje) {
-        event.preventDefault(); // Detenemos el envío automático del formulario
-        
-        Swal.fire({
-            title: '¿Confirmar acción?',
-            text: mensaje,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#52073a', // Tu color institucional
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Sí, continuar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Si el usuario da clic en "Sí", enviamos el formulario a PHP
-                formulario.submit();
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('status');
-
-        if (status === 'success') {
-            Swal.fire({
-                icon: 'success', title: '¡Actualizado!', text: 'Los datos se guardaron correctamente.', confirmButtonColor: '#52073a'
-            });
-        } else if (status === 'duplicate') {
-            Swal.fire({
-                icon: 'error', title: 'Dato Duplicado', text: 'El correo o nombre de usuario ya existe.', confirmButtonColor: '#52073a'
-            });
-        } else if (status === 'error') {
-            Swal.fire({
-                icon: 'error', title: 'Error', text: 'Ocurrió un problema al procesar la solicitud.', confirmButtonColor: '#52073a'
-            });
-        }
-        window.history.replaceState({}, document.title, window.location.pathname);
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../../public/js/empleado_crud.js"></script>

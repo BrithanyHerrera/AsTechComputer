@@ -7,6 +7,10 @@ require_once __DIR__ . "/../models/empleado_model.php";
 $modelo = new EmpleadosModel($conexion);
 $accion = $_GET['accion'] ?? '';
 
+// --- PREPARAR DATOS PARA LA VISTA ---
+$puestos    = $modelo->obtenerPuestos();
+$resultado  = $modelo->listarEmpleados();
+
 // --- AGREGAR EMPLEADO ---
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $accion == 'agregar') {
     $datos = [
@@ -47,24 +51,23 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'eliminar') {
 
 // --- EDITAR EMPLEADO ---
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $accion == 'editar') {
-    $id = $_POST['id_empleado'] ?? null;
-    $nombre = $_POST['nombre'] ?? '';
+    $id       = $_POST['id_empleado'] ?? null;
+    $nombre   = $_POST['nombre'] ?? '';
     $apellido = $_POST['apellido'] ?? '';
     $telefono = $_POST['telefono'] ?? '';
-    $correo = $_POST['correo'] ?? '';
-    $usuario = $_POST['nombre_usuario'] ?? '';
-    $puesto = $_POST['id_puesto'] ?? '';
+    $correo   = $_POST['correo'] ?? '';
+    $usuario  = $_POST['nombre_usuario'] ?? '';
+    $puesto   = $_POST['id_puesto'] ?? '';
 
-    // SEGURIDAD: Solo preparamos la contraseña si la escribieron Y si el usuario activo es Administrador (4)
     $contrasena_hash = null;
     if (!empty($_POST['contrasena']) && isset($_SESSION['id_puesto']) && $_SESSION['id_puesto'] == 4) {
         $contrasena_hash = password_hash($_POST['contrasena'], PASSWORD_DEFAULT);
     }
 
     try {
-        $resultado = $modelo->actualizarEmpleado($id, $nombre, $apellido, $telefono, $correo, $usuario, $puesto, $contrasena_hash);
+        $res = $modelo->actualizarEmpleado($id, $nombre, $apellido, $telefono, $correo, $usuario, $puesto, $contrasena_hash);
 
-        if ($resultado) {
+        if ($res) {
             header("Location: administracion_controller.php?seccion=empleado&status=success");
         } else {
             header("Location: administracion_controller.php?seccion=empleado&status=error");
