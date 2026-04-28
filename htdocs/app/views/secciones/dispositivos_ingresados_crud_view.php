@@ -9,6 +9,7 @@ $ingresos = [];
 if ($resultado && $resultado->num_rows > 0) { while ($fila = $resultado->fetch_assoc()) { $ingresos[] = $fila; } }
 ?>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="../../public/css/registros_crud.css?v=3.0">
 
 <div class="contenedor-ingresos">
@@ -18,6 +19,15 @@ if ($resultado && $resultado->num_rows > 0) { while ($fila = $resultado->fetch_a
             <div class="filtro-grupo">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" id="buscadorGlobal" placeholder="Buscar por Nombre o Folio..." onkeyup="filtrarTabla()">
+            </div>
+            <div class="filtro-grupo">
+                <label>Mostrar:</label>
+                <select id="filtroPaginacion" onchange="cambiarFilasPorPagina()">
+                    <option value="10">10 registros</option>
+                    <option value="25">25 registros</option>
+                    <option value="50">50 registros</option>
+                    <option value="todos">Todos</option>
+                </select>
             </div>
             <div class="filtro-grupo">
                 <label>Estado:</label>
@@ -98,6 +108,7 @@ if ($resultado && $resultado->num_rows > 0) { while ($fila = $resultado->fetch_a
             </tbody>
         </table>
     </div>
+    <div id="controlesPaginacion" class="paginacion-crud"></div>
 </div>
 
 <div id="modalDetalles" class="modal-personalizado">
@@ -126,7 +137,7 @@ if ($resultado && $resultado->num_rows > 0) { while ($fila = $resultado->fetch_a
     </div>
 </div>
 
-<div id="modalEditar" class="modal-personalizado style="display: none;">
+<div id="modalEditar" class="modal-personalizado" style="display: none;">
     <div class="contenido-modal">
         <span class="cerrar-modal" onclick="cerrarModalEditar()">&times;</span>
         <h2 style="color: #e17203; margin-bottom: 20px;"><i class="fa-solid fa-pen-to-square"></i> Editar Registro</h2>

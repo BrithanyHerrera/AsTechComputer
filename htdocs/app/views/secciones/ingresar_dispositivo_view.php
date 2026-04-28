@@ -83,27 +83,40 @@
         <div class="fila-doble">
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Nombre</label>
-            <input type="text" name="nombre_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['nombre_cliente'] ?? ''; ?>" required>
+            <input type="text" name="nombre_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['nombre_cliente'] ?? ''; ?>" required
+                   pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                   title="Solo se permiten letras y espacios." 
+                   oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
           </div>
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Apellido</label>
-            <input type="text" name="apellido_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['apellido_cliente'] ?? ''; ?>" required>
+            <input type="text" name="apellido_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['apellido_cliente'] ?? ''; ?>" required
+                   pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                   title="Solo se permiten letras y espacios." 
+                   oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
           </div>
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Número de telefono</label>
             <div class="input-icon-wrapper">
               <i class="fas fa-phone"></i>
-              <input type="tel" name="telefono_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['telefono_cliente'] ?? ''; ?>" required>
+              <input type="tel" name="telefono_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['telefono_cliente'] ?? ''; ?>" required
+                     pattern="[0-9]{10}" maxlength="10" 
+                     title="Debe contener exactamente 10 números."
+                     oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             </div>
           </div>
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Correo</label>
             <div class="input-icon-wrapper">
               <i class="fas fa-envelope"></i>
-              <input type="email" name="correo_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['correo_cliente'] ?? ''; ?>" required>
+              <input type="email" name="correo_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['correo_cliente'] ?? ''; ?>" required
+                     pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                     oninput="this.value = this.value.replace(/\s/g, '')" 
+                     title="Ingresa un correo válido con dominio (ejemplo: usuario@dominio.com)">
             </div>
           </div>
         </div>
+
         <button type="submit" class="boton-siguiente" name="step" value="2">Siguiente <i class="fa-solid fa-angle-right"></i></button>
         </div>
 

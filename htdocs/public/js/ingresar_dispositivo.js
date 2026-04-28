@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 1. Mostrar la alerta de éxito unificada
     // Revisamos si la URL dice 'status=success' O si PHP detectó la sesión 'mensaje_exito'
-    if (urlParams.get('status') === 'success' || typeof registroExitoso !== 'undefined' && registroExitoso) {
+    if (urlParams.get('status') === 'success' || (typeof registroExitoso !== 'undefined' && registroExitoso)) {
         Swal.fire({
             icon: 'success',
             title: '¡Registro Exitoso!',

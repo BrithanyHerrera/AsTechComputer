@@ -237,6 +237,9 @@ if ($query_gabinetes) {
         $gabinetes_disponibles[$row['tipo_espacio']][] = $row['id_gabinete'];
     }
 }
+
+$gabinetes_disponibles['otro'] = $gabinetes_disponibles['computadora_escritorio'];
+
 $json_gabinetes = json_encode($gabinetes_disponibles);
 
 // FIX: Al renderizar el paso 2, verificar que el espacio guardado en
