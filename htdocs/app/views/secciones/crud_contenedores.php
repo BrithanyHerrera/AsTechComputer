@@ -1,13 +1,6 @@
 <?php
-// Subimos dos niveles para salir de 'secciones' y 'views', luego entramos a 'config'
-include __DIR__ . "/../../config/conexion.db.php";
-
-// Verificación de seguridad (opcional pero recomendada)
-if (!isset($conexion)) {
-    die("Error: No se pudo cargar la variable de conexión \$pdo. Verifica el archivo conexion.db.php");
-}
+require_once __DIR__ . "/../../controllers/contenedor_controller.php";
 ?>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="contenedor-crud">
     <div class="encabezado-seccion">
@@ -61,31 +54,15 @@ if (!isset($conexion)) {
 <th>Tipo espacio</th>
 <th>Folio</th>
 <th>Estado</th>
-<th>Acciones</th> </tr>
+<th>Acciones</th>
 </tr>
 </thead>
 <tbody>
                     <tr>
                 <?php
-                // La consulta maestra que une gabinetes con órdenes activas
-                $sql = "SELECT 
-                            g.id_gabinete, 
-                            g.tipo_espacio, 
-                            g.estado, 
-                            o.folio 
-                        FROM gabinetes g 
-                        LEFT JOIN ordenes_ingreso o 
-                            ON g.id_gabinete = o.id_gabinete 
-                            AND o.estado != 'entregado'";
-
-                $resultado = $conexion->query($sql);
-
                 while ($row = $resultado->fetch_assoc()) {
                     $estado = $row['estado'];
-                    // Si el JOIN encontró un folio lo guardamos, si no, ponemos "N/A"
                     $folio_mostrar = !empty($row['folio']) ? $row['folio'] : 'N/A';
-                    
-                    // Limpiamos el texto del tipo de espacio (ej. computadora_escritorio -> Computadora escritorio)
                     $tipo_limpio = ucfirst(str_replace('_', ' ', $row['tipo_espacio']));
 
                     echo "<tr>
@@ -151,113 +128,4 @@ if (!isset($conexion)) {
         </form>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    
-function abrirFormulario() {
-    document.getElementById('formulario-gabinete').style.display = 'flex';
-}
-function cerrarFormulario() {
-    document.getElementById('formulario-gabinete').style.display = 'none';
-}
-// Cerrar modal al hacer clic fuera
-window.onclick = function(event) {
-    if (event.target == document.getElementById('formulario-gabinete')) {
-        cerrarFormulario();
-    }
-}
-function confirmarEliminacion(id) {
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: "Se eliminará el gabinete " + id,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#52073a',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // CORRECCIÓN: Usar backticks (`) correctamente y sin la comilla extra al final
-            window.location.href = `../controllers/contenedor_controller.php?accion=eliminar&id=${id}`;
-        }
-    })
-}
-// --- FUNCIONES PARA EDITAR ---
-function abrirEditar(datos) {
-    document.getElementById('edit-id').value = datos.id_gabinete;
-    document.getElementById('display-id').value = datos.id_gabinete;
-    document.getElementById('edit-tipo').value = datos.tipo_espacio;
-    document.getElementById('edit-estado').value = datos.estado;
-    // Si el folio no viene en el objeto, ponemos N/A
-    document.getElementById('edit-folio').value = datos.folio ? datos.folio : 'N/A';
-
-    document.getElementById('modal-editar-gabinete').style.display = 'flex';
-}
-function cerrarModalEditar() {
-    document.getElementById('modal-editar-gabinete').style.display = 'none';
-}
-
-
-
-// Cerrar modales al hacer clic fuera
-window.onclick = function(event) {
-    if (event.target.className === 'modal-formulario') {
-        cerrarFormulario();
-        cerrarModalEditar();
-    }
-}
-
-// --- ALERTAS SWEETALERT ---
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. Capturamos los parámetros de la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-    const seccion = urlParams.get('seccion');
-
-    // 2. Ejecutamos la alerta ANTES de limpiar la URL
-    if (status) {
-        // Solo mostramos si la sección coincide o si no hay sección definida
-        if (!seccion || seccion === 'contenedor') {
-            
-            if (status === 'success') {
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Operación Exitosa!',
-                    text: 'Los cambios se han guardado correctamente.',
-                    confirmButtonColor: '#52073a'
-                });
-            } 
-            else if (status === 'duplicate') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Dato Duplicado',
-                    text: 'Ese gabinete ya existe.',
-                    confirmButtonColor: '#52073a'
-                });
-            } 
-            else if (status === 'error') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Ocurrió un problema al procesar la solicitud.',
-                    confirmButtonColor: '#52073a'
-                });
-            }
-        }
-    }
-
-    // 3. LIMPIAR URL: Esto va al final para que no interfiera con la lógica anterior
-    // Solo lo hacemos si hay parámetros para limpiar
-    if (window.location.search) {
-        const nuevaUrl = window.location.pathname + (seccion ? "?seccion=" + seccion : "");
-        window.history.replaceState({}, document.title, nuevaUrl);
-    }
-});
-
-
-
-
-
-
-</script>
+<script src="../../public/js/contenedor_crud.js"></script>
