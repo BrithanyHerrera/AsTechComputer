@@ -42,7 +42,7 @@ Este archivo actúa como la Vista Parcial (Partial View) que contiene la estruct
                 <h4>Legal</h4>
                 <ul>
 
-                    <li><a href="<?php echo BASE_URL; ?>app/controllers/politica_privacidad_controller.php">Política de privacidad</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>app/controllers/aviso_privacidad_controller.php">Aviso de privacidad</a></li>
                     <li><a href="<?php echo BASE_URL; ?>app/controllers/terminos_y_condiciones_controller.php">Términos y Condiciones</a></li>
                     <li><a href="<?php echo BASE_URL; ?>app/controllers/politica_cookies_controller.php">Política de Cookies</a>
                     <li><a href="<?php echo BASE_URL; ?>app/controllers/politica_servicios_controller.php">Política de servicios</a></li>
