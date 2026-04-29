@@ -122,7 +122,8 @@ function abrirModalEditar(boton) {
         asignar('m_wa', datos.whatsapp);
         asignar('m_serie', datos.serie);
         asignar('m_modelo', datos.modelo);
-        asignar('m_detalle', datos.detalle); 
+        asignar('m_detalle', datos.detalle);
+        asignar('m_estado', datos.estado); 
 
         let elFecha = document.getElementById('m_fecha');
         if (elFecha) {
