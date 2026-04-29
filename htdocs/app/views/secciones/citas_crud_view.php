@@ -72,7 +72,7 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                     $partes_nombre = explode(' ', $nombre_mostrar);
                     $nombre_f = $datos_db['nombre_cliente'] ?? array_shift($partes_nombre);
                     $apellido_f = $datos_db['apellido_cliente'] ?? implode(' ', $partes_nombre);
-                ?>
+                    ?>
 
                     <tr class="fila-registro" data-nombre="<?= strtolower(htmlspecialchars($nombre_mostrar)) ?>"
                         data-estado="<?= $clase_estado ?>" data-fecha="<?= $fecha_formato_filtro ?>">
@@ -100,8 +100,7 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                                 <input type="hidden" name="google_id" value="<?= $id_evento ?>">
 
                                 <select name="estado" class="status-pill <?= $clase_estado ?>"
-                                    data-estado-anterior="<?= $estado_actual ?>"
-                                    onchange="confirmarCambioEstado(this)"
+                                    data-estado-anterior="<?= $estado_actual ?>" onchange="confirmarCambioEstado(this)"
                                     style="border: none; outline: none; cursor: pointer; font-weight: bold;">
                                     <option value="pendiente" <?= $estado_actual == 'pendiente' ? 'selected' : '' ?>
                                         style="background: #fff3cd; color: #856404;">Pendiente</option>
@@ -150,8 +149,7 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                             </button>
 
                             <a href="?seccion=citas&delete_id=<?= $id_evento ?>&db_id=<?= $datos_db['id_cita'] ?? '' ?>"
-                                class="btn-eliminar" title="Eliminar"
-                                onclick="confirmarEliminacion(event, this.href)">
+                                class="btn-eliminar" title="Eliminar" onclick="confirmarEliminacion(event, this.href)">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>
@@ -215,17 +213,15 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
             <div class="fila-form">
                 <div class="grupo-form">
                     <label>Nombre(s):</label>
-                    <input type="text" id="m_nombre" name="nombre" 
-                           pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
-                           title="Solo se permiten letras y espacios." 
-                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
+                    <input type="text" id="m_nombre" name="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                        title="Solo se permiten letras y espacios."
+                        oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
                 </div>
                 <div class="grupo-form">
                     <label>Apellido(s):</label>
-                    <input type="text" id="m_apellido" name="apellido" 
-                           pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
-                           title="Solo se permiten letras y espacios." 
-                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
+                    <input type="text" id="m_apellido" name="apellido" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                        title="Solo se permiten letras y espacios."
+                        oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
                 </div>
             </div>
 

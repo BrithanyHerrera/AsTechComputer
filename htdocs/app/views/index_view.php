@@ -298,7 +298,7 @@ include __DIR__ . "/../controllers/toolbar_controller.php";
         </div>
     </div>
 
-    <script src="public/js/fuciones.js"></script>
+    <script src="public/js/funciones,js"></script>
     <script src="public/js/index.js"></script>
 </body>
 

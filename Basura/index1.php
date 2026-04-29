@@ -202,7 +202,7 @@
         </footer>
     </main>
 
-    <script src="public/js/fuciones.js"></script>
+    <script src="public/js/funciones,js"></script>
 
     <div id="overlay-bloqueo" class="overlay-cookies"></div>
 
