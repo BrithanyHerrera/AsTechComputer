@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../config/conexion.db.php";
+require_once dirname(__DIR__) . '/config/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -33,6 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
 
     // Redirigir para evitar reenvío de formulario
-    header("Location: ../../app/views/administracion_view.php?seccion=inicio");
+    header("Location: " . BASE_URL . "app/views/administracion_view.php?seccion=inicio");
     exit;
 }

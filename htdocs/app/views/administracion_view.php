@@ -37,6 +37,7 @@
 
 
 <?php
+require_once dirname(__DIR__) . '/config/config.php'; 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -217,7 +218,7 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
 
       case 'contacto':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
-        if (file_exists($ruta_secciones . "contacto_info.php")) { include $ruta_secciones . "contacto_info.php"; }
+        if (file_exists($ruta_secciones . "contacto_crud_view.php")) { include $ruta_secciones . "contacto_crud_view.php"; }
         break;
 
       case 'ingreso':

@@ -7,7 +7,7 @@
 // 1. PRIMERO: Cargar los archivos necesarios
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/servicios_crud_model.php'; // Verifica que la ruta sea correcta
-
+require_once dirname(__DIR__) . '/config/config.php'; // o como se llame tu archivo
 // 2. SEGUNDO: Instanciar el modelo (Ahora sí la clase existe)
 $modelo = new ServicioCrudModel($conexion); 
 $modeloServicios = $modelo; // Mantengo ambos nombres por si los usas abajo
@@ -45,14 +45,14 @@ if ($accion == 'agregar' && $_SERVER["REQUEST_METHOD"] == "POST") {
     ];
 
     if (empty($datos['tipo_servicio']) || empty($datos['precio'])) {
-        header("Location: ../views/administracion_view.php?seccion=servicios&status=error&msg=campos_vacios");
+        header("Location: " . BASE_URL . "app/views/administracion_view.php?seccion=servicios&status=error&msg=campos_vacios");
     } else {
         try {
             if ($modelo->agregarServicio($datos)) {
-                header("Location: ../views/administracion_view.php?seccion=servicios&status=success");
+                header("Location: " . BASE_URL . "app/views/administracion_view.php?seccion=servicios&status=success");
             }
         } catch (Exception $e) {
-            header("Location: ../views/administracion_view.php?seccion=servicios&status=error");
+            header("Location: " . BASE_URL . "app/views/administracion_view.php?seccion=servicios&status=error");
         }
     }
     exit();
@@ -63,10 +63,10 @@ if ($accion == 'editar' && $_SERVER["REQUEST_METHOD"] == "POST") {
     $datos = $_POST;
     try {
         if ($modelo->editarServicio($datos)) {
-            header("Location: ../views/administracion_view.php?seccion=servicios&status=success");
+            header("Location: " . BASE_URL . "app/views/administracion_view.php?seccion=servicios&status=success");
         }
     } catch (Exception $e) {
-        header("Location: ../views/administracion_view.php?seccion=servicios&status=error");
+        header("Location: " . BASE_URL . "app/views/administracion_view.php?seccion=servicios&status=error");
     }
     exit();
 }
@@ -74,7 +74,7 @@ if ($accion == 'editar' && $_SERVER["REQUEST_METHOD"] == "POST") {
 // ELIMINAR
 if ($accion == 'eliminar' && isset($_GET['id'])) {
     if ($modelo->eliminarServicio($_GET['id'])) {
-        header("Location: ../views/administracion_view.php?seccion=servicios&status=success");
+        header("Location: " . BASE_URL . "app/views/administracion_view.php?seccion=servicios&status=success");
     }
     exit();
 }
