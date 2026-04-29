@@ -1,4 +1,27 @@
 <?php
+/**
+ * PÁGINA: Gestión de Servicios CRUD - As Tech Computer (servicios_crud_view.php)
+ * PROPÓSITO: Proporcionar una interfaz administrativa completa para visualizar, buscar, 
+ * crear, editar y eliminar los servicios ofrecidos por la empresa.
+ * FUNCIONALIDADES:
+ * - Sistema de Búsqueda: Filtrado dinámico de servicios por nombre, código, descripción o 
+ * procedimientos mediante parámetros LIKE en SQL.
+ * - Visualización de Datos:
+ * • Tabla responsiva que muestra detalles clave (Nombre, Tipo, Descripción, Tiempo, Precio y Estado).
+ * • Formateo de moneda para precios y etiquetas de estado con colores dinámicos (Activo/Inactivo).
+ * - Operaciones CRUD (Interfaz):
+ * • Formulario Modal para registro de nuevos servicios con selección de tipos de servicio y carga de imágenes.
+ * • Sistema de Edición mediante modales que se auto-pueblan con datos JSON al hacer clic.
+ * • Modal de visualización detallada para leer información extensa (procedimientos, exclusiones, etc.).
+ * - Integraciones:
+ * • SweetAlert2 para confirmaciones de eliminación y notificaciones.
+ * • Font Awesome para iconografía.
+ * • JavaScript externo (servicios_crud.js) para manejo de DOM y lógica de modales.
+ * - Relaciones de DB: Consultas con LEFT JOIN para obtener el nombre de la categoría desde 'tipos_servicios'.
+ */
+?>
+
+<?php
 include __DIR__ . "/../../config/conexion.db.php";
 
 if (!isset($conexion)) {

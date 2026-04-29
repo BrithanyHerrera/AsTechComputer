@@ -1,4 +1,22 @@
 <?php
+/**
+ * PÁGINA: Modelo de Gestión de Contactos - As Tech Computer (contacto_crud_model.php)
+ * PROPÓSITO: Definir la lógica de acceso a datos para la entidad de mensajes de contacto, 
+ * actuando como intermediario entre la base de datos y el controlador.
+ * FUNCIONALIDADES:
+ * - Estructura de clase (ContactoModel) con inyección de conexión a base de datos mediante constructor.
+ * - Lectura de Datos:
+ * • Método obtenerMensajes(): Consulta todos los registros de la tabla 'mensajes_contacto' 
+ * ordenados cronológicamente por fecha de envío.
+ * - Actualización de Datos:
+ * • Método actualizarEstado(): Modifica el estatus de un mensaje específico (ID) aplicando 
+ * limpieza de datos (real_escape_string) para prevenir SQL Injection.
+ * - Eliminación de Datos:
+ * • Método eliminarMensaje(): Borra permanentemente un registro de mensaje según su ID 
+ * con protección contra inyecciones SQL.
+ */
+?>
+<?php
 class ContactoModel {
     private $db;
 

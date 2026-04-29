@@ -1,4 +1,27 @@
 <?php
+/**
+ * PÁGINA: Bandeja de Mensajes de Contacto - As Tech Computer (contacto_crud_view.php)
+ * PROPÓSITO: Administrar la comunicación recibida a través del formulario de contacto, 
+ * permitiendo la lectura, respuesta y gestión de estados de los mensajes.
+ * FUNCIONALIDADES:
+ * - Visualización de Mensajes:
+ * • Listado tabular de mensajes con truncado de texto para mejorar la legibilidad.
+ * • Conversión y formateo de fechas de envío.
+ * • Etiquetas visuales (Badges) para identificar estados: Nuevo, Pendiente, Respondido o Finalizado.
+ * - Acciones de Comunicación:
+ * • Función de envío de correo: Abre automáticamente Gmail con destinatario, asunto y 
+ * cuerpo pre-redactado basado en el mensaje recibido.
+ * - Gestión de Estados:
+ * • Actualización de estado interactiva mediante modales de SweetAlert2 con selectores.
+ * - Mantenimiento:
+ * • Eliminación de mensajes con confirmación de seguridad vía SweetAlert2.
+ * - Feedback al Usuario:
+ * • Detección de parámetros de estado en la URL para mostrar alertas de éxito o error 
+ * tras realizar acciones.
+ */
+?>
+
+<?php
 
 include __DIR__ . "/../../config/conexion.db.php"; 
 
