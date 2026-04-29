@@ -32,7 +32,7 @@ $mensaje_error = '';
 // 4. Verificamos si el formulario fue enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
     $usuario = trim($_POST['usuario']);
-    $password = trim($_POST['password']);
+    $password = $_POST['password'];
 
     if (!empty($usuario) && !empty($password)) {
         
