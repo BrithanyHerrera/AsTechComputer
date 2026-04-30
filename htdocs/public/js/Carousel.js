@@ -1,3 +1,13 @@
+/**
+ * SCRIPT: carousel.js
+ * PROPÓSITO: Controlar el desplazamiento horizontal de un carrusel de elementos en la interfaz.
+ * FUNCIONALIDADES:
+ * - Inicialización al cargar el DOM.
+ * - Cálculo dinámico del desplazamiento según el tamaño de los elementos.
+ * - Navegación mediante botones "next" y "prev".
+ * - Implementación de animación suave (scroll) con efecto easing.
+ * - Mejora de la experiencia de usuario al desplazar múltiples elementos por interacción.
+ */
 document.addEventListener("DOMContentLoaded", () => {
 
     const track = document.getElementById("carouselTrack");
