@@ -138,8 +138,8 @@ body {
     display: none;
 }
 
-.logo {
-height: 100px;
+.logos {
+    height: 100px;
     width: 100px;
     height: 80px;
     background: white;
@@ -151,7 +151,7 @@ height: 100px;
     transition: 0.3s;
 }
 
-.logo:hover {
+.logos:hover {
     transform: scale(1.05);
 }
 

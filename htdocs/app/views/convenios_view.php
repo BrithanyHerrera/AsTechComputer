@@ -33,32 +33,26 @@
  * - Organización modular del código para facilitar mantenimiento y escalabilidad.
  */
 ?>
-<?php 
-include_once __DIR__ . "/fijos/loader_view.php";
- ?>
-    
-    <?php
-    $ruta_prefijo = "../../../"; 
- 
-    require_once __DIR__ . "/../config/config.php"; 
-    include __DIR__ . "/../controllers/toolbar_controller.php";
-   
-
-    ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convenios | AS TECH</title>
+    <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/convenios.css">
 </head>
 <body>
-    
+    <?php 
+    include_once __DIR__ . "/fijos/loader_view.php"; 
+    require_once __DIR__ . "/../config/config.php"; 
+    include __DIR__ . "/../controllers/toolbar_controller.php";
+    ?>
     
     <section class="seccion-convenios">
         <h1 class="titulo-convenios">Convenios</h1>
@@ -76,16 +70,16 @@ include_once __DIR__ . "/fijos/loader_view.php";
                 <button class="btn prev">&#10094;</button>
 
                 <div class="carousel-track" id="carouselTrack">
-                    <div class="logo"><img src="../../public/img/dell.png" style="width:100%;"></div>
-                    <div class="logo"><img src="../../public/img/lenovo.png" style="width:100%;"></div>
-                    <div class="logo"><img src="../../public/img/hp.png" style="width:100%;"></div>
-                    <div class="logo"><img src="../../public/img/acer.png" style="width:100%;"></div>
-                    <div class="logo"><img src="../../public/img/samsung.png" style="width:100%;"></div>
-                    <div class="logo"><img src="../../public/img/asus.png" style="width:100%;"></div>
-                    <div class="logo"><img src="../../public/img/huawei.png" style="width:100%;"></div>
-                    <div class="logo"><img src="../../public/img/msi.png" style="width:100%;"></div>
-                    <div class="logo"><img src="../../public/img/kingston.png" style="width:100%;"></div>
-                    <div class="logo"><img src="../../public/img/xpg.jfif" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/dell.png" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/lenovo.png" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/hp.png" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/acer.png" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/samsung.png" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/asus.png" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/huawei.png" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/msi.png" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/kingston.png" style="width:100%;"></div>
+                    <div class="logos"><img src="../../public/img/xpg.jfif" style="width:100%;"></div>
                 </div>
 
                 <button class="btn next">&#10095;</button>
