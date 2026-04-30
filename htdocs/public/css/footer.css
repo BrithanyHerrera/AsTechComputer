@@ -263,7 +263,6 @@ html, body {
     color: #1d1d1f;
 }
 
-/* Modal Detallado de Ajustes */
 .modal-ajustes {
     position: fixed;
     top: 50%;
@@ -329,7 +328,6 @@ html, body {
     text-decoration: none;
 }
 
-/* Tarjetas de Categoría de Cookies */
 .cookie-card {
     background: #fff;
     border: 1px solid #e0e0e0;
@@ -370,7 +368,6 @@ html, body {
     line-height: 1.5;
 }
 
-/* Menú Desplegable de Detalles */
 details {
     border-top: 1px solid #eee;
     padding-top: 12px;
@@ -404,7 +401,6 @@ details[open] summary i {
     border-left: 3px solid #e06c00;
 }
 
-/* Interruptores (Toggle Switch) */
 .toggle-switch {
     position: relative;
     display: inline-block;
@@ -452,8 +448,7 @@ input:checked+.slider:before {
     transform: translateX(22px);
 }
 
-/* Botones Finales del Modal */
-.modal-footer-xiaomi {
+.modal-footer {
     padding: 20px 30px;
     border-top: 1px solid #e0e0e0;
     background: #fff;

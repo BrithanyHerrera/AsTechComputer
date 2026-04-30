@@ -108,7 +108,7 @@
         <div class="grid-resenas">
             <?php if (!empty($comentarios)): ?>
                 <?php foreach ($comentarios as $comentario): ?>
-                    <div class="tarjeta-resena xiaomi-card">
+                    <div class="tarjeta-resena">
                         <div class="perfil-resena">
                             <img src="<?php echo htmlspecialchars($comentario['profile_photo_url']); ?>"
                                 alt="<?php echo htmlspecialchars($comentario['author_name']); ?>" referrerpolicy="no-referrer">

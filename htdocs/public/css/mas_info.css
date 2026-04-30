@@ -8,11 +8,10 @@ Este documento contiene las hojas de estilo en cascada (CSS) exclusivas para la 
    ========================================== */
 :root {
     --color-naranja: #e17203;
-    /* El naranja corporativo de AsTech */
     --color-texto: #333333;
     --color-gris-fondo: #f9f9fb;
     --color-blanco: #ffffff;
-    --sombra-xiaomi: 0 8px 24px rgba(0, 0, 0, 0.06);
+    --sombra: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 body {
@@ -25,11 +24,9 @@ body {
    ========================================== */
 .contenedor-principal-resenas {
     max-width: 1200px;
-    /* margin: 120px arriba | auto a los lados | 50px abajo */
     margin: 120px auto 50px auto;
     padding: 0 20px;
     flex-grow: 1;
-    /* Mantiene la posición adecuada del footer */
 }
 
 /* ==========================================
@@ -88,7 +85,6 @@ body {
 
 .estrellas-grandes {
     color: #fbbc04;
-    /* Color oficial de estrellas de Google */
     font-size: 3rem;
     margin-bottom: 5px;
 }
@@ -104,14 +100,13 @@ body {
    ========================================== */
 .grid-resenas {
     display: grid;
-    /* Ajuste responsivo de columnas */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
     padding: 20px 8%;
 }
 
 /* ==========================================
-   6. ESTILOS INDIVIDUALES DE LA TARJETA (ESTILO XIAOMI)
+   6. ESTILOS INDIVIDUALES DE LA TARJETA
    ========================================== */
 .tarjeta-resena {
     background: white;
@@ -157,7 +152,6 @@ body {
 
 .estrellas {
     color: #FFD700;
-    /* Oro estándar para reseñas */
     font-size: 0.9rem;
 }
 
@@ -171,7 +165,6 @@ body {
     font-style: italic;
     margin-bottom: 20px;
     flex-grow: 1;
-    /* Mantiene la alineación inferior de la fecha */
 }
 
 .fecha-resena {
@@ -190,7 +183,7 @@ body {
     background: var(--color-blanco);
     border-radius: 12px;
     color: #666;
-    box-shadow: var(--sombra-xiaomi);
+    box-shadow: var(--sombra);
 }
 
 .alerta-vacia i {

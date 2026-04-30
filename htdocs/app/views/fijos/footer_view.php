@@ -118,7 +118,7 @@ También contiene el sistema global de gestión de cookies (Banner y Modal).
         <p style="font-size: 0.85rem; color: #666; margin-top: 15px;">Al presionar "Aceptar Todo", consientes el uso de todas estas tecnologías.</p>
     </div>
 
-    <div class="modal-footer-xiaomi">
+    <div class="modal-footer">
         <button id="btn-modal-rechazar" class="btn-x-outline">RECHAZAR TODO</button>
         <button id="btn-modal-aceptar" class="btn-x-solid">ACEPTAR TODO</button>
     </div>

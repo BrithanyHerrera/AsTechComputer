@@ -1,7 +1,7 @@
 <script>
 /* POLITICA_COOKIES_VIEW.PHP */
 /*
-Este archivo actúa como la Vista (View) encargada de mostrar el documento oficial de la Política de Cookies de ASTECH COMPUTER. Su objetivo es transparentar hacia el usuario el tipo de tecnologías de rastreo y almacenamiento de datos que utiliza la plataforma, clasificándolas según su función (técnicas, funcionales, analíticas y publicitarias) y explicando claramente cómo impactan en servicios específicos (como el agendamiento de citas o el formulario de contacto). El diseño mantiene una estructura tipográfica limpia y profesional, e incorpora de forma modular la barra de navegación (Toolbar) y el pie de página (Footer) para preservar la uniformidad del sitio web corporativo.
+Este archivo actúa como la Vista (View) encargada de mostrar el documento oficial de la Política de Cookies de ASTECH COMPUTER. Su objetivo es transparentar hacia el usuario el tipo de tecnologías de rastreo y almacenamiento de datos que utiliza la plataforma, clasificándolas según su función (técnicas, funcionales y analíticas) y explicando claramente cómo impactan en servicios específicos (como el agendamiento de citas o el formulario de contacto). El diseño mantiene una estructura tipográfica limpia y profesional, e incorpora de forma modular la barra de navegación (Toolbar) y el pie de página (Footer) para preservar la uniformidad del sitio web corporativo.
 */
 </script>
 
