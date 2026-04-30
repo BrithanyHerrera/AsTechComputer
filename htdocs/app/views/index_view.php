@@ -9,10 +9,7 @@
  * - Visualización de servicios principales mediante tarjetas interactivas (Diagnóstico, Mantenimiento, Reparación).
  * - Presentación de la filosofía empresarial: misión, visión y valores corporativos.
  * - Sección destacada del CEO con mensaje institucional y branding.
- * - Sistema de gestión de cookies con:
- *      • Banner de consentimiento.
- *      • Opciones de aceptar, rechazar o configurar cookies.
- *      • Modal de configuración detallada por tipo de cookies.
+ * - Sistema de gestión de cookies trasladado al Footer global.
  * - Inclusión de loader inicial para mejorar la experiencia de carga.
  * - Uso de recursos externos como Google Fonts y Font Awesome para mejorar el diseño visual.
  */
@@ -33,29 +30,29 @@
     <link rel="icon" href="<?= BASE_URL ?>public/img/Astech ICO.ico" type="image/x-icon">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/toolbar.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/footer.css">
-   <link rel="stylesheet" href="<?= BASE_URL ?>public/css/index.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/index.css">
 </head>
 
 <body>
-    
+
     <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
-      
-    <?php 
+
+    <?php
     $ruta_prefijo = "";
     $ruta_img = "../../public/img/servicios/";
-   
-include __DIR__ . "/../controllers/toolbar_controller.php";
+
+    include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 
     <main>
         <section class="hero-wrapper">
             <div class="hero-astech">
                 <div class="hero-texto">
-                   
-                      <div class="hero-imagen">
-                    <img src="<?= BASE_URL ?>public/img/logo_horizontal.png" alt="Logo Astech Computer">
-                </div>
-                    
+
+                    <div class="hero-imagen">
+                        <img src="<?= BASE_URL ?>public/img/logo_horizontal.png" alt="Logo Astech Computer">
+                    </div>
+
                     <p class="destacado"> Confiabilidad, garantia y transparencia </p>
                     <div class="hero-botones">
                         <a href="app/controllers/citas_cliente_controller.php" class="btn-comprar">Agendar cita</a>
@@ -63,7 +60,7 @@ include __DIR__ . "/../controllers/toolbar_controller.php";
                                 class="fa-solid fa-angle-right"></i></a>
                     </div>
                 </div>
-              
+
             </div>
         </section>
 
@@ -71,7 +68,7 @@ include __DIR__ . "/../controllers/toolbar_controller.php";
             <div class="grid-about">
                 <div class="texto-about">
                     <h2>¿Quiénes somos?</h2>
-                   <p><?= htmlspecialchars($info['quienes_somos']) ?></p>
+                    <p><?= htmlspecialchars($info['quienes_somos']) ?></p>
                 </div>
                 <div class="imagen-about">
                     <img src="<?= BASE_URL ?>public/img/trabajado.JPG" alt="Trabajo en Astech">
@@ -172,134 +169,12 @@ include __DIR__ . "/../controllers/toolbar_controller.php";
         </section>
     </main>
 
-    <?php 
+    <?php
     $ruta_prefijo = "";
-   include __DIR__ . "/../controllers/footer_controller.php";
+    include __DIR__ . "/../controllers/footer_controller.php";
     ?>
 
-    <div id="overlay-bloqueo" class="overlay-cookies"></div>
-
-    <div id="banner-cookies" class="contenedor-cookies">
-        <div class="texto-cookies">
-            <i class="fa-solid fa-cookie-bite"></i>
-            <div>
-                <h3 style="margin: 0 0 5px 0; color: #1d1d1f; font-size: 1.2rem; font-weight: 900;">Tu privacidad es
-                    importante</h3>
-                <p>Utilizamos cookies y tecnologías similares para garantizar que el sitio funcione correctamente,
-                    mantener la seguridad y analizar nuestro tráfico. Puedes "Aceptar todas", "Rechazar todas" (excepto
-                    las estrictamente necesarias) o personalizar tu configuración.</p>
-            </div>
-        </div>
-        <div class="botones-cookies">
-            <button id="btn-configurar-cookies" class="btn-enlace">Ajustes de Cookies</button>
-
-            <div style="display: flex; gap: 10px; width: 100%; justify-content: center;">
-                <button id="btn-rechazar-cookies" class="btn-rechazar">Rechazar todas</button>
-                <button id="btn-aceptar-cookies" class="btn-aceptar">Aceptar todas</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-ajustes-cookies" class="modal-ajustes" style="display: none;">
-        <div class="modal-header-ajustes">
-            <h2>Ajustes de Cookies</h2>
-            <button id="btn-cerrar-ajustes" class="btn-cerrar"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-
-        <div class="modal-body-ajustes">
-            <p class="intro-ajustes">Tienes control total sobre las cookies (y otras tecnologías similares) cuando
-                utilizas nuestro sitio web. Puedes limitar cierto seguimiento o rechazar las cookies en relación con
-                aquellas que no son necesarias, pero ten en cuenta que si rechazas el uso de ciertos tipos de cookies,
-                algunas de las funciones de nuestro sitio web podrían verse afectadas. <br><br> Para obtener más
-                información, consulta nuestra <a href="app/controllers/politica_cookies_controller.php" target="_blank">"Política de
-                    Cookies"</a>.</p>
-
-            <div class="cookie-card">
-                <div class="cookie-card-header">
-                    <h3>COOKIES NECESARIAS</h3>
-                    <span class="badge-fijo">Siempre activas</span>
-                </div>
-                <div class="cookie-card-body">
-                    <p>Las cookies esenciales son necesarias para garantizar la funcionalidad básica y el correcto
-                        funcionamiento de nuestro sitio web.</p>
-                    <details>
-                        <summary><i class="fa-solid fa-caret-right"></i> Ver las cookies necesarias</summary>
-                        <p class="texto-oculto">Estas cookies no son opcionales y no se pueden desactivar. Se utilizan
-                            para iniciar sesión en la cuenta, identificar el dispositivo, guardar artículos en el
-                            carrito, procesar pagos y proteger el sitio web contra ataques maliciosos.</p>
-                    </details>
-                </div>
-            </div>
-
-            <div class="cookie-card">
-                <div class="cookie-card-header">
-                    <h3>COOKIES FUNCIONALES</h3>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="toggle-funcionales">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                <div class="cookie-card-body">
-                    <p>Las cookies funcionales permiten a nuestro sitio web ofrecer funciones mejoradas y mejorar la
-                        experiencia de usuario. No son estrictamente necesarias.</p>
-                    <details>
-                        <summary><i class="fa-solid fa-caret-right"></i> Configuraciones detalladas</summary>
-                        <p class="texto-oculto">Estas cookies se utilizan para proporcionar enlaces de productos,
-                            habilitar funciones de visualización, ofrecer asistencia multilingüe y distinguir entre
-                            usuarios reales y tráfico automatizado.</p>
-                    </details>
-                </div>
-            </div>
-
-            <div class="cookie-card">
-                <div class="cookie-card-header">
-                    <h3>COOKIES DE ANÁLISIS</h3>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="toggle-analiticas">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                <div class="cookie-card-body">
-                    <p>Las cookies de análisis realizan un seguimiento de su actividad en nuestro sitio web para
-                        comprender cómo utilizan el sitio y mejorar la calidad.</p>
-                    <details>
-                        <summary><i class="fa-solid fa-caret-right"></i> Configuraciones detalladas</summary>
-                        <p class="texto-oculto">Estas cookies están asociadas a Google Analytics y distinguen a los
-                            usuarios asignando IDs aleatorios. Recopilan información de forma anónima sobre visitantes y
-                            fuentes.</p>
-                    </details>
-                </div>
-            </div>
-
-            <div class="cookie-card">
-                <div class="cookie-card-header">
-                    <h3>COOKIES PUBLICITARIAS</h3>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="toggle-publicidad">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                <div class="cookie-card-body">
-                    <p>Las cookies publicitarias se utilizan para mostrarle publicidad relevante basada en sus intereses
-                        en otras plataformas.</p>
-                    <details>
-                        <summary><i class="fa-solid fa-caret-right"></i> Configuraciones detalladas</summary>
-                        <p class="texto-oculto">Google y Meta realizan un seguimiento del comportamiento para medir
-                            conversiones, personalizar contenido y ofrecer promociones basadas en navegación.</p>
-                    </details>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal-footer-xiaomi">
-            <button id="btn-modal-enviar" class="btn-x-outline">ENVIAR PREFERENCIAS</button>
-            <button id="btn-modal-aceptar" class="btn-x-solid">ACEPTAR TODO</button>
-            <button id="btn-modal-rechazar" class="btn-x-solid">RECHAZAR TODO</button>
-        </div>
-    </div>
-
-    <script src="public/js/funciones,js"></script>
-    <script src="public/js/index.js"></script>
+    <script src="<?= BASE_URL ?>public/js/index.js"></script>
 </body>
 
 </html>
