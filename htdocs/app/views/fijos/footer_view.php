@@ -64,7 +64,7 @@ También contiene el sistema global de gestión de cookies (Banner y Modal).
         </a>
     </div>
     <div class="barra-derechos">
-        <p>&copy; 2026 AS TECH COMPUTER. Todos los derechos reservados.</p>
+        <c>&copy; 2026 AS TECH COMPUTER. Todos los derechos reservados.</c>
     </div>
 </footer>
 
