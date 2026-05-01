@@ -1,62 +1,36 @@
-<?php
-/**
- * PÁGINA: Barra de Navegación (Toolbar) - As Tech Computer
- * PROPÓSITO: Proporcionar una interfaz de navegación global y acceso rápido a los servicios y búsqueda.
- * FUNCIONALIDADES: 
- * - Menú principal con enlaces dinámicos a Contacto, Servicios y Agendamiento de citas.
- * - Mega Menú interactivo que organiza los servicios por categorías (tipos) recuperados de la base de datos.
- * - Sección de "Lo más reciente" dentro del menú para destacar los últimos servicios agregados.
- * - Buscador integrado con tecnología de búsqueda en tiempo real y redirección automática al detalle del servicio.
- * - Gestión dinámica de rutas mediante la variable '$ruta_prefijo' para asegurar la navegación entre diferentes niveles de carpetas.
- *
-*/
-?>
-<?php
-require_once __DIR__ . "/../../config/config.php";
-?>
+<script>
+    /* TOOLBAR_VIEW */
+    /**
+     * PÁGINA: Barra de Navegación (Toolbar) - As Tech Computer
+     * PROPÓSITO: Proporcionar una interfaz de navegación global y acceso rápido a los servicios y búsqueda.
+     * FUNCIONALIDADES: 
+     * - Menú principal con enlaces dinámicos a Contacto, Servicios y Agendamiento de citas.
+     * - Mega Menú interactivo que organiza los servicios por categorías (tipos) recuperados de la base de datos.
+     * - Sección de "Lo más reciente" dentro del menú para destacar los últimos servicios agregados.
+     * - Buscador integrado con tecnología de búsqueda en tiempo real y redirección automática al detalle del servicio.
+     * - Gestión dinámica de rutas mediante la variable '$ruta_prefijo' para asegurar la navegación entre diferentes niveles de carpetas.
+     */
+</script>
 
-<?php 
-$ruta_img = BASE_URL . "public/img/servicios/";
-if (isset($permitirAnaliticas) && $permitirAnaliticas): ?>
+<?php
+/* ========================================================
+   1. INYECCIÓN CONDICIONAL DE ANALÍTICAS (PRIVACIDAD)
+   ======================================================== */
+// El sistema verifica si el usuario ha otorgado el consentimiento 
+// explícito para el uso de cookies analíticas antes de incrustar el script.
+if ($permitirAnaliticas):
+    ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-862PM8JVQD"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-862PM8JVQD');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-862PM8JVQD');
     </script>
 <?php endif; ?>
 
-<?php
-if (!isset($conexion)) {
-    require_once __DIR__ . "/../../config/conexion.db.php";
-}
-
-// 1. Obtener tipos de servicios
-$queryTipos = "SELECT id_tipo_servicio, nombre_tipo FROM tipos_servicios ORDER BY id_tipo_servicio ASC";
-$resultTipos = $conexion->query($queryTipos);
-
-// 2. Obtener servicios activos
-$serviciosPorTipo = [];
-$queryServicios = "SELECT * FROM servicios WHERE estado = 'activo'";
-$resServicios = $conexion->query($queryServicios);
-while ($row = $resServicios->fetch_assoc()) {
-    $serviciosPorTipo[$row['id_tipo_servicio']][] = $row;
-}
-
-// 3. Obtener los más recientes
-$queryRecientes = "
-    SELECT s.*, t.nombre_tipo 
-    FROM servicios s
-    JOIN tipos_servicios t ON s.id_tipo_servicio = t.id_tipo_servicio
-    WHERE s.estado = 'activo' 
-    ORDER BY s.id_servicio DESC 
-    LIMIT 4
-";
-$resultRecientes = $conexion->query($queryRecientes);
-?>
-
 <header class="navbar">
+
     <div class="logo">
         <a href="<?= BASE_URL ?>Index.php">
             <img src="<?= BASE_URL ?>public/img/LogoHD.png" class="logo-superior" alt="Logo">
@@ -73,52 +47,56 @@ $resultRecientes = $conexion->query($queryRecientes);
             <li class="botones"><a href="<?= BASE_URL ?>app/controllers/contacto_controller.php">Contacto</a></li>
 
             <li class="servicios-hover botones">
-                <a href="<?= BASE_URL ?>app/controllers/servicios_controller.php" class="btn-servicios">Servicios <i class="fa-solid fa-chevron-down hidden-desktop"></i></a>
+                <a href="<?= BASE_URL ?>app/controllers/servicios_controller.php" class="btn-servicios">Servicios <i
+                        class="fa-solid fa-chevron-down hidden-desktop"></i></a>
 
                 <div class="mega-menu">
                     <div class="mega-menu-content">
+
                         <div class="menu-izquierda">
-                            <?php 
-                            $resultTipos->data_seek(0); // Reiniciar puntero
-                            while($tipo = $resultTipos->fetch_assoc()): 
-                            ?>
+                            <?php foreach ($tiposServicios as $tipo): ?>
                                 <div class="acordeon-item">
                                     <button class="titulo-tipo-btn">
-                                        <?php echo $tipo['nombre_tipo']; ?>
+                                        <?php echo htmlspecialchars($tipo['nombre_tipo']); ?>
                                         <i class="fa-solid fa-chevron-down"></i>
                                     </button>
                                     <div class="submenu-desplegable">
-                                     <?php 
+                                        <?php
                                         $id_actual = $tipo['id_tipo_servicio'];
-                                         if(isset($serviciosPorTipo[$id_actual])):
-                                         foreach($serviciosPorTipo[$id_actual] as $srv): ?>
-                                        <a href="<?= BASE_URL ?>app/controllers/detalle_servicio_controller.php?id=<?php echo $srv['id_servicio']; ?>">
-                                        <?php echo $srv['tipo_servicio']; ?>
-                                         </a>
-                                         <?php endforeach; endif; ?>
+                                        if (isset($serviciosPorTipo[$id_actual])):
+                                            foreach ($serviciosPorTipo[$id_actual] as $srv): ?>
+                                                <a
+                                                    href="<?= BASE_URL ?>app/controllers/detalle_servicio_controller.php?id=<?php echo $srv['id_servicio']; ?>">
+                                                    <?php echo htmlspecialchars($srv['tipo_servicio']); ?>
+                                                </a>
+                                            <?php endforeach; endif; ?>
                                     </div>
                                 </div>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </div>
 
                         <div class="menu-derecha">
                             <p class="label-recientes">Lo más reciente</p>
-                             <div class="grid-recientes">
-                                <?php while($reciente = $resultRecientes->fetch_assoc()): ?>
-                                    <a href="<?= BASE_URL ?>detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>" style="text-decoration: none; color: inherit;">
+                            <div class="grid-recientes">
+                                <?php foreach ($serviciosRecientes as $reciente): ?>
+                                    <a href="<?= BASE_URL ?>detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>"
+                                        style="text-decoration: none; color: inherit;">
                                         <div class="tarjeta">
                                             <span class="badge">Nuevo</span>
-                                            <img src="<?php echo $ruta_img . $reciente['imagen_servicio']; ?>" alt="Servicio"> 
-                                            <h4><?php echo $reciente['tipo_servicio']; ?></h4> 
+                                            <img src="<?php echo $ruta_img . $reciente['imagen_servicio']; ?>"
+                                                alt="Servicio">
+                                            <h4><?php echo htmlspecialchars($reciente['tipo_servicio']); ?></h4>
                                         </div>
                                     </a>
-                                <?php endwhile; ?>
-                            </div>                           
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </li>
-            <li class="botones"><a href="<?= BASE_URL ?>app/controllers/citas_cliente_controller.php">Agendar cita</a></li>
+
+            <li class="botones"><a href="<?= BASE_URL ?>app/controllers/citas_cliente_controller.php">Agendar cita</a>
+            </li>
             <li class="botones">
                 <a href="javascript:void(0);" id="btnBuscador" class="enlace-opcion-serv" onclick="abrirBuscador()">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -136,123 +114,7 @@ $resultRecientes = $conexion->query($queryRecientes);
 </div>
 
 <script>
-(function() {
-    // Selectores del menú móvil
-    const mobileMenuBtn = document.getElementById("mobile-menu");
-    const navLinks = document.getElementById("nav-links");
-    const serviciosHover = document.querySelector(".servicios-hover");
-
-    // Lógica para Menú Móvil
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener("click", function() {
-            navLinks.classList.toggle("active");
-            
-            // Cambiar ícono de hamburguesa a "X"
-            const icon = mobileMenuBtn.querySelector("i");
-            if (navLinks.classList.contains("active")) {
-                icon.classList.remove("fa-bars");
-                icon.classList.add("fa-xmark");
-            } else {
-                icon.classList.remove("fa-xmark");
-                icon.classList.add("fa-bars");
-            }
-        });
-    }
-
-    // Desplegar Mega Menú en móvil al tocar "Servicios"
-    if (serviciosHover) {
-        const enlaceServicios = serviciosHover.querySelector('.btn-servicios');
-        
-        enlaceServicios.addEventListener("click", function(e) {
-            // Solo prevenimos la redirección y abrimos el acordeón si estamos en móvil (<992px)
-            if (window.innerWidth <= 992) {
-                e.preventDefault(); 
-                serviciosHover.classList.toggle("active");
-                
-                // Rotar la flechita
-                const flecha = this.querySelector('.hidden-desktop');
-                if(flecha) {
-                    flecha.style.transform = serviciosHover.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
-                }
-            }
-        });
-    }
-
-    // Selectores del Buscador
-    const buscadorContainer = document.getElementById('contenedorBuscador');
-    const inputBusqueda = document.getElementById('inputBuscador');
-    const resultadosDiv = document.getElementById('resultadosBusqueda');
-
-    // 1. Lógica para abrir/cerrar buscador
-    window.abrirBuscador = function() {
-        if(buscadorContainer) {
-            buscadorContainer.classList.toggle('active');
-            if(buscadorContainer.classList.contains('active')) {
-                setTimeout(() => inputBusqueda.focus(), 300);
-            }
-        }
-        // Cerrar menú móvil si estaba abierto al abrir el buscador
-        if(navLinks && navLinks.classList.contains('active')){
-            mobileMenuBtn.click();
-        }
-    };
-
-    // 2. Lógica de búsqueda en tiempo real
-    if (inputBusqueda) {
-        inputBusqueda.addEventListener("keyup", () => {
-            let valor = inputBusqueda.value;
-            if(valor.length < 2) {
-                resultadosDiv.innerHTML = "";
-                return;
-            }
-
-            fetch("<?= BASE_URL ?>app/controllers/buscar_servicio.php?q=" + valor)
-                .then(res => res.text())
-                .then(data => {
-                    resultadosDiv.innerHTML = data;
-                })
-                .catch(err => console.error("Error en búsqueda:", err));
-        });
-    }
-
-    // 3. Click en un resultado para ir al detalle
-    if (resultadosDiv) {
-        resultadosDiv.addEventListener("click", (e) => {
-            const item = e.target.closest(".resultado-item");
-            if(item){
-                let id = item.getAttribute("data-id");
-                if(id) {
-                    window.location.href = "<?= BASE_URL ?>detalle_servicio.php?id=" + id;
-                }
-            }
-        });
-    }
-
-    // 4. Acordeones del Mega Menu
-    document.querySelectorAll('.titulo-tipo-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            const submenu = button.nextElementSibling;
-            submenu.classList.toggle('active');
-            button.classList.toggle('active');
-            
-            const icon = button.querySelector('i');
-            if(icon) {
-                icon.style.transform = submenu.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
-                icon.style.transition = 'transform 0.3s ease';
-            }
-        });
-    });
-
-    // Cerrar buscador al hacer click fuera
-    window.addEventListener('click', (e) => {
-        if (e.target == buscadorContainer) {
-            buscadorContainer.classList.remove('active');
-        }
-    });
-})();
-
-function verServicio(id){
-    window.location.href = "<?= BASE_URL ?>detalle_servicio.php?id=" + id;
-}
+    // Se define la ruta base de la aplicación de manera global para que el JS pueda utilizarla
+    const APP_BASE_URL = "<?= BASE_URL ?>";
 </script>
+<script src="<?= BASE_URL ?>public/js/toolbar.js"></script>

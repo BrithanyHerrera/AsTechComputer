@@ -1,11 +1,22 @@
 /* TOOLBAR.CSS */
 /*
-Este archivo de estilo se encarga de definir la apariencia, estructura y comportamiento responsivo de la barra de navegación principal (Toolbar) y su "Mega Menú" desplegable. Establece la paleta de colores corporativa mediante variables globales, maneja el diseño con Flexbox para el alineamiento del logotipo y los enlaces, y controla las animaciones suaves de aparición y ocultación. Además, adapta todo el componente para dispositivos móviles, transformando la barra en un menú deslizante tipo hamburguesa.
-*/
+ * PÁGINA: Hoja de Estilos de la Barra de Navegación (Toolbar CSS) - As Tech Computer
+ * PROPÓSITO: Definir la apariencia visual, la estructura tipográfica y el comportamiento responsivo de la barra de navegación principal y sus submenús.
+ * FUNCIONALIDADES: 
+ * - Establece la paleta de colores corporativa (naranja, púrpura, blanco, negro) mediante variables globales (CSS custom properties).
+ * - Controla el alineamiento perfecto de enlaces y logotipos utilizando Flexbox y CSS Grid.
+ * - Gestiona las animaciones suaves (transiciones de opacidad, transformaciones) para el despliegue del Mega Menú y el Buscador.
+ * - Implementa el diseño adaptativo (Media Queries) para transformar la barra horizontal en un menú lateral desplegable (tipo hamburguesa) en dispositivos móviles y tabletas.
+ */
 
 /* ========================================================
    1. VARIABLES GLOBALES Y RESET DE ESTILOS
    ======================================================== */
+/**
+ * El sistema define los colores corporativos de AsTech Computer a nivel de raíz (:root)
+ * para facilitar su reutilización y mantenimiento. También resetea los márgenes 
+ * por defecto del navegador para garantizar una visualización consistente.
+ */
 :root {
     --naranja-principal: #e17203;
     --purpura-oscuro: #52073a;
@@ -23,6 +34,11 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
 /* ========================================================
    2. ESTRUCTURA PRINCIPAL DE LA BARRA DE NAVEGACIÓN
    ======================================================== */
+/**
+ * Se utiliza Flexbox para distribuir el logotipo a la izquierda, 
+ * los enlaces en el centro/derecha y mantener una altura fija de 60px.
+ * Una sombra suave inferior separa visualmente la barra del resto del contenido.
+ */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -55,12 +71,17 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
 }
 
 .menu a:hover{
-    color: #54015f;
+    color: #54015f; /* Púrpura al interactuar */
 }
 
 /* ========================================================
    3. CONFIGURACIÓN DEL MEGA MENÚ DESPLEGABLE
    ======================================================== */
+/**
+ * El Pseudo-elemento (::after) crea un puente invisible que evita 
+ * que el menú se cierre accidentalmente cuando el usuario mueve 
+ * el cursor del enlace hacia el contenedor del Mega Menú.
+ */
 .servicios-hover::after {
     height: 30px;
     content: "";
@@ -82,6 +103,11 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
     padding: 40px;
 }
 
+/**
+ * El contenedor del Mega Menú se oculta usando opacidad y visibilidad 
+ * (en lugar de display: none) para permitir una animación de entrada suave,
+ * desplazándose ligeramente desde abajo (translateY).
+ */
 .mega-menu {
     opacity: 0;
     visibility: hidden;
@@ -110,7 +136,7 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
 }
 
 /* ========================================================
-   4. ACORDEÓN IZQUIERDA (TIPOS DE DISPOSITIVOS)
+   4. ACORDEÓN IZQUIERDA (TIPOS DE SERVICIOS)
    ======================================================== */
 .menu-izquierda {
     width: 50%;
@@ -140,6 +166,9 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
     color: var(--naranja-principal);
 }
 
+/**
+ * Ocultamiento dinámico del submenú animando su altura máxima.
+ */
 .submenu-desplegable {
     max-height: 0;
     overflow: hidden;
@@ -164,9 +193,10 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
     transition: 0.2s;
 }
 
+/* Efecto de deslizamiento al posicionar el cursor sobre un subservicio */
 .submenu-desplegable a:hover {
     color: var(--naranja-principal);
-    transform: translateX(5px);
+    transform: translateX(5px); 
 }
 
 /* ========================================================
@@ -212,6 +242,7 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
     font-size: 12px;
 }
 
+/* Etiqueta flotante de "Nuevo" en las tarjetas */
 .badge {
     position: absolute;
     top: 15px;
@@ -233,6 +264,10 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
 /* ========================================================
    6. ESTILOS DEL BUSCADOR INTEGRADO
    ======================================================== */
+/**
+ * El contenedor del buscador se sitúa por encima del contenido actual 
+ * de la página, bajando suavemente desde la parte superior.
+ */
 .buscador-oculto {
     display: flex; 
     flex-direction: column;
@@ -280,6 +315,7 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
     width: 800px;
 }
 
+/* Animaciones de realce para los resultados del buscador */
 .resultado-item:hover {
     background: #acacac49;
     transform: scale(1.1);
@@ -301,25 +337,27 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
 }
 
 /* ========================================================
-   7. DISEÑO RESPONSIVO (MÓVILES Y TABLETS)
+   7. DISEÑO RESPONSIVO PREMIUM BLINDADO (MÓVILES Y TABLETS)
    ======================================================== */
 .menu-toggle {
     display: none;
     font-size: 28px;
-    color: #e17203;
+    color: #e17203; /* Forzamos Naranja corporativo */
     cursor: pointer;
 }
 
 @media (max-width: 992px) {
+    /* 1. Mostrar la hamburguesa y alinear la barra */
     .menu-toggle {
         display: block;
-        margin-left: auto; 
+        margin-left: auto; /* Empuja el ícono al extremo derecho */
     }
     
     .navbar {
         padding: 0 20px; 
     }
 
+    /* 2. Menú lateral deslizante y blindado con z-index alto */
     .menu ul {
         position: fixed; 
         top: 60px;
@@ -342,6 +380,7 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
         left: 0; 
     }
 
+    /* 3. Reestructuración de enlaces a formato de lista móvil */
     .menu ul li {
         width: 100%;
         border-bottom: 1px solid #f0f0f0;
@@ -365,10 +404,12 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
         background-color: #fcfcfc;
     }
 
+    /* Ocultar el puente invisible (solo necesario en Desktop) */
     .servicios-hover::after {
         display: none; 
     }
 
+    /* 4. Adaptación del Mega Menú para flujo vertical (Acordeón móvil) */
     .mega-menu {
         position: static;
         width: 100%;
@@ -403,6 +444,7 @@ Este archivo de estilo se encarga de definir la apariencia, estructura y comport
         border-top: 1px solid #eeeeee; 
     }
 
+    /* 5. Ajustes de anchos para el Buscador en pantallas pequeñas */
     #inputBuscador {
         width: 90%;
         max-width: 400px;

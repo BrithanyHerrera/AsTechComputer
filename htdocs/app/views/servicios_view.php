@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../../public/css/servicios.css">
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
-    <link rel="icon" href="../../public/img/logoATC.ico" type="image/x-icon">
+    <link rel="icon" href="../../public/img/Astech%20ICO.ico" type="image/x-icon">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
