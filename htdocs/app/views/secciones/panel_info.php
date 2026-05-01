@@ -1,57 +1,5 @@
 <?php
-require_once dirname(__DIR__, 2) . '/config/conexion.db.php';
-require_once dirname(__DIR__, 2) . '/models/panel_info_model.php';
-
-if (session_status() === PHP_SESSION_NONE) { session_start(); }
-
-$modeloDashboard = new DashboardModel($conexion);
-$id_empleado_actual = $_SESSION['id_empleado'] ?? 1; 
-$usuario = $modeloDashboard->obtenerInfoUsuario($id_empleado_actual);
-
-if (!$usuario) { $usuario = ['nombre' => 'Usuario', 'apellido' => 'Desconocido', 'nombre_puesto' => 'Sin Rol', 'id_puesto' => 0]; }
-
-$es_admin = ($usuario['id_puesto'] == 3 || $usuario['id_puesto'] == 4);
-
-// 1. Capturar los valores actuales de la URL
-$val_nombre = $_GET['filtro_nombre'] ?? '';
-$val_puesto = $_GET['filtro_puesto'] ?? 'todos';
-$val_fecha_inicio = $_GET['filtro_fecha_inicio'] ?? '';
-$val_fecha_fin = $_GET['filtro_fecha_fin'] ?? '';
-$val_limite = isset($_GET['limite']) ? (int)$_GET['limite'] : 50;
-
-// 2. MAGIA DE ARQUITECTO: Ejecutar la búsqueda directamente en la vista
-if (!isset($actividad_reciente)) {
-    if ($es_admin) {
-        $filtros = [
-            'nombre'       => $val_nombre,
-            'puesto'       => $val_puesto,
-            'fecha_inicio' => $val_fecha_inicio,
-            'fecha_fin'    => $val_fecha_fin
-        ];
-        
-        $pagina_actual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-        if ($pagina_actual < 1) $pagina_actual = 1;
-        
-        $offset = ($pagina_actual - 1) * $val_limite;
-
-        // Calculamos cuántas páginas existen
-        $total_registros = $modeloDashboard->contarConexiones($filtros);
-        $total_paginas = ceil($total_registros / $val_limite);
-        if ($total_paginas < 1) $total_paginas = 1;
-
-        // Traemos la información real de la base de datos
-        $actividad_reciente = $modeloDashboard->obtenerConexiones($filtros, $val_limite, $offset);
-    } else {
-        $actividad_reciente = [];
-        $total_paginas = 1;
-        $pagina_actual = 1;
-    }
-}
-
-// 3. Constructor mágico de URLs para que los botones de paginación no pierdan los filtros
-$params_url = $_GET;
-unset($params_url['pagina']); 
-$url_base_paginacion = '?' . http_build_query($params_url) . '&pagina=';
+require_once __DIR__ . "/../../controllers/panel_info_controller.php";
 ?>
 
 <link rel="stylesheet" href="../../public/css/panel_info.css?v=3.1">
@@ -86,17 +34,12 @@ $url_base_paginacion = '?' . http_build_query($params_url) . '&pagina=';
                         <label>Puesto:</label>
                         <select name="filtro_puesto" onchange="this.form.submit()">
                             <option value="todos" <?= $val_puesto == 'todos' ? 'selected' : '' ?>>Todos</option>
-                            <?php
-                            $sql_p = "SELECT nombre_puesto FROM puestos ORDER BY nombre_puesto ASC";
-                            $res_p = $conexion->query($sql_p);
-                            if ($res_p) {
-                                while ($p = $res_p->fetch_assoc()) {
-                                    $nombre_p = htmlspecialchars($p['nombre_puesto']);
-                                    $seleccionado = ($val_puesto === $nombre_p) ? 'selected' : '';
-                                    echo "<option value='{$nombre_p}' {$seleccionado}>{$nombre_p}</option>";
-                                }
-                            }
+                            <?php foreach ($puestos as $p):
+                                $nombre_p    = htmlspecialchars($p['nombre_puesto']);
+                                $seleccionado = ($val_puesto === $nombre_p) ? 'selected' : '';
                             ?>
+                                <option value="<?= $nombre_p ?>" <?= $seleccionado ?>><?= $nombre_p ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
@@ -113,9 +56,9 @@ $url_base_paginacion = '?' . http_build_query($params_url) . '&pagina=';
                     <div class="filtro-grupo">
                         <label>Mostrar:</label>
                         <select name="limite" onchange="this.form.submit()">
-                            <option value="10" <?= $val_limite == 10 ? 'selected' : '' ?>>10</option>
-                            <option value="25" <?= $val_limite == 25 ? 'selected' : '' ?>>25</option>
-                            <option value="50" <?= $val_limite == 50 ? 'selected' : '' ?>>50</option>
+                            <option value="10"  <?= $val_limite == 10  ? 'selected' : '' ?>>10</option>
+                            <option value="25"  <?= $val_limite == 25  ? 'selected' : '' ?>>25</option>
+                            <option value="50"  <?= $val_limite == 50  ? 'selected' : '' ?>>50</option>
                             <option value="100" <?= $val_limite == 100 ? 'selected' : '' ?>>100</option>
                         </select>
                     </div>
@@ -188,3 +131,5 @@ $url_base_paginacion = '?' . http_build_query($params_url) . '&pagina=';
         </div>
     <?php endif; ?>
 </div>
+
+<script src="../../public/js/panel_info.js"></script>

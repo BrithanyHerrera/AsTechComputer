@@ -21,6 +21,18 @@ class DashboardModel {
         return $resultado;
     }
 
+    /**
+     * Obtener lista de puestos para el select del filtro
+     */
+    public function obtenerPuestos() {
+        $resultado = $this->conexion->query("SELECT nombre_puesto FROM puestos ORDER BY nombre_puesto ASC");
+        $puestos = [];
+        while ($p = $resultado->fetch_assoc()) {
+            $puestos[] = $p;
+        }
+        return $puestos;
+    }
+
     // ==========================================
     // FUNCIÓN INTERNA PARA CONSTRUIR LOS FILTROS
     // ==========================================
@@ -71,11 +83,9 @@ class DashboardModel {
                 JOIN puestos p ON e.id_puesto = p.id_puesto 
                 WHERE 1=1";
 
-        // Traemos los filtros dinámicos
         $f = $this->construirFiltrosSQL($filtros);
         $sql = $base_sql . $f['sql'] . " ORDER BY b.fecha_hora DESC LIMIT ? OFFSET ?";
         
-        // Agregamos los parámetros para LIMIT y OFFSET ("ii" significa dos enteros)
         $tipos = $f['tipos'] . "ii";
         $valores = $f['valores'];
         $valores[] = (int)$limite;

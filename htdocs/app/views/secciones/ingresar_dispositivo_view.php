@@ -4,6 +4,7 @@
 // Solo dibuja el HTML. Todas las variables que necesita
 // vienen ya preparadas por el controlador.
 // =============================================================
+require_once __DIR__ . "/../../controllers/ingreso_controller.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
