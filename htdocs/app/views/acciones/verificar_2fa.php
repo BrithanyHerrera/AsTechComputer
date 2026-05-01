@@ -11,28 +11,33 @@ if (!isset($_SESSION['temp_empleado'])) {
 <head>
     <meta charset="UTF-8">
     <title>Verificación de Seguridad</title>
-    <link rel="stylesheet" href="../../public/css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../public/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 <div class="pantalla-login">
-    <div class="tarjeta-login" style="width: 400px; padding: 40px; text-align: center;">
-        <h2>Código de Seguridad</h2>
-        <p>Hemos enviado un código de 6 dígitos a tu WhatsApp.</p>
+    
+    <!-- Agregamos position: relative a la tarjeta para contener el botón -->
+    <div class="tarjeta-login" style="position: relative; width: 450px; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
         
-        <div style="background: #ffeeba; border: 1px solid #ffe8a1; padding: 10px; border-radius: 5px; margin-bottom: 20px; color: #856404; font-size: 14px;">
-           <i class="fas fa-tools"></i> <b>Modo Pruebas Activo:</b><br>
-           Como Meta aún no aprueba el mensaje, tu código es: 
-           <strong style="font-size: 18px; display: block; margin-top: 5px; letter-spacing: 2px;">
-               <?php echo $_SESSION['codigo_2fa']; ?>
-           </strong>
-        </div>
+        <!-- BOTÓN DE REGRESAR (Enviando al logout para limpiar la sesión temporal) -->
+        <a href="../../controllers/logout_controller.php" style="position: absolute; top: 20px; left: 20px; text-decoration: none; color: #888; font-size: 15px; font-weight: bold; transition: color 0.3s;" onmouseover="this.style.color='#c0392b'" onmouseout="this.style.color='#888'">
+            <i class="fa-solid fa-arrow-left"></i> Regresar
+        </a>
+
+        <h2 style="margin-bottom: 15px; margin-top: 15px;"><i class="fa-solid fa-shield-halved" style="color: #2c3e50;"></i> Código de Seguridad</h2>
+        <p style="margin-bottom: 25px; color: #555; line-height: 1.5;">Abre tu aplicación de <b>Google Authenticator</b> e ingresa el código de 6 dígitos para acceder.</p>
         
-        <form action="../../controllers/procesar_2fa_controller.php" method="POST">
-            <div class="grupo-entrada">
-                <input type="text" name="codigo_ingresado" placeholder="123456" maxlength="6" required style="font-size: 24px; text-align: center; letter-spacing: 5px;">
+        <form action="../../controllers/procesar_2fa_controller.php" method="POST" style="width: 100%;">
+            <div class="grupo-entrada" style="margin-bottom: 20px;">
+                <input type="text" name="codigo_ingresado" placeholder="000 000" maxlength="6" required style="font-size: 24px; text-align: center; letter-spacing: 10px; width: 100%; box-sizing: border-box;">
             </div>
-            <button type="submit" class="boton-ingresar" style="margin-top: 20px;">Verificar e Ingresar</button>
+            <button type="submit" class="boton-ingresar" style="width: 100%; margin-top: 10px;">
+                <i class="fa-solid fa-lock"></i> Verificar e Ingresar
+            </button>
         </form>
+        
     </div>
 </div>
 </body>

@@ -4,34 +4,34 @@
 // UBICACIÓN: app/controllers/login_controller.php
 // ========================================================
 require_once __DIR__ . "/../config/config.php"; 
-// 1. Iniciamos la sesión
-session_start();
 
-// Si el usuario ya está logueado, lo mandamos directo al dashboard (AQUÍ ESTABA UN ERROR)
+// 1. Iniciamos la sesión e importamos la librería
+session_start();
+use RobThree\Auth\TwoFactorAuth;
+use RobThree\Auth\Providers\Qr\QRServerProvider;
+
+// ¡AQUÍ ESTÁ LA MAGIA QUE FALTABA! Cargamos todas las librerías de Composer
+require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
+
+// Si el usuario ya está logueado, lo mandamos directo al dashboard
 if (isset($_SESSION['id_empleado'])) {
     header("Location: administracion_controller.php");
     exit;
 }
 
-// 2. CARGAMOS VARIABLES DE ENTORNO PARA LA API DE META
-require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
-try {
-    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
-    $dotenv->load();
-} catch (Exception $e) {
-    // Silencioso
-}
-
-// 3. Requerimos la base de datos y el modelo
+// 2. Requerimos la base de datos y el modelo
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/login_model.php';
 
 $modeloLogin = new LoginModel($conexion);
 $mensaje_error = '';
 
-// 4. Verificamos si el formulario fue enviado
+// 3. Verificamos si el formulario fue enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
-    $usuario = trim($_POST['usuario']);
+    
+    // Limpiamos espacios y forzamos minúsculas para el usuario
+    $usuario = strtolower(trim($_POST['usuario']));
+    // La contraseña se recibe cruda y exacta
     $password = $_POST['password'];
 
     if (!empty($usuario) && !empty($password)) {
@@ -39,68 +39,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
         $empleado = $modeloLogin->buscarUsuario($usuario);
 
         if ($empleado) {
+            // Verificamos la contraseña (ya sea encriptada o texto plano heredado)
             if (password_verify($password, $empleado['contrasena']) || $password === $empleado['contrasena']) { 
                 
                 $puestos_permitidos = [1, 2, 3, 4]; 
 
                 if (in_array($empleado['id_puesto'], $puestos_permitidos)) {
                     
-                    // A. Generar código de 6 dígitos
-                    $codigo_2fa = rand(100000, 999999);
-                    
-                    // B. Guardar datos en sesión TEMPORAL
-                    $_SESSION['temp_empleado'] = $empleado;
-                    $_SESSION['codigo_2fa'] = $codigo_2fa;
-                    
-                    // C. Enviar el código vía Meta API
-                    try {
-                        $token = $_ENV['META_WA_TOKEN'];
-                        $phone_id = $_ENV['META_PHONE_ID'];
+                    // 1. Instanciamos el motor que dibujará el QR
+                    $motorQR = new QRServerProvider();
+
+                    // 2. Iniciamos la librería pasándole el motor y el nombre de tu empresa
+                    $tfa = new TwoFactorAuth($motorQR, 'As Tech Computer');
+
+                    // Verificamos si es un empleado NUEVO (Aún no tiene 2FA configurado)
+                    if ($empleado['is_2fa_activo'] == 0) {
                         
-                        $telefono_limpio = preg_replace('/[^0-9]/', '', $empleado['telefono']);
-                        $telefono_destino = (strlen($telefono_limpio) == 10) ? "52" . $telefono_limpio : $telefono_limpio;
+                        // 1. Generamos un secreto único para este empleado
+                        $secreto = $tfa->createSecret();
+                        
+                        // 2. Guardamos este secreto temporalmente en la BD
+                        $stmt = $conexion->prepare("UPDATE empleados SET secreto_2fa = ? WHERE id_empleado = ?");
+                        $stmt->bind_param("si", $secreto, $empleado['id_empleado']);
+                        $stmt->execute();
+                        $stmt->close();
+                        
+                        // 3. Generamos el Código QR
+                        // Se mostrará: As Tech Computer (nombre_usuario)
+                        $qr_image = $tfa->getQRCodeImageAsDataUri($empleado['nombre_usuario'], $secreto);
+                        
+                        // 4. Guardamos en sesión y mandamos a la vista de configuración
+                        $_SESSION['temp_empleado'] = $empleado;
+                        $_SESSION['qr_image']      = $qr_image;
+                        $_SESSION['secreto_2fa']   = $secreto; 
+                        
+                        header("Location: ../views/acciones/configurar_2fa.php");
+                        exit;
 
-                        $url = "https://graph.facebook.com/v25.0/" . $phone_id . "/messages";
-
-                        $data = [
-                            "messaging_product" => "whatsapp",
-                            "to" => $telefono_destino,
-                            "type" => "template",
-                            "template" => [
-                                "name" => "codigo_verificacion_astech", 
-                                "language" => [ "code" => "es_MX" ],
-                                "components" => [
-                                    [
-                                        "type" => "body",
-                                        "parameters" => [
-                                            [ "type" => "text", "text" => (string)$codigo_2fa ]
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ];
-
-                        $options = [
-                            CURLOPT_URL => $url,
-                            CURLOPT_RETURNTRANSFER => true,
-                            CURLOPT_POST => true,
-                            CURLOPT_POSTFIELDS => json_encode($data),
-                            CURLOPT_HTTPHEADER => [
-                                "Authorization: Bearer " . $token,
-                                "Content-Type: application/json"
-                            ]
-                        ];
-
-                        $curl = curl_init();
-                        curl_setopt_array($curl, $options);
-                        curl_exec($curl);
-                        curl_close($curl);
-
-                    } catch (Exception $e) { /* Error silencioso */ }
-
-                    // D. Redirigir a la pantalla para poner el código (AQUÍ ESTABA EL ERROR 404)
-                    header("Location: ../views/acciones/verificar_2fa.php");
-                    exit;
+                    } else {
+                        // Si ya es un empleado CONFIGURADO (is_2fa_activo == 1)
+                        // Solo lo mandamos a que escriba sus 6 dígitos
+                        $_SESSION['temp_empleado'] = $empleado;
+                        
+                        header("Location: ../views/acciones/verificar_2fa.php");
+                        exit;
+                    }
 
                 } else {
                     $mensaje_error = "Tu puesto no tiene los permisos para acceder a esta área.";

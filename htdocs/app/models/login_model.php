@@ -13,7 +13,7 @@ class LoginModel {
 
     // Método para buscar al usuario por su nombre
     public function buscarUsuario($usuario) {
-        $stmt = $this->conexion->prepare("SELECT id_empleado, nombre, id_puesto, contrasena FROM empleados WHERE nombre_usuario = ?");
+        $stmt = $this->conexion->prepare("SELECT id_empleado, nombre, nombre_usuario, id_puesto, contrasena, secreto_2fa, is_2fa_activo FROM empleados WHERE nombre_usuario = ?");
         $stmt->bind_param("s", $usuario);
         $stmt->execute();
         $resultado = $stmt->get_result();
