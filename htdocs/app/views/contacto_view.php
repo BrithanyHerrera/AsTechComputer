@@ -109,33 +109,6 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
 </body>
 
 </html>
-<script src="public/js/contacto.js"></script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const status = "<?php echo $status; ?>";
-        
-        if (status === "success") {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Enviado!',
-                text: 'Tu mensaje ha sido recibido con éxito.',
-                confirmButtonColor: '#3085d6'
-            });
-        } else if (status === "wait") {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Espera un momento',
-                text: 'Ya enviaste un mensaje recientemente. Por favor, espera 5 minutos.',
-                confirmButtonColor: '#f39c12'
-            });
-        } else if (status === "error") {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'No se pudo enviar el mensaje. Intenta más tarde.',
-                confirmButtonColor: '#d33'
-            });
-        }
-    });
-</script>
+
+<script src="../../public/js/contacto.js"></script>

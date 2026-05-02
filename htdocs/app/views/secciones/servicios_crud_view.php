@@ -1,27 +1,13 @@
 <?php
 /**
- * PÁGINA: Gestión de Servicios CRUD - As Tech Computer (servicios_crud_view.php)
- * PROPÓSITO: Proporcionar una interfaz administrativa completa para visualizar, buscar, 
- * crear, editar y eliminar los servicios ofrecidos por la empresa.
- * FUNCIONALIDADES:
- * - Sistema de Búsqueda: Filtrado dinámico de servicios por nombre, código, descripción o 
- * procedimientos mediante parámetros LIKE en SQL.
- * - Visualización de Datos:
- * • Tabla responsiva que muestra detalles clave (Nombre, Tipo, Descripción, Tiempo, Precio y Estado).
- * • Formateo de moneda para precios y etiquetas de estado con colores dinámicos (Activo/Inactivo).
- * - Operaciones CRUD (Interfaz):
- * • Formulario Modal para registro de nuevos servicios con selección de tipos de servicio y carga de imágenes.
- * • Sistema de Edición mediante modales que se auto-pueblan con datos JSON al hacer clic.
- * • Modal de visualización detallada para leer información extensa (procedimientos, exclusiones, etc.).
- * - Integraciones:
- * • SweetAlert2 para confirmaciones de eliminación y notificaciones.
- * • Font Awesome para iconografía.
- * • JavaScript externo (servicios_crud.js) para manejo de DOM y lógica de modales.
- * - Relaciones de DB: Consultas con LEFT JOIN para obtener el nombre de la categoría desde 'tipos_servicios'.
+ * PÁGINA: Gestión de Servicios CRUD - As Tech Computer
+ * PROPÓSITO: Interfaz administrativa para buscar, visualizar, agregar, editar y eliminar servicios,
+ * incluyendo formularios modales, integración con base de datos y manejo dinámico con JavaScript.
  */
 ?>
-
 <?php
+/* CONFIGURACIÓN E INICIALIZACIÓN */
+
 include __DIR__ . "/../../config/conexion.db.php";
 
 if (!isset($conexion)) {
@@ -31,7 +17,7 @@ if (!isset($conexion)) {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-
+<!-- BUSCADOR DE SERVICIOS -->
 <div class="contenedor-crud">
     <div class="buscador-container">
 <form method="GET" class="buscador-form">
@@ -48,6 +34,8 @@ if (!isset($conexion)) {
     <button type="submit" class="buscador-btn">Buscar</button>
     </div>
 </form>
+
+   <!-- FORMULARIO PARA AGREGAR UN NUEVO SERVICIO  -->
     <div class="encabezado-seccion">
         <button class="boton-primario" onclick="abrirFormulario()">
             <i class="fa-solid fa-plus"></i> Nuevo Servicio
@@ -100,9 +88,6 @@ if (!isset($conexion)) {
                 <label>Exclusiones:</label>
                 <textarea name="exclusiones" required></textarea>
             </div>
-                    
-         
-        
           <div class="flex-form-ayuda">
     <div class="campos-principales">
         <div class="grupo-input">
@@ -111,7 +96,6 @@ if (!isset($conexion)) {
         </div>
         
         </div>
-
     <div class="guia-url">
         <h4><i class="fa-solid fa-circle-info"></i> Formato Requerido</h4>
         <p>Escribe el nombre exacto del archivo con su extensión:</p>
@@ -141,8 +125,8 @@ if (!isset($conexion)) {
         </form>
     </div>
 </div>
-
-    <div class="tabla-responsiva">
+<!-- Tabla que muestra los servicios -->
+    <div >
         <table>
             <thead>
                 <tr>
@@ -250,6 +234,7 @@ if (!$resultado) {
         </table>
     </div>
 </div>
+<!-- FORMULARIO PARA EDITAR SERVICIO -->
 <div id="modal-editar-servicio" class="modal-formulario" style="display: none;">
     <div class="contenido-modal modal-purpura">
  
@@ -333,6 +318,7 @@ if (!$resultado) {
     </div>
   
 </div>
+<!-- MODAL PARA VER INFRORMACION EXTRA DEL SERVICIO -->
   <div id="modalVerServicio" class="modal-formulario" style="display: none;">
     <div class="contenido-modal modal-purpura" style="max-height: 90vh; overflow-y: auto; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
         <span class="cerrar-modal" onclick="cerrarModalVerServicio()" style="float:right; cursor:pointer; font-size:28px;">&times;</span>
@@ -352,5 +338,6 @@ if (!$resultado) {
         </div>
     </div>
 </div>
+<!-- SCRIPT DE JAVASCRIPT -->
 <script src="../../public/js/servicios_crud.js"></script>
 

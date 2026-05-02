@@ -1,4 +1,9 @@
+
 <?php
+//PAGINA:Buscar servicio
+//se usa en todas las paginas principales: index, contacto, servicios y citas
+//esta dentro de el toolbar
+//busca los servicios segun su tipo de servicio
         require_once __DIR__ . "/../config/config.php"; 
 include __DIR__ . "../../config/conexion.db.php";
 

@@ -1,36 +1,14 @@
 <?php
-
 /**
- * PÁGINA: Panel de Administración - As Tech Computer (administracion_view.php)
- * PROPÓSITO: Gestionar el acceso y la navegación al sistema administrativo según el rol del usuario, 
- *            permitiendo visualizar y administrar distintas secciones del sistema de forma segura.
+ * PÁGINA: Panel de Administración - As Tech Computer
+ * PROPÓSITO: Controlar el acceso y la navegación del sistema según el rol del usuario autenticado.
  * FUNCIONALIDADES:
- * - Control de sesión para restringir el acceso únicamente a usuarios autenticados.
- * - Redirección automática al inicio si no existe una sesión válida.
- * - Identificación del rol del usuario (Técnico, Atención, Gerente, Administrador).
- * - Sistema de permisos basado en roles que define qué secciones puede visualizar cada usuario.
- * - Validación de acceso por URL para evitar دخول a secciones no autorizadas.
- * - Implementación de bitácora (audit trail) que registra:
- *      • ID del empleado.
- *      • Acción realizada (navegación).
- *      • Detalle de la sección visitada.
- *      • Fecha y hora del evento.
- * - Prevención de registros duplicados en la bitácora al recargar la misma sección.
- * - Interfaz con barra lateral dinámica que muestra opciones según el rol del usuario:
- *      • Dashboard principal.
- *      • Estadísticas (solo Gerente y Administrador).
- *      • Gestión de página (Inicio, Servicios, Contacto).
- *      • Gestión de citas e ingreso de servicios.
- *      • Visualización de registros ingresados.
- *      • Administración de empleados.
- *      • Gestión de contenedores.
- * - Sistema de navegación interna mediante parámetro GET (?seccion=).
- * - Carga dinámica de contenido usando estructura modular (include de vistas por sección).
- * - Verificación de existencia de archivos antes de incluirlos para evitar errores.
- * - Integración de estilos CSS externos y librerías como Google Fonts y Font Awesome.
- * - Inclusión de loader inicial para mejorar la experiencia de usuario.
- * - Botón de cierre de sesión que destruye la sesión activa.
- * - Manejo de errores básico mostrando página 404 en caso de secciones no válidas.
+ * - Validación de sesión y redirección si no hay acceso válido.
+ * - Gestión de permisos por rol para mostrar secciones autorizadas.
+ * - Navegación interna por parámetro GET y carga dinámica de vistas.
+ * - Registro en bitácora de accesos evitando duplicados.
+ * - Interfaz con menú lateral dinámico y opción de cierre de sesión.
+ * - Manejo básico de errores (404) y verificación de archivos antes de incluirlos.
  */
 ?>
 
@@ -41,17 +19,13 @@ require_once dirname(__DIR__) . '/config/config.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-// 1. SEGURIDAD: Si no hay sesión, nadie pasa
 if (!isset($_SESSION['id_puesto'])) {
     header("Location: ../../index.php"); 
     exit;
 }
 
-$puesto_usuario = $_SESSION['id_puesto']; // 1: Técnico, 2: Atención, 3: Gerente, 4: Administrador
+$puesto_usuario = $_SESSION['id_puesto']; 
 $seccion_actual = isset($_GET['seccion']) ? $_GET['seccion'] : 'dashboard';
-
-// 2. DEFINICIÓN DE PERMISOS (Arquitectura de Seguridad)
 $permisos = [
     1 => ['dashboard', 'registros_ingresados_crud_view', 'contenedor'], // Técnico
     2 => ['dashboard', 'citas', 'ingreso', 'registros_ingresados_crud_view'], // Atención al Cliente
@@ -59,7 +33,6 @@ $permisos = [
     4 => ['dashboard', 'servicios', 'inicio', 'citas', 'contacto', 'ingreso', 'registros_ingresados_crud_view', 'empleado', 'contenedor', 'estadisticas']  // Administrador
 ];
 
-// Validación de seguridad por URL
 if (!in_array($seccion_actual, $permisos[$puesto_usuario])) {
     $seccion_actual = 'acceso_denegado';
 }
@@ -113,7 +86,7 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
           <i class="fa-solid fa-gears"></i> Dashboard
         </a>
       </li>
-
+<!-- Secciones de el panel administrativo que se muestran segun el rol del usuario-->
       <?php if ($puesto_usuario == 3 || $puesto_usuario == 4): ?>
       <li>
         <a href="?seccion=estadisticas" class="<?= $seccion_actual == 'estadisticas' ? 'activo' : '' ?>">
@@ -183,64 +156,65 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
       </a>
     </div>
   </nav>
-
+<!-- panel principal de el panel administrativo y secciones de el panel-->
   <main class="contenido-principal">
     <?php
     $ruta_secciones = __DIR__ . '/secciones/';
 
     switch ($seccion_actual) {
+      //dashboard
       case 'dashboard':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         echo "<h1>Bienvenido al panel principal</h1>";
         if (file_exists($ruta_secciones . "panel_info.php")) { include $ruta_secciones . "panel_info.php"; }
         break;
-
-      // NUEVA SECCIÓN DE ESTADÍSTICAS
+        //pagina estadisticas
       case 'estadisticas':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists($ruta_secciones . "estadisticas.php")) { include $ruta_secciones . "estadisticas.php"; }
         break;
-
+       //pagina de servicios
       case 'servicios':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists($ruta_secciones . "servicios_crud_view.php")) { include $ruta_secciones . "servicios_crud_view.php"; }
         break;
-
+      //pagina de inicio
       case 'inicio':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists($ruta_secciones . "inicio_crud_view.php")) { include $ruta_secciones . "inicio_crud_view.php"; }
         break;
-
+      //pagina citas
       case 'citas':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists($ruta_secciones . "citas_crud_view.php")) { include $ruta_secciones . "citas_crud_view.php"; }
         break;
-
+      //pagina contacto
       case 'contacto':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists($ruta_secciones . "contacto_crud_view.php")) { include $ruta_secciones . "contacto_crud_view.php"; }
         break;
-
+      //pagina ingreso
       case 'ingreso':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists($ruta_secciones . "ingresar_dispositivo_view.php")) { include $ruta_secciones . "ingresar_dispositivo_view.php"; }
         break;
-
+      //pagina que muestra los ingresados
       case 'registros_ingresados_crud_view':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists($ruta_secciones . "dispositivos_ingresados_crud_view.php")) { include $ruta_secciones . "dispositivos_ingresados_crud_view.php"; }
         break;
-
+       //pagina de empleados
       case 'empleado':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists($ruta_secciones . "empleado.php")) { include $ruta_secciones . "empleado.php"; }
         break;
-
+      //pagina de contenedores
       case 'contenedor':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         if (file_exists($ruta_secciones . "crud_contenedores.php")) { include $ruta_secciones . "crud_contenedores.php"; }
         break;
-
+    
+        //en caso de que no se encuentre nada
       default:
         echo "<h1>404</h1><p>Sección no encontrada.</p>";
         break;

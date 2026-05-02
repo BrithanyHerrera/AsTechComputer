@@ -1,4 +1,14 @@
+
 <?php
+//  PAGINA:index_crud_view
+// seccion de la pagina de el panel de administracion 
+//que se encarga de cambiar el texto de las secciones de la pagina principal
+//SECCIONES:
+//mision y vision
+//Frase del CEO
+//acerca de nosotros
+
+
 include __DIR__ . "/../../config/conexion.db.php";
 
 $edit = $_GET['edit'] ?? 'portada';
@@ -72,24 +82,16 @@ function es_activo($actual, $objetivo) {
     </div>
 </div>
 <script>
+    //funcion para cambiar el texto de la pagina index
    function cambiarSeccion(seccion) {
-
-    // Ocultar todas
     document.querySelectorAll('.seccion-form').forEach(div => {
         div.classList.remove('activa');
     });
-
-    // Mostrar la seleccionada
     document.getElementById('seccion-' + seccion).classList.add('activa');
-
-    // Cambiar botón activo
     document.querySelectorAll('.btn-tab').forEach(btn => {
         btn.classList.remove('activo');
     });
-
     event.target.classList.add('activo');
-
-    // Actualizar input hidden
     document.getElementById('seccion_editada').value = seccion;
 } 
 </script>
