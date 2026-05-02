@@ -206,7 +206,7 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
        //pagina de empleados
       case 'empleado':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
-        if (file_exists($ruta_secciones . "empleado.php")) { include $ruta_secciones . "empleado.php"; }
+        if (file_exists($ruta_secciones . "empleado_crud_view.php")) { include $ruta_secciones . "empleado_crud_view.php"; }
         break;
       //pagina de contenedores
       case 'contenedor':

@@ -1,8 +1,15 @@
 <?php
+// ========================================================
+//CONTROLADOR DE EMPLEADO, SECCION EN LA PAGINA DEL PANEL
+//VIEW:empleado_crud_view.php
+// mODELO: empleado_crud_model.php
+// pagina que agrega, edita y elimina empleados
+// ========================================================
+
 session_start(); // CRÍTICO: Necesario para validar si es Administrador
 
 require_once __DIR__ . '/../config/conexion.db.php';
-require_once __DIR__ . "/../models/empleado_model.php";
+require_once __DIR__ . "/../models/empleado_crud_model.php";
 
 $modelo = new EmpleadosModel($conexion);
 $accion = $_GET['accion'] ?? '';

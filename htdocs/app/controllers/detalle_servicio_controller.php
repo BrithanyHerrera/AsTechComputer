@@ -7,6 +7,7 @@
 // mODELO: detalle_servicio_model.php (Página de detalle servicio)
 // pagina que muestra informacion especifica de cada servicio en la pagina servicios_view.php
 // ========================================================
+
 // ruta que dirige a la ruta inicial de el proyecto
 $path_config = realpath(__DIR__ . '/../config/conexion.db.php');
 // ruta que conecta a model con controller

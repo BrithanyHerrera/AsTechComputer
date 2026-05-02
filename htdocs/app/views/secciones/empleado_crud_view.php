@@ -13,7 +13,7 @@
  * - Integración con SweetAlert para confirmaciones y notificaciones.
  * - Control de permisos para cambio de contraseña (solo administrador).
  */
-require_once __DIR__ . "/../../controllers/empleado_controller.php"; 
+require_once __DIR__ . "/../../controllers/empleado_crud_controller.php"; 
 ?>
 <!-- esto es para las alertas o notificaciones -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -29,7 +29,7 @@ require_once __DIR__ . "/../../controllers/empleado_controller.php";
         <div class="contenido-modal">
             <span class="cerrar" onclick="cerrarFormulario()">&times;</span>
             <h3>Registrar Nuevo Empleado</h3>
-            <form action="../controllers/empleado_controller.php?accion=agregar" method="POST" onsubmit="confirmarAccion(event, this, '¿Estás seguro de registrar a este nuevo empleado?')">
+            <form action="../controllers/empleado_crud_controller.php?accion=agregar" method="POST" onsubmit="confirmarAccion(event, this, '¿Estás seguro de registrar a este nuevo empleado?')">
                 
                 <div class="grupo-input">
                     <label>Nombre:</label>
@@ -134,7 +134,7 @@ require_once __DIR__ . "/../../controllers/empleado_controller.php";
         <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
         <h3><i class="fa-solid fa-user-pen"></i> Editar Empleado</h3>
 
-        <form action="../controllers/empleado_controller.php?accion=editar" method="POST" id="form-editar" onsubmit="confirmarAccion(event, this, '¿Estás seguro de guardar los cambios de este empleado?')">
+        <form action="../controllers/empleado_crud_controller.php?accion=editar" method="POST" id="form-editar" onsubmit="confirmarAccion(event, this, '¿Estás seguro de guardar los cambios de este empleado?')">
             <input type="hidden" name="id_empleado" id="edit-id">
 
             <div class="grupo-input">
