@@ -27,7 +27,7 @@ if ($seccion_actual === 'citas') {
 } elseif ($seccion_actual === 'ingreso') {
     // Al cargarse aquí, ejecuta las consultas de la BD y crea variables vitales
     // (como $paso) para que la vista pueda consumirlas de la memoria posteriormente.
-    require_once 'ingreso_controller.php'; 
+    require_once 'ingresar_dispositivo_controller.php'; 
 }
 
 /* ========================================================

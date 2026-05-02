@@ -1,7 +1,7 @@
 <?php
 // =============================================================
-// CONTROLADOR: ingreso_controller.php
-// UBICACIÓN: app/controllers/ingreso_controller.php
+// CONTROLADOR: ingresar_dispositivo_controller.php
+// UBICACIÓN: app/controllers/ingresar_dispositivo_controller.php
 // =============================================================
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once dirname(__DIR__) . '/config/conexion.db.php';
-require_once dirname(__DIR__) . '/models/ingreso_model.php';
+require_once dirname(__DIR__) . '/models/ingresar_dispositivo_model.php';
 
 $model = new IngresoModel($conexion);
 

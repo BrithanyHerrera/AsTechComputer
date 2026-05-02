@@ -1,7 +1,7 @@
 <?php
 // =============================================================
-// MODELO: ingreso_model.php — La Bóveda de Datos
-// UBICACIÓN: app/models/ingreso_model.php
+// MODELO: ingresar_dispositivo_model.php — La Bóveda de Datos
+// UBICACIÓN: app/models/ingresar_dispositivo_model.php
 // Solo habla con la base de datos. Nada de HTML, sesiones
 // ni redirecciones. Solo extrae, guarda y devuelve datos limpios.
 // =============================================================
