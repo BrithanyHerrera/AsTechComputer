@@ -1,23 +1,42 @@
 <?php
-// =============================================================
-// MODELO: ingresar_dispositivo_model.php — La Bóveda de Datos
-// UBICACIÓN: app/models/ingresar_dispositivo_model.php
-// Solo habla con la base de datos. Nada de HTML, sesiones
-// ni redirecciones. Solo extrae, guarda y devuelve datos limpios.
-// =============================================================
+/* INGRESAR_DISPOSITIVO_MODEL.PHP */
+/*
+ * PÁGINA: Modelo de Ingreso de Dispositivos (Ingreso Model) - As Tech Computer
+ * PROPÓSITO: Centralizar toda la lógica de interacción con la base de datos para el módulo de ingreso y edición de equipos, actuando como la "Bóveda de Datos" del sistema MVC.
+ * FUNCIONALIDADES: 
+ * - Consultas de Lectura Estructuradas: Extracción segura de registros completos mediante JOINs, verificación de disponibilidad de gabinetes, y obtención de catálogos (técnicos, marcas, tipos de equipo).
+ * - Importación de Citas: Recuperación de datos de clientes desde el módulo de agendamiento web para autocompletar el asistente físico.
+ * - Transacciones ACID (Escritura y Actualización): Ejecución atómica de bloques de inserción (o actualización) a través de 5 tablas interconectadas (clientes, equipos, ordenes_ingreso, condiciones_servicio y marketing), asegurando que si una falla, ninguna se guarde.
+ * - Control de Inventario: Gestión del estado de los gabinetes físicos (cambiando su disponibilidad a 'ocupado' o 'disponible' según el flujo del usuario).
+ * - Protección contra Duplicidad: Verificación de clientes existentes por nombre, apellido y teléfono antes de crear un nuevo registro, reciclando su ID para mantener la base de datos limpia.
+ */
 
+/* =============================================================
+   1. DEFINICIÓN DE LA CLASE Y CONSTRUCTOR
+   ============================================================= */
+/**
+ * La clase IngresoModel encapsula exclusivamente la lógica de base de datos.
+ * Cumple con el principio de responsabilidad única del patrón MVC, 
+ * sin procesar variables de sesión ni emitir HTML.
+ */
 class IngresoModel {
 
     private $conexion;
 
+    // El modelo recibe la conexión activa desde el controlador (Inyección de Dependencias)
     public function __construct($conexion) {
         $this->conexion = $conexion;
     }
 
-    // ----------------------------------------------------------
-    // LECTURA: Obtiene todos los datos de una orden por folio
-    // (usado al activar el modo edición)
-    // ----------------------------------------------------------
+    /* =============================================================
+       2. BLOQUE DE LECTURA (SELECTS)
+       ============================================================= */
+
+    /**
+     * LECTURA: Obtiene todos los datos de una orden por folio
+     * (Usado cuando el usuario activa el modo edición).
+     * Emplea JOINs para unificar la información dispersa en 5 tablas.
+     */
     public function obtenerDatosPorFolio($folio) {
         $sql = "SELECT o.*, c.*, e.*, s.*, m.recibir_promociones, m.es_primera_vez, m.id_tipo_uso, m.id_frecuencia_servicio, m.id_medio_contacto, m.medio_contacto_otro 
                 FROM ordenes_ingreso o
@@ -32,17 +51,18 @@ class IngresoModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    // ----------------------------------------------------------
-    // LECTURA: Obtiene el tipo de espacio de un gabinete por ID
-    // ----------------------------------------------------------
+    /**
+     * LECTURA: Identifica si un gabinete corresponde a laptops, PC, u otro.
+     */
     public function obtenerTipoGabinete($id_gabinete) {
         $q = $this->conexion->query("SELECT tipo_espacio FROM gabinetes WHERE id_gabinete = '" . $this->conexion->real_escape_string($id_gabinete) . "'");
         return $q ? $q->fetch_assoc() : null;
     }
 
-    // ----------------------------------------------------------
-    // LECTURA: Obtiene los datos de una cita por su ID
-    // ----------------------------------------------------------
+    /**
+     * LECTURA: Extrae la información de una cita agendada en la web
+     * para rellenar automáticamente el formulario físico.
+     */
     public function obtenerDatosCita($id_cita) {
         $stmt = $this->conexion->prepare("SELECT * FROM citas_web WHERE id_cita = ?");
         $stmt->bind_param("i", $id_cita);
@@ -50,9 +70,10 @@ class IngresoModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    // ----------------------------------------------------------
-    // LECTURA: Verifica el estado actual de un gabinete
-    // ----------------------------------------------------------
+    /**
+     * LECTURA: Verifica en tiempo real si un espacio físico sigue libre,
+     * previniendo colisiones de asignación entre técnicos.
+     */
     public function verificarEstadoGabinete($id_gabinete) {
         $stmt = $this->conexion->prepare("SELECT estado FROM gabinetes WHERE id_gabinete = ?");
         $stmt->bind_param("s", $id_gabinete);
@@ -60,9 +81,11 @@ class IngresoModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    // ----------------------------------------------------------
-    // LECTURA: Catálogos para poblar los selects del formulario
-    // ----------------------------------------------------------
+    /* =============================================================
+       3. BLOQUE DE CATÁLOGOS (SELECTS SIMPLES)
+       ============================================================= */
+    // Métodos para alimentar las listas desplegables del formulario
+
     public function obtenerTecnicos() {
         return $this->conexion->query("SELECT id_empleado, nombre, apellido FROM empleados WHERE id_puesto = 1");
     }
@@ -76,7 +99,6 @@ class IngresoModel {
     }
 
     public function obtenerRelacionesEquipoMarca() {
-        // Renombrada para que el controlador la encuentre (en el original pusiste obtenerRelacionesMarcaEquipo)
         $sql = "SELECT id_tipo_equipo, id_marca FROM relacion_equipo_marca";
         $res = $this->conexion->query($sql);
         $relaciones = [];
@@ -88,9 +110,10 @@ class IngresoModel {
         return $relaciones;
     }
 
-    // ----------------------------------------------------------
-    // LECTURA: Citas web pendientes (desde ayer en adelante)
-    // ----------------------------------------------------------
+    /**
+     * LECTURA: Obtiene las citas web que no han sido procesadas,
+     * desde el día de ayer en adelante.
+     */
     public function obtenerCitasPendientes() {
         $sql = "SELECT id_cita, nombre_cliente, apellido_cliente, whatsapp, id_tipo_equipo, id_marca, modelo, numero_serie, problema_reportado, detalle_falla, fecha_cita, hora_cita 
                 FROM citas_web 
@@ -106,11 +129,11 @@ class IngresoModel {
         return $citas;
     }
 
-    // ----------------------------------------------------------
-    // LECTURA: Gabinetes disponibles (Actualizado para el JSON del JS)
-    // En modo edición incluye también el gabinete original aunque
-    // esté "ocupado", para que el técnico pueda mantenerlo.
-    // ----------------------------------------------------------
+    /**
+     * LECTURA: Estructura los gabinetes disponibles en un array asociativo 
+     * listo para ser convertido en JSON. Si se está editando un registro, 
+     * incluye el gabinete originalmente asignado para evitar que el técnico lo pierda.
+     */
     public function obtenerGabinetesDisponibles($gabinete_original = null) {
         if ($gabinete_original) {
             $stmt = $this->conexion->prepare("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' OR id_gabinete = ? ORDER BY id_gabinete ASC");
@@ -121,11 +144,9 @@ class IngresoModel {
             $res = $this->conexion->query("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' ORDER BY id_gabinete ASC");
         }
 
-        // Armamos el arreglo estructurado que el JavaScript espera
         $gabinetes = ['laptop' => [], 'computadora_escritorio' => [], 'otro' => []];
         if ($res) {
             while ($row = $res->fetch_assoc()) {
-                // Asegurarnos de que el tipo_espacio existe en nuestro arreglo antes de meterlo
                 if (isset($gabinetes[$row['tipo_espacio']])) {
                     $gabinetes[$row['tipo_espacio']][] = $row['id_gabinete'];
                 }
@@ -134,18 +155,21 @@ class IngresoModel {
         return $gabinetes;
     }
 
-    // ----------------------------------------------------------
-    // ESCRITURA: Actualiza el estado de un gabinete
-    // ----------------------------------------------------------
+    /* =============================================================
+       4. BLOQUE DE ESCRITURA Y ACTUALIZACIÓN (TRANSACCIONES)
+       ============================================================= */
+
     public function actualizarEstadoGabinete($id_gabinete, $estado) {
         $stmt = $this->conexion->prepare("UPDATE gabinetes SET estado = ? WHERE id_gabinete = ?");
         $stmt->bind_param("ss", $estado, $id_gabinete);
         return $stmt->execute();
     }
 
-    // ----------------------------------------------------------
-    // ESCRITURA: Actualiza un registro existente en las 5 tablas
-    // ----------------------------------------------------------
+    /**
+     * ESCRITURA: Actualiza un registro existente.
+     * Utiliza 'begin_transaction' para asegurar que si falla el guardado
+     * en una de las 5 tablas, se revierta todo (ACID compliance).
+     */
     public function actualizarRegistro($datos, $folio_edit, $id_cliente, $id_equipo, $gabinete_original) {
         $this->conexion->begin_transaction();
 
@@ -154,6 +178,7 @@ class IngresoModel {
         $accesorios_txt    = isset($datos['accesorios']) ? implode(", ", $datos['accesorios']) : 'Ninguno';
         $recordatorio_pago = isset($datos['claro_pago']) ? 'si' : 'no';
 
+        // Traducción de valores textuales a IDs relacionales
         $map_uso        = ['estudio'=>1, 'oficina'=>2, 'disenio_edicion'=>3, 'gaming'=>4];
         $map_frecuencia = ['1_vez_anio'=>1, '2-3_veces_anio'=>2, 'mas_3_anio'=>3, 'descompone'=>4];
         $map_origen     = ['recomendacion'=>1, 'redes_sociales'=>2, 'google_web'=>3, 'cartel'=>4, 'cucosta'=>4, 'recurrente'=>4];
@@ -166,6 +191,7 @@ class IngresoModel {
         $id_marca       = $datos['marca'];
         $id_tecnico     = $datos['tecnico_asignado'] ?? 1;
 
+        // Actualización secuencial de las 5 entidades
         $stmt1 = $this->conexion->prepare("UPDATE clientes SET nombre=?, apellido=?, telefono=?, correo=? WHERE id_cliente=?");
         $stmt1->bind_param("ssssi", $datos['nombre_cliente'], $datos['apellido_cliente'], $telefono, $datos['correo_cliente'], $id_cliente);
         $stmt1->execute();
@@ -186,19 +212,22 @@ class IngresoModel {
         $stmt5->bind_param("issisis", $id_origen, $origen_otro, $datos['promociones'], $id_uso, $datos['primera_vez'], $id_frecuencia, $folio_edit);
         $stmt5->execute();
 
-        // Si el técnico decidió cambiarlo de gabinete físico,
-        // liberamos el viejo y ocupamos el nuevo
+        // Si el técnico decidió reasignar el equipo a un nuevo espacio físico, 
+        // el sistema se encarga de cambiar los estados de ambos gabinetes simultáneamente.
         if ($datos['espacio_almacenamiento'] !== $gabinete_original) {
             $this->conexion->query("UPDATE gabinetes SET estado = 'disponible' WHERE id_gabinete = '" . $this->conexion->real_escape_string($gabinete_original) . "'");
             $this->conexion->query("UPDATE gabinetes SET estado = 'ocupado' WHERE id_gabinete = '" . $this->conexion->real_escape_string($datos['espacio_almacenamiento']) . "'");
         }
 
+        // Se confirma y sella la transacción global.
         $this->conexion->commit();
     }
 
-    // ----------------------------------------------------------
-    // ESCRITURA: Crea un nuevo registro completo en las 5 tablas
-    // ----------------------------------------------------------
+    /**
+     * ESCRITURA: Crea un nuevo registro completo.
+     * Incorpora lógica inteligente para detectar si el cliente ya existe
+     * en la base de datos, evitando registros duplicados.
+     */
     public function crearRegistro($datos) {
         $this->conexion->begin_transaction();
 
@@ -219,30 +248,30 @@ class IngresoModel {
         $id_marca       = $datos['marca'];
         $id_tecnico     = $datos['tecnico_asignado'] ?? 1;
 
-        // 1. Verificar si el cliente ya existe (Buscamos por Nombre, Apellido y Teléfono)
+        // BÚSQUEDA DE DUPLICADOS: Si el nombre, apellido y teléfono coinciden, se recicla el ID.
         $stmt_check_cliente = $this->conexion->prepare("SELECT id_cliente FROM clientes WHERE nombre = ? AND apellido = ? AND telefono = ? LIMIT 1");
         $stmt_check_cliente->bind_param("sss", $datos['nombre_cliente'], $datos['apellido_cliente'], $telefono);
         $stmt_check_cliente->execute();
         $resultado_cliente = $stmt_check_cliente->get_result();
 
         if ($resultado_cliente->num_rows > 0) {
-            // EL CLIENTE YA EXISTE: Reciclamos su ID para no duplicarlo
             $fila_cliente = $resultado_cliente->fetch_assoc();
             $id_cliente = $fila_cliente['id_cliente'];
             
-            // Actualizamos su correo por si en esta nueva visita dio uno diferente
+            // Actualización del correo (el usuario pudo proporcionar uno nuevo)
             $stmt_update_correo = $this->conexion->prepare("UPDATE clientes SET correo = ? WHERE id_cliente = ?");
             $stmt_update_correo->bind_param("si", $datos['correo_cliente'], $id_cliente);
             $stmt_update_correo->execute();
             
         } else {
-            // ES UN CLIENTE NUEVO: Lo insertamos de cero
+            // INSERCIÓN: Es un cliente completamente nuevo.
             $stmt1 = $this->conexion->prepare("INSERT INTO clientes (nombre, apellido, telefono, correo) VALUES (?, ?, ?, ?)");
             $stmt1->bind_param("ssss", $datos['nombre_cliente'], $datos['apellido_cliente'], $telefono, $datos['correo_cliente']);
             $stmt1->execute();
             $id_cliente = $this->conexion->insert_id;
         }
 
+        // Inserciones en cascada (Equipos, Ordenes, Condiciones y Marketing)
         $stmt2 = $this->conexion->prepare("INSERT INTO equipos (id_cliente, id_marca, id_tipo_equipo, modelo, numero_serie) VALUES (?, ?, ?, ?, ?)");
         $stmt2->bind_param("iiiss", $id_cliente, $id_marca, $id_tipo_equipo, $datos['modelo'], $datos['numero_serie']);
         $stmt2->execute();
@@ -260,6 +289,7 @@ class IngresoModel {
         $stmt5->bind_param("sissisi", $datos['folio'], $id_origen, $origen_otro, $datos['promociones'], $id_uso, $datos['primera_vez'], $id_frecuencia);
         $stmt5->execute();
 
+        // Se actualiza el estado del gabinete para que no pueda ser asignado a otro equipo.
         $stmt6 = $this->conexion->prepare("UPDATE gabinetes SET estado = 'ocupado' WHERE id_gabinete = ?");
         $stmt6->bind_param("s", $datos['espacio_almacenamiento']);
         $stmt6->execute();
