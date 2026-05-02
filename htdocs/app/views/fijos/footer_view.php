@@ -25,7 +25,6 @@ También contiene el sistema global de gestión de cookies (Banner y Modal).
             <div class="fila-links">
                 <h4>Empresa</h4>
                 <ul>
-                    <li><a href="<?php echo BASE_URL; ?>app/controllers/sobre_nosotros_controller.php">Sobre Nosotros</a></li>
                     <li><a href="<?php echo BASE_URL; ?>app/controllers/convenios_controller.php">Convenios</a></li>
                     <li><a href="<?php echo BASE_URL; ?>app/controllers/registro_marca_controller.php">Registro de marca</a></li>
                     <li><a href="<?php echo BASE_URL; ?>app/controllers/login_controller.php">Operaciones</a></li>
@@ -35,7 +34,6 @@ También contiene el sistema global de gestión de cookies (Banner y Modal).
                 <h4>Legal</h4>
                 <ul>
                     <li><a href="<?php echo BASE_URL; ?>app/controllers/aviso_privacidad_controller.php">Aviso de privacidad</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>app/controllers/terminos_y_condiciones_controller.php">Términos y Condiciones</a></li>
                     <li><a href="<?php echo BASE_URL; ?>app/controllers/politica_cookies_controller.php">Política de Cookies</a></li>
                     <li><a href="<?php echo BASE_URL; ?>app/controllers/politica_servicios_controller.php">Política de servicios</a></li>
                 </ul>
