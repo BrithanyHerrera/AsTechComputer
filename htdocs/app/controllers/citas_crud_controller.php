@@ -1,32 +1,49 @@
 <?php
 /* CITAS_CRUD_CONTROLLER.PHP */
 /*
-Este archivo es el Controlador (Controller) responsable de la gestión interna de citas (CRUD) dentro del panel administrativo de AsTech Computer. Funciona como el intermediario principal entre la interfaz del administrador, la base de datos local y la API de Google Calendar. Sus tareas incluyen: cargar las librerías necesarias, recibir solicitudes asíncronas (AJAX) para cambiar rápidamente el estado de una cita, limpiar automáticamente los registros que ya han expirado, gestionar la eliminación o edición de citas asegurando que los cambios se reflejen de manera sincronizada tanto en el servidor local como en Google Calendar, y finalmente, preparar todos los datos en crudo (listas de marcas, tipos de equipo y horarios ocupados) que serán renderizados por la Vista.
-*/
+ * PÁGINA: Controlador de Gestión de Citas (Citas CRUD Controller) - As Tech Computer
+ * PROPÓSITO: Servir como el intermediario (Controller) principal para la gestión interna de citas dentro del panel administrativo, orquestando la comunicación entre la interfaz de usuario, la base de datos local y la API de Google Calendar.
+ * FUNCIONALIDADES:
+ * - Carga de dependencias mediante Composer y establecimiento de la zona horaria del sistema.
+ * - Configuración y autenticación segura con la API de Google Calendar mediante credenciales JSON.
+ * - Procesamiento de solicitudes asíncronas (AJAX) para realizar cambios rápidos de estado en las citas registradas.
+ * - Mantenimiento automatizado que detecta, extrae y elimina registros de citas cuya vigencia ha expirado en ambos sistemas.
+ * - Ejecución controlada de la eliminación manual de registros por parte del administrador.
+ * - Orquestación de la edición integral de citas desde ventanas modales, reestructurando las descripciones y sincronizando los cambios con Google.
+ * - Extracción y preparación de catálogos crudos (marcas, tipos de equipo) y mapeo de horarios ocupados para alimentar la Vista.
+ */
+
 /* ========================================================
    1. INICIALIZACIÓN Y CARGA DE DEPENDENCIAS
    ======================================================== */
-
-// Inclusión de librerías mediante Composer y conexión a BD
+/**
+ * El sistema importa las librerías necesarias gestionadas por Composer,
+ * incluye los parámetros de conexión a la base de datos y llama al 
+ * modelo correspondiente para estructurar el patrón MVC.
+ */
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/conexion.db.php';
-require_once dirname(__DIR__) . '/models/citas_crud_model.php'; // <-- INCLUIMOS EL MODELO
+require_once dirname(__DIR__) . '/models/citas_crud_model.php';
 
 use Google\Client;
 use Google\Service\Calendar;
 
+// Se establece la zona horaria oficial de la operación para evitar desfases en los agendamientos.
 date_default_timezone_set('America/Mexico_City');
 
 /* ==========================================================
    2. INSTANCIACIÓN DEL MODELO Y CONFIGURACIÓN DE GOOGLE API
    ========================================================== */
-// Se instancia el Modelo para gestionar operaciones de base de datos
+/**
+ * Se instancia el objeto del modelo que concentrará las operaciones de base de datos.
+ * Posteriormente, el sistema inicializa el cliente de Google y le inyecta las 
+ * credenciales de la cuenta de servicio para habilitar la lectura y escritura en el calendario.
+ */
 $modeloCitas = new CitasAdminModel($conexion);
 
-// Variable para controlar las alertas de la vista (En vez de hacer echo <script>)
+// Variable global inicializada para controlar y almacenar las alertas de éxito/error hacia la Vista.
 $alerta_script = ""; 
 
-// Configuración de credenciales y acceso al cliente de Google Calendar
 $client = new Client();
 $ruta_credenciales = dirname(__DIR__, 2) . '/credenciales.json';
 $client->setAuthConfig($ruta_credenciales);
@@ -37,15 +54,17 @@ $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@
 /* ==========================================================
    3. ACTUALIZACIÓN DE ESTADO RÁPIDA VÍA AJAX
    ========================================================== */
-// Intercepta peticiones POST para actualizar el estado de una cita de forma asíncrona
+/**
+ * El controlador intercepta las peticiones POST generadas en segundo plano (AJAX).
+ * Valida la existencia del identificador y solicita al modelo que modifique 
+ * exclusivamente la columna de estado, preparando una alerta de recarga exitosa.
+ */
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar_estado_rapido') {
     $id_cita = $_POST['db_id'] ?? null; 
     $nuevo_estado = $_POST['estado'] ?? 'pendiente';
 
     if ($id_cita) {
-        // Llamamos al modelo para que actualice la base de datos
         $modeloCitas->actualizarEstado($id_cita, $nuevo_estado);
-        // Recarga la página para mostrar el nuevo color y estado
         $alerta_script = "Swal.fire('Estado Actualizado', 'El estado de la cita ha sido modificado', 'success').then(() => { window.location.href='?seccion=citas'; });";
     } else {
         $alerta_script = "Swal.fire('Error', 'No se pudo encontrar el ID de la cita en la base de datos local', 'error');";
@@ -55,7 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 /* ==========================================================
    4. LIMPIEZA AUTOMÁTICA DE CITAS EXPIRADAS
    ========================================================== */
-// Extrae y elimina citas cuya vigencia ha expirado, sincronizando BD y Calendar
+/**
+ * Rutina de auto-mantenimiento: El sistema detecta las citas que ya pasaron
+ * de su fecha y hora límite, procediendo a eliminarlas primero en la nube
+ * (Google Calendar) mitigando errores, y finalmente borrándolas de la base local.
+ */
 $citas_expiradas = $modeloCitas->obtenerCitasExpiradas();
 foreach ($citas_expiradas as $cita_exp) {
     if (!empty($cita_exp['id_google_calendar'])) {
@@ -69,7 +92,11 @@ foreach ($citas_expiradas as $cita_exp) {
 /* ==========================================================
    5. LÓGICA PARA ELIMINACIÓN MANUAL DE CITAS
    ========================================================== */
-// Elimina una cita específica cuando el administrador acciona el botón de eliminar
+/**
+ * El controlador captura el parámetro GET de eliminación. Ejecuta el borrado 
+ * atómico en el servicio de Google y, de ser exitoso, delega al modelo la 
+ * destrucción del registro en MySQL, devolviendo la confirmación visual.
+ */
 if (isset($_GET['delete_id'])) {
     try {
         $service->events->delete($calendarId, $_GET['delete_id']);
@@ -77,7 +104,6 @@ if (isset($_GET['delete_id'])) {
         if (!empty($_GET['db_id'])) {
             $modeloCitas->eliminarCitaLocal($_GET['db_id']);
         }
-        // Se genera el script de alerta para confirmación en la vista
         $alerta_script = "Swal.fire('Eliminada', 'Cita eliminada correctamente', 'success').then(() => { window.location.href='?seccion=citas'; });";
     } catch (Exception $e) {
         $alerta_script = "Swal.fire('Error', 'No se pudo eliminar: " . addslashes($e->getMessage()) . "', 'error');";
@@ -87,7 +113,12 @@ if (isset($_GET['delete_id'])) {
 /* ==========================================================
    6. LÓGICA DE EDICIÓN Y ACTUALIZACIÓN GENERAL (MODAL)
    ========================================================== */
-// Procesa los datos enviados desde la ventana modal de edición
+/**
+ * Cuando el administrador envía el formulario modal completo, el sistema 
+ * recolecta la data, re-calcula las conversiones textuales de los catálogos 
+ * (marcas, tipos) para mantener la descripción humana del evento de Google 
+ * actualizada, y finalmente impacta ambas bases de datos.
+ */
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'actualizar') {
     $id_google     = $_POST['modal_google_id'];
     $id_db         = $_POST['modal_db_id'];
@@ -105,16 +136,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     $estado        = $_POST['estado'] ?? ''; 
 
     try {
-        // Se solicitan los nombres textuales al modelo para armar el resumen en Google
         $m_nom = $modeloCitas->obtenerNombreMarca($id_marca);
         $t_nom = $modeloCitas->obtenerNombreTipo($id_tipo);
 
         $nuevo_resumen = "SERVICIO: $nombre $apellido - $t_nom";
         
-        // Agregamos el detalle de la falla al evento de Google Calendar
         $nueva_desc = "Marca: $m_nom\nModelo: $modelo\nNo. Serie: $n_serie\nFalla: $falla\nDetalles: $detalle_falla\nWhatsApp: $whatsapp";
 
-        // Sincronización de los nuevos datos hacia Google Calendar
         $evento = $service->events->get($calendarId, $id_google);
         $inicio_dt = $fecha . 'T' . $hora . ':00-06:00';
         $fin_dt = date('Y-m-d\TH:i:sP', strtotime($inicio_dt . ' + 1 hour'));
@@ -139,14 +167,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
 /* ==========================================================
    7. PREPARACIÓN Y EXTRACCIÓN DE DATOS PARA LA VISTA
    ========================================================== */
-// Se solicitan al modelo los catálogos y el mapa completo de citas
+/**
+ * Concluida la lógica de transacciones, el controlador extrae de la base 
+ * de datos todos los catálogos y registros que necesita la Vista para 
+ * rellenar los selects y tablas. Además, consulta la API en vivo para 
+ * crear un mapa JSON de los horarios ocupados.
+ */
 $marcas_res = $modeloCitas->obtenerMarcas();
 $tipos_res = $modeloCitas->obtenerTiposEquipo();
 $mapa_db = $modeloCitas->obtenerCitasCompletas();
 
 $servicios_res = $modeloCitas->obtenerServiciosConfigurados();
 
-// Extracción de eventos directamente desde Google Calendar para sincronizar horarios ocupados
 $eventos_google = $service->events->listEvents($calendarId, ['singleEvents' => true, 'orderBy' => 'startTime', 'timeMin' => date('c')])->getItems();
 
 $citas_ocupadas = [];

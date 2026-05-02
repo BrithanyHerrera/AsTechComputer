@@ -1,42 +1,57 @@
 <?php
- require_once __DIR__ . "/../config/config.php"; 
 /* ADMINISTRACION_CONTROLLER.PHP */
 /*
-Este archivo actúa como el Controlador Maestro (Front Controller) del panel de administración. Su responsabilidad dentro del patrón arquitectónico MVC es centralizar el enrutamiento del sistema. Captura la solicitud del usuario mediante la URL, ejecuta en segundo plano los controladores secundarios (para preparar datos como registros de base de datos o variables de estado) y, finalmente, despliega la Vista Maestra, inyectándole toda la información previamente procesada de manera limpia y segura.
-*/
+ * PÁGINA: Controlador Maestro de Administración (Front Controller) - As Tech Computer
+ * PROPÓSITO: Centralizar el enrutamiento del sistema para el panel de administración, gestionando qué submódulo debe ejecutarse y renderizarse.
+ * FUNCIONALIDADES:
+ * - Carga inicial de las configuraciones y constantes globales del sistema.
+ * - Captura y validación de parámetros de la URL (método GET) para determinar la sección solicitada ('citas', 'ingreso', o 'dashboard' por defecto).
+ * - Ejecución condicional y dinámica de los controladores secundarios correspondientes a cada submódulo, permitiendo la preparación de datos y operaciones de base de datos previas a la vista.
+ * - Renderización de la vista maestra, integrando de forma limpia toda la lógica de negocio procesada en segundo plano.
+ */
+
+
 /* ========================================================
-   GESTIÓN DE ENRUTAMIENTO PRINCIPAL (GET)
+   1. CARGA DE CONFIGURACIÓN GLOBAL
    ======================================================== */
-/*
-El sistema captura el parámetro 'seccion' a través de la URL (método GET).
-Si no se especifica ninguna ruta, establece 'dashboard' como valor 
-predeterminado para garantizar la carga correcta del panel de inicio.
+// El sistema incluye el archivo principal de configuración para asegurar
+// el acceso a constantes y parámetros de entorno definidos globalmente.
+require_once __DIR__ . "/../config/config.php"; 
+
+/* ========================================================
+   2. GESTIÓN DE ENRUTAMIENTO PRINCIPAL (GET)
+   ======================================================== */
+/**
+ * El sistema captura el parámetro 'seccion' a través de la URL.
+ * Si el usuario no especifica ninguna ruta concreta, el controlador 
+ * establece automáticamente 'dashboard' como valor predeterminado 
+ * para garantizar la carga correcta de la pantalla inicial.
  */
 $seccion_actual = isset($_GET['seccion']) ? $_GET['seccion'] : 'dashboard';
 
 /* ========================================================
-   EJECUCIÓN DINÁMICA DE CONTROLADORES SECUNDARIOS
+   3. EJECUCIÓN DINÁMICA DE CONTROLADORES SECUNDARIOS
    ======================================================== */
-/*
-El controlador maestro actúa como un gestor de tráfico, delegando 
-responsabilidades y ejecutando la lógica de negocio específica 
-(operaciones de base de datos, preparación de variables) antes del HTML.
-*/
+/**
+ * Actuando como un gestor de tráfico, el controlador maestro delega 
+ * las responsabilidades hacia controladores secundarios específicos. 
+ * Estos archivos se ejecutan en segundo plano para procesar lógica de 
+ * negocio, consultas a la base de datos o preparación de variables vitales 
+ * (como $paso) que las vistas consumirán posteriormente.
+ */
 if ($seccion_actual === 'citas') {
     require_once 'citas_crud_controller.php';
 } elseif ($seccion_actual === 'ingreso') {
-    // Al cargarse aquí, ejecuta las consultas de la BD y crea variables vitales
-    // (como $paso) para que la vista pueda consumirlas de la memoria posteriormente.
     require_once 'ingresar_dispositivo_controller.php'; 
 }
 
 /* ========================================================
-   RENDERIZACIÓN DE LA VISTA MAESTRA
+   4. RENDERIZACIÓN DE LA VISTA MAESTRA
    ======================================================== */
-/*
-Una vez preparada toda la lógica y los datos en segundo plano, el sistema 
-invoca la carga de la interfaz gráfica principal. Se utiliza la constante
-de directorio absoluto para asegurar la portabilidad y seguridad de la ruta.
-*/
+/**
+ * Una vez completada toda la preparación lógica en segundo plano, 
+ * el sistema invoca e integra la interfaz gráfica principal. Se emplea 
+ * dirname() para garantizar una construcción de rutas absoluta y segura.
+ */
 require_once dirname(__DIR__) . '/views/administracion_view.php';
 ?>

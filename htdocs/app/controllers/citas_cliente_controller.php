@@ -1,17 +1,28 @@
 <?php
 /* CITAS_CLIENTE_CONTROLLER.PHP */
 /*
-Este archivo opera como el Controlador (Controller) principal para el flujo de agendamiento desde la perspectiva del usuario. Su labor consiste en recibir los datos del formulario (POST), validar la disponibilidad de horarios a través del modelo de la base de datos, insertar el registro sincronizado en la API de Google Calendar (incluyendo ahora el campo de detalle de la falla), guardar la información en la base de datos local y, finalmente, accionar el envío automático de un mensaje de confirmación mediante la API de WhatsApp de Meta. Por último, inyecta los datos de catálogos necesarios para que la Vista (interfaz gráfica) se dibuje correctamente.
-*/
+ * PÁGINA: Controlador de Citas del Cliente - As Tech Computer
+ * PROPÓSITO: Operar como el cerebro (Controller) principal para el flujo de agendamiento desde la perspectiva del usuario.
+ * FUNCIONALIDADES: 
+ * - Recepción y limpieza de datos provenientes del formulario de citas (POST).
+ * - Validación de disponibilidad horaria consultando el modelo de la base de datos para evitar sobreescrituras.
+ * - Inserción y sincronización del registro en la API de Google Calendar, integrando detalles técnicos y fallas en la descripción del evento.
+ * - Registro persistente de la información del cliente, equipo y cita en la base de datos local (MySQL).
+ * - Disparo de notificaciones automáticas de confirmación vía WhatsApp utilizando la API oficial de Meta (Graph API).
+ * - Inyección de catálogos (tipos de equipo, marcas, servicios y horarios ocupados) hacia la Vista para la correcta renderización del formulario interactivo.
+ */
 
 /* ========================================================
-   CARGA DE DEPENDENCIAS Y VARIABLES DE ENTORNO (APIs)
+   1. CARGA DE DEPENDENCIAS Y VARIABLES DE ENTORNO (APIs)
    ======================================================== */
-// Se utiliza dirname() para establecer una ruta absoluta hacia las librerías de Composer.
-// Esto permite utilizar las APIs de Google y la lectura de variables de entorno (.env) de forma segura.
-        require_once __DIR__ . "/../config/config.php"; 
+/**
+ * Se utiliza dirname() para establecer una ruta absoluta y segura 
+ * hacia las configuraciones globales y las librerías de Composer.
+ * Esto habilita el uso de las APIs de Google y la lectura de 
+ * variables de entorno (.env) para proteger credenciales sensibles.
+ */
+require_once __DIR__ . "/../config/config.php"; 
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
-
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
@@ -24,15 +35,22 @@ use Google\Service\Calendar;
 use Google\Service\Calendar\Event;
 
 /* ========================================================
-   INSTANCIACIÓN DEL MODELO DE BASE DE DATOS
+   2. INSTANCIACIÓN DEL MODELO DE BASE DE DATOS
    ======================================================== */
-// Se crea una instancia del modelo para manejar las consultas SQL relacionadas con las citas.
+/**
+ * Se crea una instancia del modelo CitaModel, inyectándole la conexión.
+ * Este objeto manejará de forma exclusiva todas las consultas SQL 
+ * relacionadas con la gestión de citas.
+ */
 $modeloCita = new CitaModel($conexion);
 
 /* ========================================================
-   RECEPCIÓN Y LIMPIEZA DE DATOS (MÉTODO POST)
+   3. RECEPCIÓN Y LIMPIEZA DE DATOS (MÉTODO POST)
    ======================================================== */
-// El sistema detecta si se ha enviado el formulario e inicia la captura de variables.
+/**
+ * El sistema detecta si se ha enviado el formulario mediante POST 
+ * e inicia la captura y asignación de variables.
+ */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = $_POST['nombre_cliente'];
     $apellido = $_POST['apellido_cliente'];
@@ -60,32 +78,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         /* ========================================================
-           VALIDACIÓN DE DISPONIBILIDAD HORARIA (BACKEND)
+           4. VALIDACIÓN DE DISPONIBILIDAD HORARIA (BACKEND)
            ======================================================== */
-        // Se consulta al modelo si la fecha y hora seleccionadas aún están libres.
+        /**
+         * Se consulta al modelo si la fecha y hora seleccionadas aún están libres.
+         * Si el horario está tomado, se levanta una bandera; de lo contrario, 
+         * continúa el proceso de agendamiento.
+         */
         if ($modeloCita->verificarDisponibilidad($fecha, $hora)) {
             $horario_ocupado = true;
         } else {
             
             /* ========================================================
-               SINCRONIZACIÓN CON GOOGLE CALENDAR API
+               5. SINCRONIZACIÓN CON GOOGLE CALENDAR API
                ======================================================== */
-            // Se traducen los IDs a texto plano para que el calendario sea legible.
+            /**
+             * Se traducen los IDs numéricos a texto plano utilizando el modelo,
+             * para asegurar que el evento en el calendario sea legible por humanos.
+             */
             $nombre_marca_cal = ($id_marca == "12") ? $marca_otro : $modeloCita->obtenerNombreMarca($id_marca);
             $nombre_tipo_cal = ($id_tipo_equipo == "7") ? $tipo_equipo_otro : $modeloCita->obtenerNombreTipo($id_tipo_equipo);
 
-            // Se inicializa el cliente de Google y se cargan las credenciales JSON.
+            // Se inicializa el cliente de Google y se asocian las credenciales JSON de la cuenta de servicio.
             $client = new Client();
             $client->setAuthConfig(dirname(__DIR__, 2) . '/credenciales.json');
             $client->addScope(Calendar::CALENDAR);
             $service = new Calendar($client);
             $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@group.calendar.google.com';
 
-            // Se calcula el tiempo de inicio y fin (duración estándar de 1 hora).
+            // Se calcula el tiempo de inicio y fin (asumiendo una duración estándar de 1 hora por cita).
             $start_time = $fecha . 'T' . $hora . ':00-06:00';
             $end_time = date('Y-m-d\TH:i:sP', strtotime($start_time . ' + 1 hour'));
 
-            // Se estructura el evento, integrando ahora el campo $detalle_falla en la descripción.
+            // Se estructura el evento, integrando el campo $detalle_falla en la descripción para mayor contexto.
             $event = new Event([
                 'summary' => "SERVICIO: $nombreCompleto - $nombre_tipo_cal",
                 'description' => "Marca: $nombre_marca_cal\nModelo: $modelo\nFalla: $problema\nDetalle: $detalle_falla\nWhatsApp: $whatsapp",
@@ -99,18 +124,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id_google_calendar = $evento_creado->getId();
 
             /* ========================================================
-               REGISTRO EN LA BASE DE DATOS LOCAL
+               6. REGISTRO EN LA BASE DE DATOS LOCAL
                ======================================================== */
-            // Se empaquetan todas las variables, incluyendo el nuevo campo $detalle_falla, para enviarlas al modelo.
+            /**
+             * Se empaquetan todas las variables procesadas (incluyendo el ID de Google) 
+             * utilizando compact(), y se envían al modelo para su persistencia en MySQL.
+             */
             $datosDB = compact('id_google_calendar', 'nombre', 'apellido', 'whatsapp', 'id_tipo_equipo', 'tipo_equipo_otro', 'id_marca', 'marca_otro', 'modelo', 'numero_serie', 'problema', 'detalle_falla', 'fecha', 'hora');
             
             $modeloCita->registrarCita($datosDB);
 
             /* ========================================================
-               NOTIFICACIÓN AUTOMÁTICA VÍA META WHATSAPP API
+               7. NOTIFICACIÓN AUTOMÁTICA VÍA META WHATSAPP API
                ======================================================== */
+            /**
+             * Se intenta enviar un mensaje de confirmación al cliente utilizando la API 
+             * oficial de Meta. Este bloque está envuelto en un try-catch silencioso 
+             * para que un fallo en WhatsApp no interrumpa el éxito del agendamiento.
+             */
             try {
-                // Se leen las credenciales secretas del archivo .env.
+                // Se extraen las credenciales desde las variables de entorno.
                 $token = $_ENV['META_WA_TOKEN'];
                 $phone_id = $_ENV['META_PHONE_ID'];
                 
@@ -119,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $url = "https://graph.facebook.com/v25.0/" . $phone_id . "/messages";
 
-                // Se construye el cuerpo JSON para invocar la plantilla preaprobada de confirmación.
+                // Se construye el payload JSON invocando la plantilla preaprobada de confirmación.
                 $data = [
                     "messaging_product" => "whatsapp",
                     "to" => $telefono_destino,
@@ -140,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     ]
                 ];
 
-                // Se configuran las cabeceras cURL y se dispara la petición HTTP POST hacia los servidores de Meta.
+                // Configuración de cabeceras cURL y ejecución de la petición HTTP POST.
                 $options = [
                     CURLOPT_URL => $url,
                     CURLOPT_RETURNTRANSFER => true,
@@ -158,10 +191,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 curl_close($curl);
 
             } catch (Exception $e) { 
-                // Los errores de WhatsApp se silencian para no interrumpir el flujo si la API falla.
+                // Excepciones de red o API silenciadas por diseño.
             }
 
-            // Se levanta la bandera de éxito para que la vista renderice el mensaje de confirmación (SweetAlert).
+            // Se levanta la bandera de éxito para que la vista despliegue el mensaje final (SweetAlert).
             $exito = true;
         }
     } catch (Exception $e) {
@@ -170,10 +203,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 /* ========================================================
-   EXTRACCIÓN DE DATOS COMPLEMENTARIOS PARA EL FORMULARIO
+   8. EXTRACCIÓN DE CATÁLOGOS PARA EL FORMULARIO (GET/POST)
    ======================================================== */
-// Independientemente de si se envió el POST o no, el sistema debe cargar los catálogos 
-// de la base de datos para dibujar los menús desplegables (<select>) en el HTML.
+/**
+ * Independientemente de si se envió el formulario (POST) o si es 
+ * la carga inicial (GET), el sistema extrae de la base de datos 
+ * los catálogos y relaciones necesarios para dibujar los selects en el HTML.
+ */
 $query_tipos = $modeloCita->obtenerTiposFormulario();
 $query_marcas = $modeloCita->obtenerMarcasFormulario();
 $query_servicios = $modeloCita->obtenerServiciosActivos(); 
@@ -181,8 +217,8 @@ $json_relaciones = json_encode($modeloCita->obtenerRelaciones());
 $json_ocupadas = json_encode($modeloCita->obtenerCitasOcupadas());
 
 /* ========================================================
-   RENDERIZACIÓN DE LA VISTA (UI)
+   9. RENDERIZACIÓN DE LA VISTA (UI)
    ======================================================== */
-// Se llama al archivo visual para presentar el formulario final al usuario.
+// Se integra el archivo visual, pasando todas las variables procesadas al Frontend.
 require_once dirname(__DIR__) . '/views/citas_cliente_view.php';
 ?>
