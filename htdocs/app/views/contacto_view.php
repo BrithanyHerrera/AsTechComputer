@@ -1,7 +1,11 @@
 <script>
 /* CONTACTO_VIEW.PHP */
 /*
-Este archivo representa la Vista (View) exclusiva para la sección de contacto de la plataforma. Su función es estructurar la interfaz gráfica mediante la cual los usuarios pueden enviar mensajes directos al taller. Adicionalmente, despliega la ubicación física a través de un mapa interactivo y muestra los accesos a las redes sociales. A nivel técnico, recibe la variable $status desde su respectivo controlador para inicializar los scripts de notificaciones (alertas) en el navegador del cliente, integrándose finalmente con las secciones globales de navegación y pie de página.
+Este archivo representa la Vista (View) exclusiva para la sección de contacto de la plataforma. 
+Su función es estructurar la interfaz gráfica mediante la cual los usuarios pueden enviar mensajes directos al taller. 
+Adicionalmente, despliega la ubicación física a través de un mapa interactivo y muestra los accesos a las redes sociales. 
+A nivel técnico, recibe la variable $status desde su respectivo controlador para inicializar los scripts de notificaciones (alertas) en el navegador del cliente, 
+integrándose finalmente con las secciones globales de navegación y pie de página.
 */
 </script>
 
@@ -37,22 +41,32 @@ Este archivo representa la Vista (View) exclusiva para la sección de contacto d
             <form action="" method="POST">
                 <div class="form-group">
                     <label>Nombre Completo</label>
-                    <input type="text" name="nombre" required 
+                   <input type="text" name="nombre" id="nombre" required 
+               maxlength="100"
                pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" 
-               oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
+               oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')"
+               placeholder="Ej. Juan Pérez">
                 </div>
                 <div class="form-group">
         <label>Correo Electrónico</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" id="email" required 
+               maxlength="150"
+               placeholder="correo@ejemplo.com">
     </div>
                 <div class="form-group">
-                    <label>Asunto</label>
-                    <textarea name="asunto" rows="1" required></textarea>
-                </div>
+            <label>Asunto</label>
+            <textarea name="asunto" id="asunto" rows="1" required 
+                      maxlength="100"
+                      oninput="this.value = this.value.replace(/[<>{}[\];]/g, '')"
+                      placeholder="Motivo de tu mensaje"></textarea>
+        </div>
                 <div class="form-group">
-                    <label>Mensaje</label>
-                    <textarea name="mensaje" rows="2" required></textarea>
-                </div>
+            <label>Mensaje</label>
+            <textarea name="mensaje" id="mensaje" rows="2" required 
+                      maxlength="500"
+                      oninput="this.value = this.value.replace(/[<>{}[\];]/g, '')"
+                      placeholder="Escribe tu mensaje aquí..."></textarea>
+        </div>
                 <button type="submit" class="boton-submit">Enviar Mensaje</button>
             </form>
         </section>
@@ -95,7 +109,7 @@ Este archivo representa la Vista (View) exclusiva para la sección de contacto d
 </body>
 
 </html>
-
+<script src="public/js/contacto.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

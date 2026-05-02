@@ -1,137 +1,189 @@
-:root { 
-    --color-primario: #6b0b4df5;
-    --color-secundario: #000000;
-    --color-acento: #e9ecef;
-    --texto-oscuro: #333;
-    --texto-claro: #fff;
+/* =========================================
+   CONVENIOS.CSS 
+   ========================================= */
+:root {
+    --naranja: #e17203;
+    --purpura-oscuro: #52073a;
+    --naranja-hover: #c56502;
+    --gris-oscuro: #333333;
+    --gris-medio: #666666;
+    --gris-claro: #f4f4f4;
+    --blanco: #ffffff;
+    --borde: #dddddd;
+    --sombra-suave: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-/* BASE */
 body {
+    background-color: var(--blanco);
+    color: var(--gris-oscuro);
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
     margin: 0;
-       font-family: 'Lato', sans-serif;
-    background: #f8f9fa;
 }
 
-/* HERO */
+/* =========================================
+   HERO SECCIÓN
+   ========================================= */
 .seccion-convenios {
-    padding: 120px 20px 60px;
+    padding: 100px 20px 80px;
     text-align: center;
-    background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
-    color: white;
+    background: var(--gris-claro);
+    border-bottom: 1px solid var(--borde);
 }
 
 .titulo-convenios {
-    font-size: 3.0rem;
+    font-size: 2.5rem;
     font-weight: 900;
-    margin-bottom: 10px;
+    color: var(--purpura-oscuro);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.titulo-convenios::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--naranja);
 }
 
 .subtitulo-convenios {
-    max-width: 600px;
-    margin: 0 auto;
-    opacity: 0.9;
-    font-size:1.2rem;
-    margin-bottom:10px;
+    max-width: 700px;
+    margin: 35px auto 0;
+    color: var(--gris-medio);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    letter-spacing: 0.5px;
 }
 
-/* CONTENEDOR GENERAL */
+/* =========================================
+   ESTRUCTURA Y TÍTULOS DE BLOQUE
+   ========================================= */
 .contenedor-convenios {
-    max-width: 1100px;
-    margin: -50px auto 40px;
+    max-width: 1200px;
+    margin: 60px auto;
     padding: 0 20px;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
-/* SECCIONES */
-.bloque {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* TITULOS SECCION */
 .titulo-bloque {
     font-size: 1.6rem;
-    color: var(--color-primario);
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-/* GRID */
-.grid-convenios {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-/* CARDS */
-.card-convenio {
-    background: #fff;
-    border-radius: 15px;
-    padding: 20px;
-    transition: 0.3s;
-    border: 1px solid #eee;
+    color: var(--gris-oscuro);
     position: relative;
-    overflow: hidden;
+    padding-bottom: 15px;
+    margin-bottom: 40px;
+    font-weight: 700;
 }
 
-.card-convenio::before {
+.titulo-bloque::after {
     content: "";
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    height: 4px;
-    width: 100%;
-    background: var(--color-primario);
+    width: 90%;
+    height: 2px;
+    background: linear-gradient(to right, var(--naranja), rgba(225, 114, 3, 0.1), transparent);
+    border-radius: 2px;
+}
+
+.bloque-logos .titulo-bloque {
+    text-align: center;
+}
+
+.bloque-logos .titulo-bloque::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* =========================================
+   GRID Y TARJETAS (CARDS)
+   ========================================= */
+.grid-convenios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card-convenio {
+    background: var(--blanco);
+    border-radius: 10px;
+    padding: 30px;
+    border: 1px solid var(--borde);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-convenio:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-suave);
+    border-color: var(--naranja);
 }
 
 .card-convenio h3 {
-    margin-top: 10px;
-    color: var(--color-primario);
+    margin: 0 0 15px 0;
+    color: var(--purpura-oscuro);
+    font-size: 1.4rem;
 }
 
 .badge-convenio {
-    background: var(--color-acento);
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    background: var(--gris-claro);
+    color: var(--naranja);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
     display: inline-block;
+    margin-bottom: 15px;
 }
 
-/* LISTA */
 .beneficios-lista {
-    padding: 0;
     list-style: none;
-    margin-top: 15px;
+    padding: 0;
+    margin: 15px 0 0;
 }
 
 .beneficios-lista li {
-    font-size: 0.9rem;
-    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: var(--gris-medio);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 
-/* CAROUSEL MEJORADO */
+.beneficios-lista li::before {
+    content: "•";
+    color: var(--naranja);
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* =========================================
+   CAROUSEL Y LOGOS
+   ========================================= */
 .carousel {
     position: relative;
     overflow: visible;
-    padding:20px;
-   
+    padding: 40px 0;
+    margin-top: 60px;
 }
-
 
 .carousel-track {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 10px 50px;
+    padding: 20px 10px;
 }
 
 .carousel-track::-webkit-scrollbar {
@@ -139,49 +191,79 @@ body {
 }
 
 .logos {
-    height: 100px;
     width: 100px;
     height: 80px;
-    background: white;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 auto; 
-    transition: 0.3s;
+    flex: 0 0 auto;
+    transition: 0.3s ease;
 }
 
 .logos:hover {
     transform: scale(1.05);
+    border-color: var(--naranja);
+    box-shadow: 0 5px 15px rgba(225, 114, 3, 0.1);
 }
 
-/* BOTONES */
+.logos img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: 0.3s;
+    opacity: 0.7;
+}
+
+.logos:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* =========================================
+   BOTONES DE NAVEGACIÓN
+   ========================================= */
 .btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--color-primario);
-    color: white;
+    background: var(--purpura-oscuro);
+    color: var(--blanco);
     border: none;
-    padding: 10px 15px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
 }
 
-.prev { left: -10px; }
-.next { right: -10px; }
+.prev { left: -25px; }
+.next { right: -25px; }
 
 .btn:hover {
-    background: var(--color-secundario);
+    background: var(--naranja);
+    transform: translateY(-50%) scale(1.1);
 }
 
-/* RESPONSIVE */
+/* =========================================
+   RESPONSIVE
+   ========================================= */
 @media (max-width: 768px) {
     .titulo-convenios {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+    
+    .seccion-convenios {
+        padding: 60px 20px;
     }
 
-    .contenedor-convenios {
-        margin-top: -30px;
-    }
+    .prev { left: 0; }
+    .next { right: 0; }
 }
