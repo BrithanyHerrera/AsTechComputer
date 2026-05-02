@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 27-04-2026 a las 03:03:03
+-- Tiempo de generación: 02-05-2026 a las 03:50:57
 -- Versión del servidor: 11.8.6-MariaDB-log
 -- Versión de PHP: 7.2.34
 
@@ -79,7 +79,17 @@ INSERT INTO `bitacora_logins` (`id_login`, `id_empleado`, `fecha_hora`, `direcci
 (38, 1, '2026-04-23 16:10:37', '2806:102e:18:1fbd:110c:3e27:30c3:921a'),
 (39, 1, '2026-04-24 04:57:06', '189.178.235.37'),
 (40, 1, '2026-04-26 22:55:08', '189.178.235.37'),
-(41, 1, '2026-04-27 01:29:48', '189.178.250.243');
+(41, 1, '2026-04-27 01:29:48', '189.178.250.243'),
+(42, 1, '2026-04-27 06:53:28', '189.178.235.37'),
+(43, 1, '2026-04-27 06:54:34', '189.178.235.37'),
+(44, 1, '2026-04-27 07:06:32', '189.178.235.37'),
+(45, 1, '2026-04-27 07:27:15', '189.178.235.37'),
+(46, 1, '2026-04-27 07:45:22', '189.178.235.37'),
+(47, 1, '2026-04-28 06:38:11', '189.178.235.37'),
+(48, 1, '2026-04-28 16:22:44', '189.178.235.37'),
+(49, 1, '2026-04-29 02:14:59', '189.178.235.37'),
+(50, 1, '2026-04-29 05:45:08', '189.178.235.37'),
+(51, 1, '2026-05-01 06:49:59', '189.178.235.37');
 
 -- --------------------------------------------------------
 
@@ -678,7 +688,119 @@ INSERT INTO `bitacora_movimientos` (`id_movimiento`, `id_empleado`, `accion`, `d
 (576, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-27 01:29:52'),
 (577, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-27 01:29:53'),
 (578, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 01:29:54'),
-(579, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 01:57:42');
+(579, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 01:57:42'),
+(580, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 06:53:28'),
+(581, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 06:53:30'),
+(582, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 06:53:36'),
+(583, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 06:53:52'),
+(584, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 06:54:34'),
+(585, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 06:54:35'),
+(586, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 06:54:37'),
+(587, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 06:54:43'),
+(588, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 06:54:54'),
+(589, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 06:55:00'),
+(590, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 06:55:45'),
+(591, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 06:55:47'),
+(592, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 06:55:59'),
+(593, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 07:06:32'),
+(594, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:06:35'),
+(595, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:06:37'),
+(596, 1, 'Navegación', 'Ingresó a la sección: ACCESO_DENEGADO', '2026-04-27 07:06:47'),
+(597, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:09:17'),
+(598, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:09:18'),
+(599, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:09:23'),
+(600, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:09:32'),
+(601, 1, 'Navegación', 'Ingresó a la sección: CONTENEDOR', '2026-04-27 07:10:23'),
+(602, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-27 07:10:25'),
+(603, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:10:28');
+INSERT INTO `bitacora_movimientos` (`id_movimiento`, `id_empleado`, `accion`, `detalle`, `fecha_hora`) VALUES
+(604, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:10:29'),
+(605, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 07:16:18'),
+(606, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:16:20'),
+(607, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:17:16'),
+(608, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:19:33'),
+(609, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 07:27:15'),
+(610, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:27:16'),
+(611, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:27:26'),
+(612, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-27 07:27:29'),
+(613, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 07:31:39'),
+(614, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:31:40'),
+(615, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:32:17'),
+(616, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:44:49'),
+(617, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-27 07:44:50'),
+(618, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:44:52'),
+(619, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-27 07:45:22'),
+(620, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:45:24'),
+(621, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:45:31'),
+(622, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:45:33'),
+(623, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-27 07:46:14'),
+(624, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-27 07:46:16'),
+(625, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-28 06:38:11'),
+(626, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-28 06:38:15'),
+(627, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-28 06:38:21'),
+(628, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 06:38:24'),
+(629, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-28 06:38:28'),
+(630, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-28 06:38:30'),
+(631, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-28 06:38:31'),
+(632, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-28 06:38:34'),
+(633, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-28 06:43:20'),
+(634, 1, 'Navegación', 'Ingresó a la sección: CONTENEDOR', '2026-04-28 06:43:26'),
+(635, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-28 06:44:41'),
+(636, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-28 06:45:21'),
+(637, 1, 'Navegación', 'Ingresó a la sección: ESTADISTICAS', '2026-04-28 06:45:23'),
+(638, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-28 06:45:28'),
+(639, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-28 06:45:33'),
+(640, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 06:46:02'),
+(641, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-28 06:46:13'),
+(642, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-28 06:46:15'),
+(643, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 06:46:35'),
+(644, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-28 06:46:38'),
+(645, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 06:46:59'),
+(646, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-28 06:47:02'),
+(647, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-28 06:47:04'),
+(648, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-28 06:47:09'),
+(649, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 06:47:10'),
+(650, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-28 06:47:11'),
+(651, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 06:47:13'),
+(652, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-28 06:47:14'),
+(653, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-28 06:47:15'),
+(654, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-28 06:47:18'),
+(655, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 06:47:19'),
+(656, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-28 06:47:59'),
+(657, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-28 06:48:01'),
+(658, 1, 'Navegación', 'Ingresó a la sección: CONTENEDOR', '2026-04-28 06:48:39'),
+(659, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-28 06:50:56'),
+(660, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-28 06:51:04'),
+(661, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-28 06:51:18'),
+(662, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-28 06:51:24'),
+(663, 1, 'Navegación', 'Ingresó a la sección: CONTENEDOR', '2026-04-28 06:51:29'),
+(664, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-28 07:03:10'),
+(665, 1, 'Navegación', 'Ingresó a la sección: CONTENEDOR', '2026-04-28 07:03:11'),
+(666, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-28 07:06:35'),
+(667, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 07:08:45'),
+(668, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-28 07:13:30'),
+(669, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-28 07:13:31'),
+(670, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-28 07:16:37'),
+(671, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 07:16:48'),
+(672, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-28 16:22:44'),
+(673, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-28 16:22:46'),
+(674, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-28 16:31:48'),
+(675, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-28 16:32:22'),
+(676, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-29 02:14:59'),
+(677, 1, 'Navegación', 'Ingresó a la sección: CONTENEDOR', '2026-04-29 02:15:02'),
+(678, 1, 'Navegación', 'Ingresó a la sección: EMPLEADO', '2026-04-29 02:15:26'),
+(679, 1, 'Navegación', 'Ingresó a la sección: REGISTROS_INGRESADOS_CRUD_VIEW', '2026-04-29 02:15:32'),
+(680, 1, 'Navegación', 'Ingresó a la sección: INGRESO', '2026-04-29 02:15:46'),
+(681, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-29 02:15:50'),
+(682, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-29 02:15:53'),
+(683, 1, 'Navegación', 'Ingresó a la sección: CITAS', '2026-04-29 02:16:05'),
+(684, 1, 'Navegación', 'Ingresó a la sección: CONTACTO', '2026-04-29 02:16:08'),
+(685, 1, 'Navegación', 'Ingresó a la sección: INICIO', '2026-04-29 02:16:11'),
+(686, 1, 'Navegación', 'Ingresó a la sección: SERVICIOS', '2026-04-29 02:16:13'),
+(687, 1, 'Navegación', 'Ingresó a la sección: ESTADISTICAS', '2026-04-29 02:16:14'),
+(688, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-29 02:17:00'),
+(689, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-04-29 05:45:08'),
+(690, 1, 'Navegación', 'Ingresó a la sección: DASHBOARD', '2026-05-01 06:49:59');
 
 -- --------------------------------------------------------
 
@@ -738,7 +860,8 @@ INSERT INTO `citas_web` (`id_cita`, `id_google_calendar`, `nombre_cliente`, `ape
 (15, '6d58ivp5poho43cqej2uvbadco', 'Jose Eduardo', 'Flores Frausto', '3331342222', 5, NULL, 10, NULL, 'xbox', NULL, 'Instalación de Microsoft Office 2016 con clave de producto original', 'esta sucia', '2026-05-31', '13:20:00', '2026-04-23 16:24:18', 'pendiente'),
 (16, 'tac44kp3hs2boaidch5jrdaib8', 'Jose Eduardo', 'Flores Frausto', '3221014500', 5, NULL, 10, NULL, 'xbox', NULL, 'Instalación de Microsoft Office 2016 con clave de producto original', 'esta sucia', '2026-05-30', '14:00:00', '2026-04-23 16:25:32', 'pendiente'),
 (17, 'uq3289atqvcduhm778plo84tr0', 'Jose Eduardo', 'Flores Frausto', '3221014500', 5, NULL, 9, NULL, 'xbox', NULL, 'Instalación de Microsoft Office 2019 con clave de producto', '', '2026-04-27', '14:00:00', '2026-04-23 16:44:41', 'pendiente'),
-(18, 'rbisvefggc1hjn17go9r1ljp8k', 'Jose Eduardo', 'Flores Frausto', '3221014500', 5, NULL, 9, NULL, 'xbox', NULL, 'Instalación de Microsoft Office 2019 con clave de producto', '', '2026-04-28', '14:00:00', '2026-04-23 16:48:17', 'pendiente');
+(18, 'rbisvefggc1hjn17go9r1ljp8k', 'Jose Eduardo', 'Flores Frausto', '3221014500', 5, NULL, 9, NULL, 'xbox', NULL, 'Instalación de Microsoft Office 2019 con clave de producto', '', '2026-04-28', '14:00:00', '2026-04-23 16:48:17', 'pendiente'),
+(19, 't658mbvnam38bkm5dacr6rvj4o', 'Ferdán Alejandro', 'Garrigós Rojas', '3222362505', 1, NULL, 4, NULL, 'Hp 15-cw', NULL, 'Servicio de asistencia remota', '', '2026-05-08', '11:20:00', '2026-05-01 16:34:33', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -759,7 +882,8 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nombre`, `apellido`, `telefono`, `correo`) VALUES
-(1, 'Jose Eduardo', 'Flores Frausto', '3331342222', 'celex67067@donumart.com');
+(1, 'JOSE EDUARDO', 'FLORES FRAUSTO', '3331342222', 'celex67067@donumart.com'),
+(2, 'FERDAN', 'CARRILLO', '3222362505', 'celex67067@donumart.com');
 
 -- --------------------------------------------------------
 
@@ -782,7 +906,9 @@ CREATE TABLE `condiciones_servicio` (
 
 INSERT INTO `condiciones_servicio` (`id_condicion`, `folio_orden`, `autoriza_revision_costo`, `tiempo_estimado`, `recordatorio_anticipo`, `dudas_cliente`) VALUES
 (1, '23042026-10', 'no', '1', 'si', ''),
-(2, '26042026-11', 'no', '1', 'si', '');
+(2, '26042026-11', 'no', '1', 'si', ''),
+(3, '27042026-12', 'no', '1', 'si', ''),
+(4, '27042026-A', 'no', '1', 'si', '');
 
 -- --------------------------------------------------------
 
@@ -816,18 +942,20 @@ CREATE TABLE `empleados` (
   `correo` varchar(100) NOT NULL,
   `nombre_usuario` varchar(50) NOT NULL,
   `contrasena` varchar(255) NOT NULL,
-  `id_puesto` int(11) NOT NULL
+  `id_puesto` int(11) NOT NULL,
+  `secreto_2fa` varchar(32) DEFAULT NULL,
+  `is_2fa_activo` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`id_empleado`, `nombre`, `apellido`, `telefono`, `correo`, `nombre_usuario`, `contrasena`, `id_puesto`) VALUES
-(1, 'Ferdan', 'Garrillo', '3222362505', 'ferdan.garrigos@astechcomputer.com', 'Ferdan-01', 'admin', 4),
-(2, 'Lino', 'Gonzales.', '3221234560', 'lino@astech.com', 'lino-02', '$2y$10$BIMlggxG5y341zBd3AX19uHwsDVaJRkMSq8cQEUpQ1.jUKAspqIq.', 1),
-(3, 'Eduardo', 'Flores', '3221014500', 'floresfraustoj4@gmail.com', 'Jose-01', 'jose123', 4),
-(4, 'Brithany', 'Herrera', '3227790871', 'brithanymil@gmail.com', 'Brit', '12345', 4);
+INSERT INTO `empleados` (`id_empleado`, `nombre`, `apellido`, `telefono`, `correo`, `nombre_usuario`, `contrasena`, `id_puesto`, `secreto_2fa`, `is_2fa_activo`) VALUES
+(1, 'Ferdan', 'Garrillo', '3222362505', 'ferdan.garrigos@astechcomputer.com', 'Ferdan-01', 'admin', 4, NULL, 0),
+(2, 'Lino', 'Gonzales', '3221234560', 'lino@astech.com', 'lino-02', '$2y$10$jERP0zRXP5Gllg4aBo7iWeMdrTCiZsFzl4tgSDOnsS9425eHM/GgS', 1, NULL, 0),
+(3, 'Eduardo', 'Flores', '3221014500', 'floresfraustoj4@gmail.com', 'Jose-01', 'jose123', 4, NULL, 0),
+(4, 'Brithany', 'Herrera', '3227790871', 'brithanymil@gmail.com', 'Brit', '12345', 4, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -852,7 +980,9 @@ CREATE TABLE `equipos` (
 
 INSERT INTO `equipos` (`id_equipo`, `id_cliente`, `id_marca`, `id_tipo_equipo`, `marca_otro`, `tipo_equipo_otro`, `modelo`, `numero_serie`) VALUES
 (1, 1, 6, 3, NULL, NULL, 'vivobook', '2345'),
-(2, 1, 2, 3, NULL, NULL, 'pc', 'sn');
+(2, 1, 6, 3, NULL, NULL, 'pc', 'sn'),
+(3, 2, 6, 3, NULL, NULL, '2345', '33'),
+(4, 2, 9, 5, NULL, NULL, 'xboox', 'sn');
 
 -- --------------------------------------------------------
 
@@ -894,14 +1024,17 @@ CREATE TABLE `gabinetes` (
 --
 
 INSERT INTO `gabinetes` (`id_gabinete`, `tipo_espacio`, `estado`) VALUES
-('10', 'laptop', 'ocupado'),
-('11', 'laptop', 'ocupado'),
+('1', 'laptop', 'disponible'),
+('10', 'laptop', 'disponible'),
+('11', 'laptop', 'disponible'),
 ('12', 'laptop', 'disponible'),
+('2', 'laptop', 'disponible'),
+('3', 'laptop', 'disponible'),
 ('A', 'computadora_escritorio', 'disponible'),
 ('B', 'computadora_escritorio', 'disponible'),
 ('C', 'computadora_escritorio', 'disponible'),
 ('D', 'computadora_escritorio', 'disponible'),
-('J', 'computadora_escritorio', 'disponible');
+('E', 'computadora_escritorio', 'disponible');
 
 -- --------------------------------------------------------
 
@@ -924,7 +1057,7 @@ CREATE TABLE `informacion_index` (
 --
 
 INSERT INTO `informacion_index` (`id`, `quienes_somos`, `mision`, `vision`, `frase_fundador`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(1, 'Somos una empresa humana y amigable, guiada por los valores de integridad y transparencia para brindar a nuestros clientes servicios de reparación y mantenimiento de calidad. Nuestro compromiso es garantizar que tu tecnología siempre funcione a la perfección.', '\"Brindamos una experiencia integral a nuestros clientes con servicios de reparación, mantenimiento, asesoría computacional y soporte a MiPymes de la región, garantizando la privacidad de datos y ofreciendo garantía en todos nuestros servicios, con principios de transparencia, honestidad y respeto para cumplir las expectativas y brindar soluciones confiables y vanguardistas.\"', '\"En AsTech Computer soñamos con un 2030 donde seamos la empresa de servicios tecnológicos de referencia en Puerto Vallarta, reconocida por nuestra excelencia, compromiso, innovación y la confianza que nos brinda nuestra comunidad.</p>\r\n                    <p>Creceremos junto a nuestros clientes y aliados estratégicos, compartiendo una misma visión de futuro: desarrollar talento local, promover la tecnología responsable y generar un impacto positivo en nuestro entorno.\"', '“En nuestra empresa tratamos cada equipo como si fuera propio, porque sabemos que ahí está tu trabajo, tus recuerdos y tu información.\"', '0000-00-00 00:00:00', '2026-04-26 07:10:35');
+(1, 'Somos una empresa humana y amigable, guiada por los valores de integridad y transparencia para brindar a nuestros clientes servicios de reparación y mantenimiento de calidad. Nuestro compromiso es garantizar que tu tecnología siempre funcione a la perfección.', '\"Brindamos una experiencia integral a nuestros clientes con servicios de reparación, mantenimiento, asesoría computacional y soporte a MiPymes de la región, garantizando la privacidad de datos y ofreciendo garantía en todos nuestros servicios, con principios de transparencia, honestidad y respeto para cumplir las expectativas y brindar soluciones confiables y vanguardistas.\"', '\"En AsTech Computer soñamos con un 2030 donde seamos la empresa de servicios tecnológicos de referencia en Puerto Vallarta, reconocida por nuestra excelencia, compromiso, innovación y la confianza que nos brinda nuestra comunidad.</p>\r\n                    <p>Creceremos junto a nuestros clientes y aliados estratégicos, compartiendo una misma visión de futuro: desarrollar talento local, promover la tecnología responsable y generar un impacto positivo en nuestro entorno\"', '“En nuestra empresa tratamos cada equipo como si fuera propio, porque sabemos que ahí está tu trabajo, tus recuerdos y tu información.\"', '0000-00-00 00:00:00', '2026-04-28 06:46:27');
 
 -- --------------------------------------------------------
 
@@ -980,7 +1113,9 @@ CREATE TABLE `marketing` (
 
 INSERT INTO `marketing` (`id_encuesta`, `folio_orden`, `id_medio_contacto`, `medio_contacto_otro`, `recibir_promociones`, `id_tipo_uso`, `tipo_uso_otro`, `es_primera_vez`, `id_frecuencia_servicio`, `frecuencia_servicio_otro`) VALUES
 (1, '23042026-10', 4, 'recurrente', 'si por correo', 2, NULL, 'no', 4, NULL),
-(2, '26042026-11', 4, 'cucosta', 'si por whatsapp', 3, NULL, 'si', 3, NULL);
+(2, '26042026-11', 4, 'cucosta', 'si por whatsapp', 3, NULL, 'si', 3, NULL),
+(3, '27042026-12', 4, 'cucosta', 'si por whatsapp', 1, NULL, 'si', 3, NULL),
+(4, '27042026-A', 4, 'cucosta', 'ambos', 1, NULL, 'si', 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -1064,8 +1199,10 @@ CREATE TABLE `ordenes_ingreso` (
 --
 
 INSERT INTO `ordenes_ingreso` (`folio`, `id_equipo`, `id_tecnico`, `id_gabinete`, `fecha_ingreso`, `condicion_fisica`, `accesorios_entregados`, `descripcion_problema`, `observaciones_recepcion`, `estado`, `fecha_entrega`) VALUES
-('23042026-10', 1, 2, '10', '2026-04-23 00:00:00', 'faltan_piezas', 'cargador', 'MANTENIMIENTO PREVENTIVO PARA EQUIPOS PORTáTILES DE ALTO RENDIMIENTO: esta sucia', 'niguna', 'recibido', NULL),
-('26042026-11', 2, 2, '11', '2026-04-26 00:00:00', 'enciende', 'cable_poder', 'ninguno', 'ninguna', 'recibido', NULL);
+('23042026-10', 1, 2, '10', '2026-04-23 00:00:00', 'faltan_piezas', 'cargador', 'MANTENIMIENTO PREVENTIVO PARA EQUIPOS PORTáTILES DE ALTO RENDIMIENTO: esta sucia', 'niguna', 'entregado', '2026-04-27 07:10:12'),
+('26042026-11', 2, 2, '11', '2026-04-26 00:00:00', 'enciende', 'cable_poder', 'ninguno', 'ninguna', 'entregado', '2026-04-27 07:10:15'),
+('27042026-12', 3, 2, '12', '2026-04-27 00:00:00', 'rayones', 'cable_poder', 'Reparación de sistema de bisagras (Laptops de alto rendimiento)', 'ninguna', 'entregado', '2026-04-27 07:10:19'),
+('27042026-A', 4, 2, 'A', '2026-04-27 00:00:00', 'desarmado', 'cargador', 'Reparación de sistema de bisagras (Laptops de alto rendimiento)', 'ninguno', 'entregado', '2026-04-27 07:17:45');
 
 -- --------------------------------------------------------
 
@@ -1187,7 +1324,7 @@ CREATE TABLE `servicios` (
 --
 
 INSERT INTO `servicios` (`id_servicio`, `codigo_servicio`, `id_tipo_servicio`, `tipo_servicio`, `descripcion`, `procedimiento`, `beneficios`, `indicaciones`, `exclusiones`, `tiempo_estimado`, `precio`, `estado`, `imagen_servicio`) VALUES
-(1, 'MLA-002', 1, 'Mantenimiento preventivo para equipos portátiles de alto rendimiento', 'Mantén tu laptop gamer y de trabajo en optima condición. El mantenimiento preventivo es clave para prolongar la vida útil de tu equipo, prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel con insumos de alto rendimiento de la marca THERMAL GRIZZLY.', 'Durante el servicio se realiza:\r\n\r\n∆ Revisión de los componentes electrónicos y sus conexiones. \r\n\r\n∆ Usamos herramientas y productos especializados para limpiar a fondo los componentes eléctricos y electrónicos. \r\n\r\n∆ Limpiamos a profundidad los ventiladores y el disipador para optimizar el flujo de aire y evitar que la temperatura afecte el rendimiento.\r\n\r\n∆ Reemplazamos la pasta térmica del procesador (CPU) y del procesador de gráficos (GPU) con una de alta calidad. Esto mejora drásticamente la disipación del calor.\r\n\r\n∆ Sustituimos los pads termicos de chipset, reguladores de voltaje (VRM) y memorias de video (Vram) para una transferencia de calor óptima.\r\n\r\nTu laptop lucirá impecable, libre de polvo y suciedad. ', '\r\nBeneficios de traer tu equipo con nosotros \r\n\r\n✓ Ahorro de tiempo y esfuerzo al contar con atención profesional.\r\n✓ Uso de herramientas y repuestos de alta calidad.\r\n✓ Seguimiento puntual del estado de tu servicio.\r\n✓ Garantía en todos nuestros servicios respaldada por procedimientos estandarizados y apoyo con manuales de servicio', 'Respaldo de información: Aunque el proceso es físico, siempre recomendamos tener una copia de seguridad de tus archivos importantes.', '*Importante* \r\nEste precio no incluye refacciones \r\n', '1 día hábil', 1450.00, 'activo', 'Miniaturas_500px_Preventivo_Portatil_AR.png'),
+(1, NULL, 1, 'Mantenimiento preventivo para equipos portátiles de alto rendimiento', 'Mantén tu laptop gamer y de trabajo en optima condición. El mantenimiento preventivo es clave para prolongar la vida útil de tu equipo, prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel con insumos de alto rendimiento de la marca THERMAL GRIZZLY.', 'Durante el servicio se realiza:\r\n\r\n∆ Revisión de los componentes electrónicos y sus conexiones. \r\n\r\n∆ Usamos herramientas y productos especializados para limpiar a fondo los componentes eléctricos y electrónicos. \r\n\r\n∆ Limpiamos a profundidad los ventiladores y el disipador para optimizar el flujo de aire y evitar que la temperatura afecte el rendimiento.\r\n\r\n∆ Reemplazamos la pasta térmica del procesador (CPU) y del procesador de gráficos (GPU) con una de alta calidad. Esto mejora drásticamente la disipación del calor.\r\n\r\n∆ Sustituimos los pads termicos de chipset, reguladores de voltaje (VRM) y memorias de video (Vram) para una transferencia de calor óptima.\r\n\r\nTu laptop lucirá impecable, libre de polvo y suciedad. ', '\r\nBeneficios de traer tu equipo con nosotros \r\n\r\n✓ Ahorro de tiempo y esfuerzo al contar con atención profesional.\r\n✓ Uso de herramientas y repuestos de alta calidad.\r\n✓ Seguimiento puntual del estado de tu servicio.\r\n✓ Garantía en todos nuestros servicios respaldada por procedimientos estandarizados y apoyo con manuales de servicio', 'Respaldo de información: Aunque el proceso es físico, siempre recomendamos tener una copia de seguridad de tus archivos importantes.', '*Importante* \r\nEste precio no incluye refacciones\r\n', '1', 1450.00, 'activo', 'Miniaturas_500px_Preventivo_Portatil_AR.png'),
 (2, 'MLO-001', 1, 'Mantenimiento preventivo para equipos portátiles de oficina', 'Mantén tu laptop en optima condición. Nuestro servicio de mantenimiento preventivo completo ayuda a prevenir problemas de sobrecalentamiento, y asegurar que siempre funcione al máximo nivel sin interrupciones.', '∆ Desensamble parcial del equipo.\n∆ Limpieza interna con aire comprimido y brochas antiestáticas.\n∆ Limpieza de ventiladores y disipadores.\n∆ Revisión de puertos, teclado y batería.\n∆ Aplicación de pasta térmica si es necesario.', '✓ Mejora el rendimiento general.\n✓ Previene sobrecalentamiento.\n✓ Prolonga la vida útil del equipo.\n✓ Reduce fallas inesperadas.', 'Se recomienda respaldar la información antes del servicio.', 'No incluye refacciones ni reparación de componentes dañados.', '1 día hábil', 690.00, 'activo', 'Miniaturas_500px_Preventivo_Portatil_Ofi.png'),
 (3, 'MG-003', 1, 'Mantenimiento preventivo para gabinetes mid tower', 'Tu PC merece un cuidado completo. Este servicio esta diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo.', '∆ Limpieza interna completa del gabinete.\n∆ Limpieza de ventiladores, fuente de poder y disipadores.\n∆ Organización de cableado.\n∆ Revisión de temperaturas.', '✓ Mejor flujo de aire.\n✓ Menor temperatura de operación.\n✓ Mayor estabilidad del sistema.', 'Apagar correctamente el equipo antes del servicio.', 'No incluye cambio de piezas dañadas.', '1 día hábil', 920.00, 'activo', 'Miniaturas_500px_Preventivo_Mid.png'),
 (4, 'MG-001', 1, 'Mantenimiento preventivo para gabinetes de oficina', 'Tu PC de oficina merece un cuidado completo. Este servicio está diseñado para prevenir problemas, mejorar el rendimiento y prolongar la vida útil de tu equipo. Realizamos una limpieza profunda y optimizamos el flujo de aire para asegurar que tu gabinete funcione al 100%.', '∆ Limpieza básica interna.\n∆ Eliminación de polvo en componentes.\n∆ Revisión de conexiones.\n∆ Verificación de funcionamiento general.', '✓ Previene fallas comunes.\n✓ Mejora el desempeño básico.', 'Equipo debe entregarse con cables y accesorios.', 'No incluye mantenimiento profundo ni refacciones.', '1 día hábil', 680.00, 'activo', 'Miniaturas_500px_Diagnostico_Gab_Ofi.png'),
@@ -1435,13 +1572,13 @@ ALTER TABLE `tipos_uso`
 -- AUTO_INCREMENT de la tabla `bitacora_logins`
 --
 ALTER TABLE `bitacora_logins`
-  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora_movimientos`
 --
 ALTER TABLE `bitacora_movimientos`
-  MODIFY `id_movimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=580;
+  MODIFY `id_movimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=691;
 
 --
 -- AUTO_INCREMENT de la tabla `causas_servicio`
@@ -1453,19 +1590,19 @@ ALTER TABLE `causas_servicio`
 -- AUTO_INCREMENT de la tabla `citas_web`
 --
 ALTER TABLE `citas_web`
-  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `condiciones_servicio`
 --
 ALTER TABLE `condiciones_servicio`
-  MODIFY `id_condicion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_condicion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `directorio_socios`
@@ -1477,13 +1614,13 @@ ALTER TABLE `directorio_socios`
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `frecuencias_servicio`
@@ -1507,7 +1644,7 @@ ALTER TABLE `marcas`
 -- AUTO_INCREMENT de la tabla `marketing`
 --
 ALTER TABLE `marketing`
-  MODIFY `id_encuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_encuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `medios_contacto`
