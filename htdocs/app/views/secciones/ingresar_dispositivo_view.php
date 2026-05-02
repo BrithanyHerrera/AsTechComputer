@@ -1,11 +1,3 @@
-<?php
-// =============================================================
-// ingresar_dispositivo_view.php — La Vista
-// Solo dibuja el HTML. Todas las variables que necesita
-// vienen ya preparadas por el controlador.
-// =============================================================
-require_once __DIR__ . "/../../controllers/ingreso_controller.php";
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -46,15 +38,15 @@ require_once __DIR__ . "/../../controllers/ingreso_controller.php";
       <div class="step-line"></div>
       <div class="paso <?php if ($paso == 5) echo 'active'; ?>">
         <div class="icono-paso">5</div>
-        <div class="etiqueta-paso">Información esencial del equipo</div>
+        <div class="etiqueta-paso">Información del equipo</div>
       </div>
     </div>
   </div>
 
   <div class="formulario">
     <form method="POST" action="">
+      
       <?php if ($paso == 1): ?>
-
         <div class="formulario">
           <?php if(isset($_SESSION['modo_edicion'])): ?>
             <div style="background:#e0e7ff; color:#3730a3; padding:10px; text-align:center; font-weight:bold; margin-bottom:15px; border-radius:8px; border:2px dashed #818cf8;">
@@ -62,63 +54,63 @@ require_once __DIR__ . "/../../controllers/ingreso_controller.php";
             </div>
           <?php endif; ?>
 
-        <h1>Datos del cliente</h1>
-        <div class="grupo-entrada" style="background: #eef2ff; border: 1px solid #c7d2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-          <label class="etiqueta-formulario" style="color: #4f46e5; font-weight: bold;">
-            <i class="fas fa-calendar-check"></i> ¿El cliente tiene cita previa?
-          </label>
-          <select id="importar_cita" name="id_cita_importada" class="campo-texto" style="border-color: #a5b4fc; cursor: pointer;">
-            <option value="">No, es un cliente sin cita (Llenado manual)</option>
-            <?php foreach ($citas_agendadas as $cita): ?>
-              <?php
-                $fecha_formt = date("d/m/Y", strtotime($cita['fecha_cita']));
-                $hora_formt  = date("H:i",   strtotime($cita['hora_cita']));
-              ?>
-              <option value="<?php echo $cita['id_cita']; ?>">
-                <?php echo htmlspecialchars($cita['nombre_cliente'] . ' ' . $cita['apellido_cliente']); ?> - <?php echo $fecha_formt; ?> a las <?php echo $hora_formt; ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-        
-        <div class="fila-doble">
-          <div class="grupo-entrada">
-            <label class="etiqueta-formulario">Nombre</label>
-            <input type="text" name="nombre_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['nombre_cliente'] ?? ''; ?>" required
-                   pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
-                   title="Solo se permiten letras y espacios." 
-                   oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
+          <h1>Datos del cliente</h1>
+          <div class="grupo-entrada" style="background: #eef2ff; border: 1px solid #c7d2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <label class="etiqueta-formulario" style="color: #4f46e5; font-weight: bold;">
+              <i class="fas fa-calendar-check"></i> ¿El cliente tiene cita previa?
+            </label>
+            <select id="importar_cita" name="id_cita_importada" class="campo-texto" style="border-color: #a5b4fc; cursor: pointer;">
+              <option value="">No, es un cliente sin cita (Llenado manual)</option>
+              <?php foreach ($citas_agendadas as $cita): ?>
+                <?php
+                  $fecha_formt = date("d/m/Y", strtotime($cita['fecha_cita']));
+                  $hora_formt  = date("H:i",   strtotime($cita['hora_cita']));
+                ?>
+                <option value="<?php echo $cita['id_cita']; ?>">
+                  <?php echo htmlspecialchars($cita['nombre_cliente'] . ' ' . $cita['apellido_cliente']); ?> - <?php echo $fecha_formt; ?> a las <?php echo $hora_formt; ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
           </div>
-          <div class="grupo-entrada">
-            <label class="etiqueta-formulario">Apellido</label>
-            <input type="text" name="apellido_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['apellido_cliente'] ?? ''; ?>" required
-                   pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
-                   title="Solo se permiten letras y espacios." 
-                   oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
-          </div>
-          <div class="grupo-entrada">
-            <label class="etiqueta-formulario">Número de telefono</label>
-            <div class="input-icon-wrapper">
-              <i class="fas fa-phone"></i>
-              <input type="tel" name="telefono_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['telefono_cliente'] ?? ''; ?>" required
-                     pattern="[0-9]{10}" maxlength="10" 
-                     title="Debe contener exactamente 10 números."
-                     oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          
+          <div class="fila-doble">
+            <div class="grupo-entrada">
+              <label class="etiqueta-formulario">Nombre</label>
+              <input type="text" name="nombre_cliente" class="campo-texto" value="<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['nombre_cliente'] ?? ''); ?>" required
+                     pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                     title="Solo se permiten letras y espacios." 
+                     oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
+            </div>
+            <div class="grupo-entrada">
+              <label class="etiqueta-formulario">Apellido</label>
+              <input type="text" name="apellido_cliente" class="campo-texto" value="<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['apellido_cliente'] ?? ''); ?>" required
+                     pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
+                     title="Solo se permiten letras y espacios." 
+                     oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
+            </div>
+            <div class="grupo-entrada">
+              <label class="etiqueta-formulario">Número de telefono</label>
+              <div class="input-icon-wrapper">
+                <i class="fas fa-phone"></i>
+                <input type="tel" name="telefono_cliente" class="campo-texto" value="<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['telefono_cliente'] ?? ''); ?>" required
+                       pattern="[0-9]{10}" maxlength="10" 
+                       title="Debe contener exactamente 10 números."
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+              </div>
+            </div>
+            <div class="grupo-entrada">
+              <label class="etiqueta-formulario">Correo</label>
+              <div class="input-icon-wrapper">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="correo_cliente" class="campo-texto" value="<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['correo_cliente'] ?? ''); ?>" required
+                       pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                       oninput="this.value = this.value.replace(/\s/g, '')" 
+                       title="Ingresa un correo válido con dominio (ejemplo: usuario@dominio.com)">
+              </div>
             </div>
           </div>
-          <div class="grupo-entrada">
-            <label class="etiqueta-formulario">Correo</label>
-            <div class="input-icon-wrapper">
-              <i class="fas fa-envelope"></i>
-              <input type="email" name="correo_cliente" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['correo_cliente'] ?? ''; ?>" required
-                     pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-                     oninput="this.value = this.value.replace(/\s/g, '')" 
-                     title="Ingresa un correo válido con dominio (ejemplo: usuario@dominio.com)">
-            </div>
-          </div>
-        </div>
 
-        <button type="submit" class="boton-siguiente" name="step" value="2">Siguiente <i class="fa-solid fa-angle-right"></i></button>
+          <button type="submit" class="boton-siguiente" name="step" value="2">Siguiente <i class="fa-solid fa-angle-right"></i></button>
         </div>
 
       <?php elseif ($paso == 2): ?>
@@ -152,9 +144,9 @@ require_once __DIR__ . "/../../controllers/ingreso_controller.php";
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Espacio disponible</label>
             <p class="nota-formulario">Lugar físico donde se guardará el equipo</p>
-           <select name="espacio_almacenamiento" id="espacio_almacenamiento" class="campo-texto" required>
-    <option value="">Primero elija tipo...</option>
-  </select>
+            <select name="espacio_almacenamiento" id="espacio_almacenamiento" class="campo-texto" required>
+              <option value="">Primero elija tipo...</option>
+            </select>
           </div>
 
           <div class="grupo-entrada">
@@ -241,7 +233,7 @@ require_once __DIR__ . "/../../controllers/ingreso_controller.php";
         <div class="grupo-entrada">
           <label class="etiqueta-formulario">Tiempo estimado de reparación (Días)</label>
           <p class="nota-formulario">Notificar al cliente que se le contactará por medios digitales. El servicio express tiene un costo extra del 30%.</p>
-          <input type="number" name="tiempo_estimado" class="campo-texto" min="1" value="<?php echo $_SESSION['memoria_ingreso']['tiempo_estimado'] ?? ''; ?>">
+          <input type="number" name="tiempo_estimado" class="campo-texto" min="1" value="<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['tiempo_estimado'] ?? ''); ?>">
         </div>
 
         <div class="grupo-entrada">
@@ -257,7 +249,7 @@ require_once __DIR__ . "/../../controllers/ingreso_controller.php";
         <div class="grupo-entrada">
           <label class="etiqueta-formulario">Dudas adicionales</label>
           <p class="nota-formulario">¿El cliente tiene alguna duda adicional relacionada con el servicio?</p>
-          <textarea name="dudas_cliente" class="campo-texto" rows="2"><?php echo $_SESSION['memoria_ingreso']['dudas_cliente'] ?? ''; ?></textarea>
+          <textarea name="dudas_cliente" class="campo-texto" rows="2"><?php echo htmlspecialchars($_SESSION['memoria_ingreso']['dudas_cliente'] ?? ''); ?></textarea>
         </div>
 
         <div class="form-acciones">
@@ -373,7 +365,7 @@ require_once __DIR__ . "/../../controllers/ingreso_controller.php";
           <div class="grupo-entrada">
             <label class="etiqueta-formulario">Modelo</label>
             <p class="nota-formulario">Suele estar en la parte inferior</p>
-            <input type="text" name="modelo" class="campo-texto" value="<?php echo $_SESSION['memoria_ingreso']['modelo'] ?? ''; ?>" required>
+            <input type="text" name="modelo" class="campo-texto" value="<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['modelo'] ?? ''); ?>" required>
           </div>
         </div>
 
@@ -382,7 +374,7 @@ require_once __DIR__ . "/../../controllers/ingreso_controller.php";
           <p class="nota-formulario">Identificador único del fabricante</p>
           <div class="input-icon-wrapper">
             <i class="fas fa-barcode"></i>
-            <input type="text" name="numero_serie" class="campo-texto" style="padding-left: 35px;" value="<?php echo $_SESSION['memoria_ingreso']['numero_serie'] ?? ''; ?>" required>
+            <input type="text" name="numero_serie" class="campo-texto" style="padding-left: 35px;" value="<?php echo htmlspecialchars($_SESSION['memoria_ingreso']['numero_serie'] ?? ''); ?>" required>
           </div>
         </div>
 

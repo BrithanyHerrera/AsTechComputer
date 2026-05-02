@@ -1,6 +1,7 @@
 <?php
 // =============================================================
-// ingreso_model.php — La Bóveda de Datos
+// MODELO: ingreso_model.php — La Bóveda de Datos
+// UBICACIÓN: app/models/ingreso_model.php
 // Solo habla con la base de datos. Nada de HTML, sesiones
 // ni redirecciones. Solo extrae, guarda y devuelve datos limpios.
 // =============================================================
@@ -75,27 +76,72 @@ class IngresoModel {
     }
 
     public function obtenerRelacionesEquipoMarca() {
-        return $this->conexion->query("SELECT id_tipo_equipo, id_marca FROM relacion_equipo_marca");
+        // Renombrada para que el controlador la encuentre (en el original pusiste obtenerRelacionesMarcaEquipo)
+        $sql = "SELECT id_tipo_equipo, id_marca FROM relacion_equipo_marca";
+        $res = $this->conexion->query($sql);
+        $relaciones = [];
+        if ($res) {
+            while ($row = $res->fetch_assoc()) {
+                $relaciones[$row['id_tipo_equipo']][] = $row['id_marca'];
+            }
+        }
+        return $relaciones;
     }
 
     // ----------------------------------------------------------
     // LECTURA: Citas web pendientes (desde ayer en adelante)
     // ----------------------------------------------------------
     public function obtenerCitasPendientes() {
-        return $this->conexion->query("
-            SELECT id_cita, nombre_cliente, apellido_cliente, whatsapp, id_tipo_equipo, id_marca, modelo, numero_serie, problema_reportado, detalle_falla, fecha_cita, hora_cita 
-            FROM citas_web 
-            WHERE fecha_cita >= CURDATE() - INTERVAL 1 DAY 
-            ORDER BY fecha_cita ASC, hora_cita ASC
-        ");
+        $sql = "SELECT id_cita, nombre_cliente, apellido_cliente, whatsapp, id_tipo_equipo, id_marca, modelo, numero_serie, problema_reportado, detalle_falla, fecha_cita, hora_cita 
+                FROM citas_web 
+                WHERE fecha_cita >= CURDATE() - INTERVAL 1 DAY AND estado = 'pendiente'
+                ORDER BY fecha_cita ASC, hora_cita ASC";
+        $res = $this->conexion->query($sql);
+        $citas = [];
+        if ($res) {
+            while ($row = $res->fetch_assoc()) {
+                $citas[$row['id_cita']] = $row;
+            }
+        }
+        return $citas;
     }
 
     // ----------------------------------------------------------
-    // LECTURA: Gabinetes disponibles.
+    // LECTURA: Gabinetes disponibles (Actualizado para el JSON del JS)
     // En modo edición incluye también el gabinete original aunque
     // esté "ocupado", para que el técnico pueda mantenerlo.
     // ----------------------------------------------------------
+    public function obtenerGabinetesDisponibles($gabinete_original = null) {
+        if ($gabinete_original) {
+            $stmt = $this->conexion->prepare("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' OR id_gabinete = ? ORDER BY id_gabinete ASC");
+            $stmt->bind_param("s", $gabinete_original);
+            $stmt->execute();
+            $res = $stmt->get_result();
+        } else {
+            $res = $this->conexion->query("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' ORDER BY id_gabinete ASC");
+        }
 
+        // Armamos el arreglo estructurado que el JavaScript espera
+        $gabinetes = ['laptop' => [], 'computadora_escritorio' => [], 'otro' => []];
+        if ($res) {
+            while ($row = $res->fetch_assoc()) {
+                // Asegurarnos de que el tipo_espacio existe en nuestro arreglo antes de meterlo
+                if (isset($gabinetes[$row['tipo_espacio']])) {
+                    $gabinetes[$row['tipo_espacio']][] = $row['id_gabinete'];
+                }
+            }
+        }
+        return $gabinetes;
+    }
+
+    // ----------------------------------------------------------
+    // ESCRITURA: Actualiza el estado de un gabinete
+    // ----------------------------------------------------------
+    public function actualizarEstadoGabinete($id_gabinete, $estado) {
+        $stmt = $this->conexion->prepare("UPDATE gabinetes SET estado = ? WHERE id_gabinete = ?");
+        $stmt->bind_param("ss", $estado, $id_gabinete);
+        return $stmt->execute();
+    }
 
     // ----------------------------------------------------------
     // ESCRITURA: Actualiza un registro existente en las 5 tablas
@@ -220,20 +266,5 @@ class IngresoModel {
 
         $this->conexion->commit();
     }
-
-    public function obtenerGabinetesDisponibles($gabinete_original = null) {
-    if ($gabinete_original) {
-        $stmt = $this->conexion->prepare("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' OR id_gabinete = ? ORDER BY id_gabinete ASC");
-        $stmt->bind_param("s", $gabinete_original);
-        $stmt->execute();
-        return $stmt->get_result();
-    }
-    return $this->conexion->query("SELECT id_gabinete, tipo_espacio FROM gabinetes WHERE estado = 'disponible' ORDER BY id_gabinete ASC");
 }
-
-public function actualizarEstadoGabinete($id_gabinete, $estado) {
-    $stmt = $this->conexion->prepare("UPDATE gabinetes SET estado = ? WHERE id_gabinete = ?");
-    $stmt->bind_param("ss", $estado, $id_gabinete);
-    return $stmt->execute();
-}
-}
+?>

@@ -1,9 +1,7 @@
 <?php
 // =============================================================
-// ingreso_controller.php — El Director de Orquesta
-// Recibe peticiones, decide qué hacer, llama al Modelo y
-// prepara las variables que la Vista necesita para dibujarse.
-// Nunca toca HTML ni escribe SQL directamente.
+// CONTROLADOR: ingreso_controller.php
+// UBICACIÓN: app/controllers/ingreso_controller.php
 // =============================================================
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -143,8 +141,8 @@ if (isset($_POST['finalizar_registro'])) {
         unset($_SESSION['memoria_ingreso']['espacio_almacenamiento'], $_SESSION['memoria_ingreso']['folio'], $_SESSION['memoria_ingreso']['tipo_almacenamiento']);
         $_SESSION['error_espacio'] = "El espacio <strong>{$espacio_elegido}</strong> ya no está disponible. Elige otro espacio.";
         
-        // REDIRECCIÓN LIMPIA JS
-        echo "<script>window.location.href = 'administracion_controller.php?seccion=ingreso&retorno=2';</script>";
+        // REDIRECCIÓN LIMPIA MVC
+        header("Location: administracion_controller.php?seccion=ingreso&retorno=2");
         exit;
     }
 
@@ -155,22 +153,23 @@ if (isset($_POST['finalizar_registro'])) {
             );
             unset($_SESSION['memoria_ingreso'], $_SESSION['modo_edicion'], $_SESSION['id_cliente_edicion'], $_SESSION['id_equipo_edicion'], $_SESSION['gabinete_original']);
             
-            // REDIRECCIÓN A LA TABLA CON ESTATUS "success_edit"
-            echo "<script>window.location.href = 'administracion_controller.php?seccion=registros_ingresados_crud_view&status=success_edit';</script>";
+            // REDIRECCIÓN LIMPIA MVC
+            header("Location: administracion_controller.php?seccion=registrosCRUD&status=success_edit");
             exit;
 
         } else {
             $model->crearRegistro($datos);
             unset($_SESSION['memoria_ingreso']);
+            $_SESSION['mensaje_exito'] = true; // Activar flag para el JS
             
-            // REDIRECCIÓN A INGRESO CON ESTATUS "success"
-            echo "<script>window.location.href = 'administracion_controller.php?seccion=ingreso&status=success';</script>";
+            // REDIRECCIÓN LIMPIA MVC
+            header("Location: administracion_controller.php?seccion=ingreso&status=success");
             exit;
         }
 
     } catch (Exception $e) {
         $_SESSION['error_db'] = "Error al guardar: " . $e->getMessage();
-        echo "<script>window.location.href = 'administracion_controller.php?seccion=ingreso&retorno=5';</script>";
+        header("Location: administracion_controller.php?seccion=ingreso&retorno=5");
         exit;
     }
 }
@@ -198,26 +197,14 @@ $query_tecnicos = $model->obtenerTecnicos();
 $query_marcas   = $model->obtenerMarcas();
 $query_tipos    = $model->obtenerTiposEquipo();
 
-$query_relaciones = $model->obtenerRelacionesEquipoMarca();
-$relaciones = [];
-if ($query_relaciones) {
-    while ($row = $query_relaciones->fetch_assoc()) {
-        $relaciones[$row['id_tipo_equipo']][] = $row['id_marca'];
-    }
-}
+$relaciones = $model->obtenerRelacionesEquipoMarca();
 $json_relaciones = json_encode($relaciones);
 
 // ==========================================
 // CONSULTA DE CITAS PENDIENTES (Para autollenado)
 // Traemos las citas desde ayer en adelante
 // ==========================================
-$query_citas = $model->obtenerCitasPendientes();
-$citas_agendadas = [];
-if ($query_citas) {
-    while ($row = $query_citas->fetch_assoc()) {
-        $citas_agendadas[$row['id_cita']] = $row;
-    }
-}
+$citas_agendadas = $model->obtenerCitasPendientes();
 $json_citas = json_encode($citas_agendadas);
 
 // FIX: Esta consulta siempre trae SOLO los gabinetes con estado
@@ -225,21 +212,8 @@ $json_citas = json_encode($citas_agendadas);
 // puede mostrar espacios ocupados porque simplemente no están en
 // el objeto espaciosDB que recibe.
 $gabinete_original_sesion = $_SESSION['gabinete_original'] ?? null;
-$query_gabinetes = $model->obtenerGabinetesDisponibles($gabinete_original_sesion);
-
-$gabinetes_disponibles = [
-    'laptop'                 => [],
-    'computadora_escritorio' => [],
-    'otro'                   => [],
-];
-if ($query_gabinetes) {
-    while ($row = $query_gabinetes->fetch_assoc()) {
-        $gabinetes_disponibles[$row['tipo_espacio']][] = $row['id_gabinete'];
-    }
-}
-
-$gabinetes_disponibles['otro'] = $gabinetes_disponibles['computadora_escritorio'];
-
+$gabinetes_disponibles = $model->obtenerGabinetesDisponibles($gabinete_original_sesion);
+$gabinetes_disponibles['otro'] = $gabinetes_disponibles['computadora_escritorio']; // Homologar 'otro' con PC
 $json_gabinetes = json_encode($gabinetes_disponibles);
 
 // FIX: Al renderizar el paso 2, verificar que el espacio guardado en
@@ -270,34 +244,8 @@ if ($paso == 2 && isset($_SESSION['memoria_ingreso']['espacio_almacenamiento']))
             $_SESSION['error_espacio'] = "El espacio que tenías seleccionado ya no está disponible. Por favor, elige otro.";
         }
     }
-    $gabinete_original_sesion = $_SESSION['gabinete_original'] ?? null;
-$query_gabinetes = $model->obtenerGabinetesDisponibles($gabinete_original_sesion);
-
-$gabinetes_disponibles = [
-    'laptop'                 => [],
-    'computadora_escritorio' => [],
-    'otro'                   => [],
-];
-
-if ($query_gabinetes) {
-    while ($row = $query_gabinetes->fetch_assoc()) {
-        $gabinetes_disponibles[$row['tipo_espacio']][] = $row['id_gabinete'];
-    }
 }
-$json_gabinetes = json_encode($gabinetes_disponibles);
 
-if (isset($_POST['finalizar_registro'])) {
-    $datos = $_SESSION['memoria_ingreso'];
-    try {
-        if (isset($_SESSION['modo_edicion'])) {
-            $model->actualizarRegistro($datos, $_SESSION['modo_edicion'], $_SESSION['id_cliente_edicion'], $_SESSION['id_equipo_edicion'], $_SESSION['gabinete_original']);
-        } else {
-            $model->crearRegistro($datos);
-        }
-        echo "<script>window.location.href = 'administracion_controller.php?seccion=ingreso&status=success';</script>";
-        exit;
-    } catch (Exception $e) {
-        $_SESSION['error_db'] = $e->getMessage();
-    }
-}
-}
+// 5. Cargar la vista (Asumiendo que el controlador principal incluye esto y la vista después)
+// require_once dirname(__DIR__) . '/views/secciones/ingresar_dispositivo_view.php';
+?>
