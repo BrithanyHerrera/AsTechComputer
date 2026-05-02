@@ -1,9 +1,21 @@
 <?php
-/* POLÍTICA_SERVICIOS_CONTROLLER.PHP */
-/* 
-Este archivo funge como el Controlador (Controller) designado para gestionar el despliegue de la Política de Servicios. Su responsabilidad técnica se limita a procesar la solicitud de la página e invocar la Vista correspondiente mediante el uso de una ruta absoluta blindada. Esto asegura que el texto legal se cargue de manera segura y precisa, independientemente del entorno de alojamiento del sistema.
-*/
+/* POLITICA_SERVICIOS_CONTROLLER.PHP */
+/*
+ * PÁGINA: Controlador de Política de Servicios - As Tech Computer
+ * PROPÓSITO: Gestionar el acceso a la sección legal de la Política de Servicios, actuando como enlace operativo dentro de la arquitectura MVC.
+ * FUNCIONALIDADES:
+ * - Invocación directa y segura de la Vista correspondiente a las políticas de servicio.
+ * - Implementación de rutas absolutas blindadas mediante dirname(__DIR__) para garantizar el despliegue del contenido legal independientemente de la ubicación del usuario en la estructura de directorios del servidor.
+ */
 
-// Cargamos la vista usando la ruta absoluta blindada
+/* ========================================================
+   1. RENDERIZACIÓN DE LA VISTA
+   ======================================================== */
+/**
+ * El sistema procesa la carga de la interfaz gráfica correspondiente 
+ * utilizando una ruta absoluta dinámica. Esto asegura que el texto 
+ * legal se integre de manera segura en la plataforma, manteniendo 
+ * la integridad de la estructura de carpetas.
+ */
 require_once dirname(__DIR__) . '/views/politica_servicios_view.php';
 ?>

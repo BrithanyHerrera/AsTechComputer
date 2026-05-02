@@ -1,9 +1,16 @@
-<script>
-/* POLITICA_PRIVACIDAD.PHP */
+<?php
+/* AVISO_PRIVACIDAD_VIEW.PHP */
 /*
-Este archivo representa la Vista (View) destinada a exhibir el Aviso de Privacidad oficial de AsTech Computer. Su propósito principal es transparentar y comunicar a los usuarios las políticas de recopilación, uso, protección y transferencia de datos personales, así como los lineamientos de confidencialidad en el acceso a los equipos y el proceso para ejercer los derechos ARCO. Se estructura mediante un formato de lectura accesible y modular, integrando los controladores globales de navegación (Toolbar) y pie de página (Footer) para asegurar la homogeneidad visual de la plataforma corporativa.
-*/
-</script>
+ * PÁGINA: Vista del Aviso de Privacidad (Privacy Policy View) - As Tech Computer
+ * PROPÓSITO: Exhibir el documento legal oficial sobre el tratamiento, uso y protección de los datos personales de los clientes, garantizando el cumplimiento normativo.
+ * FUNCIONALIDADES: 
+ * - Estructuración semántica del contenido legal mediante secciones modulares y accesibles (Identidad, Datos Recabados, Finalidades, Derechos ARCO, Seguridad y Transferencia).
+ * - Inyección dinámica de la barra de navegación (Toolbar) en la cabecera utilizando variables de ruta para mantener la consistencia de los enlaces.
+ * - Inyección del pie de página (Footer) y su respectivo sistema de gestión de privacidad (Cookies) en la parte inferior de la página.
+ * - Vinculación de hojas de estilo dedicadas (info_legal.css) para optimizar la legibilidad y el diseño responsivo de textos densos.
+ */
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -71,6 +78,8 @@ Este archivo representa la Vista (View) destinada a exhibir el Aviso de Privacid
     </main>
 
     <?php
+    // El sistema establece la ruta relativa hacia la raíz y delega 
+    // la renderización del pie de página (con el sistema de cookies) al controlador.
     $ruta_prefijo = "../../../"; 
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>

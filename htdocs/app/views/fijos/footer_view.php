@@ -1,10 +1,15 @@
-<script>
+<?php
 /* FOOTER_VIEW.PHP */
 /*
-Este archivo actúa como la Vista Parcial (Partial View) que contiene la estructura HTML del pie de página global de AsTech Computer. Su objetivo es ser incluido al final de todas las páginas del sitio web para proporcionar una navegación secundaria uniforme. Incluye el logotipo corporativo, enlaces directos a los servicios principales, accesos a páginas legales (Políticas de Cookies, Privacidad y Términos y Condiciones), y a la sección operativa (Login). Además, integra las redes sociales de la empresa y un botón flotante persistente de WhatsApp diseñado para facilitar el contacto inmediato del cliente desde cualquier punto de la página.
-También contiene el sistema global de gestión de cookies (Banner y Modal).
-*/
-</script>
+ * PÁGINA: Pie de Página y Sistema de Cookies (Footer View) - As Tech Computer
+ * PROPÓSITO: Proporcionar la estructura HTML global (Partial View) que cierra todas las páginas del sistema web, incluyendo navegación secundaria, redes sociales y el motor de privacidad.
+ * FUNCIONALIDADES:
+ * - Renderización de enlaces corporativos, servicios y documentos legales mediante el uso de la constante dinámica BASE_URL para evitar rutas rotas.
+ * - Integración de íconos interactivos de redes sociales y un botón flotante persistente de contacto vía WhatsApp.
+ * - Inyección del sistema modular de privacidad: Despliega el "Banner de Cookies" inicial y el "Modal de Ajustes Detallados", gestionando sus estilos de visibilidad iniciales (ocultos por defecto).
+ * - Carga final del script (footer.js) encargado de controlar el comportamiento asíncrono y de almacenamiento local de las preferencias de privacidad del usuario.
+ */
+?>
 
 <footer class="pie-pagina">
     <div class="contenedor-pie">

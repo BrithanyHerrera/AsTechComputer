@@ -1,9 +1,17 @@
-<script>
-    /* CITAS_CLIENTE_VIEW.PHP */
-    /*
-    Este archivo es la Vista principal del sistema de agendamiento para los clientes. Su función es renderizar el formulario interactivo donde los usuarios ingresan sus datos personales, la información de su equipo (marca, modelo, falla) y seleccionan la fecha y hora de su cita. Además, incluye la lógica de presentación para mostrar alertas dinámicas (usando SweetAlert2) en caso de éxito, error o si el horario elegido ya fue ocupado, integrándose fluidamente con el Toolbar y Footer de As Tech Computer.
-    */
-</script>
+<?php
+/* CITAS_CLIENTE_VIEW.PHP */
+/*
+ * PÁGINA: Vista de Agendamiento de Citas (Citas Cliente View) - As Tech Computer
+ * PROPÓSITO: Renderizar la interfaz gráfica interactiva que permite a los clientes solicitar y agendar servicios técnicos desde el sitio web.
+ * FUNCIONALIDADES:
+ * - Formularios interactivos con validación estricta en tiempo real (HTML5 y patrones RegEx) para la captura segura de datos personales y técnicos.
+ * - Integración dinámica de catálogos (tipos de dispositivos, marcas, servicios) recuperados desde el controlador.
+ * - Restricción visual de políticas de la empresa (Ej. alerta sobre la no recepción de equipos de la marca Apple).
+ * - Prevención de conflictos de horario mediante la inyección de variables JSON que JavaScript utiliza para deshabilitar horas ya reservadas.
+ * - Despliegue de notificaciones avanzadas y modales de retroalimentación utilizando la librería SweetAlert2 para informar sobre el éxito, error o colisión de la solicitud.
+ * - Ensamblaje modular del diseño, integrando componentes globales como la cabecera (Toolbar), el pie de página (Footer) y la pantalla de carga (Loader).
+ */
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -23,9 +31,11 @@
 </head>
 
 <body>
-    <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
-    
     <?php
+    // El sistema incluye la pantalla de carga (Loader) para transiciones suaves.
+    include_once __DIR__ . "/fijos/loader_view.php";
+    // Se establece la ruta relativa hacia la raíz y se invoca al controlador 
+    // de la barra de navegación para renderizar el menú global de la plataforma.
     $ruta_prefijo = "../../";
     require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
@@ -247,6 +257,7 @@
     </script>
 
     <?php
+    // Inclusión del pie de página (Footer) con el sistema de políticas de cookies.
     $ruta_prefijo = "../../../";
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>
