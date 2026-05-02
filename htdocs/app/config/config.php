@@ -1,3 +1,4 @@
+<!--❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤ -->
 <?php
 //PAGINA:CONFIG.PHP
 //Se usa en los urls para dirijir a la raiz del proyecto:htdocs, en caso de que esten en otra pagina 
@@ -11,3 +12,4 @@ $base = explode('/app', $base)[0]; // corta en /app
 define('BASE_URL', $protocolo . '://' . $host . $base . '/');
 
 ?>
+<!--❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤ -->

@@ -1,3 +1,4 @@
+<!--❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤ -->
 <?php
 // Detectamos si estamos trabajando en tu computadora (localhost/Laragon)
 if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1') {
@@ -29,3 +30,4 @@ if ($conexion->connect_error) {
 // Configuramos los caracteres especiales para evitar problemas con las ñ y acentos
 $conexion->set_charset("utf8mb4");
 ?>
+<!--❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤ -->

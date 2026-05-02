@@ -7,10 +7,14 @@
 // mODELO: detalle_servicio_model.php (Página de detalle servicio)
 // pagina que muestra informacion especifica de cada servicio en la pagina servicios_view.php
 // ========================================================
-// Esto crea la ruta absoluta limpia eliminando los "/../"
+// ruta que dirige a la ruta inicial de el proyecto
 $path_config = realpath(__DIR__ . '/../config/conexion.db.php');
+// ruta que conecta a model con controller
 $path_model  = realpath(__DIR__ . '/../models/detalle_servicio_model.php');
 
+
+//muestra toda la informacion de el servicio al hacer click en el servicio en la pagina de servicios principal
+//en caso de que no se encuentre nada, da un mensaje de error
 if (!$path_config || !$path_model) {
     die("Error crítico: No se encontró el archivo de Configuración o el Modelo. 
          Revisa que 'app/models/ServicioModel.php' exista exactamente con ese nombre.");

@@ -1,6 +1,21 @@
+<!--❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤ -->
 <?php
-require_once __DIR__ . "/../../controllers/empleado_controller.php";
+/**
+ * PÁGINA: Gestión de Empleados - As Tech Computer
+ * PROPÓSITO: Proporcionar una interfaz para administrar empleados, permitiendo registrar, visualizar,
+ * editar y eliminar información del personal.
+ * FUNCIONALIDADES:
+ * - Formulario modal para agregar nuevos empleados con validaciones.
+ * - Tabla dinámica que muestra los empleados registrados.
+ * - Edición de datos mediante modal con carga automática de información.
+ * - Eliminación de empleados con confirmación.
+ * - Validación de campos (nombre, teléfono, correo, usuario, contraseña).
+ * - Integración con SweetAlert para confirmaciones y notificaciones.
+ * - Control de permisos para cambio de contraseña (solo administrador).
+ */
+require_once __DIR__ . "/../../controllers/empleado_controller.php"; 
 ?>
+<!-- esto es para las alertas o notificaciones -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="contenedor-crud">
@@ -9,7 +24,7 @@ require_once __DIR__ . "/../../controllers/empleado_controller.php";
             <i class="fa-solid fa-plus"></i> Nuevo empleado
         </button>
     </div>
-
+<!--formulario para registrar datos del empleado -->
     <div id="formulario-empleado" class="modal-formulario" style="display: none;">
         <div class="contenido-modal">
             <span class="cerrar" onclick="cerrarFormulario()">&times;</span>
@@ -69,7 +84,7 @@ require_once __DIR__ . "/../../controllers/empleado_controller.php";
                         <?php endforeach; ?>
                     </select>
                 </div>
-                
+               <!--botones del formulario --> 
                 <div class="botones-form">
                     <button type="submit" class="btn-guardar">Guardar Empleado</button>
                     <button type="button" class="btn-cancelar" onclick="cerrarFormulario()">Cancelar</button>
@@ -77,8 +92,8 @@ require_once __DIR__ . "/../../controllers/empleado_controller.php";
             </form>
         </div>
     </div>
-
-    <div class="tabla-responsiva">
+<!--tabla q muestra datos del empleado -->
+    <div >
         <table>
             <thead>
                 <tr>
@@ -113,7 +128,7 @@ require_once __DIR__ . "/../../controllers/empleado_controller.php";
         </table>
     </div>
 </div>
-
+<!--formulario para editar datos del empleado -->
 <div id="modal-editar-empleado" class="modal-formulario" style="display: none;">
     <div class="contenido-modal modal-purpura">
         <span class="cerrar" onclick="cerrarModalEditar()">&times;</span>
@@ -172,26 +187,20 @@ require_once __DIR__ . "/../../controllers/empleado_controller.php";
             </div>
 
             <?php if (isset($_SESSION['id_puesto']) && $_SESSION['id_puesto'] == 4): ?>
-                <div class="grupo-input"
-                    style="background: #fdf2f8; padding: 10px; border-radius: 5px; border-left: 4px solid #8e44ad; margin-top: 15px;">
-                    <label style="color: #4a148c; font-weight: bold;"><i class="fa-solid fa-shield-halved"></i> Cambio de
+                <div class="grupo-input">
+                    <label ><i class="fa-solid fa-shield-halved"></i> Cambio de
                         Contraseña (Solo Admin)</label>
                     <input type="password" name="contrasena" placeholder="Deja en blanco para no modificar" minlength="8">
                 </div>
             <?php endif; ?>
 
-            <div class="botones-form" style="margin-top: 20px;">
+            <div class="botones-form" >
                 <button type="submit" class="btn-actualizar">Actualizar Cambios</button>
                 <button type="button" class="btn-cancelar" onclick="cerrarModalEditar()">Cancelar</button>
             </div>
         </form>
     </div>
 </div>
-
-<style>
-    .swal2-container {
-        z-index: 999999 !important;
-    }
-</style>
-
+<!--para el js -->
 <script src="../../public/js/empleado_crud.js"></script>
+<!--❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤ -->

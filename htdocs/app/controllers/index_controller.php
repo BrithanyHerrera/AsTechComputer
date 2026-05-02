@@ -1,4 +1,11 @@
 <?php
+// ========================================================
+//CONTROLADOR DE LA PAGINA INDEX
+//VIEW:index_controller.php
+// mODELO: index_model.php (Página de  inicio)
+// pagina que muestra informacion en la pagina principal, se puede editar\
+// por que esta guardada en la base de datos
+// ========================================================
 require_once __DIR__ . "/../config/conexion.db.php";
 require_once __DIR__ . "/../models/index_model.php";
 

@@ -1,4 +1,11 @@
 <?php
+//---------------------------------------------------------------------------------------
+//PAGINA:contenedor_controller
+//gestiona los contenedores (gabinetes) del sistema: obtiene la lista para mostrarla en la vista 
+// maneja las operaciones de agregar, editar y eliminar registros en la base de datos. 
+//También controla redirecciones y estados (éxito, error o duplicado) 
+//según el resultado de cada acción.
+//------------------------------------------------------------------------------------------
 require_once __DIR__ . '/../config/conexion.db.php';
 require_once __DIR__ . "/../models/contenedor_model.php";
 
