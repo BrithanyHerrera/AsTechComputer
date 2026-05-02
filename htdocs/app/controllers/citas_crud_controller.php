@@ -1,7 +1,7 @@
 <?php
 /* CITAS_CRUD_CONTROLLER.PHP */
 /*
-Este archivo es el Controlador (Controller) responsable de la gestión interna de citas (CRUD) dentro del panel administrativo de ASTECH COMPUTER. Funciona como el intermediario principal entre la interfaz del administrador, la base de datos local y la API de Google Calendar. Sus tareas incluyen: cargar las librerías necesarias, recibir solicitudes asíncronas (AJAX) para cambiar rápidamente el estado de una cita, limpiar automáticamente los registros que ya han expirado, gestionar la eliminación o edición de citas asegurando que los cambios se reflejen de manera sincronizada tanto en el servidor local como en Google Calendar, y finalmente, preparar todos los datos en crudo (listas de marcas, tipos de equipo y horarios ocupados) que serán renderizados por la Vista.
+Este archivo es el Controlador (Controller) responsable de la gestión interna de citas (CRUD) dentro del panel administrativo de AsTech Computer. Funciona como el intermediario principal entre la interfaz del administrador, la base de datos local y la API de Google Calendar. Sus tareas incluyen: cargar las librerías necesarias, recibir solicitudes asíncronas (AJAX) para cambiar rápidamente el estado de una cita, limpiar automáticamente los registros que ya han expirado, gestionar la eliminación o edición de citas asegurando que los cambios se reflejen de manera sincronizada tanto en el servidor local como en Google Calendar, y finalmente, preparar todos los datos en crudo (listas de marcas, tipos de equipo y horarios ocupados) que serán renderizados por la Vista.
 */
 /* ========================================================
    1. INICIALIZACIÓN Y CARGA DE DEPENDENCIAS

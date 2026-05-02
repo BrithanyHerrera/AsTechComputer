@@ -1,7 +1,7 @@
 <?php
 /* MAS_INFO_CONTROLLER.PHP */
 /*
-Este archivo es el Controlador (Controller) consolidado para la página de "Más Información" de ASTECH COMPUTER. Combina dos grandes responsabilidades bajo la arquitectura MVC: primero, interactúa con la API de Google Places para extraer las reseñas, la calificación general y el número total de opiniones del negocio. Segundo, gestiona la lógica del formulario de contacto directo, conectándose a la base de datos (mediante ContactoModel) para registrar nuevos mensajes y devolviendo un estado ($status) de éxito o error. Finalmente, pasa toda esta información procesada a una única Vista consolidada (mas_info_view.php).
+Este archivo es el Controlador (Controller) consolidado para la página de "Más Información" de AsTech Computer. Combina dos grandes responsabilidades bajo la arquitectura MVC: primero, interactúa con la API de Google Places para extraer las reseñas, la calificación general y el número total de opiniones del negocio. Segundo, gestiona la lógica del formulario de contacto directo, conectándose a la base de datos (mediante ContactoModel) para registrar nuevos mensajes y devolviendo un estado ($status) de éxito o error. Finalmente, pasa toda esta información procesada a una única Vista consolidada (mas_info_view.php).
 */
 
 /* ==========================================

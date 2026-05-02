@@ -1,7 +1,7 @@
 <script>
 /* SOBRE_NOSOTROS_VIEW.PHP */
 /*
-Este archivo representa la Vista (View) encargada de mostrar la identidad corporativa de ASTECH COMPUTER. Su objetivo es consolidar en una página exclusiva la misión, visión, valores y el mensaje del fundador (CEO). Para conservar la estética y evitar la duplicidad de código, esta vista importa directamente la hoja de estilos index.css, además de integrar los controladores correspondientes para la barra de navegación (Toolbar) y el pie de página (Footer). Tras los ajustes solicitados, se redujo el espacio superior debajo de la barra de navegación y se unificaron las secciones de "Quiénes somos" y "Filosofía Empresarial" dentro de un mismo bloque, logrando una transición visual más fluida.
+Este archivo representa la Vista (View) encargada de mostrar la identidad corporativa de AsTech Computer. Su objetivo es consolidar en una página exclusiva la misión, visión, valores y el mensaje del fundador (CEO). Para conservar la estética y evitar la duplicidad de código, esta vista importa directamente la hoja de estilos index.css, además de integrar los controladores correspondientes para la barra de navegación (Toolbar) y el pie de página (Footer). Tras los ajustes solicitados, se redujo el espacio superior debajo de la barra de navegación y se unificaron las secciones de "Quiénes somos" y "Filosofía Empresarial" dentro de un mismo bloque, logrando una transición visual más fluida.
 */
 </script>
 
@@ -110,7 +110,7 @@ Este archivo representa la Vista (View) encargada de mostrar la identidad corpor
                     <p style="color: var(--color-texto-secundario);">Fundador & CEO</p>
                 </div>
                 <div class="ceo-img">
-                    <img src="../../public/img/ceoo.png" alt="CEO de Astech Computer">
+                    <img src="../../public/img/ceoo.png" alt="CEO de AsTech Computer">
                 </div>
             </div>
         </section>

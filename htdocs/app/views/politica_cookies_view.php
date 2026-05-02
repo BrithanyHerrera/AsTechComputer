@@ -1,7 +1,7 @@
 <script>
 /* POLITICA_COOKIES_VIEW.PHP */
 /*
-Este archivo actúa como la Vista (View) encargada de mostrar el documento oficial de la Política de Cookies de ASTECH COMPUTER. Su objetivo es transparentar hacia el usuario el tipo de tecnologías de rastreo y almacenamiento de datos que utiliza la plataforma, clasificándolas según su función (técnicas, funcionales y analíticas) y explicando claramente cómo impactan en servicios específicos (como el agendamiento de citas o el formulario de contacto). El diseño mantiene una estructura tipográfica limpia y profesional, e incorpora de forma modular la barra de navegación (Toolbar) y el pie de página (Footer) para preservar la uniformidad del sitio web corporativo.
+Este archivo actúa como la Vista (View) encargada de mostrar el documento oficial de la Política de Cookies de AsTech Computer. Su objetivo es transparentar hacia el usuario el tipo de tecnologías de rastreo y almacenamiento de datos que utiliza la plataforma, clasificándolas según su función (técnicas, funcionales y analíticas) y explicando claramente cómo impactan en servicios específicos (como el agendamiento de citas o el formulario de contacto). El diseño mantiene una estructura tipográfica limpia y profesional, e incorpora de forma modular la barra de navegación (Toolbar) y el pie de página (Footer) para preservar la uniformidad del sitio web corporativo.
 */
 </script>
 
@@ -33,19 +33,19 @@ Este archivo actúa como la Vista (View) encargada de mostrar el documento ofici
             <h1>Política de Cookies</h1>
             <span class="fecha-actualizacion">Última actualización: Abril de 2026</span>
 
-            <p>Le informamos que se encuentra en el portal web oficial de Astech Computer. En cumplimiento con los principios de transparencia e integridad que rigen nuestra empresa, utilizamos cookies y tecnologías similares con el objetivo de facilitar el uso de la plataforma, optimizar la navegación, mejorar su experiencia como usuario y dar cumplimiento a las obligaciones legales correspondientes, así como mejorar la calidad de nuestra página de acuerdo con sus hábitos y estilos de navegación.</p>
+            <p>Le informamos que se encuentra en el portal web oficial de AsTech Computer. En cumplimiento con los principios de transparencia e integridad que rigen nuestra empresa, utilizamos cookies y tecnologías similares con el objetivo de facilitar el uso de la plataforma, optimizar la navegación, mejorar su experiencia como usuario y dar cumplimiento a las obligaciones legales correspondientes, así como mejorar la calidad de nuestra página de acuerdo con sus hábitos y estilos de navegación.</p>
             
-            <p>Al navegar y continuar en nuestra web autoriza a Astech Computer a utilizar las cookies en las condiciones contenidas en la presente Política y según las preferencias que usted haya seleccionado en nuestro Panel de Ajustes.</p>
+            <p>Al navegar y continuar en nuestra web autoriza a AsTech Computer a utilizar las cookies en las condiciones contenidas en la presente Política y según las preferencias que usted haya seleccionado en nuestro Panel de Ajustes.</p>
 
             <h3>Definición de cookies:</h3>
             <p>Las cookies son pequeños archivos de datos o fragmentos de texto que se generan y almacenan en su computador, smartphone, tablet o cualquier otro dispositivo electrónico al acceder a una página web. Estos archivos permiten al titular del portal almacenar o recuperar información específica sobre la interacción y navegación efectuada desde dicho equipo, lo cual es fundamental para personalizar y optimizar el servicio brindado.</p>
 
             <h3>Tipología de cookies</h3>
-            <p>En Astech Computer clasificamos las cookies en tres secciones: según su gestión, según su permanencia y según su finalidad. A continuación se desglosan para una mayor comprensión:</p>
+            <p>En AsTech Computer clasificamos las cookies en tres secciones: según su gestión, según su permanencia y según su finalidad. A continuación se desglosan para una mayor comprensión:</p>
             
             <p><strong>A. Según la entidad que las gestiona:</strong></p>
             <ul>
-                <li><strong>Cookies propias:</strong> Son aquellas enviadas a su terminal directamente desde nuestro dominio gestionado por Astech Computer.</li>
+                <li><strong>Cookies propias:</strong> Son aquellas enviadas a su terminal directamente desde nuestro dominio gestionado por AsTech Computer.</li>
                 <li><strong>Cookies de terceros:</strong> Son enviadas desde equipos o dominios gestionados por entidades externas que nos prestan servicios, tales como proveedores de analítica (Google), redes sociales (Meta) o integraciones funcionales, para tratar los datos que obtienen a través de estas.</li>
             </ul>
 
@@ -62,8 +62,8 @@ Este archivo actúa como la Vista (View) encargada de mostrar el documento ofici
                 <li><strong>3. Cookies de Análisis:</strong> Nos permiten cuantificar el número de usuarios, comprender cómo interactúan con el sitio (páginas visitadas, clics) y realizar análisis estadísticos. Generalmente asociadas a Google Analytics, recopilan información de forma anónima para mejorar continuamente la calidad de nuestros servicios tecnológicos.</li>
             </ul>
 
-            <h3>Uso específico de la información en Astech Computer</h3>
-            <p>Astech Computer utiliza la información recolectada a través de las cookies explícitamente para:</p>
+            <h3>Uso específico de la información en AsTech Computer</h3>
+            <p>AsTech Computer utiliza la información recolectada a través de las cookies explícitamente para:</p>
             <ul>
                 <li><strong>1. Agendamiento de Servicio:</strong> Garantizar que el flujo de datos (nombre, dispositivo, marca y falla) se procese de manera técnica y correcta, permitiendo la selección de intervalos de tiempo específicos y asegurando que la solicitud llegue íntegra a nuestra base de datos.</li>
                 <li><strong>2. Gestión de Citas:</strong> Verificar la disponibilidad en tiempo real mediante la integración con el calendario y asegurar que el formulario de agendamiento funcione sin errores técnicos.</li>
@@ -73,14 +73,14 @@ Este archivo actúa como la Vista (View) encargada de mostrar el documento ofici
             </ul>
 
             <h3>Gestión y desactivación de cookies</h3>
-            <p>Astech Computer pone a su disposición un <strong>Panel de Ajustes de Cookies</strong> accesible desde el aviso emergente inicial en nuestra página principal. Desde allí, usted tiene el control total para activar o desactivar las cookies Funcionales, de Análisis y Publicitarias en cualquier momento.</p>
+            <p>AsTech Computer pone a su disposición un <strong>Panel de Ajustes de Cookies</strong> accesible desde el aviso emergente inicial en nuestra página principal. Desde allí, usted tiene el control total para activar o desactivar las cookies Funcionales, de Análisis y Publicitarias en cualquier momento.</p>
             
             <p>De forma adicional, usted puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de las opciones del navegador de Internet instalado en su dispositivo (Chrome, Safari, Firefox, Edge, etc.).</p>
             
             <p>Tenga en cuenta que, en caso de rechazar o no permitir la instalación de las cookies necesarias/técnicas desde su navegador, es muy probable que no pueda acceder a nuestros servicios <strong>(como el agendamiento de citas y el formulario de contacto directo)</strong> o que la página deje de funcionar correctamente.</p>
 
             <h3>Modificación y vigencia</h3>
-            <p>Astech Computer podrá modificar esta Política de Cookies en función de nuevas exigencias reglamentarias, legislativas o con la finalidad de adaptar dicha política a las instrucciones dictadas por las autoridades competentes en protección de datos. Recomendamos su revisión periódica.</p>
+            <p>AsTech Computer podrá modificar esta Política de Cookies en función de nuevas exigencias reglamentarias, legislativas o con la finalidad de adaptar dicha política a las instrucciones dictadas por las autoridades competentes en protección de datos. Recomendamos su revisión periódica.</p>
             <p>Esta política actúa como un complemento indispensable a nuestra Política de Tratamiento de Datos Personales, asegurando un manejo ético y profesional de toda su información.</p>
         </section>
     </main>

@@ -22,7 +22,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astech Computer</title>
+    <title>AsTech Computer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -50,7 +50,7 @@
                 <div class="hero-texto">
 
                     <div class="hero-imagen">
-                        <img src="<?= BASE_URL ?>public/img/logo_horizontal.png" alt="Logo Astech Computer">
+                        <img src="<?= BASE_URL ?>public/img/logo_horizontal.png" alt="Logo AsTech Computer">
                     </div>
 
                     <p class="destacado"> Confiabilidad, garantia y transparencia </p>
@@ -163,7 +163,7 @@
                     <p style="color: var(--color-texto-secundario);">Fundador & CEO</p>
                 </div>
                 <div class="ceo-img">
-                    <img src="<?= BASE_URL ?>public/img/ceoo.png" alt="CEO de Astech Computer">
+                    <img src="<?= BASE_URL ?>public/img/ceoo.png" alt="CEO de AsTech Computer">
                 </div>
             </div>
         </section>

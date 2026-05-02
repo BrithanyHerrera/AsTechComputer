@@ -1,7 +1,7 @@
 <script>
 /* FOOTER_VIEW.PHP */
 /*
-Este archivo actúa como la Vista Parcial (Partial View) que contiene la estructura HTML del pie de página global de ASTECH COMPUTER. Su objetivo es ser incluido al final de todas las páginas del sitio web para proporcionar una navegación secundaria uniforme. Incluye el logotipo corporativo, enlaces directos a los servicios principales, accesos a páginas legales (Políticas de Cookies, Privacidad y Términos y Condiciones), y a la sección operativa (Login). Además, integra las redes sociales de la empresa y un botón flotante persistente de WhatsApp diseñado para facilitar el contacto inmediato del cliente desde cualquier punto de la página.
+Este archivo actúa como la Vista Parcial (Partial View) que contiene la estructura HTML del pie de página global de AsTech Computer. Su objetivo es ser incluido al final de todas las páginas del sitio web para proporcionar una navegación secundaria uniforme. Incluye el logotipo corporativo, enlaces directos a los servicios principales, accesos a páginas legales (Políticas de Cookies, Privacidad y Términos y Condiciones), y a la sección operativa (Login). Además, integra las redes sociales de la empresa y un botón flotante persistente de WhatsApp diseñado para facilitar el contacto inmediato del cliente desde cualquier punto de la página.
 También contiene el sistema global de gestión de cookies (Banner y Modal).
 */
 </script>

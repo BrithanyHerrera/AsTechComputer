@@ -1,7 +1,7 @@
 <script>
     /* MAS_INFO_VIEW.PHP */
     /*
-    Este archivo representa la Vista (View) principal encargada de unificar dos secciones clave para el sitio web de ASTECH COMPUTER: el formulario de contacto directo y la exhibición de reseñas obtenidas de Google Maps. Su propósito es procesar las variables (como $rating_general, $total_opiniones, $comentarios y $status) generadas por el controlador respectivo y renderizarlas en un diseño estructurado. Incluye áreas para captura de mensajes, un mapa interactivo de ubicación, enlaces a redes sociales y un grid para desplegar los comentarios de clientes en formato de tarjeta. Se integra fluidamente con el encabezado (Toolbar) y el pie de página (Footer) corporativos.
+    Este archivo representa la Vista (View) principal encargada de unificar dos secciones clave para el sitio web de AsTech Computer: el formulario de contacto directo y la exhibición de reseñas obtenidas de Google Maps. Su propósito es procesar las variables (como $rating_general, $total_opiniones, $comentarios y $status) generadas por el controlador respectivo y renderizarlas en un diseño estructurado. Incluye áreas para captura de mensajes, un mapa interactivo de ubicación, enlaces a redes sociales y un grid para desplegar los comentarios de clientes en formato de tarjeta. Se integra fluidamente con el encabezado (Toolbar) y el pie de página (Footer) corporativos.
     */
 </script>
 

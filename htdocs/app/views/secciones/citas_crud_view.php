@@ -1,7 +1,7 @@
 <?php
 /* CITAS_CRUD_VIEW.PHP */
 /*
-Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de administración (CRUD) de citas para ASTECH COMPUTER. Su objetivo es tomar los datos provenientes del controlador (eventos de Google Calendar cruzados con la base de datos local) y mostrarlos en una tabla dinámica e interactiva. Incluye una barra de filtros superiores, botones de acción por cada registro, y un modal emergente que permite al administrador editar toda la información de una cita específica de manera cómoda. Se vincula externamente a hojas de estilo CSS y scripts de JavaScript para mantener una arquitectura limpia y responsiva.
+Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de administración (CRUD) de citas para AsTech Computer. Su objetivo es tomar los datos provenientes del controlador (eventos de Google Calendar cruzados con la base de datos local) y mostrarlos en una tabla dinámica e interactiva. Incluye una barra de filtros superiores, botones de acción por cada registro, y un modal emergente que permite al administrador editar toda la información de una cita específica de manera cómoda. Se vincula externamente a hojas de estilo CSS y scripts de JavaScript para mantener una arquitectura limpia y responsiva.
 */
 ?>
 

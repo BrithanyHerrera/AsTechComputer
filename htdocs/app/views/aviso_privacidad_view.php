@@ -1,7 +1,7 @@
 <script>
 /* POLITICA_PRIVACIDAD.PHP */
 /*
-Este archivo representa la Vista (View) destinada a exhibir el Aviso de Privacidad oficial de ASTECH COMPUTER. Su propósito principal es transparentar y comunicar a los usuarios las políticas de recopilación, uso, protección y transferencia de datos personales, así como los lineamientos de confidencialidad en el acceso a los equipos y el proceso para ejercer los derechos ARCO. Se estructura mediante un formato de lectura accesible y modular, integrando los controladores globales de navegación (Toolbar) y pie de página (Footer) para asegurar la homogeneidad visual de la plataforma corporativa.
+Este archivo representa la Vista (View) destinada a exhibir el Aviso de Privacidad oficial de AsTech Computer. Su propósito principal es transparentar y comunicar a los usuarios las políticas de recopilación, uso, protección y transferencia de datos personales, así como los lineamientos de confidencialidad en el acceso a los equipos y el proceso para ejercer los derechos ARCO. Se estructura mediante un formato de lectura accesible y modular, integrando los controladores globales de navegación (Toolbar) y pie de página (Footer) para asegurar la homogeneidad visual de la plataforma corporativa.
 */
 </script>
 <!DOCTYPE html>

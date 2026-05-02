@@ -11,5 +11,7 @@
             "email": "joceline.delatorre6785@alumnos.udg.mx"
         }
     ],
-    "require": {}
+    "require": {
+        "robthree/twofactorauth": "^3.0"
+    }
 }
