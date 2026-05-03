@@ -1,36 +1,14 @@
 <?php 
-/**
- * PÁGINA: Convenios - As Tech Computer
- * PROPÓSITO: Mostrar las alianzas estratégicas, marcas, proveedores y convenios institucionales 
- *            de la empresa para fortalecer la confianza del usuario y destacar su red de colaboración.
+/* CONVENIOS_VIEW.PHP */
+/*
+ * PÁGINA: Vista de Convenios y Alianzas (Convenios View) - As Tech Computer
+ * PROPÓSITO: Exhibir las alianzas estratégicas, marcas soportadas, proveedores y convenios institucionales de la empresa para fortalecer la confianza del usuario y destacar su red de colaboración comercial y académica.
  * FUNCIONALIDADES:
- * - Estructura HTML responsive con configuración de viewport y codificación UTF-8.
- * - Integración de recursos externos como:
- *      • Google Fonts (tipografía Lato).
- *      • Font Awesome (iconografía visual).
- * - Inclusión de estilos personalizados para toolbar, footer y diseño específico de convenios.
- * - Implementación de loader inicial para mejorar la experiencia de carga.
- * - Integración dinámica de la barra de navegación (toolbar) mediante controlador.
- * - Sección principal con título y subtítulo que introduce el propósito de los convenios.
- * - Carrusel interactivo de marcas:
- *      • Navegación mediante botones (anterior/siguiente).
- *      • Visualización de logos de marcas reconocidas (Dell, Lenovo, HP, etc.).
- *      • Control dinámico mediante JavaScript externo (carousel.js).
- * - Sección de proveedores:
- *      • Tarjetas informativas con nombre de empresa y beneficios.
- *      • Presentación en formato de grid adaptable.
- * - Sección de alianzas estratégicas:
- *      • Tarjetas con beneficios como capacitaciones y eventos conjuntos.
- * - Sección de partners:
- *      • Visualización de empresas colaboradoras con integración de servicios.
- * - Sección de convenios educativos:
- *      • Tarjetas destacadas con diseño enriquecido (iconos, badges, descripción).
- *      • Información de instituciones (ej. Universidad de Guadalajara CUCosta).
- *      • Beneficios como prácticas profesionales y colaboraciones académicas.
- *      • Indicadores de estado (activo / próximamente).
- * - Uso de iconografía para reforzar la comunicación visual (graduación, ubicación, checks).
- * - Inclusión de footer dinámico mediante controlador.
- * - Organización modular del código para facilitar mantenimiento y escalabilidad.
+ * - Estructuración semántica del contenido mediante un diseño responsivo y modular (HTML5).
+ * - Inyección dinámica de componentes globales de la arquitectura MVC, incluyendo la pantalla de carga (Loader), la barra de navegación (Toolbar) y el pie de página (Footer).
+ * - Despliegue de un carrusel interactivo, controlado por JavaScript externo, para la visualización fluida de los logotipos de marcas tecnológicas reconocidas.
+ * - Renderización de cuadrículas (Grids) adaptables que presentan tarjetas informativas sobre proveedores, alianzas estratégicas y partners corporativos.
+ * - Presentación destacada de convenios educativos (ej. Universidad de Guadalajara CUCosta) empleando indicadores visuales de estado (Activo / Próximamente) y listas estructuradas de beneficios.
  */
 ?>
 <!DOCTYPE html>
@@ -39,16 +17,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convenios | AS TECH</title>
+    
     <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/convenios.css">
 </head>
 <body>
     <?php 
+    // El sistema incluye la pantalla de carga y procesa el enrutamiento del menú global
     include_once __DIR__ . "/fijos/loader_view.php"; 
     require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
@@ -140,6 +121,7 @@
         <div class="bloque">
             <h2 class="titulo-bloque">Convenios Educativos</h2>
             <div class="grid-convenios">
+                
                 <article class="card-convenio">
                     <div class="header-convenio">
                         <i class="fa-solid fa-graduation-cap" style="font-size: 4rem; color: #e17203;"></i>

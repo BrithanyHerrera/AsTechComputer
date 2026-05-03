@@ -1,19 +1,26 @@
-<script>
+<?php
 /* REGISTRO_MARCA_VIEW.PHP */
 /*
-Este archivo representa la Vista (View) encargada de exhibir la información legal referente a la titularidad y los derechos de propiedad intelectual de la marca "AsTech Computer". Su objetivo principal es dotar de certeza jurídica a la empresa frente a clientes y socios, mostrando de forma estructurada los datos registrales emitidos por el IMPI. Adicionalmente, incorpora un botón para la descarga directa del título oficial en formato PDF y define las cláusulas restrictivas sobre el uso indebido de la identidad gráfica. Mantiene el diseño modular al incluir la barra de navegación y el pie de página del sistema.
-*/
-</script>
-
+ * PÁGINA: Vista de Registro de Marca (Trademark Registry View) - As Tech Computer
+ * PROPÓSITO: Exhibir la información legal referente a la titularidad y los derechos de propiedad intelectual de la marca "AsTech Computer", dotando de certeza jurídica a la empresa frente a clientes, socios comerciales y proveedores.
+ * FUNCIONALIDADES:
+ * - Presentación estructurada de los datos registrales oficiales emitidos por el Instituto Mexicano de la Propiedad Industrial (IMPI).
+ * - Integración de un botón interactivo para la descarga directa del título oficial en formato PDF.
+ * - Definición explícita de las cláusulas restrictivas sobre el uso indebido de la identidad gráfica (logotipo, tipografía, nombre comercial y paleta de colores).
+ * - Inyección dinámica de los componentes fijos de la arquitectura MVC (Toolbar y Footer) garantizando la uniformidad visual y de navegación en todo el sitio web.
+ */
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Marca - AsTech Computer</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">        
+    
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/info_legal.css">
@@ -21,6 +28,8 @@ Este archivo representa la Vista (View) encargada de exhibir la información leg
 
 <body style="background-color: #f4f4f4;">
     <?php
+    // El sistema define la profundidad de la ruta relativa y delega 
+    // la renderización de la cabecera principal al controlador del Toolbar.
     $ruta_prefijo = "../../../"; 
     require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
@@ -76,7 +85,7 @@ Este archivo representa la Vista (View) encargada de exhibir la información leg
                     </div>
 
                     <div style="margin-top: 35px;">
-                        <a href="../../public/docs/M625 Título de registro.pdf" download="M625 Título de registro.pdf" class="btn-descargar-pdf">
+                        <a href="../../public/docs/M625 Título de registro.pdf" download="M625 Título de registro.pdf" class="btn-descargar-pdf">
                             <i class="fa-solid fa-file-pdf" style="font-size: 1.2rem;"></i> Descargar Título Oficial (PDF)
                         </a>
                     </div>
@@ -92,6 +101,8 @@ Este archivo representa la Vista (View) encargada de exhibir la información leg
     </main>
 
     <?php
+    // El sistema establece la ruta de retorno y delega la renderización 
+    // del pie de página al controlador correspondiente.
     $ruta_prefijo = "../../../"; 
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>

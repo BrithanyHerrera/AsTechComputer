@@ -1,8 +1,15 @@
 <?php
 /* CITAS_CRUD_VIEW.PHP */
 /*
-Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de administración (CRUD) de citas para AsTech Computer. Su objetivo es tomar los datos provenientes del controlador (eventos de Google Calendar cruzados con la base de datos local) y mostrarlos en una tabla dinámica e interactiva. Incluye una barra de filtros superiores, botones de acción por cada registro, y un modal emergente que permite al administrador editar toda la información de una cita específica de manera cómoda. Se vincula externamente a hojas de estilo CSS y scripts de JavaScript para mantener una arquitectura limpia y responsiva.
-*/
+ * PÁGINA: Vista de Gestión de Citas (Citas CRUD View) - As Tech Computer
+ * PROPÓSITO: Renderizar la interfaz de administración (CRUD) de citas, mostrando los datos sincronizados entre Google Calendar y la base de datos local en una tabla dinámica e interactiva.
+ * FUNCIONALIDADES:
+ * - Barra de filtros superiores multifuncional que permite búsquedas en tiempo real (por nombre, estado y rango de fechas).
+ * - Representación tabular de los registros, integrando selectores para la actualización rápida y asíncrona (AJAX) del estado de cada cita sin recargar la página completa.
+ * - Despliegue de ventanas emergentes (Modales) modulares para la visualización de detalles completos y la edición profunda de la información.
+ * - Preparación y serialización de datos de la cita mediante atributos `data-cita` en formato JSON, facilitando su consumo seguro por JavaScript al abrir los modales.
+ * - Inyección de variables dinámicas (como los horarios ocupados y scripts de alerta) para gobernar el comportamiento del lado del cliente.
+ */
 ?>
 
 <link rel="stylesheet" href="../../public/css/citas_crud.css">
@@ -56,7 +63,11 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($eventos_google as $event):
+                <?php 
+                /* * El sistema itera sobre los eventos extraídos de Google Calendar y 
+                 * los cruza con el mapa de la base de datos local ($mapa_db) usando el ID del evento. 
+                 */
+                foreach ($eventos_google as $event):
                     $start_dt = $event->start->dateTime ?: $event->start->date;
                     $id_evento = $event->getId();
                     $datos_db = $mapa_db[$id_evento] ?? null;
@@ -129,6 +140,7 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
                             ]), ENT_QUOTES, "UTF-8") ?>' onclick="abrirModalVer(this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
+                            
                             <button class="btn-editar" type="button" title="Editar" data-cita='<?= htmlspecialchars(json_encode([
                                 "googleId" => $id_evento,
                                 "dbId" => $datos_db['id_cita'] ?? "",
@@ -313,11 +325,13 @@ Este archivo actúa como la Vista (View) encargada de renderizar la interfaz de 
 </div>
 
 <script>
+    // El sistema serializa e inyecta los horarios ocupados a JavaScript para gestionar disponibilidades
     const horasOcupadas = <?= $json_ocupadas ?? '{}' ?>;
 </script>
 
 <?php if (!empty($alerta_script)): ?>
     <script>
+        // El sistema evalúa si el controlador emitió alguna alerta de éxito/error y la dispara
         document.addEventListener('DOMContentLoaded', function () {
             <?php echo $alerta_script; ?>
         });

@@ -1,11 +1,15 @@
-<script>
+<?php
 /* POLITICA_COOKIES_VIEW.PHP */
 /*
-Este archivo actúa como la Vista (View) encargada de mostrar el documento oficial de la Política de Cookies de AsTech Computer. Su objetivo es transparentar hacia el usuario el tipo de tecnologías de rastreo y almacenamiento de datos que utiliza la plataforma, clasificándolas según su función (técnicas, funcionales y analíticas) y explicando claramente cómo impactan en servicios específicos (como el agendamiento de citas o el formulario de contacto). El diseño mantiene una estructura tipográfica limpia y profesional, e incorpora de forma modular la barra de navegación (Toolbar) y el pie de página (Footer) para preservar la uniformidad del sitio web corporativo.
-*/
-</script>
-
-
+ * PÁGINA: Vista de la Política de Cookies (Cookie Policy View) - As Tech Computer
+ * PROPÓSITO: Exhibir el documento oficial sobre la Política de Cookies, transparentando hacia el usuario el tipo de tecnologías de rastreo y almacenamiento de datos que utiliza la plataforma.
+ * FUNCIONALIDADES:
+ * - Estructuración semántica de la información legal, clasificando las cookies según su gestión, permanencia y finalidad (técnicas, funcionales y analíticas).
+ * - Explicación detallada del impacto de estas tecnologías en servicios específicos del sitio (agendamiento de citas, formulario de contacto, seguridad administrativa).
+ * - Inyección dinámica de los componentes globales de la plataforma, como la barra de navegación (Toolbar) y el pie de página (Footer) con su sistema modular de ajustes de privacidad integrado.
+ * - Vinculación de hojas de estilo dedicadas (info_legal.css) para optimizar la lectura de textos legales y mantener un diseño corporativo limpio y responsivo.
+ */
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,6 +27,8 @@ Este archivo actúa como la Vista (View) encargada de mostrar el documento ofici
 <body style="background-color: #f4f4f4;">
 
     <?php
+    // El sistema define la profundidad del directorio actual ($ruta_prefijo)
+    // e invoca al controlador del Toolbar para renderizar el menú global de la plataforma.
     $ruta_prefijo = "../../../"; 
     require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
@@ -86,6 +92,8 @@ Este archivo actúa como la Vista (View) encargada de mostrar el documento ofici
     </main>
 
     <?php
+    // El sistema establece la ruta relativa hacia la raíz y delega 
+    // la renderización del pie de página al controlador correspondiente.
     $ruta_prefijo = "../../../"; 
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>
