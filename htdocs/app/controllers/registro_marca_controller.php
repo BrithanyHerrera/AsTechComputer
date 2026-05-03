@@ -1,3 +1,4 @@
+<?php
 /* REGISTRO_MARCA_CONTROLLER.PHP */
 /*
  * PÁGINA: Controlador de Registro de Marca - As Tech Computer
@@ -7,7 +8,6 @@
  * - Implementación de rutas absolutas blindadas mediante dirname(__DIR__) para garantizar el despliegue del contenido independientemente de la ubicación del usuario en la estructura de directorios del servidor, eliminando fallos por reubicación.
  */
 
-<?php
 /* ========================================================
    1. RENDERIZACIÓN DE LA VISTA
    ======================================================== */
