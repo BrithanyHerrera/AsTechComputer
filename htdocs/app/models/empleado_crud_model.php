@@ -76,6 +76,20 @@ class EmpleadosModel {
     }
 
     /**
+     * Restablecer QR (2FA) de un empleado
+     */
+    public function resetearQR(int $id): bool {
+        $sql = "UPDATE empleados SET secreto_2fa = NULL, is_2fa_activo = 0 WHERE id_empleado = ?";
+        
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $resultado = $stmt->execute();
+        $stmt->close();
+        
+        return $resultado;
+    }
+
+    /**
      * Actualizar empleado
      */
     public function actualizarEmpleado(

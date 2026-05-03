@@ -1,4 +1,3 @@
-<!--❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤ -->
 <?php
 /**
  * PÁGINA: Gestión de Empleados - As Tech Computer
@@ -17,6 +16,11 @@ require_once __DIR__ . "/../../controllers/empleado_crud_controller.php";
 ?>
 <!-- esto es para las alertas o notificaciones -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    .swal2-container {
+        z-index: 999999 !important;
+    }
+</style>
 
 <div class="contenedor-crud">
     <div class="encabezado-seccion">
@@ -119,6 +123,9 @@ require_once __DIR__ . "/../../controllers/empleado_crud_controller.php";
                         <td><?= $row['nombre_puesto'] ?></td>
                         <td class='acciones'>
                             <button class='btn-editar' onclick='abrirEditar(<?= json_encode($row) ?>)'><i class='fa-solid fa-pen-to-square'></i></button>
+                            <button class='btn-reset-qr' onclick='confirmarResetQR(<?= $row['id_empleado'] ?>)' title="Restablecer QR" style="background-color: #f39c12; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px;">
+                            <i class='fa-solid fa-qrcode'></i>
+                            </button>
                             <button class='btn-eliminar' onclick='confirmarEliminacion(<?= $row['id_empleado'] ?>)'><i class='fa-solid fa-trash'></i></button>
                             <button class='btn-contactar'><i class='fa-brands fa-whatsapp'></i></button>
                         </td>
@@ -203,4 +210,3 @@ require_once __DIR__ . "/../../controllers/empleado_crud_controller.php";
 </div>
 <!--para el js -->
 <script src="../../public/js/empleado_crud.js"></script>
-<!--❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤❤ -->

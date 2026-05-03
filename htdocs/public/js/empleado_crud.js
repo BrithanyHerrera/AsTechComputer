@@ -65,6 +65,23 @@ function confirmarAccion(event, formulario, mensaje) {
     });
 }
 
+function confirmarResetQR(id) {
+    Swal.fire({
+        title: '¿Restablecer QR de este empleado?',
+        text: "Esto borrará su configuración de 2FA. En su próximo inicio de sesión, el sistema le pedirá escanear un código nuevo.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f39c12',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, restablecer',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = `../controllers/empleado_crud_controller.php?accion=reset_qr&id=${id}`;
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
@@ -76,6 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (status === 'duplicate') {
         Swal.fire({
             icon: 'error', title: 'Dato Duplicado', text: 'El correo o nombre de usuario ya existe.', confirmButtonColor: '#52073a'
+        });
+    } else if (status === 'qr_reset') {
+        Swal.fire({
+            icon: 'success', title: '¡QR Restablecido!', text: 'El empleado deberá configurar su Autenticador nuevamente.', confirmButtonColor: '#52073a'
         });
     } else if (status === 'error') {
         Swal.fire({

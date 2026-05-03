@@ -56,6 +56,19 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'eliminar') {
     exit();
 }
 
+// --- RESETEAR QR 2FA ---
+if (isset($_GET['accion']) && $_GET['accion'] == 'reset_qr') {
+    $id = $_GET['id'];
+    $ok = $modelo->resetearQR($id);
+
+    if ($ok) {
+       header("Location: administracion_controller.php?seccion=empleado&status=qr_reset");
+    } else {
+       header("Location: administracion_controller.php?seccion=empleado&status=error");
+    }
+    exit();
+}
+
 // --- EDITAR EMPLEADO ---
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $accion == 'editar') {
     $id       = $_POST['id_empleado'] ?? null;
