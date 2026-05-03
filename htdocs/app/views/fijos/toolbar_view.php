@@ -32,7 +32,7 @@ if ($permitirAnaliticas):
 <header class="navbar">
 
     <div class="logo">
-        <a href="<?= BASE_URL ?>Index.php">
+        <a href="<?= BASE_URL ?>index.php">
             <img src="<?= BASE_URL ?>public/img/LogoHD.png" class="logo-superior" alt="Logo">
         </a>
     </div>

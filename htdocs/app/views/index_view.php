@@ -81,7 +81,7 @@
                 <h2 class="titulo-seccion">Nuestros Servicios</h2>
                 <div class="grid-cards">
                     <div class="astech-card">
-                        <img src="<?= BASE_URL ?>public/img/diagnostico.jpg" alt="Diagnóstico">
+                        <img src="<?= BASE_URL ?>public/img/diagnostico.JPG" alt="Diagnóstico">
                         <div class="astech-card-body">
                             <h3>Diagnóstico</h3>
                             <p>Revisión profunda para identificar el origen exacto de la falla en tu equipo.</p>

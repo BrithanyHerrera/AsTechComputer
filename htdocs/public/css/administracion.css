@@ -1,17 +1,26 @@
+/* ADMINISTRACION.CSS */
+
 :root {
   --color-primario: #00000062;
   --color-secundario: #52073a;
-  --color-acento: #e67e22; /* El naranja de tu logo */
+  --color-acento: #e67e22;
   --ancho-sidebar: 260px;
+  --transition-sidebar: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ==========================================
+   BASE
+   ========================================== */
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: 'Lato', sans-serif;
   background-color: #f4f7f6;
-  height:100%;
+  height: 100%;
 }
 
+/* ==========================================
+   BARRA LATERAL (SIDEBAR)
+   ========================================== */
 .barra-lateral {
   position: fixed;
   top: 0;
@@ -22,27 +31,31 @@ body {
   color: white;
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: transform var(--transition-sidebar);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .contenedor-logo {
-
   text-align: center;
-  border-bottom: 1px solid  #ffffff85;
-
+  border-bottom: 1px solid #ffffff85;
+  flex-shrink: 0;
 }
 
 .logo-sidebar {
   width: 70%;
-
-
 }
 
+/* ==========================================
+   MENÚ DE NAVEGACIÓN
+   ========================================== */
 .menu-navegacion {
   list-style: none;
   padding: 10px 0;
   margin: 0;
-  flex-grow: 1; 
+  flex-grow: 1;
 }
 
 .menu-navegacion li a {
@@ -53,23 +66,29 @@ body {
   color: #adb5bd;
   text-decoration: none;
   transition: all 0.3s;
+  white-space: nowrap;
 }
 
 .menu-navegacion li a i {
   width: 20px;
   font-size: 1.1rem;
+  flex-shrink: 0;
 }
 
-.menu-navegacion li a:hover, 
+.menu-navegacion li a:hover,
 .menu-navegacion li a.activo {
   color: white;
   background-color: var(--color-primario);
   border-left: 5px solid var(--color-acento);
 }
 
+/* ==========================================
+   SECCIÓN INFERIOR (SALIR)
+   ========================================== */
 .seccion-inferior {
   padding: 20px;
   border-top: 1px solid #ffffff85;
+  flex-shrink: 0;
 }
 
 .boton-salir {
@@ -80,71 +99,196 @@ body {
   text-decoration: none;
   padding: 10px 20px;
   font-weight: bold;
+  border-radius: 8px;
+  transition: background 0.2s ease;
 }
 
 .boton-salir:hover {
   background-color: rgba(255, 77, 77, 0.1);
-  border-radius: 8px;
-}
-.contenido-principal h1{
-    color: var(--color-secundario);
-    font-size: 2.5rem;
 }
 
-
+/* ==========================================
+   CONTENIDO PRINCIPAL
+   ========================================== */
 .contenido-principal {
   margin-left: var(--ancho-sidebar);
   padding: 40px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  transition: margin-left var(--transition-sidebar);
 }
+
+.contenido-principal h1 {
+  color: var(--color-secundario);
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+/* ==========================================
+   BOTÓN HAMBURGUESA (OCULTO EN ESCRITORIO)
+   ========================================== */
+.btn-hamburguesa {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1100;
+  background-color: var(--color-secundario);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: background 0.2s ease;
+}
+
+.btn-hamburguesa:hover {
+  background-color: #3d0529;
+}
+
+/* ==========================================
+   OVERLAY (FONDO OSCURO EN MÓVIL)
+   ========================================== */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity var(--transition-sidebar);
+}
+
+.sidebar-overlay.activo {
+  opacity: 1;
+}
+
+/* ==========================================
+   UTILIDADES EXISTENTES
+   ========================================== */
 .flex-form-ayuda {
-   
-    gap: 20px;
-    align-items: flex-start;
+  gap: 20px;
+  align-items: flex-start;
 }
+
 .campos-principales {
-    flex: 1.5;
+  flex: 1.5;
 }
+
 .guia-url {
-    background: #fff3cd;
-    border-left: 5px solid #ffb007;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 0.85em;
-    color: #856404;
-margin-bottom: 10px;
-    gap: 8px; /* Espacio uniforme entre el texto y el código */
+  background: #fff3cd;
+  border-left: 5px solid #ffb007;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.85em;
+  color: #856404;
+  margin-bottom: 10px;
+  gap: 8px;
 }
 
 .guia-url code {
-    display: block; /* Fuerza a que el código inicie en una nueva línea */
-    background: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    font-weight: bold;
-    color: #52073a;
-    width: fit-content; /* El fondo blanco solo cubrirá el ancho del texto */
-    border: 1px solid #ffeeba; /* Un borde sutil para que resalte más */
-    word-break: break-all; /* Por si el código es muy largo, que no se desborde */
+  display: block;
+  background: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #52073a;
+  width: fit-content;
+  border: 1px solid #ffeeba;
+  word-break: break-all;
 }
-/* Responsive: si la pantalla es pequeña, la fila se vuelve columna */
-@media (max-width: 600px) {
-    .fila-input {
-        flex-direction: column;
-        gap: 0;
-    }
-}
+
+/* ==========================================
+   ANIMACIÓN DE ENTRADA
+   ========================================== */
 @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
-@media (max-width: 768px) {
-  .barra-lateral {
-    width: 70px; 
+
+/* ==========================================
+   RESPONSIVE — TABLETS (max 992px)
+   ========================================== */
+@media (max-width: 992px) {
+  :root {
+    --ancho-sidebar: 240px;
   }
-  .barra-lateral a span, .contenedor-logo, .boton-salir {
-    display: none; 
-  }
+
   .contenido-principal {
-    margin-left: 70px;
+    padding: 25px;
+  }
+
+  .contenido-principal h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE — MÓVILES (max 768px)
+   ========================================== */
+@media (max-width: 768px) {
+  /* El sidebar se convierte en drawer oculto a la izquierda */
+  .barra-lateral {
+    transform: translateX(-100%);
+    width: var(--ancho-sidebar);
+  }
+
+  /* Clase activo: sidebar desliza hacia dentro */
+  .barra-lateral.abierto {
+    transform: translateX(0);
+  }
+
+  /* El overlay aparece cuando el sidebar está abierto */
+  .sidebar-overlay {
+    display: block;
+  }
+
+  /* El contenido ocupa todo el ancho */
+  .contenido-principal {
+    margin-left: 0;
+    padding: 70px 16px 20px; /* 70px arriba para dejar espacio al botón hamburguesa */
+  }
+
+  .contenido-principal h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Mostrar botón hamburguesa */
+  .btn-hamburguesa {
+    display: flex;
+  }
+
+  /* Pequeños ajustes de lista en el menú */
+  .menu-navegacion li a {
+    padding: 14px 24px;
+  }
+
+  .fila-input {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE — MÓVILES PEQUEÑOS (max 480px)
+   ========================================== */
+@media (max-width: 480px) {
+  /* El sidebar ocupa casi toda la pantalla en móviles muy pequeños */
+  .barra-lateral {
+    width: 85vw;
+    max-width: 300px;
+  }
+
+  .contenido-principal {
+    padding: 70px 12px 16px;
+  }
+
+  .contenido-principal h1 {
+    font-size: 1.3rem;
   }
 }
