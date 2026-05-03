@@ -2,6 +2,9 @@
 // ========================================================
 // MODELO: contacto_model.php
 // UBICACIÓN: app/models/contacto_model.php
+// CONTROLADOR:contacto_controler.php
+// VISTA:contacto_view.php
+// esta pagina guarda los mensajes que se envian en la base de datos y hace conexion a la base de datos
 // ========================================================
 
 class ContactoModel {

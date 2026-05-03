@@ -9,6 +9,35 @@
  * - Despliegue de un carrusel interactivo, controlado por JavaScript externo, para la visualización fluida de los logotipos de marcas tecnológicas reconocidas.
  * - Renderización de cuadrículas (Grids) adaptables que presentan tarjetas informativas sobre proveedores, alianzas estratégicas y partners corporativos.
  * - Presentación destacada de convenios educativos (ej. Universidad de Guadalajara CUCosta) empleando indicadores visuales de estado (Activo / Próximamente) y listas estructuradas de beneficios.
+
+ * - Estructura HTML responsive con configuración de viewport y codificación UTF-8.
+ * - Integración de recursos externos como:
+ *      • Google Fonts (tipografía Lato).
+ *      • Font Awesome (iconografía visual).
+ * - Inclusión de estilos personalizados para toolbar, footer y diseño específico de convenios.
+ * - Implementación de loader inicial para mejorar la experiencia de carga.
+ * - Integración dinámica de la barra de navegación (toolbar) mediante controlador.
+ * - Sección principal con título y subtítulo que introduce el propósito de los convenios.
+ * - Carrusel interactivo de marcas:
+ *      • Navegación mediante botones (anterior/siguiente).
+ *      • Visualización de logoss de marcas reconocidas (Dell, Lenovo, HP, etc.).
+ *      • Control dinámico mediante JavaScript externo (carousel.js).
+ * - Sección de proveedores:
+ *      • Tarjetas informativas con nombre de empresa y beneficios.
+ *      • Presentación en formato de grid adaptable.
+ * - Sección de alianzas estratégicas:
+ *      • Tarjetas con beneficios como capacitaciones y eventos conjuntos.
+ * - Sección de partners:
+ *      • Visualización de empresas colaboradoras con integración de servicios.
+ * - Sección de convenios educativos:
+ *      • Tarjetas destacadas con diseño enriquecido (iconos, badges, descripción).
+ *      • Información de instituciones (ej. Universidad de Guadalajara CUCosta).
+ *      • Beneficios como prácticas profesionales y colaboraciones académicas.
+ *      • Indicadores de estado (activo / próximamente).
+ * - Uso de iconografía para reforzar la comunicación visual (graduación, ubicación, checks).
+ * - Inclusión de footer dinámico mediante controlador.
+ * - Organización modular del código para facilitar mantenimiento y escalabilidad.
+
  */
 ?>
 <!DOCTYPE html>
@@ -130,7 +159,6 @@
                         <span class="badge-convenio">Activo</span>
                         <h3>Universidad de Guadalajara <br><small>CUCosta</small></h3>
                         <p>Convenio de colaboración académica y beneficios en servicios tecnológicos para la comunidad universitaria.</p>
-                        
                         <ul class="beneficios-lista">
                             <li><i class="fa-solid fa-circle-check"></i> Practicas profesionales.</li>
                             <li><i class="fa-solid fa-circle-check"></i> .....</li>
@@ -143,9 +171,9 @@
                     </div>
                 </article>
 
-                <article class="card-convenio" style="border-top-color: #ccc; opacity: 0.7;">
-                    <div class="header-convenio" style="background: #eee;">
-                        <i class="fa-solid fa-handshake" style="font-size: 4rem; color: #999;"></i>
+                <article class="card-convenio" >
+                    <div class="header-convenio" >
+                        <i class="fa-solid fa-handshake" ></i>
                     </div>
                     <div class="body-convenio">
                         <h3>Próximamente</h3>

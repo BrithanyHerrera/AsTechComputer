@@ -10,7 +10,7 @@
 require_once(__DIR__ . '/../config/conexion.db.php');
 
 class ServicioModel {
-
+    //funcion para obtener servicio segun su tipo o nombre, para poderse mostrar en la pagina
     public static function obtenerServicioPorId($id) {
         global $conexion;
 

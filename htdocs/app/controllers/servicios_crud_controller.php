@@ -1,18 +1,21 @@
 <?php
 // ========================================================
-// CONTROLADOR: servicios_controller.php
-// UBICACIÓN: app/controllers/servicios_controller.php
+// PAGINA: servicios_crud_controller.php
+// UBICACIÓN: app/controllers/servicios_crud_controller.php
+// VISTA:servicios_crud_view.php
+// MODELO: servicios_crud_model.php
+//esta pagina controla el crud de la seccionde servicios de el panel
+//hace las acciones de guardar, eliminar y editar en la base de datos
 // ========================================================
 
-// 1. PRIMERO: Cargar los archivos necesarios
+//conexion
 require_once dirname(__DIR__) . '/config/conexion.db.php';
-require_once dirname(__DIR__) . '/models/servicios_crud_model.php'; // Verifica que la ruta sea correcta
-require_once dirname(__DIR__) . '/config/config.php'; // o como se llame tu archivo
-// 2. SEGUNDO: Instanciar el modelo (Ahora sí la clase existe)
-$modelo = new ServicioCrudModel($conexion); 
-$modeloServicios = $modelo; // Mantengo ambos nombres por si los usas abajo
+require_once dirname(__DIR__) . '/models/servicios_crud_model.php'; 
+require_once dirname(__DIR__) . '/config/config.php'; 
 
-// 3. TERCERO: Capturar variables de control
+$modelo = new ServicioCrudModel($conexion); 
+$modeloServicios = $modelo;
+
 $accion = $_GET['accion'] ?? $_POST['accion'] ?? '';
 $id_tipo = isset($_GET['id_tipo_servicio']) ? $_GET['id_tipo_servicio'] : null;
 

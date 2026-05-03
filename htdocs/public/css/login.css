@@ -1,4 +1,9 @@
-.pantalla-login {
+/* =========================================
+   LOGIN.CSS 
+   ========================================= */
+
+    /* estilo de pantalla */
+  .pantalla-login {
   background-color: #f0f2f5;
   height: 100vh;
   display: flex;

@@ -2,6 +2,10 @@
 // ========================================================
 // CONTROLADOR: servicios_controller.php
 // UBICACIÓN: app/controllers/servicios_controller.php
+// MODELO:servicios_model.php
+// VISTA:servicios_view.php
+//pagina que controla el funcionamiento de la pagina de servicios,cambia el texto en las seccinens 
+//de el primer modulo de la pagina servicios y ahce que se muestren los servicios agrupados segun su tipo
 // ========================================================
 
 // 1. PRIMERO: Cargar los archivos necesarios

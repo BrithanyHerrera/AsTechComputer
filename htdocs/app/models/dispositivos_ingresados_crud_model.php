@@ -1,4 +1,6 @@
+
 <?php
+
 // ========================================================
 // MODELO: dispositivos_ingresados_crud_model.php
 // UBICACIÓN: app/models/dispositivos_ingresados_crud_model.php
@@ -7,6 +9,7 @@
 // No hace HTML, no maneja sesiones, no redirige.
 // El controlador lo instancia y llama sus métodos.
 // ========================================================
+
 
 class RegistrosModel {
     private $conexion; // Conexión mysqli recibida desde el controlador

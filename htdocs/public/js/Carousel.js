@@ -1,6 +1,6 @@
 /**
  * SCRIPT: carousel.js
- * PROPÓSITO: Controlar el desplazamiento horizontal de un carrusel de elementos en la interfaz.
+ * PROPÓSITO: Controlar el desplazamiento horizontal de un carrusel de elementos en la interfaz. de convenios
  * FUNCIONALIDADES:
  * - Inicialización al cargar el DOM.
  * - Cálculo dinámico del desplazamiento según el tamaño de los elementos.
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prev = document.querySelector(".prev");
 
     function getScrollAmount() {
-        const logo = track.querySelector(".logo");
+        const logo = track.querySelector(".logos");
         return (logo.offsetWidth + 20) * 3;
     }
 
