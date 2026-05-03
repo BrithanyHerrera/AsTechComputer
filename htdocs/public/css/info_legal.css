@@ -1,11 +1,22 @@
 /* INFO_LEGAL.CSS */
 /*
-Este archivo centraliza la hoja de estilos dedicada exclusivamente a la presentación de los documentos oficiales y normativos de la empresa (como la Política de Privacidad, Términos y Condiciones, Registro de Marca y Política de Cookies). Su propósito es garantizar una lectura cómoda y profesional mediante márgenes amplios, una jerarquía visual clara (utilizando los colores corporativos naranja y púrpura para los encabezados), y definir los efectos de interacción (hover) del botón destinado a la descarga de archivos PDF legales.
-*/
+ * PÁGINA: Hoja de Estilos de Información Legal (Legal Info CSS) - As Tech Computer
+ * PROPÓSITO: Centralizar y estandarizar la presentación visual de todos los documentos oficiales y normativos de la empresa (Política de Privacidad, Términos y Condiciones, Registro de Marca y Política de Cookies).
+ * FUNCIONALIDADES:
+ * - Configuración del contenedor principal para garantizar una lectura cómoda y profesional mediante márgenes amplios y un ancho máximo restringido.
+ * - Establecimiento de una jerarquía visual clara utilizando los colores corporativos (púrpura y naranja) para resaltar títulos y subtítulos.
+ * - Formateo optimizado de tipografía (ajustes de interlineado en párrafos y listas) orientado a prevenir la fatiga visual al leer textos legales densos.
+ * - Definición de estilos interactivos (efectos hover, sombras y transiciones) para el botón de acción destinado a la descarga segura de archivos PDF.
+ */
 
 /* =========================================
    1. CONTENEDOR PRINCIPAL Y TIPOGRAFÍA BASE
    ========================================= */
+/**
+ * El sistema define el contenedor base de los documentos legales, 
+ * restringiendo su ancho máximo y centrando el contenido en pantalla 
+ * para facilitar el seguimiento de las líneas de texto.
+ */
 .seccion-legal {
     padding: 120px 20px 60px 20px;
     max-width: 900px;
@@ -17,6 +28,11 @@ Este archivo centraliza la hoja de estilos dedicada exclusivamente a la presenta
 /* =========================================
    2. JERARQUÍA VISUAL DE ENCABEZADOS
    ========================================= */
+/**
+ * Se establece un sistema tipográfico estricto, aplicando la paleta 
+ * corporativa y subrayados decorativos para distinguir visualmente 
+ * los títulos principales (h1) de los subtítulos de sección (h3).
+ */
 .seccion-legal h1 {
     color: #52073a;
     margin-bottom: 20px;
@@ -36,6 +52,11 @@ Este archivo centraliza la hoja de estilos dedicada exclusivamente a la presenta
 /* =========================================
    3. FORMATO DE LECTURA (PÁRRAFOS Y LISTAS)
    ========================================= */
+/**
+ * El sistema incrementa el interlineado (line-height) y ajusta los 
+ * márgenes de los párrafos y listas, asegurando que los bloques de 
+ * texto extenso mantengan un aspecto limpio y accesible.
+ */
 .seccion-legal p {
     color: #444;
     line-height: 1.8;
@@ -69,6 +90,11 @@ Este archivo centraliza la hoja de estilos dedicada exclusivamente a la presenta
 /* =========================================
    4. BOTONES DE ACCIÓN LEGAL (DESCARGA DE PDF)
    ========================================= */
+/**
+ * Estilización interactiva del botón para descargar documentos legales. 
+ * Integra un efecto de elevación espacial (translateY) y transiciones 
+ * de color de la marca al momento de interactuar con el cursor.
+ */
 .btn-descargar-pdf {
     background-color: #e17203;
     color: #ffffff;

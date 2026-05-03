@@ -1,10 +1,25 @@
 /* CITAS_CLIENTE.CSS */
 /*
-Este archivo define todos los estilos visuales para la interfaz donde el cliente agenda sus citas. Controla la apariencia del contenedor principal, el diseño del formulario (campos, etiquetas, botones), las animaciones para mostrar campos ocultos, los tooltips interactivos de ayuda (para "Número de Serie" y "Modelo"), la adaptabilidad a dispositivos móviles (diseño responsivo) y la ventana modal de confirmación.
-*/
+ * PÁGINA: Hoja de Estilos de Citas Cliente (Client Appointments CSS) - As Tech Computer
+ * PROPÓSITO: Definir de manera exhaustiva todos los estilos visuales para la interfaz pública donde los clientes agendan sus servicios técnicos.
+ * FUNCIONALIDADES:
+ * - Definición centralizada de la paleta de colores corporativa (Naranja y Púrpura) mediante el uso de variables CSS (:root) para mantener consistencia.
+ * - Modelado del contenedor principal del formulario, aplicando sombras y bordes redondeados para un aspecto moderno y limpio.
+ * - Estilización interactiva de los controles de entrada (inputs y selects), incluyendo efectos visuales de enfoque (focus) para guiar al usuario.
+ * - Implementación de animaciones suaves (@keyframes) para el despliegue dinámico de campos condicionales (Ej: Al seleccionar la opción "Otro").
+ * - Diseño de tooltips informativos interactivos que orientan al usuario al solicitar datos técnicos complejos como el "Número de Serie" o "Modelo".
+ * - Configuración de un diseño responsivo adaptativo que colapsa las cuadrículas (Grid) de doble columna a una sola columna en dispositivos móviles.
+ * - Construcción visual de una ventana modal de confirmación con efectos de difuminado de fondo (backdrop-filter) y animación de entrada.
+ */
+
 /* ==========================================
    1. VARIABLES GLOBALES Y RESETEO BÁSICO
    ========================================== */
+/**
+ * Se establece la paleta de colores oficial de la empresa.
+ * El selector universal (*) elimina márgenes y paddings por defecto 
+ * en todos los navegadores para asegurar un renderizado uniforme.
+ */
 :root {
     --naranja-principal: #e17203;
     --purpura-oscuro: #52073a;
@@ -72,6 +87,11 @@ body {
 /* ==========================================
    5. ALERTAS Y NOTIFICACIONES
    ========================================== */
+/**
+ * Estilo diseñado específicamente para informar al usuario sobre 
+ * políticas restrictivas de la empresa (Ej: la exclusión de equipos Apple), 
+ * utilizando colores de advertencia (naranja/amarillo).
+ */
 .alerta-restriccion {
     background-color: #ffd9b3;
     border: 1px solid #ffcb8c;
@@ -130,6 +150,10 @@ label {
 /* ==========================================
    7. ANIMACIÓN PARA CAMPOS DESPLEGABLES (Ej: "Otro")
    ========================================== */
+/**
+ * Estos estilos controlan los campos de texto auxiliares que aparecen 
+ * solo cuando el usuario selecciona la opción "Otro" en algún menú desplegable.
+ */
 .campo-otro {
     display: none;
     margin-top: 12px;
@@ -148,9 +172,15 @@ label {
 }
 
 /* ==========================================
-   8. TOOLTIP DE AYUDA (NÚMERO DE SERIE)
+   8. TOOLTIP DE AYUDA (NÚMERO DE SERIE Y MODELO)
    ========================================== */
-.ayuda-serie {
+/**
+ * Crea un ícono interactivo (?) que, al ser sobrevolado con el ratón (hover) 
+ * o seleccionado (focus), despliega un cuadro de texto explicativo para ayudar 
+ * al cliente a encontrar información técnica en su computadora.
+ */
+.ayuda-serie,
+.ayuda-modelo {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -166,13 +196,23 @@ label {
     transition: 0.3s;
 }
 
-.ayuda-serie:hover {
+.ayuda-serie:hover,
+.ayuda-modelo:hover {
     background-color: var(--purpura-oscuro);
     color: white;
 }
 
+/* El contenido en texto del Tooltip se maneja mediante el pseudo-elemento ::after */
 .ayuda-serie::after {
     content: "El número de serie suele situarse en la parte inferior del equipo como una etiqueta o grabado. Si no es visible, puedes dejarlo en blanco.";
+}
+
+.ayuda-modelo::after {
+    content: "El modelo suele encontrarse en una etiqueta en la parte trasera o inferior del equipo, cerca de la batería, o en la configuración del sistema ('Acerca de').";
+}
+
+.ayuda-serie::after,
+.ayuda-modelo::after {
     position: absolute;
     bottom: 125%;
     left: 50%;
@@ -194,12 +234,16 @@ label {
 }
 
 .ayuda-serie:hover::after,
-.ayuda-serie:focus::after {
+.ayuda-serie:focus::after,
+.ayuda-modelo:hover::after,
+.ayuda-modelo:focus::after {
     visibility: visible;
     opacity: 1;
 }
 
-.ayuda-serie::before {
+/* La flecha indicadora del Tooltip se maneja mediante el pseudo-elemento ::before */
+.ayuda-serie::before,
+.ayuda-modelo::before {
     content: "";
     position: absolute;
     bottom: 110%;
@@ -213,7 +257,8 @@ label {
     transition: 0.3s;
 }
 
-.ayuda-serie:hover::before {
+.ayuda-serie:hover::before,
+.ayuda-modelo:hover::before {
     visibility: visible;
     opacity: 1;
 }
@@ -251,21 +296,12 @@ label {
 }
 
 /* ==========================================
-   10. DISEÑO RESPONSIVO (MÓVILES)
+   10. MODAL DE CONFIRMACIÓN DE CITA
    ========================================== */
-@media (max-width: 600px) {
-    .fila-doble {
-        grid-template-columns: 1fr;
-    }
-
-    .contenedor-cita {
-        padding: 30px;
-    }
-}
-
-/* ==========================================
-   11. MODAL DE CONFIRMACIÓN DE CITA
-   ========================================== */
+/**
+ * Capa oscura que se superpone a todo el sitio web cuando el usuario 
+ * confirma su información. Incorpora un difuminado (blur) para resaltar el mensaje central.
+ */
 .modal-confirm {
     display: none;
     position: fixed;
@@ -319,72 +355,15 @@ label {
 }
 
 /* ==========================================
-   12. TOOLTIP DE AYUDA PARA EL MODELO
+   11. DISEÑO RESPONSIVO (MÓVILES)
    ========================================== */
-.ayuda-modelo {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 16px;
-    height: 16px;
-    background-color: var(--borde);
-    color: var(--gris-suave);
-    border-radius: 50%;
-    font-size: 10px;
-    margin-left: 8px;
-    cursor: pointer;
-    position: relative;
-    transition: 0.3s;
-}
+@media (max-width: 600px) {
+    .fila-doble {
+        grid-template-columns: 1fr;
+    }
 
-.ayuda-modelo:hover {
-    background-color: var(--purpura-oscuro);
-    color: white;
-}
-
-.ayuda-modelo::after {
-    content: "El modelo suele encontrarse en una etiqueta en la parte trasera o inferior del equipo, cerca de la batería, o en la configuración del sistema ('Acerca de').";
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    background-color: var(--purpura-oscuro);
-    color: white;
-    padding: 10px;
-    border-radius: 4px;
-    font-size: 11px;
-    text-transform: none;
-    font-weight: 400;
-    letter-spacing: 0;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s;
-    z-index: 10;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.ayuda-modelo:hover::after,
-.ayuda-modelo:focus::after {
-    visibility: visible;
-    opacity: 1;
-}
-
-.ayuda-modelo::before {
-    content: "";
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 5px;
-    border-style: solid;
-    border-color: var(--purpura-oscuro) transparent transparent transparent;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s;
-}
-
-.ayuda-modelo:hover::before {
-    visibility: visible;
-    opacity: 1;
+    .contenedor-cita {
+        padding: 30px;
+        width: 90%;
+    }
 }

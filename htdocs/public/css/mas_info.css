@@ -1,11 +1,23 @@
 /* MAS_INFO.CSS */
 /*
-Este documento contiene las hojas de estilo en cascada (CSS) exclusivas para la sección de reseñas de clientes. Su objetivo es asegurar que la presentación visual coincida con la identidad corporativa de AsTech Computer, utilizando un diseño minimalista y moderno. Controla la disposición del contenedor principal, la tipografía, los colores, el diseño en cuadrícula (grid) para las tarjetas individuales de comentarios, y los efectos de elevación al interactuar con las tarjetas (efecto hover). Adicionalmente, estructura visualmente el resumen de calificación extraído de Google Maps.
-*/
+ * PÁGINA: Hoja de Estilos de Más Información y Reseñas (Mas Info CSS) - As Tech Computer
+ * PROPÓSITO: Establecer y centralizar la presentación visual para la sección de contacto y las reseñas de clientes obtenidas a través de Google Maps, garantizando un diseño minimalista, moderno y coherente con la identidad corporativa.
+ * FUNCIONALIDADES:
+ * - Declaración de variables CSS base (:root) para estandarizar la paleta de colores (naranja, gris de fondo, textos) y las sombras en todo el documento.
+ * - Estructuración del bloque de resumen general de calificaciones, resaltando visualmente la puntuación promedio y las estrellas (Score).
+ * - Implementación de un sistema de cuadrícula (CSS Grid) adaptativo y fluido para alinear armónicamente las tarjetas de comentarios de los usuarios.
+ * - Diseño interactivo de las tarjetas de testimonios, incorporando un efecto de elevación espacial (translateY) y acentuación de sombra al momento de interactuar con el puntero (Hover).
+ * - Formateo gráfico de contingencia (alerta vacía) en caso de que la conexión con la API falle o no existan reseñas por mostrar.
+ */
 
 /* ==========================================
    1. VARIABLES BASE Y CONFIGURACIÓN GLOBAL
    ========================================== */
+/**
+ * El sistema define la paleta de colores corporativa y variables base 
+ * para sombras en la raíz del documento (:root), asegurando consistencia 
+ * visual y facilitando un mantenimiento rápido del código.
+ */
 :root {
     --color-naranja: #e17203;
     --color-texto: #333333;
@@ -22,6 +34,11 @@ body {
 /* ==========================================
    2. ESTRUCTURA DEL CONTENEDOR PRINCIPAL
    ========================================== */
+/**
+ * Establece los límites máximos de anchura y el centrado automático 
+ * del contenedor maestro, previniendo que el contenido se desborde 
+ * en pantallas ultra anchas.
+ */
 .contenedor-principal-resenas {
     max-width: 1200px;
     margin: 120px auto 50px auto;
@@ -32,6 +49,11 @@ body {
 /* ==========================================
    3. ENCABEZADO Y TÍTULOS DE LA SECCIÓN
    ========================================== */
+/**
+ * Configura la jerarquía tipográfica (h1/h3), los grosores de fuente 
+ * (font-weight: 900) y posiciona el separador temático naranja justo 
+ * debajo del título de la sección.
+ */
 .encabezado {
     text-align: center;
     margin-bottom: 50px;
@@ -63,6 +85,11 @@ body {
 /* ==========================================
    4. ESTILOS DEL RESUMEN DE CALIFICACIÓN (GOOGLE)
    ========================================== */
+/**
+ * Formatea visualmente el bloque de estadísticas generales extraídas 
+ * desde Google Maps, destacando el promedio numérico general y alineando 
+ * los íconos de estrellas (Score) mediante flexbox.
+ */
 .contenedor-resumen-general {
     display: flex;
     align-items: center;
@@ -98,6 +125,11 @@ body {
 /* ==========================================
    5. DISEÑO EN CUADRÍCULA (GRID) PARA RESEÑAS
    ========================================== */
+/**
+ * Implementa CSS Grid con auto-fit y dimensiones mínimas de 300px 
+ * para adaptar las tarjetas automáticamente dependiendo de la 
+ * resolución del dispositivo (Responsive Design).
+ */
 .grid-resenas {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -108,6 +140,11 @@ body {
 /* ==========================================
    6. ESTILOS INDIVIDUALES DE LA TARJETA
    ========================================== */
+/**
+ * Construye el diseño base de las tarjetas individuales (Cards), 
+ * aplicando bordes redondeados y un efecto de elevación suave 
+ * (translateY) al ser sobrevoladas por el puntero.
+ */
 .tarjeta-resena {
     background: white;
     padding: 25px;
@@ -128,6 +165,11 @@ body {
 /* ==========================================
    7. INFORMACIÓN Y PERFIL DEL CLIENTE
    ========================================== */
+/**
+ * Modela la estructura de la cabecera de cada tarjeta, perfilando la 
+ * fotografía del usuario (border-radius: 50%) y coloreando 
+ * dinámicamente las estrellas de valoración individual.
+ */
 .perfil-resena {
     display: flex;
     align-items: center;
@@ -158,6 +200,10 @@ body {
 /* ==========================================
    8. CONTENIDO Y FECHA DE LA RESEÑA
    ========================================== */
+/**
+ * Define el formato tipográfico (cursiva, color de fuente y altura de línea) 
+ * para el cuerpo principal del testimonio y la marca de tiempo (fecha).
+ */
 .texto-resena {
     font-size: 1rem;
     color: #555555;
@@ -176,6 +222,11 @@ body {
 /* ==========================================
    9. ALERTA PARA RESULTADOS VACÍOS O ERRORES
    ========================================== */
+/**
+ * El sistema estiliza una tarjeta de retroalimentación gráfica que ocupa 
+ * todas las columnas disponibles (grid-column: 1 / -1) en caso de no 
+ * recibir datos desde la API de Google Places.
+ */
 .alerta-vacia {
     grid-column: 1 / -1;
     text-align: center;

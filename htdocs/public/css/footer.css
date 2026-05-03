@@ -1,12 +1,24 @@
 /* FOOTER.CSS */
 /*
-Este archivo de estilo se enfoca exclusivamente en la presentación visual del Pie de Página (Footer) y el botón flotante de WhatsApp. Define colores robustos (blindados con !important), la cuadrícula (grid) para alinear los enlaces de navegación, los efectos de transición o "hover" y la adaptación para dispositivos móviles (responsive design).
-También incluye los estilos globales del sistema modular de privacidad (Banner y Modal de Ajustes de Cookies).
-*/
+ * PÁGINA: Hoja de Estilos del Pie de Página y Privacidad (Footer & Privacy CSS) - As Tech Computer
+ * PROPÓSITO: Definir de manera centralizada la presentación visual del pie de página global, el botón flotante de atención al cliente y el sistema modular de gestión de cookies.
+ * FUNCIONALIDADES:
+ * - Configuración base del contenedor utilizando la paleta oscura corporativa, blindando colores críticos mediante la directiva !important para evitar herencias no deseadas.
+ * - Estructuración del contenido principal en columnas mediante CSS Grid, facilitando la alineación responsiva de enlaces, logotipo y redes sociales.
+ * - Estilización del botón flotante de WhatsApp, integrando sombras (box-shadow), posicionamiento anclado (fixed) y animaciones de escala fluida al interactuar (hover).
+ * - Formateo visual arquitectónico del motor de privacidad: incluye la capa de desenfoque (backdrop-filter), el banner emergente y el modal de ajustes detallados.
+ * - Diseño interactivo de componentes de usuario (interruptores tipo toggle, botones sólidos/outline y acordeones con <details>) para la personalización de cookies.
+ * - Implementación de Media Queries para reestructurar fluidamente las cuadrículas y redimensionar elementos táctiles en dispositivos móviles.
+ */
 
 /* =========================================
    1. RESET Y CONFIGURACIÓN BASE DEL FOOTER
    ========================================= */
+/**
+ * El sistema neutraliza márgenes y paddings a nivel de raíz para 
+ * asegurar que el contenedor oscuro del pie de página ocupe el 100% 
+ * del ancho sin desbordamientos. Los colores se blindan con !important.
+ */
 html, body {
     margin: 0;
     padding: 0;
@@ -23,6 +35,11 @@ html, body {
 /* =========================================
    2. ESTRUCTURA DE COLUMNAS (GRID)
    ========================================= */
+/**
+ * Se implementa una cuadrícula dinámica (CSS Grid) asimétrica 
+ * (1fr 2fr 1fr) para distribuir el espacio entre el logo, los 
+ * bloques de enlaces y las redes sociales.
+ */
 .contenedor-pie {
     max-width: 1200px;
     margin: 0 auto;
@@ -35,6 +52,11 @@ html, body {
 /* =========================================
    3. ESTILOS DE ENLACES Y TEXTOS
    ========================================= */
+/**
+ * El sistema estiliza las listas de navegación secundaria, eliminando 
+ * viñetas por defecto y aplicando transiciones suaves de color (al 
+ * tono naranja corporativo) cuando el usuario interactúa.
+ */
 .fila-links h4 {
     color: #fff !important;
     margin-bottom: 25px;
@@ -65,6 +87,11 @@ html, body {
 /* =========================================
    4. REDES SOCIALES E ÍCONOS
    ========================================= */
+/**
+ * Configuración en formato flexible (Flexbox) para la botonera 
+ * de iconos sociales, garantizando espaciado uniforme y cursores 
+ * interactivos.
+ */
 .redes-sociales ul {
     margin-top: 25px;
     display: flex;
@@ -87,6 +114,10 @@ html, body {
 /* =========================================
    5. BARRA DE DERECHOS Y COPYRIGHT
    ========================================= */
+/**
+ * Diseño de la franja final de la página, separada por un borde 
+ * superior sutil, destinada a los derechos de propiedad intelectual.
+ */
 .barra-derechos {
     text-align: center;
     margin-top: 60px;
@@ -99,6 +130,11 @@ html, body {
 /* =========================================
    6. DISEÑO RESPONSIVO (MÓVILES)
    ========================================= */
+/**
+ * El sistema colapsa las columnas del grid en una sola (1fr) y centra 
+ * los elementos (textos y logotipos) cuando la pantalla se reduce a 
+ * dimensiones de tableta o móvil (max-width: 900px).
+ */
 @media (max-width: 900px) {
     .contenedor-pie {
         grid-template-columns: 1fr; 
@@ -119,6 +155,11 @@ html, body {
 /* =========================================
    7. BOTÓN FLOTANTE DE CONTACTO (WHATSAPP)
    ========================================= */
+/**
+ * Configuración del botón de contacto rápido, anclado de forma absoluta 
+ * (fixed) en la esquina inferior derecha. Incluye sombras de profundidad 
+ * y un efecto de escala. Se reduce su tamaño en pantallas pequeñas.
+ */
 .btn-whatsapp-flotante {
     position: fixed;
     bottom: 30px;    
@@ -156,6 +197,11 @@ html, body {
 /* =========================================
    8. SISTEMA DE PRIVACIDAD Y GESTIÓN DE COOKIES
    ========================================= */
+/**
+ * Diseño arquitectónico del motor de privacidad. El sistema define una 
+ * clase utilitaria para bloquear el scroll, una capa oscura de fondo 
+ * (overlay) y el contenedor principal del banner flotante.
+ */
 .bloquear-scroll {
     overflow: hidden;
 }
@@ -209,6 +255,10 @@ html, body {
     line-height: 1.5;
 }
 
+/**
+ * Sistema de botones de decisión (Aceptar, Rechazar y Más Información) 
+ * con efectos de elevación interactivos.
+ */
 .botones-cookies {
     display: flex;
     flex-direction: column;
@@ -263,6 +313,11 @@ html, body {
     color: #1d1d1f;
 }
 
+/**
+ * Ventana modal de ajustes granulares. Posicionada en el centro de la 
+ * pantalla (translate -50%, -50%) con scroll interno para desglosar 
+ * las políticas de la LFPDPPP.
+ */
 .modal-ajustes {
     position: fixed;
     top: 50%;
@@ -328,6 +383,9 @@ html, body {
     text-decoration: none;
 }
 
+/**
+ * Tarjetas de información legal separadas visualmente (Cards).
+ */
 .cookie-card {
     background: #fff;
     border: 1px solid #e0e0e0;
@@ -368,6 +426,10 @@ html, body {
     line-height: 1.5;
 }
 
+/**
+ * Estilización de elementos HTML semánticos (<details> y <summary>) 
+ * para crear bloques de texto desplegables nativos.
+ */
 details {
     border-top: 1px solid #eee;
     padding-top: 12px;
@@ -401,6 +463,10 @@ details[open] summary i {
     border-left: 3px solid #e06c00;
 }
 
+/**
+ * Construcción visual de interruptores (Toggle Switches) estilo iOS 
+ * utilizando checkboxes ocultos e inputs pseudo-elemento.
+ */
 .toggle-switch {
     position: relative;
     display: inline-block;
@@ -448,6 +514,10 @@ input:checked+.slider:before {
     transform: translateX(22px);
 }
 
+/**
+ * Panel inferior del modal con botones de acción global masivos 
+ * (Aceptar o Rechazar todo) estilizados en variantes outline y solid.
+ */
 .modal-footer {
     padding: 20px 30px;
     border-top: 1px solid #e0e0e0;

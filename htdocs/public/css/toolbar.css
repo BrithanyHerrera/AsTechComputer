@@ -71,7 +71,7 @@
 }
 
 .menu a:hover{
-    color: #54015f; /* Púrpura al interactuar */
+    color: #54015f;
 }
 
 /* ========================================================
@@ -342,7 +342,7 @@
 .menu-toggle {
     display: none;
     font-size: 28px;
-    color: #e17203; /* Forzamos Naranja corporativo */
+    color: #e17203;
     cursor: pointer;
 }
 
@@ -350,7 +350,7 @@
     /* 1. Mostrar la hamburguesa y alinear la barra */
     .menu-toggle {
         display: block;
-        margin-left: auto; /* Empuja el ícono al extremo derecho */
+        margin-left: auto;
     }
     
     .navbar {

@@ -1,6 +1,24 @@
+/* CONVENIOS.CSS */
+/*
+ * PÁGINA: Hoja de Estilos de Convenios y Alianzas (Convenios CSS) - As Tech Computer
+ * PROPÓSITO: Definir la presentación visual y el diseño interactivo de la página de convenios, proveedores y alianzas estratégicas corporativas.
+ * FUNCIONALIDADES:
+ * - Centralización de la paleta de colores corporativa y variables globales de diseño mediante :root.
+ * - Estilización de la sección principal (Hero) con títulos destacados y líneas decorativas dinámicas (pseudo-elementos).
+ * - Implementación de un sistema de cuadrícula (CSS Grid) adaptativo para las tarjetas informativas, asegurando uniformidad estructural en múltiples resoluciones.
+ * - Diseño de animaciones suaves de entrada (FadeIn) y efectos de transición interactivos (Hover) en tarjetas para mejorar la experiencia de usuario (UX).
+ * - Formateo visual del carrusel de marcas aliadas, aplicando filtros de imagen progresivos (de escala de grises a color real) y botones de navegación absolutos.
+ * - Ajustes responsivos (Media Queries) orientados a optimizar la legibilidad y accesibilidad en dispositivos móviles.
+ */
+
 /* =========================================
-   CONVENIOS.CSS 
+   1. VARIABLES GLOBALES Y RESETEO BÁSICO
    ========================================= */
+/**
+ * Se declaran las variables globales del sistema para garantizar la 
+ * consistencia de la paleta de colores y sombreados en toda la página.
+ * Además, se resetean los estilos base del cuerpo (body).
+ */
 :root {
     --naranja: #e17203;
     --purpura-oscuro: #52073a;
@@ -22,8 +40,13 @@ body {
 }
 
 /* =========================================
-   HERO SECCIÓN
+   2. SECCIÓN PRINCIPAL (HERO)
    ========================================= */
+/**
+ * El bloque hero actúa como la cabecera visual de la página. 
+ * Integra un subrayado decorativo centrado creado mediante un 
+ * pseudo-elemento (::after) debajo del título principal.
+ */
 .seccion-convenios {
     padding: 100px 20px 80px;
     text-align: center;
@@ -61,8 +84,13 @@ body {
 }
 
 /* =========================================
-   ESTRUCTURA Y TÍTULOS DE BLOQUE
+   3. ESTRUCTURA GLOBAL Y TÍTULOS DE BLOQUE
    ========================================= */
+/**
+ * Define el contenedor maestro con un ancho máximo estandarizado 
+ * y aplica una animación de aparición sutil (fadeIn) al momento 
+ * de cargar el documento.
+ */
 .contenedor-convenios {
     max-width: 1200px;
     margin: 60px auto;
@@ -105,8 +133,13 @@ body {
 }
 
 /* =========================================
-   GRID Y TARJETAS (CARDS)
+   4. SISTEMA DE CUADRÍCULA (GRID) Y TARJETAS
    ========================================= */
+/**
+ * Implementa CSS Grid con auto-fit y minmax para lograr tarjetas que se
+ * adapten inteligentemente al ancho de la pantalla sin necesidad de 
+ * media queries estrictas, incorporando efectos de elevación al interactuar.
+ */
 .grid-convenios {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -169,8 +202,13 @@ body {
 }
 
 /* =========================================
-   CAROUSEL Y LOGOS
+   5. CARRUSEL INTERACTIVO Y LOGOTIPOS
    ========================================= */
+/**
+ * Diseña la pista desplazable (track) ocultando la barra de navegación nativa. 
+ * Los logotipos de las marcas mantienen una escala de grises inactiva y, al 
+ * pasar el cursor, recuperan su opacidad y color original en una transición suave.
+ */
 .carousel {
     position: relative;
     overflow: visible;
@@ -224,8 +262,12 @@ body {
 }
 
 /* =========================================
-   BOTONES DE NAVEGACIÓN
+   6. BOTONES DE NAVEGACIÓN DEL CARRUSEL
    ========================================= */
+/**
+ * Controles de interacción ubicados a los extremos del contenedor. 
+ * Permanecen flotantes sobre el eje Y al 50% de altura.
+ */
 .btn {
     position: absolute;
     top: 50%;
@@ -253,8 +295,13 @@ body {
 }
 
 /* =========================================
-   RESPONSIVE
+   7. DISEÑO RESPONSIVO (DISPOSITIVOS MÓVILES)
    ========================================= */
+/**
+ * Adapta el espaciado interno, reduce la tipografía de los encabezados 
+ * y reajusta la posición absoluta de los botones del carrusel para prevenir 
+ * desbordamientos en pantallas estrechas.
+ */
 @media (max-width: 768px) {
     .titulo-convenios {
         font-size: 1.8rem;

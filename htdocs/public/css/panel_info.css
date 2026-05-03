@@ -1,11 +1,23 @@
 /* PANEL_INFO.CSS */
 /*
-Este archivo concentra la hoja de estilos encargada de la presentación visual de la bitácora o panel de registros administrativos. Su característica más destacada es la implementación de un sistema avanzado de CSS Grid para la barra de filtros, lo cual garantiza una alineación milimétrica entre las cajas de texto, los selectores y los botones. Además, define el diseño adaptable (responsivo) de la tabla de datos, las tarjetas contenedoras y las etiquetas de colores (pills) que permiten identificar visualmente los diferentes roles de usuario dentro del sistema.
-*/
+ * PÁGINA: Hoja de Estilos del Panel de Información (Dashboard CSS) - As Tech Computer
+ * PROPÓSITO: Centralizar la presentación visual de la bitácora o panel de registros administrativos, garantizando una interfaz de control estructurada, limpia y altamente funcional para los usuarios del sistema.
+ * FUNCIONALIDADES:
+ * - Implementación de un sistema avanzado de CSS Grid para la barra de filtros, lo cual garantiza una alineación milimétrica entre cajas de texto, selectores y botones de acción.
+ * - Modelado adaptable (Responsive Design) de la tabla de datos mediante el control de desbordamiento (overflow-x) para evitar que la interfaz se rompa en dispositivos con pantallas reducidas.
+ * - Formateo gráfico de identificadores visuales (pildora-usuario) para mostrar de manera elegante el nombre y avatar del empleado en sesión.
+ * - Definición de un sistema de etiquetas de colores (Status Pills) que permite identificar de un solo vistazo los diferentes roles de los usuarios (Administrador, Gerente, Recepción, Técnico).
+ * - Uso intensivo de Media Queries escalonados (1150px, 768px, 480px) para reorganizar la cuadrícula de filtros conforme se reduce el ancho del navegador.
+ */
 
 /* ==========================================
    1. CONTENEDORES PRINCIPALES Y TARJETAS
    ========================================== */
+/**
+ * Se define la estructura base del panel administrativo. 
+ * El fondo gris claro (f7f7f7) contrasta con las tarjetas blancas 
+ * para facilitar la concentración en los datos.
+ */
 .contenedor-dashboard {
    padding: 30px;
    background-color: #f7f7f7;
@@ -30,6 +42,11 @@ Este archivo concentra la hoja de estilos encargada de la presentación visual d
 /* ==========================================
    2. IDENTIFICADOR VISUAL DE USUARIO (PILL)
    ========================================== */
+/**
+ * Componente interactivo tipo "cápsula" (pill) que encapsula 
+ * el icono de perfil y el nombre del usuario activo, generando 
+ * una sombra suave para destacarlo sobre el fondo.
+ */
 .pildora-usuario {
    display: inline-flex;
    align-items: center;
@@ -62,6 +79,11 @@ Este archivo concentra la hoja de estilos encargada de la presentación visual d
 /* ==========================================
    3. BARRA DE FILTROS AVANZADA (CSS GRID)
    ========================================== */
+/**
+ * Configuración maestra de la barra de herramientas. Utiliza fracciones (fr) 
+ * para distribuir dinámicamente el espacio entre el buscador principal, 
+ * los selectores y las fechas, alineando todos los elementos a la base (flex-end).
+ */
 .barra-filtros {
    display: grid;
    grid-template-columns: 2.5fr 1.5fr 1fr 1fr 80px auto;
@@ -92,6 +114,10 @@ Este archivo concentra la hoja de estilos encargada de la presentación visual d
 /* ==========================================
    4. CAJAS DE TEXTO Y SELECTORES
    ========================================== */
+/**
+ * Estilos compartidos para inputs y selects que garantizan consistencia 
+ * en altura, bordes y comportamiento al recibir el foco del teclado o ratón (focus).
+ */
 .filtro-grupo input,
 .filtro-grupo select {
    height: 42px;
@@ -128,7 +154,7 @@ Este archivo concentra la hoja de estilos encargada de la presentación visual d
 }
 
 .input-con-icono input {
-   padding-left: 38px;
+   padding-left: 38px; 
 }
 
 /* ==========================================
@@ -187,6 +213,11 @@ Este archivo concentra la hoja de estilos encargada de la presentación visual d
 /* ==========================================
    6. DISEÑO RESPONSIVO (MEDIA QUERIES)
    ========================================== */
+/**
+ * Escalabilidad progresiva de la cuadrícula de filtros. 
+ * El sistema reduce las columnas de 6 a 3, a 2 y finalmente a 1 
+ * conforme la pantalla se estrecha.
+ */
 @media (max-width: 1150px) {
    .barra-filtros {
       grid-template-columns: 1fr 1fr 1fr;
@@ -236,6 +267,11 @@ Este archivo concentra la hoja de estilos encargada de la presentación visual d
 /* ==========================================
    7. TABLA RESPONSIVA DE REGISTROS
    ========================================== */
+/**
+ * Formato de la tabla principal de la bitácora. Incorpora un 
+ * contenedor con scroll horizontal (overflow-x) para evitar la 
+ * superposición de columnas largas en dispositivos móviles.
+ */
 .tabla-responsiva {
    width: 100%;
    overflow-x: auto;
@@ -288,6 +324,10 @@ Este archivo concentra la hoja de estilos encargada de la presentación visual d
    color: #333;
 }
 
+/**
+ * Tarjeta gráfica renderizada cuando el usuario aplica un filtro 
+ * que no arroja resultados coincidentes.
+ */
 .mensaje-vacio {
    padding: 20px;
    text-align: center;
@@ -307,6 +347,10 @@ Este archivo concentra la hoja de estilos encargada de la presentación visual d
 /* ==========================================
    8. ETIQUETAS DE ROL (STATUS PILLS)
    ========================================== */
+/**
+ * Etiquetas visuales (Pills) diseñadas para clasificar los registros 
+ * en la tabla dependiendo del rol (Puesto) que ejecutó la acción.
+ */
 .status-pill {
    padding: 5px 12px;
    border-radius: 20px;
@@ -331,6 +375,6 @@ Este archivo concentra la hoja de estilos encargada de la presentación visual d
 }
 
 .rol-tecnico {
-   background: #e2e3e5;
+   background: #e2e3e5; 
    color: #383d41;
 }

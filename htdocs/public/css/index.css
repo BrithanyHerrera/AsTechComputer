@@ -1,11 +1,23 @@
 /* INDEX.CSS */
 /*
-Este archivo concentra la hoja de estilos principal de la página de aterrizaje (Landing Page) y otras vistas afines de AsTech Computer. Su función es establecer la identidad visual base mediante el uso de variables CSS (colores corporativos, sombras, bordes), definir las animaciones de entrada (fadeUp, fadeIn), estructurar las secciones clave como el Hero principal, las tarjetas de servicios y los bloques informativos de identidad corporativa.
-*/
+ * PÁGINA: Hoja de Estilos Principal (Index CSS) - As Tech Computer
+ * PROPÓSITO: Establecer la identidad visual base y estructurar la presentación de la página de aterrizaje (Landing Page) y otras vistas afines de la plataforma corporativa.
+ * FUNCIONALIDADES:
+ * - Centralización de la paleta de colores corporativa, tipografía, bordes y sombras globales mediante el uso de variables CSS (:root) para garantizar consistencia.
+ * - Definición de animaciones fluidas (@keyframes) para la carga dinámica de secciones (fadeUp, fadeIn, heroEnter), mejorando la experiencia visual del usuario (UX).
+ * - Estructuración de la sección principal (Hero) con imágenes de fondo, superposición de gradientes y elementos tipográficos de alto impacto.
+ * - Formateo visual de tarjetas de servicio interactivas y bloques informativos (Identidad, Valores Corporativos y CEO) empleando el sistema de cuadrículas (CSS Grid).
+ * - Adaptabilidad total a dispositivos móviles mediante Media Queries, asegurando que las cuadrículas se colapsen a una sola columna de forma inteligente y fluida.
+ */
 
 /* =========================================
    1. VARIABLES GLOBALES Y RESET DE ESTILOS
    ========================================= */
+/**
+ * Se declaran las variables globales del sistema para unificar los 
+ * colores, sombras y radios de borde en todo el sitio web. Se aplica 
+ * un reseteo general y un comportamiento de desplazamiento suave (smooth).
+ */
 :root {
     --color-fondo: #f5f5f7;
     --color-blanco: #ffffff;
@@ -39,6 +51,10 @@ body {
 /* =========================================
    2. CONTENEDORES Y ANIMACIONES BASE
    ========================================= */
+/**
+ * El sistema define un contenedor maestro que delimita el ancho de la 
+ * información y despliega una animación de aparición en cascada al cargar.
+ */
 .contenedor-max {
     max-width: 1200px;
     margin: 0 auto;
@@ -69,6 +85,11 @@ body {
 /* =========================================
    3. SECCIÓN HERO (PORTADA PRINCIPAL)
    ========================================= */
+/**
+ * Diseño del bloque de bienvenida que ocupa toda la altura de la ventana (100vh). 
+ * Se integra una imagen de fondo con superposición de gradientes radiales 
+ * y lineales para garantizar la legibilidad del texto en primer plano.
+ */
 .hero-wrapper {
     width: 100%;
     min-height: 100vh;
@@ -154,7 +175,7 @@ body {
     animation: heroEnter 0.9s ease-out forwards;
 }
 
-/* Aplica la animación a los hijos también (sin delay individual) */
+/* El sistema aplica la animación a los hijos del Hero para una entrada fluida */
 .hero-astech,
 .hero-texto,
 .hero-imagen,
@@ -166,7 +187,7 @@ body {
     animation-delay: 0.2s;
 }
 
-/* Keyframes contenedor */
+/* Keyframes de animación estructurales */
 @keyframes heroEnter {
     to {
         opacity: 1;
@@ -174,7 +195,6 @@ body {
     }
 }
 
-/* Keyframes elementos internos */
 @keyframes heroChildEnter {
     to {
         opacity: 1;
@@ -185,6 +205,10 @@ body {
 /* =========================================
    4. BOTONES PRINCIPALES Y DE NAVEGACIÓN
    ========================================= */
+/**
+ * Estilización de los llamados a la acción (CTAs). Incorpora efectos 
+ * de escala ligera y cambios de color al interactuar con el puntero.
+ */
 .hero-botones {
     display: flex;
     align-items: center;
@@ -226,6 +250,11 @@ body {
 /* =========================================
    5. IMÁGENES HERO Y TARJETAS DE SERVICIO
    ========================================= */
+/**
+ * Se implementa la cuadrícula de tarjetas de servicios, configurando 
+ * efectos de elevación tridimensional (translateY y box-shadow) que 
+ * simulan interactividad al momento de colocar el cursor por encima.
+ */
 .hero-imagen {
     flex: 0.8;
     display: flex;
@@ -300,6 +329,11 @@ body {
 /* =========================================
    6. SECCIONES: IDENTIDAD Y VALORES CORPORATIVOS
    ========================================= */
+/**
+ * Arquitectura visual de los bloques informativos institucionales, 
+ * apoyada en CSS Grid para alinear de forma armónica los textos 
+ * descriptivos, las fotografías y la iconografía.
+ */
 .seccion-about {
     background-color: var(--color-blanco);
     padding: 100px 20px;
@@ -369,6 +403,11 @@ body {
 /* =========================================
    7. SECCIÓN DEL FUNDADOR (CEO)
    ========================================= */
+/**
+ * Renderización de la tarjeta de presentación directiva. 
+ * Crea una caja estéticamente dividida entre la fotografía 
+ * del CEO y su mensaje/cita (blockquote).
+ */
 .seccion-ceo {
     background-color: var(--color-fondo);
     padding: 80px 20px;
@@ -435,6 +474,12 @@ body {
 /* =========================================
    9. DISEÑO RESPONSIVO (MEDIA QUERIES)
    ========================================= */
+/**
+ * Instrucciones críticas de adaptabilidad. El sistema garantiza que en 
+ * dispositivos móviles o tabletas (resolución menor a 900px), los 
+ * bloques de información, textos hero y cuadrículas se presenten 
+ * apilados verticalmente de forma óptima y legible.
+ */
 @media (max-width: 900px) {
     .hero-astech {
         flex-direction: column;

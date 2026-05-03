@@ -1,11 +1,23 @@
 /* CITAS_CRUD.CSS */
 /*
-Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la interfaz de administración (CRUD) de citas de AsTech Computer. Su objetivo es estructurar visualmente el panel de control, incluyendo la barra de búsqueda y filtros, el diseño de la tabla responsiva de registros, la personalización de los botones de acción, y el formato de las "pills" (etiquetas de estado) que indican la etapa de cada servicio. Adicionalmente, define la apariencia y el posicionamiento centrado de la ventana modal que se utiliza para editar la información detallada de cada cita.
-*/
+ * PÁGINA: Hoja de Estilos de Administración de Citas (Citas CRUD CSS) - As Tech Computer
+ * PROPÓSITO: Centralizar y definir exhaustivamente los estilos visuales para la interfaz del panel de control donde los administradores gestionan (CRUD) las citas agendadas.
+ * FUNCIONALIDADES:
+ * - Estructuración del contenedor principal de ingresos y la botonera de filtrado, aplicando un diseño en línea (flexbox) adaptable y limpio.
+ * - Formateo de la tabla de registros en un esquema responsivo (overflow-x) con anchos mínimos para garantizar la legibilidad de columnas densas en pantallas pequeñas.
+ * - Diseño de las etiquetas indicadoras de estado (Status Pills), aplicando paletas de color semánticas (amarillo, verde, rojo) para una rápida identificación visual del ciclo de vida del servicio.
+ * - Personalización interactiva (hover/focus) de los botones de acción rápida (Ver, Editar, Eliminar) utilizando íconos y transiciones suaves.
+ * - Arquitectura visual completa para las ventanas modales superpuestas (Overlay), tanto para los formularios de edición profunda (inputs, selects) como para las tarjetas de visualización de detalles (solo lectura), asegurando un centrado absoluto en pantalla.
+ */
 
 /* =========================================
    1. ESTILOS GENERALES, CONTENEDOR Y FILTROS
    ========================================= */
+/**
+ * Se define el contenedor maestro del panel con bordes suavizados 
+ * y una sombra paralela discreta para despegarlo del fondo, 
+ * creando un efecto de tarjeta (card) moderna.
+ */
 .contenedor-ingresos {
     padding: 25px;
     background: #fff;
@@ -14,13 +26,18 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
 }
 
 .encabezado-crud h1 {
-    color: #52073a;
+    color: #52073a; /* Púrpura corporativo */
     margin-bottom: 20px;
     font-size: 1.6rem;
-    border-left: 5px solid #e17203;
+    border-left: 5px solid #e17203; /* Acento naranja corporativo */
     padding-left: 15px;
 }
 
+/**
+ * La barra de filtros utiliza Flexbox con flex-wrap para garantizar 
+ * que los controles de búsqueda (inputs y selects) se reacomoden 
+ * hacia abajo si la pantalla se estrecha.
+ */
 .barra-filtros {
     display: flex;
     gap: 20px;
@@ -70,6 +87,11 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
 /* =========================================
    2. TABLA RESPONSIVA Y TEXTOS DESCRIPTIVOS
    ========================================= */
+/**
+ * overflow-x: auto permite que la tabla haga scroll horizontal en 
+ * dispositivos móviles, previniendo que el diseño general de la 
+ * página se rompa o se desborde.
+ */
 .tabla-responsiva {
     overflow-x: auto;
 }
@@ -77,7 +99,7 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
 .tabla-admin {
     width: 100%;
     border-collapse: collapse;
-    min-width: 900px;
+    min-width: 900px; /* Ancho mínimo forzado para evitar apilamiento de texto */
 }
 
 .tabla-admin th {
@@ -105,6 +127,11 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
 /* =========================================
    3. ETIQUETAS DE ESTADO (PILLS) Y SELECTS
    ========================================= */
+/**
+ * Los status-pills son indicadores visuales redondeados que cambian de color 
+ * según la etapa del servicio, proporcionando una rápida retroalimentación visual 
+ * al administrador.
+ */
 .status-pill {
     padding: 6px 30px 6px 15px;
     border-radius: 20px;
@@ -120,20 +147,25 @@ Este archivo contiene las hojas de estilo (CSS) dedicadas exclusivamente a la in
 }
 
 .pendiente {
-    background-color: #fff3cd;
+    background-color: #fff3cd; /* Amarillo preventivo */
     color: #856404;
 }
 
 .atendida {
-    background-color: #d4edda;
+    background-color: #d4edda; /* Verde éxito */
     color: #155724;
 }
 
 .cancelada {
-    background-color: #f8d7da;
+    background-color: #f8d7da; /* Rojo alerta */
     color: #721c24;
 }
 
+/**
+ * Se sobrescribe el diseño nativo del navegador para el elemento <select>
+ * integrando un icono SVG personalizado como flecha desplegable, 
+ * unificando su diseño con el estilo de la "Pill".
+ */
 select.status-pill {
     appearance: none;
     -webkit-appearance: none;
@@ -146,6 +178,11 @@ select.status-pill {
 /* =========================================
    4. BOTONES DE ACCIÓN (VER / EDITAR / ELIMINAR)
    ========================================= */
+/**
+ * Botonera compacta (flex) asignada a la última columna de cada registro.
+ * Utiliza colores semánticos (Cyan para información, Naranja para edición, 
+ * Rojo para eliminación).
+ */
 .acciones {
     display: flex;
     gap: 8px;
@@ -197,9 +234,13 @@ select.status-pill {
 /* =========================================
    5. DISEÑO DE LA VENTANA MODAL (GENERAL)
    ========================================= */
+/**
+ * Capa oscura superpuesta (Overlay) que bloquea la interacción con la 
+ * tabla de fondo mientras el administrador edita un registro.
+ */
 .modal-personalizado {
     position: fixed;
-    z-index: 99999;
+    z-index: 99999; /* Máxima prioridad de apilamiento */
     left: 0;
     top: 0;
     width: 100%;
@@ -208,6 +249,12 @@ select.status-pill {
     display: none;
 }
 
+/**
+ * Centrado absoluto de la ventana en pantalla utilizando la técnica 
+ * de transform: translate(-50%, -50%). Incluye un control de altura 
+ * máxima (max-height) y desbordamiento (overflow-y) para prevenir 
+ * que el formulario salga de los límites de monitores pequeños.
+ */
 .contenido-modal {
     background: #fff;
     padding: 25px;
@@ -290,6 +337,11 @@ select.status-pill {
 /* =========================================
    7. DISEÑO INTERNO DEL MODAL DE DETALLES (SOLO LECTURA)
    ========================================= */
+/**
+ * Cuando se presiona el botón "Ver Detalles", los datos se organizan 
+ * en una estructura tipo Grid de dos columnas. Cada bloque (detalle-item) 
+ * simula una tarjeta individual con borde izquierdo acentuado.
+ */
 .grid-detalles {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -322,6 +374,10 @@ select.status-pill {
 /* =========================================
    8. ESTILOS MODAL CONFIRMACIÓN (NUEVO)
    ========================================= */
+/**
+ * Interfaz de seguridad superpuesta que exige una doble verificación 
+ * visual antes de ejecutar acciones destructivas (Eliminación de registros).
+ */
 .btn-aceptar-conf {
     background: #28a745;
     color: #fff;
