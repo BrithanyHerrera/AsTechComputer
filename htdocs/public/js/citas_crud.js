@@ -1,11 +1,24 @@
 /* CITAS_CRUD.JS */
 /*
-Este archivo concentra toda la lógica interactiva del lado del cliente (Frontend) para el panel de administración de citas. Su propósito es dotar a la tabla de registros de capacidades dinámicas sin necesidad de recargar la página. Entre sus responsabilidades destacan: filtrar las citas en tiempo real (por nombre, estado o fecha), gestionar los horarios disponibles para reagendar citas, controlar la apertura y llenado automático de la ventana modal de edición, enviar actualizaciones rápidas de estado mediante peticiones AJAX al servidor, y prevenir el doble envío de formularios para mantener la integridad de los datos.
-*/
+ * PÁGINA: Script de Administración de Citas (Citas CRUD JS) - As Tech Computer
+ * PROPÓSITO: Dotar de interactividad y dinamismo al panel administrativo de citas, gestionando filtros en tiempo real, manipulación de ventanas modales y confirmaciones de seguridad sin necesidad de recargar la página.
+ * FUNCIONALIDADES:
+ * - Implementación de un motor de búsqueda y filtrado asíncrono sobre la tabla de registros (filtra por coincidencias de texto, selectores de estado y rangos de fechas).
+ * - Renderizado dinámico de horarios en el formulario de edición, excluyendo de forma inteligente las horas ya ocupadas en la fecha seleccionada por el administrador.
+ * - Despliegue de ventanas modales (Overlays) inyectando datos pre-estructurados en formato JSON desde los atributos `data-cita` de cada fila hacia los formularios o tarjetas de visualización.
+ * - Interceptación y validación de formularios mediante alertas visuales personalizadas (SweetAlert2) para prevenir envíos accidentales (Double Submit) y confirmar acciones críticas como ediciones profundas o eliminaciones de registros.
+ * - Captura de motivos obligatorios (Input prompt) cuando el administrador cambia rápidamente el estado de una cita a "Cancelada".
+ */
 
 /* ==========================================
    1. SISTEMA DE FILTRADO DINÁMICO EN TABLA
    ========================================== */
+/**
+ * El sistema lee los valores actuales de los controles de búsqueda (texto, 
+ * estado, rango de fechas) e itera sobre todas las filas de la tabla 
+ * ocultando (display: 'none') aquellas que no cumplan simultáneamente 
+ * con todas las condiciones ingresadas.
+ */
 function filtrarTabla() {
     const busqueda = document.getElementById('buscadorGlobal').value.toLowerCase();
     const estado = document.getElementById('filtroEstado').value;
@@ -26,6 +39,7 @@ function filtrarTabla() {
         
         let coincideFecha = true;
         if (txtFecha) {
+            // El sistema normaliza la hora a mediodía para evitar desfases de zona horaria en la validación
             const tsFila = new Date(txtFecha + "T12:00:00").getTime(); 
             if (tsInicio && tsFin) {
                 coincideFecha = (tsFila >= tsInicio && tsFila <= tsFin);
@@ -51,6 +65,12 @@ function limpiarFiltros() {
 /* ==========================================
    2. GESTIÓN DINÁMICA DE HORARIOS EN MODAL
    ========================================== */
+/**
+ * Al cambiar la fecha en el modal de edición, el script cruza una matriz 
+ * de horarios base predefinidos contra el objeto global (horasOcupadas) 
+ * renderizado por PHP. Solo imprime como <option> las horas que están 
+ * libres o la hora original que ya tenía la cita.
+ */
 function generarHorarios(fechaElegida, horaPreseleccionada) {
     const selectorHora = document.getElementById('m_hora');
     selectorHora.innerHTML = '<option value="">Seleccione una hora...</option>';
@@ -87,6 +107,11 @@ if (inputFecha) {
 /* ==========================================
    3. CONTROLADOR DE LA VENTANA MODAL (VER DETALLES)
    ========================================== */
+/**
+ * Extrae la cadena JSON incrustada en el atributo data-cita del botón presionado, 
+ * la parsea a un objeto JavaScript y distribuye sus propiedades en los elementos 
+ * de solo lectura correspondientes dentro de la ventana modal.
+ */
 function abrirModalVer(boton) {
     try {
         let datos = JSON.parse(boton.getAttribute('data-cita'));
@@ -109,6 +134,11 @@ function cerrarModalVer() { document.getElementById('modalVer').style.display = 
 /* ==========================================
    4. CONTROLADORES DE LA VENTANA MODAL (EDICIÓN)
    ========================================== */
+/**
+ * Al igual que el modal de detalles, extrae la información JSON del botón 
+ * pero esta vez inyecta los valores en los campos de entrada (inputs, selects) 
+ * del formulario de edición, preparando el entorno para que el usuario los modifique.
+ */
 function abrirModalEditar(boton) {
     try {
         let datos = JSON.parse(boton.getAttribute('data-cita'));
@@ -150,7 +180,7 @@ function abrirModalEditar(boton) {
 
 function cerrarModal() { document.getElementById('modalEditar').style.display = 'none'; }
 
-/* Cierre de modales al dar clic fuera */
+/* Cierre de modales al dar clic fuera del contenedor activo */
 window.onclick = function (e) { 
     if (e.target.classList.contains('modal-personalizado')) {
         e.target.style.display = 'none';
@@ -160,6 +190,11 @@ window.onclick = function (e) {
 /* ==========================================
    5. INTERCEPTAR GUARDADO DE EDICIÓN (SWEETALERT)
    ========================================== */
+/**
+ * El sistema pausa el envío del formulario de edición y despliega 
+ * una alerta de advertencia para confirmar la acción, forzando su 
+ * indexación de apilamiento (z-index) por encima de cualquier otro elemento.
+ */
 const formEditar = document.getElementById('formEditarCita');
 if (formEditar) {
     formEditar.addEventListener('submit', function(e) {
@@ -191,6 +226,12 @@ if (formEditar) {
 /* ==========================================
    6. CAMBIO DE ESTADO RÁPIDO (SWEETALERT)
    ========================================== */
+/**
+ * Cuando el administrador modifica el selector rápido en la tabla, el 
+ * sistema pausa la petición. Si se selecciona "Cancelada", se exige 
+ * obligatoriamente la captura de un texto que justifique la acción 
+ * antes de enviar el formulario al servidor.
+ */
 function confirmarCambioEstado(selectElement) {
     const estadoAnterior = selectElement.getAttribute('data-estado-anterior');
     const nuevoEstado = selectElement.value;
@@ -242,6 +283,11 @@ function confirmarCambioEstado(selectElement) {
 /* ==========================================
    7. ELIMINACIÓN DE CITA (SWEETALERT)
    ========================================== */
+/**
+ * Intercepta la navegación (href) del botón de eliminación y despliega 
+ * una advertencia de acción destructiva. Solo si el administrador confirma, 
+ * el sistema procesa la redirección hacia el controlador.
+ */
 function confirmarEliminacion(event, urlDestino) {
     event.preventDefault(); 
     Swal.fire({
