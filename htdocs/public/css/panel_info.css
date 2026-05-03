@@ -8,16 +8,12 @@
  * - Formateo gráfico de identificadores visuales (pildora-usuario) para mostrar de manera elegante el nombre y avatar del empleado en sesión.
  * - Definición de un sistema de etiquetas de colores (Status Pills) que permite identificar de un solo vistazo los diferentes roles de los usuarios (Administrador, Gerente, Recepción, Técnico).
  * - Uso intensivo de Media Queries escalonados (1150px, 768px, 480px) para reorganizar la cuadrícula de filtros conforme se reduce el ancho del navegador.
+ * - Estilos de paginación centralizados (extraídos de inline styles en el PHP).
  */
 
 /* ==========================================
    1. CONTENEDORES PRINCIPALES Y TARJETAS
    ========================================== */
-/**
- * Se define la estructura base del panel administrativo. 
- * El fondo gris claro (f7f7f7) contrasta con las tarjetas blancas 
- * para facilitar la concentración en los datos.
- */
 .contenedor-dashboard {
    padding: 30px;
    background-color: #f7f7f7;
@@ -37,16 +33,12 @@
    border-bottom: 2px solid #e17203;
    padding-bottom: 10px;
    margin-bottom: 20px;
+   font-size: 1.3rem;
 }
 
 /* ==========================================
    2. IDENTIFICADOR VISUAL DE USUARIO (PILL)
    ========================================== */
-/**
- * Componente interactivo tipo "cápsula" (pill) que encapsula 
- * el icono de perfil y el nombre del usuario activo, generando 
- * una sombra suave para destacarlo sobre el fondo.
- */
 .pildora-usuario {
    display: inline-flex;
    align-items: center;
@@ -55,6 +47,8 @@
    padding: 5px 20px 5px 5px;
    margin-bottom: 30px;
    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   max-width: 100%;
+   overflow: hidden;
 }
 
 .icono-usuario {
@@ -62,6 +56,7 @@
    color: #ffffff;
    width: 35px;
    height: 35px;
+   min-width: 35px; /* Evita que el icono se comprima */
    border-radius: 50%;
    display: flex;
    justify-content: center;
@@ -74,16 +69,14 @@
    color: #000000;
    font-weight: 600;
    font-size: 16px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }
 
 /* ==========================================
    3. BARRA DE FILTROS AVANZADA (CSS GRID)
    ========================================== */
-/**
- * Configuración maestra de la barra de herramientas. Utiliza fracciones (fr) 
- * para distribuir dinámicamente el espacio entre el buscador principal, 
- * los selectores y las fechas, alineando todos los elementos a la base (flex-end).
- */
 .barra-filtros {
    display: grid;
    grid-template-columns: 2.5fr 1.5fr 1fr 1fr 80px auto;
@@ -114,10 +107,6 @@
 /* ==========================================
    4. CAJAS DE TEXTO Y SELECTORES
    ========================================== */
-/**
- * Estilos compartidos para inputs y selects que garantizan consistencia 
- * en altura, bordes y comportamiento al recibir el foco del teclado o ratón (focus).
- */
 .filtro-grupo input,
 .filtro-grupo select {
    height: 42px;
@@ -198,6 +187,7 @@
    box-sizing: border-box;
    height: 42px;
    width: 42px;
+   min-width: 42px;
    background: #f3f4f6;
    color: #4b5563;
    border-radius: 8px;
@@ -211,70 +201,12 @@
 }
 
 /* ==========================================
-   6. DISEÑO RESPONSIVO (MEDIA QUERIES)
+   6. TABLA RESPONSIVA DE REGISTROS
    ========================================== */
-/**
- * Escalabilidad progresiva de la cuadrícula de filtros. 
- * El sistema reduce las columnas de 6 a 3, a 2 y finalmente a 1 
- * conforme la pantalla se estrecha.
- */
-@media (max-width: 1150px) {
-   .barra-filtros {
-      grid-template-columns: 1fr 1fr 1fr;
-   }
-
-   .filtro-grupo.buscador {
-      grid-column: span 3;
-   }
-
-   .filtro-acciones {
-      grid-column: span 3;
-      justify-content: flex-end;
-   }
-}
-
-@media (max-width: 768px) {
-   .barra-filtros {
-      grid-template-columns: 1fr 1fr;
-   }
-
-   .filtro-grupo.buscador,
-   .filtro-acciones {
-      grid-column: span 2;
-   }
-}
-
-@media (max-width: 480px) {
-   .barra-filtros {
-      grid-template-columns: 1fr;
-   }
-
-   .filtro-grupo.buscador,
-   .filtro-acciones {
-      grid-column: span 1;
-   }
-
-   .filtro-acciones {
-      width: 100%;
-   }
-
-   .btn-buscar {
-      flex-grow: 1;
-      justify-content: center;
-   }
-}
-
-/* ==========================================
-   7. TABLA RESPONSIVA DE REGISTROS
-   ========================================== */
-/**
- * Formato de la tabla principal de la bitácora. Incorpora un 
- * contenedor con scroll horizontal (overflow-x) para evitar la 
- * superposición de columnas largas en dispositivos móviles.
- */
 .tabla-responsiva {
    width: 100%;
    overflow-x: auto;
+   -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
 }
 
 .tabla-admin {
@@ -282,13 +214,14 @@
    border-collapse: collapse;
    font-size: 14px;
    text-align: left;
-   min-width: 800px;
+   min-width: 700px;
 }
 
 .tabla-admin th {
    background-color: #52073a;
    color: white;
    padding: 12px;
+   white-space: nowrap;
 }
 
 .tabla-admin th:first-child {
@@ -302,6 +235,7 @@
 .tabla-admin td {
    padding: 12px;
    border-bottom: 1px solid #eaeaea;
+   vertical-align: middle;
 }
 
 .fila-panel-info:hover {
@@ -314,6 +248,11 @@
    max-width: 300px;
 }
 
+.td-fecha {
+   color: #666;
+   white-space: nowrap;
+}
+
 .badge-accion {
    background-color: #f0f0f0;
    border: 1px solid #ddd;
@@ -322,41 +261,36 @@
    font-weight: bold;
    font-size: 0.85em;
    color: #333;
+   white-space: nowrap;
 }
 
-/**
- * Tarjeta gráfica renderizada cuando el usuario aplica un filtro 
- * que no arroja resultados coincidentes.
- */
 .mensaje-vacio {
-   padding: 20px;
+   padding: 40px 20px;
    text-align: center;
-   color: #666;
+   color: #6b7280;
    font-style: italic;
    background: #f9f9f9;
    border-radius: 5px;
 }
 
 .mensaje-vacio i {
-   font-size: 24px;
+   font-size: 30px;
    color: #ccc;
    margin-bottom: 10px;
    display: block;
 }
 
 /* ==========================================
-   8. ETIQUETAS DE ROL (STATUS PILLS)
+   7. ETIQUETAS DE ROL (STATUS PILLS)
    ========================================== */
-/**
- * Etiquetas visuales (Pills) diseñadas para clasificar los registros 
- * en la tabla dependiendo del rol (Puesto) que ejecutó la acción.
- */
 .status-pill {
    padding: 5px 12px;
    border-radius: 20px;
    font-size: 0.75rem;
    font-weight: bold;
    text-transform: uppercase;
+   white-space: nowrap;
+   display: inline-block;
 }
 
 .rol-administrador {
@@ -377,4 +311,203 @@
 .rol-tecnico {
    background: #e2e3e5; 
    color: #383d41;
+}
+
+/* ==========================================
+   8. PAGINACIÓN (CENTRALIZADO DESDE PHP)
+   ========================================== */
+/**
+ * Estilos extraídos de los inline styles del PHP para centralizar
+ * el control visual y facilitar futuras modificaciones.
+ */
+.paginacion {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 10px;
+   margin-top: 20px;
+   padding: 15px;
+   flex-wrap: wrap;
+}
+
+.paginacion-info {
+   font-size: 14px;
+   color: #4b5563;
+}
+
+.paginacion-info strong {
+   color: #52073a;
+}
+
+.btn-pagina {
+   padding: 8px 15px;
+   border-radius: 6px;
+   text-decoration: none;
+   font-weight: bold;
+   font-size: 0.9rem;
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-pagina-activo {
+   background: #eef2ff;
+   color: #4f46e5;
+}
+
+.btn-pagina-activo:hover {
+   background: #e0e7ff;
+   color: #3730a3;
+}
+
+.btn-pagina-deshabilitado {
+   background: #f3f4f6;
+   color: #9ca3af;
+   cursor: default;
+   pointer-events: none;
+}
+
+/* ==========================================
+   9. DISEÑO RESPONSIVO (MEDIA QUERIES)
+   ========================================== */
+
+/* --- Pantallas medianas (tablets grandes) --- */
+@media (max-width: 1150px) {
+   .barra-filtros {
+      grid-template-columns: 1fr 1fr 1fr;
+   }
+
+   .filtro-grupo.buscador {
+      grid-column: span 3;
+   }
+
+   .filtro-acciones {
+      grid-column: span 3;
+      justify-content: flex-end;
+      height: auto;
+   }
+}
+
+/* --- Tablets --- */
+@media (max-width: 768px) {
+   .contenedor-dashboard {
+      padding: 15px;
+   }
+
+   .bitacora-panel {
+      padding: 15px;
+   }
+
+   .titulo-panel {
+      font-size: 1.1rem;
+   }
+
+   .pildora-usuario {
+      margin-bottom: 20px;
+   }
+
+   .texto-usuario {
+      font-size: 14px;
+   }
+
+   .barra-filtros {
+      grid-template-columns: 1fr 1fr;
+      padding: 15px;
+      gap: 12px;
+   }
+
+   .filtro-grupo.buscador,
+   .filtro-acciones {
+      grid-column: span 2;
+   }
+
+   .filtro-acciones {
+      height: auto;
+   }
+
+   /* Tabla: ocultar columna "Detalle" en tablet si es necesario */
+   .tabla-admin {
+      font-size: 13px;
+   }
+
+   .td-detalle {
+      max-width: 180px;
+      font-size: 12px;
+   }
+
+   .paginacion {
+      gap: 6px;
+      padding: 10px;
+   }
+
+   .btn-pagina {
+      padding: 7px 12px;
+      font-size: 0.85rem;
+   }
+}
+
+/* --- Móviles --- */
+@media (max-width: 480px) {
+   .contenedor-dashboard {
+      padding: 10px;
+   }
+
+   .bitacora-panel {
+      padding: 12px;
+      border-radius: 6px;
+   }
+
+   .titulo-panel {
+      font-size: 1rem;
+   }
+
+   .pildora-usuario {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+   }
+
+   .texto-usuario {
+      font-size: 13px;
+   }
+
+   .barra-filtros {
+      grid-template-columns: 1fr;
+      padding: 12px;
+      gap: 10px;
+   }
+
+   .filtro-grupo.buscador,
+   .filtro-acciones {
+      grid-column: span 1;
+   }
+
+   .filtro-acciones {
+      width: 100%;
+      height: auto;
+   }
+
+   .btn-buscar {
+      flex-grow: 1;
+      justify-content: center;
+      height: 42px;
+   }
+
+   .btn-limpiar {
+      height: 42px;
+      width: 42px;
+      min-width: 42px;
+   }
+
+   /* Paginación apilada en móvil */
+   .paginacion {
+      flex-direction: column;
+      gap: 8px;
+   }
+
+   .btn-pagina {
+      width: 100%;
+      justify-content: center;
+   }
 }

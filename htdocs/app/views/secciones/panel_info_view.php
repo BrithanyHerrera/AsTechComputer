@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../../controllers/panel_info_controller.php";
 ?>
 
-<link rel="stylesheet" href="../../public/css/panel_info.css?v=3.1">
+<link rel="stylesheet" href="../../public/css/panel_info.css?v=4.0">
 
 <div class="contenedor-dashboard">
     <div class="pildora-usuario">
@@ -97,7 +97,7 @@ require_once __DIR__ . "/../../controllers/panel_info_controller.php";
                             <td><span class="status-pill rol-<?= $nombre_puesto_clase ?>"><?= htmlspecialchars($act['nombre_puesto']) ?></span></td>
                             <td><span class="badge-accion"><?= htmlspecialchars($act['accion']) ?></span></td>
                             <td class="td-detalle"><?= htmlspecialchars($act['detalle']) ?></td>
-                            <td style="color: #666;"><i class="fa-regular fa-calendar" style="margin-right: 5px;"></i> <?= date('d/m/Y H:i', strtotime($act['fecha_hora'])) ?></td>
+                            <td class="td-fecha"><i class="fa-regular fa-calendar" style="margin-right: 5px;"></i><?= date('d/m/Y H:i', strtotime($act['fecha_hora'])) ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -105,26 +105,34 @@ require_once __DIR__ . "/../../controllers/panel_info_controller.php";
             </div>
 
             <?php if ($total_paginas > 1): ?>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px; padding: 15px;">
+            <div class="paginacion">
                 <?php if ($pagina_actual > 1): ?>
-                    <a href="<?= $url_base_paginacion . ($pagina_actual - 1) ?>" style="padding: 8px 15px; background: #eef2ff; color: #4f46e5; border-radius: 6px; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-angle-left"></i> Anterior</a>
+                    <a href="<?= $url_base_paginacion . ($pagina_actual - 1) ?>" class="btn-pagina btn-pagina-activo">
+                        <i class="fa-solid fa-angle-left"></i> Anterior
+                    </a>
                 <?php else: ?>
-                    <span style="padding: 8px 15px; background: #f3f4f6; color: #9ca3af; border-radius: 6px; font-weight: bold;"><i class="fa-solid fa-angle-left"></i> Anterior</span>
+                    <span class="btn-pagina btn-pagina-deshabilitado">
+                        <i class="fa-solid fa-angle-left"></i> Anterior
+                    </span>
                 <?php endif; ?>
 
-                <span style="font-size: 14px; color: #4b5563;">Página <strong><?= $pagina_actual ?></strong> de <strong><?= $total_paginas ?></strong></span>
+                <span class="paginacion-info">Página <strong><?= $pagina_actual ?></strong> de <strong><?= $total_paginas ?></strong></span>
 
                 <?php if ($pagina_actual < $total_paginas): ?>
-                    <a href="<?= $url_base_paginacion . ($pagina_actual + 1) ?>" style="padding: 8px 15px; background: #eef2ff; color: #4f46e5; border-radius: 6px; text-decoration: none; font-weight: bold;">Siguiente <i class="fa-solid fa-angle-right"></i></a>
+                    <a href="<?= $url_base_paginacion . ($pagina_actual + 1) ?>" class="btn-pagina btn-pagina-activo">
+                        Siguiente <i class="fa-solid fa-angle-right"></i>
+                    </a>
                 <?php else: ?>
-                    <span style="padding: 8px 15px; background: #f3f4f6; color: #9ca3af; border-radius: 6px; font-weight: bold;">Siguiente <i class="fa-solid fa-angle-right"></i></span>
+                    <span class="btn-pagina btn-pagina-deshabilitado">
+                        Siguiente <i class="fa-solid fa-angle-right"></i>
+                    </span>
                 <?php endif; ?>
             </div>
             <?php endif; ?>
 
             <?php else: ?>
-                <div class="mensaje-vacio" style="text-align: center; padding: 40px; color: #6b7280;">
-                    <i class="fa-solid fa-search" style="font-size: 30px; margin-bottom: 10px;"></i><br>
+                <div class="mensaje-vacio">
+                    <i class="fa-solid fa-search"></i>
                     No se encontraron movimientos con esos filtros.
                 </div>
             <?php endif; ?>
