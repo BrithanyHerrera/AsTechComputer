@@ -11,7 +11,7 @@ use RobThree\Auth\TwoFactorAuth;
 use RobThree\Auth\Providers\Qr\QRServerProvider;
 
 // ¡AQUÍ ESTÁ LA MAGIA QUE FALTABA! Cargamos todas las librerías de Composer
-require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 // Si el usuario ya está logueado, lo mandamos directo al dashboard
 if (isset($_SESSION['id_empleado'])) {

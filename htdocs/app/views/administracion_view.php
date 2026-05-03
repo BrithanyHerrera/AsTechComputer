@@ -166,7 +166,7 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
       case 'dashboard':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
         echo "<h1>Bienvenido al panel principal</h1>";
-        if (file_exists($ruta_secciones . "panel_info.php")) { include $ruta_secciones . "panel_info.php"; }
+        if (file_exists($ruta_secciones . "panel_info_view.php")) { include $ruta_secciones . "panel_info_view.php"; }
         break;
         //pagina estadisticas
       case 'estadisticas':

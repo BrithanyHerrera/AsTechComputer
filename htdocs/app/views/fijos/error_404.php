@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 404 | As Tech Computer</title>
+    <title>Error 404 | AsTech Computer</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
@@ -17,7 +17,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100dvh; /* Se adapta incluso si hay barra de direcciones en el celular */
+            height: 100dvh;
             text-align: center;
             color: #333;
         }
@@ -29,14 +29,14 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             width: 90%;
             max-width: 500px;
-            border-top: 5px solid #e17203; /* Acento Naranja */
+            border-top: 5px solid #e17203;
         }
         
         .icono-error {
             font-size: clamp(60px, 10vw, 80px);
-            color: #4a148c; /* Morado Institucional */
+            color: #4a148c; 
             margin-bottom: 20px;
-            animation: flotar 3s ease-in-out infinite; /* Efecto suave de flotación */
+            animation: flotar 3s ease-in-out infinite; 
         }
         
         h1 {
