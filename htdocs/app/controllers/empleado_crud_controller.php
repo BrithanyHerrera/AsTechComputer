@@ -6,8 +6,9 @@
 // pagina que agrega, edita y elimina empleados
 // ========================================================
 
-session_start(); // CRÍTICO: Necesario para validar si es Administrador
-
+if (session_status() === PHP_SESSION_NONE) { 
+    session_start(); 
+}
 require_once __DIR__ . '/../config/conexion.db.php';
 require_once __DIR__ . "/../models/empleado_crud_model.php";
 

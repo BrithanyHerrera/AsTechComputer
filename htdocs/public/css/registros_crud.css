@@ -231,6 +231,21 @@
     box-sizing: border-box;
 }
 
+/* Nueva clase para modales con mucha información */
+.modal-amplio {
+    width: 95% !important;
+    max-width: 900px !important;
+    max-height: 85vh;
+    overflow-y: auto;
+    
+    /* La técnica infalible de Citas: */
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important; /* Borramos el margen anterior para que no estorbe */
+}
+
 /* Título del modal de detalles */
 .contenido-modal h2 {
     color: #52073a;

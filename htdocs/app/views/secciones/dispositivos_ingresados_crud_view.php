@@ -153,7 +153,7 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
      MODAL: VER DETALLES (COMPLETO)
 ======================================================== -->
 <div id="modalDetalles" class="modal-personalizado">
-    <div class="contenido-modal" style="width: 95%; max-width: 900px; max-height: 85vh; overflow-y: auto;"> 
+    <div class="contenido-modal modal-amplio"> 
         <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
         <h2 id="det_folio" style="text-align: center; color: #4f46e5;">Detalles del Ingreso</h2>
 
