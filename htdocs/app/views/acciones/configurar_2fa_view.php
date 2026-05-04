@@ -1,12 +1,4 @@
-<?php
-session_start();
-
-// Si alguien intenta entrar aquí de colado sin haber pasado por el login, lo pateamos fuera
-if (!isset($_SESSION['temp_empleado']) || !isset($_SESSION['qr_image'])) {
-    header("Location: ../../index.php");
-    exit;
-}
-?>
+<!-- UBICACIÓN: app/views/acciones/configurar_2fa_view.php -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +6,9 @@ if (!isset($_SESSION['temp_empleado']) || !isset($_SESSION['qr_image'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurar Seguridad | As Tech Computer</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../public/css/login.css">
+    
+    <!-- Ajustamos la ruta del CSS (2 niveles atrás desde controllers) -->
+    <link rel="stylesheet" href="../../public/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         .instrucciones { text-align: left; font-size: 14px; color: #555; margin-bottom: 20px; line-height: 1.5; }
@@ -29,8 +23,8 @@ if (!isset($_SESSION['temp_empleado']) || !isset($_SESSION['qr_image'])) {
         
         <h2><i class="fa-solid fa-shield-halved" style="color: #2c3e50;"></i> Activar Seguridad</h2>
 
-        <!-- BOTÓN DE REGRESAR (Enviando al logout para limpiar la sesión temporal) -->
-        <a href="../../controllers/logout_controller.php" style="position: absolute; top: 20px; left: 20px; text-decoration: none; color: #888; font-size: 15px; font-weight: bold; transition: color 0.3s;" onmouseover="this.style.color='#c0392b'" onmouseout="this.style.color='#888'">
+        <!-- BOTÓN DE REGRESAR (Ajustado porque ya estamos en la carpeta controllers) -->
+        <a href="logout_controller.php" style="position: absolute; top: 20px; left: 20px; text-decoration: none; color: #888; font-size: 15px; font-weight: bold; transition: color 0.3s;" onmouseover="this.style.color='#c0392b'" onmouseout="this.style.color='#888'">
             <i class="fa-solid fa-arrow-left"></i> Regresar
         </a>
         
@@ -55,13 +49,12 @@ if (!isset($_SESSION['temp_empleado']) || !isset($_SESSION['qr_image'])) {
             <b>Paso 3:</b> Ingresa el código de 6 dígitos que te da la app para confirmar.
         </div>
         
-        <!-- Mandamos el código al procesador final -->
-        <form action="../../controllers/procesar_2fa_controller.php" method="POST">
+        <!-- Acción del formulario ajustada (ya estamos en la carpeta controllers) -->
+        <form action="procesar_2fa_controller.php" method="POST">
             <div class="grupo-entrada">
                 <input type="text" name="codigo_ingresado" placeholder="000 000" maxlength="6" required style="font-size: 24px; text-align: center; letter-spacing: 10px;">
             </div>
             
-            <!-- Campo oculto para decirle al controlador que venimos de configurarlo por primera vez -->
             <input type="hidden" name="es_nueva_configuracion" value="1">
 
             <button type="submit" class="boton-ingresar" style="margin-top: 10px;">

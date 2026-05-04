@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
                         $_SESSION['qr_image']      = $qr_image;
                         $_SESSION['secreto_2fa']   = $secreto; 
                         
-                        header("Location: ../views/acciones/configurar_2fa.php");
+                        header("Location: configurar_2fa_controller.php");
                         exit;
 
                     } else {
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['usuario'])) {
                         // Solo lo mandamos a que escriba sus 6 dígitos
                         $_SESSION['temp_empleado'] = $empleado;
                         
-                        header("Location: ../views/acciones/verificar_2fa.php");
+                        header("Location: verificar_2fa_controller.php");
                         exit;
                     }
 
