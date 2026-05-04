@@ -1,0 +1,70 @@
+/* ========================================================
+   estadisticas.css
+   UBICACIÓN: public/css/estadisticas.css
+
+   Estilos para la sección de Inteligencia de Negocios.
+   Organizado por secciones:
+     1. Contenedor principal
+     2. Grid de tarjetas de gráficas
+     3. Tarjetas individuales
+     4. Títulos internos
+======================================================== */
+
+
+/* ----------------------------------------------------------
+   1. CONTENEDOR PRINCIPAL
+   Envuelve todo el panel de estadísticas con
+   separación del encabezado y el texto introductorio.
+---------------------------------------------------------- */
+.contenedor-estadisticas {
+    padding: 20px;
+}
+
+.contenedor-estadisticas h2 {
+    color: #4a148c;
+    margin-bottom: 5px;
+}
+
+.contenedor-estadisticas > p {
+    color: #666;
+    margin-bottom: 0;
+}
+
+
+/* ----------------------------------------------------------
+   2. GRID DE TARJETAS
+   Distribución responsive: en pantallas grandes muestra
+   varias columnas, en móviles se apila en una sola columna.
+---------------------------------------------------------- */
+.grid-graficas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+
+/* ----------------------------------------------------------
+   3. TARJETA INDIVIDUAL DE GRÁFICA
+   Fondo blanco, bordes suaves y sombra sutil para elevar
+   visualmente cada gráfica del fondo de la página.
+---------------------------------------------------------- */
+.tarjeta-grafica {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ----------------------------------------------------------
+   4. TÍTULO DENTRO DE CADA TARJETA
+   Centrado, en color institucional morado, con separación
+   inferior para que no quede pegado al canvas de Chart.js.
+---------------------------------------------------------- */
+.tarjeta-grafica h3 {
+    text-align: center;
+    color: #4a148c;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
