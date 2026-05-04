@@ -69,14 +69,20 @@
         <div class="bloque">
             <h2 class="titulo-bloque">Proveedores</h2>
             <div class="grid-convenios">
-                <div class="card-convenio">
-                    <span class="badge-convenio">Proveedor</span>
-                    <h3>Empresa X</h3>
-                    <ul class="beneficios-lista">
-                        <li>Descuentos especiales</li>
-                        <li>Entrega rápida</li>
-                    </ul>
-                </div>
+       <div class="card-convenio">
+          <span class="badge-convenio">Proveedor</span>
+    <div class="logo-empresa">
+        <img src="../../public/img/ccs_logo.png" alt="Logo CCS">
+    </div>
+
+  
+    <h3>Centro de Copiadoras y Servicios</h3>
+    <ul class="beneficios-lista">
+        <li>Soporte rápido en equipos de copiado y digitalización.</li>
+        <li>Soluciones integrales para manejo de documentos empresariales.</li>
+      
+    </ul>
+</div>
 
                 <div class="card-convenio">
                     <span class="badge-convenio">Proveedor</span>

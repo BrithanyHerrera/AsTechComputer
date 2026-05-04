@@ -15,6 +15,9 @@
  */
 
 ?>
+<?php
+/** @var array $info Contiene 'quienes_somos', 'mision', 'vision', 'frase_fundador' */
+?>
 
 <!DOCTYPE html>
 <html lang="es">

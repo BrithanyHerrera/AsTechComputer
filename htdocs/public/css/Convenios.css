@@ -41,7 +41,7 @@ body {
 header-convenio{
     background: #eee;
 }
-.fa-solid fa-handshake{
+.fa-handshake{
     font-size: 4rem; color: #999;
 }
 
@@ -220,7 +220,7 @@ header-convenio{
     position: relative;
     overflow: visible;
     padding: 40px 0;
-    margin-top: 60px;
+
 }
 
 .carousel-track {
@@ -270,16 +270,13 @@ header-convenio{
 /* =========================================
    6. BOTONES DE NAVEGACIÓN DEL CARRUSEL
    ========================================= */
-/**
- * Controles de interacción ubicados a los extremos del contenedor. 
- * Permanecen flotantes sobre el eje Y al 50% de altura.
- */
+
 .btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--purpura-oscuro);
-    color: var(--blanco);
+
+    color: var(--negro);
     border: none;
     width: 45px;
     height: 45px;
@@ -290,6 +287,7 @@ header-convenio{
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+
 }
 
 .prev { left: -25px; }
@@ -298,6 +296,34 @@ header-convenio{
 .btn:hover {
     background: var(--naranja);
     transform: translateY(-50%) scale(1.1);
+}
+
+.logo-empresa {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.logo-empresa img {
+    max-width: 100%;
+    max-height: 250px; 
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.card-convenio:hover .logo-empresa img {
+    transform: scale(1.1);
+}
+
+.card-convenio {
+    opacity: 1 !important; /* Forzamos a que sea visible */
+    border-top: 1px solid var(--borde);
 }
 
 /* =========================================
