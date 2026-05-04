@@ -43,7 +43,7 @@ if ($permitirAnaliticas):
 
     <nav class="menu">
         <ul id="nav-links">
-            <li class="botones"><a href="<?= BASE_URL ?>Index.php">Inicio</a></li>
+            <li class="botones"><a href="<?= BASE_URL ?>index.php">Inicio</a></li>
             <li class="botones"><a href="<?= BASE_URL ?>app/controllers/contacto_controller.php">Contacto</a></li>
 
             <li class="servicios-hover botones">

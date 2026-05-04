@@ -160,7 +160,7 @@
         <section class="seccion-ceo">
             <div class="caja-ceo">
                 <div class="ceo-texto">
-                    <img src="<?= BASE_URL ?>public/img/Iso.png" alt="Logo" style="width: 60px; margin-bottom: 20px;">
+                    <img src="<?= BASE_URL ?>public/img/isologotipo.png" alt="Logo" style="width: 60px; margin-bottom: 20px;">
                     <blockquote><?= htmlspecialchars($info['frase_fundador']) ?></blockquote>
                     <p style="font-weight: 700; font-size: 1.2rem;">Ferdán Garrigos</p>
                     <p style="color: var(--color-texto-secundario);">Fundador & CEO</p>
