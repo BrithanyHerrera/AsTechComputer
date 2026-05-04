@@ -33,7 +33,7 @@ if ($permitirAnaliticas):
 
     <div class="logo">
         <a href="<?= BASE_URL ?>index.php">
-            <img src="<?= BASE_URL ?>public/img/LogoHD.png" class="logo-superior" alt="Logo">
+            <img src="<?= BASE_URL ?>public/img/logo_vertical.png" class="logo-superior" alt="Logo">
         </a>
     </div>
 
@@ -54,7 +54,7 @@ if ($permitirAnaliticas):
                     <div class="mega-menu-content">
 
                         <div class="menu-izquierda">
-                            <?php foreach ($tiposServicios as $tipo): ?>
+                           <?php foreach ($tiposServicios ?? [] as $tipo): ?>
                                 <div class="acordeon-item">
                                     <button class="titulo-tipo-btn">
                                         <?php echo htmlspecialchars($tipo['nombre_tipo']); ?>
@@ -78,7 +78,7 @@ if ($permitirAnaliticas):
                         <div class="menu-derecha">
                             <p class="label-recientes">Lo más reciente</p>
                             <div class="grid-recientes">
-                                <?php foreach ($serviciosRecientes as $reciente): ?>
+                                <?php foreach ($serviciosRecientes  ?? [] as $reciente): ?>
                                     <a href="<?= BASE_URL ?>detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>"
                                         style="text-decoration: none; color: inherit;">
                                         <div class="tarjeta">

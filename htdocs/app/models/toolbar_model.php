@@ -20,9 +20,9 @@ de inyección de dependencias al recibir la conexión en su constructor.
 */
 class ToolbarModel
 {
-    private $conexion;
+    private mysqli $conexion;
 
-    public function __construct($conexion)
+    public function __construct(mysqli $conexion)
     {
         $this->conexion = $conexion;
     }

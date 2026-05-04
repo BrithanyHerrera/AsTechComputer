@@ -5,22 +5,20 @@
 // ========================================================
 
 class ServicioCrudModel {
-    private $conexion;
+    private mysqli $conexion;
 
-    public function __construct($conexion) {
+    public function __construct(mysqli $conexion) {
         $this->conexion = $conexion;
     }
 
- public function obtenerServicios($id_tipo = null) {
-        if ($id_tipo) {
-            // Se agregaron las 4 columnas nuevas al SELECT
+    public function obtenerServicios(?int $id_tipo = null): array {
+        if ($id_tipo !== null) {
             $sql = "SELECT tipo_servicio, codigo_servicio, descripcion, precio, imagen_servicio, procedimiento, beneficios, indicaciones, exclusiones 
                     FROM servicios 
                     WHERE estado = 'activo' AND id_tipo_servicio = ?";
             $stmt = $this->conexion->prepare($sql);
             $stmt->bind_param("i", $id_tipo);
         } else {
-            // Se agregaron las 4 columnas nuevas al SELECT
             $sql = "SELECT tipo_servicio, codigo_servicio, descripcion, precio, imagen_servicio, procedimiento, beneficios, indicaciones, exclusiones 
                     FROM servicios 
                     WHERE estado = 'activo'";
@@ -29,7 +27,7 @@ class ServicioCrudModel {
 
         $stmt->execute();
         $resultado = $stmt->get_result();
-        
+
         $servicios = [];
         while ($row = $resultado->fetch_assoc()) {
             $servicios[] = $row;
@@ -39,94 +37,124 @@ class ServicioCrudModel {
         return $servicios;
     }
 
-    public function agregarServicio($datos) {
-        // Se agregaron las columnas al INSERT y 4 "?" adicionales
+    public function agregarServicio(array $datos): bool {
         $sql = "INSERT INTO servicios 
                 (tipo_servicio, codigo_servicio, id_tipo_servicio, descripcion, imagen_servicio, tiempo_estimado, precio, estado, procedimiento, beneficios, indicaciones, exclusiones)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conexion->prepare($sql);
-        
-        // Ajuste de bind_param: Se agregaron 4 "s" al final (total 12 parámetros)
-        // tipos: sssssdds + ssss = sssssddsssss
-        $stmt->bind_param("sssssddsssss", 
+
+        // CASTEO CORRECTO
+        $id_tipo = (int)$datos['id_tipo_servicio'];
+        $tiempo = (float)$datos['tiempo_estimado'];
+        $precio = (float)$datos['precio'];
+
+        $stmt->bind_param(
+            "ssissddsssss",
             $datos['tipo_servicio'],
             $datos['codigo_servicio'],
-            $datos['id_tipo_servicio'],
+            $id_tipo,
             $datos['descripcion'],
             $datos['imagen_servicio'],
-            $datos['tiempo_estimado'],
-            $datos['precio'],
+            $tiempo,
+            $precio,
             $datos['estado'],
             $datos['procedimiento'],
             $datos['beneficios'],
             $datos['indicaciones'],
             $datos['exclusiones']
         );
+
         return $stmt->execute();
     }
 
-    public function editarServicio($datos) {
+    public function editarServicio(array $datos): bool {
+        $id_tipo = (int)$datos['id_tipo_servicio'];
+        $tiempo = (float)$datos['tiempo_estimado'];
+        $precio = (float)$datos['precio'];
+        $id_servicio = (int)$datos['id_servicio'];
+
         if (!empty($datos['imagen_servicio'])) {
-            // UPDATE con imagen + nuevas columnas
-            $sql = "UPDATE servicios SET tipo_servicio=?, codigo_servicio=?, id_tipo_servicio=?, descripcion=?, precio=?, tiempo_estimado=?, estado=?, procedimiento=?, beneficios=?, indicaciones=?, exclusiones=?, imagen_servicio=? WHERE id_servicio=?";
+            $sql = "UPDATE servicios 
+                    SET tipo_servicio=?, codigo_servicio=?, id_tipo_servicio=?, descripcion=?, precio=?, tiempo_estimado=?, estado=?, procedimiento=?, beneficios=?, indicaciones=?, exclusiones=?, imagen_servicio=? 
+                    WHERE id_servicio=?";
+
             $stmt = $this->conexion->prepare($sql);
-            // bind_param: 13 parámetros en total
-            $stmt->bind_param("ssssddssssssi", 
-                $datos['tipo_servicio'], $datos['codigo_servicio'], $datos['id_tipo_servicio'], 
-                $datos['descripcion'], $datos['precio'], $datos['tiempo_estimado'], 
-                $datos['estado'], $datos['procedimiento'], $datos['beneficios'], 
-                $datos['indicaciones'], $datos['exclusiones'], $datos['imagen_servicio'], 
-                $datos['id_servicio']
+
+            $stmt->bind_param(
+                "ssissdssssssi",
+                $datos['tipo_servicio'],
+                $datos['codigo_servicio'],
+                $id_tipo,
+                $datos['descripcion'],
+                $precio,
+                $tiempo,
+                $datos['estado'],
+                $datos['procedimiento'],
+                $datos['beneficios'],
+                $datos['indicaciones'],
+                $datos['exclusiones'],
+                $datos['imagen_servicio'],
+                $id_servicio
             );
         } else {
-            // UPDATE sin imagen + nuevas columnas
-            $sql = "UPDATE servicios SET tipo_servicio=?, codigo_servicio=?, id_tipo_servicio=?, descripcion=?, precio=?, tiempo_estimado=?, estado=?, procedimiento=?, beneficios=?, indicaciones=?, exclusiones=? WHERE id_servicio=?";
+            $sql = "UPDATE servicios 
+                    SET tipo_servicio=?, codigo_servicio=?, id_tipo_servicio=?, descripcion=?, precio=?, tiempo_estimado=?, estado=?, procedimiento=?, beneficios=?, indicaciones=?, exclusiones=? 
+                    WHERE id_servicio=?";
+
             $stmt = $this->conexion->prepare($sql);
-            // bind_param: 12 parámetros en total
-            $stmt->bind_param("ssssddsssssi", 
-                $datos['tipo_servicio'], $datos['codigo_servicio'], $datos['id_tipo_servicio'], 
-                $datos['descripcion'], $datos['precio'], $datos['tiempo_estimado'], 
-                $datos['estado'], $datos['procedimiento'], $datos['beneficios'], 
-                $datos['indicaciones'], $datos['exclusiones'], $datos['id_servicio']
+
+            $stmt->bind_param(
+                "ssissdsssssi",
+                $datos['tipo_servicio'],
+                $datos['codigo_servicio'],
+                $id_tipo,
+                $datos['descripcion'],
+                $precio,
+                $tiempo,
+                $datos['estado'],
+                $datos['procedimiento'],
+                $datos['beneficios'],
+                $datos['indicaciones'],
+                $datos['exclusiones'],
+                $id_servicio
             );
         }
+
         return $stmt->execute();
     }
 
-    public function eliminarServicio($id) {
+    public function eliminarServicio(int $id): bool {
         $stmt = $this->conexion->prepare("DELETE FROM servicios WHERE id_servicio = ?");
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
 
+    public function buscarServicios(string $busqueda): mysqli_result {
+        $sql = "SELECT * FROM servicios 
+                WHERE tipo_servicio LIKE ? 
+                OR codigo_servicio LIKE ?
+                OR descripcion LIKE ?
+                OR procedimiento LIKE ?
+                OR beneficios LIKE ?
+                OR indicaciones LIKE ?
+                OR exclusiones LIKE ?
+                OR tiempo_estimado LIKE ?
+                OR precio LIKE ?
+                OR estado LIKE ?";
 
-    public function buscarServicios($busqueda)
-{
-    $sql = "SELECT * FROM servicios 
-            WHERE tipo_servicio LIKE ? 
-            OR codigo_servicio LIKE ?
-            OR descripcion LIKE ?
-            OR procedimiento LIKE ?
-            OR beneficios LIKE ?
-            OR indicaciones LIKE ?
-            OR exclusiones LIKE ?
-            OR tiempo_estimado LIKE ?
-            OR precio LIKE ?
-            OR estado LIKE ?";
+        $stmt = $this->conexion->prepare($sql);
 
-    $stmt = $this->conexion->prepare($sql);
+        $like = "%" . $busqueda . "%";
 
-    $like = "%" . $busqueda . "%";
+        $stmt->bind_param(
+            "ssssssssss",
+            $like, $like, $like, $like, $like,
+            $like, $like, $like, $like, $like
+        );
 
-    $stmt->bind_param(
-        "ssssssssss",
-        $like, $like, $like, $like, $like,
-        $like, $like, $like, $like, $like
-    );
-
-    $stmt->execute();
-    return $stmt->get_result();
-}
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
 ?>

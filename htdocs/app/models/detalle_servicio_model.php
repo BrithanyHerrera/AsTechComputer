@@ -4,7 +4,8 @@
 //MODELO DE SETALLE SERVICIO
 //VIEW:detalle_servicio_view.php
 // CONTROLADOR: detalle_servicio_controller.php (Página de detalle servicio)
-// pagina que muestra informacion especifica de cada servicio en la pagina servicios_view.php
+// pagina que modela el uso de la pagina detalle sevricio, la cual muestra informacion 
+//acerca de los servicios (informacion especifica)
 // ========================================================
 
 require_once(__DIR__ . '/../config/conexion.db.php');
@@ -25,7 +26,7 @@ class ServicioModel {
 
         return null;
     }
-
+//funcion para obtener los metodos de pago desde la base de datos 
     public static function obtenerMetodosPago() {
         global $conexion;
 

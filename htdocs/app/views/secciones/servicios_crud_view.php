@@ -1,6 +1,9 @@
 <?php
 /**
  * PÁGINA: Gestión de Servicios CRUD - As Tech Computer
+ * NOMBRE: servicios_crud_view.php
+ * MODELO: servicios_crud_model.php
+ * CONTROLADOR: servicios_crud_controller.php
  * PROPÓSITO: Interfaz administrativa para buscar, visualizar, agregar, editar y eliminar servicios,
  * incluyendo formularios modales, integración con base de datos y manejo dinámico con JavaScript.
  */

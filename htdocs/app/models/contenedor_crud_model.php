@@ -8,9 +8,9 @@
 // ========================================================
 
 class ContenedorModel {
-    private $db;
+    private mysqli $db;
 
-    public function __construct($conexion) {
+    public function __construct(mysqli $conexion) {
         $this->db = $conexion;
     }
 
@@ -34,7 +34,7 @@ class ContenedorModel {
     /**
      * Agregar gabinete (Sin folio)
      */
-    public function agregarContenedor($id_gabinete, $tipo, $estado) {
+    public function agregarContenedor(string $id_gabinete,string $tipo, string $estado) {
         $sql = "INSERT INTO gabinetes (id_gabinete, tipo_espacio, estado) 
                 VALUES (?, ?, ?)";
         
@@ -51,7 +51,7 @@ class ContenedorModel {
     /**
      * Eliminar gabinete
      */
-    public function eliminarGabinete($id) {
+    public function eliminarGabinete(string $id) {
         $stmt = $this->db->prepare("DELETE FROM gabinetes WHERE id_gabinete = ?");
         $stmt->bind_param("s", $id);
 
@@ -61,7 +61,7 @@ class ContenedorModel {
     /**
      * Editar gabinete
      */
-    public function editarGabinete($id_gabinete, $tipo_espacio, $estado) {
+    public function editarGabinete(string $id_gabinete, string $tipo_espacio, string $estado) {
         $sql = "UPDATE gabinetes SET 
                 tipo_espacio = ?, 
                 estado = ? 

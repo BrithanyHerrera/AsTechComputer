@@ -1,4 +1,9 @@
 <?php
+// ========================================================
+// MODELO: servicios_model.php
+// UBICACIÓN: app/models/servicios_model.php
+// ========================================================
+
 require_once __DIR__ . "/../../config/conexion.db.php";
 
 function obtenerInformacionIndex($id = 1) {
@@ -10,20 +15,19 @@ function obtenerInformacionIndex($id = 1) {
     return $stmt->get_result()->fetch_assoc();
 }
 
-function actualizarPortada($conexion, $quienes) {
+function actualizarPortada(mysqli $conexion, string $quienes) {
     $stmt = $conexion->prepare("UPDATE informacion_index SET quienes_somos=? WHERE id=1");
     $stmt->bind_param("s", $quienes);
     return $stmt->execute();
 }
-
-function actualizarMision($id, $mision, $vision) {
+function actualizarMision(int $id, string $mision, string $vision) {
     global $conexion;
     $stmt = $conexion->prepare("UPDATE informacion_index SET mision = ?, vision = ? WHERE id = ?");
     $stmt->bind_param("ssi", $mision, $vision, $id);
     return $stmt->execute();
 }
 
-function actualizarCEO($id, $frase) {
+function actualizarCEO(int $id, string $frase) {
     global $conexion;
     $stmt = $conexion->prepare("UPDATE informacion_index SET frase_fundador = ? WHERE id = ?");
     $stmt->bind_param("si", $frase, $id);

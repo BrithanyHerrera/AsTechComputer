@@ -1,43 +1,13 @@
 <?php 
 /* CONVENIOS_VIEW.PHP */
 /*
- * PÁGINA: Vista de Convenios y Alianzas (Convenios View) - As Tech Computer
- * PROPÓSITO: Exhibir las alianzas estratégicas, marcas soportadas, proveedores y convenios institucionales de la empresa para fortalecer la confianza del usuario y destacar su red de colaboración comercial y académica.
- * FUNCIONALIDADES:
- * - Estructuración semántica del contenido mediante un diseño responsivo y modular (HTML5).
- * - Inyección dinámica de componentes globales de la arquitectura MVC, incluyendo la pantalla de carga (Loader), la barra de navegación (Toolbar) y el pie de página (Footer).
- * - Despliegue de un carrusel interactivo, controlado por JavaScript externo, para la visualización fluida de los logotipos de marcas tecnológicas reconocidas.
- * - Renderización de cuadrículas (Grids) adaptables que presentan tarjetas informativas sobre proveedores, alianzas estratégicas y partners corporativos.
- * - Presentación destacada de convenios educativos (ej. Universidad de Guadalajara CUCosta) empleando indicadores visuales de estado (Activo / Próximamente) y listas estructuradas de beneficios.
-
- * - Estructura HTML responsive con configuración de viewport y codificación UTF-8.
- * - Integración de recursos externos como:
- *      • Google Fonts (tipografía Lato).
- *      • Font Awesome (iconografía visual).
- * - Inclusión de estilos personalizados para toolbar, footer y diseño específico de convenios.
- * - Implementación de loader inicial para mejorar la experiencia de carga.
- * - Integración dinámica de la barra de navegación (toolbar) mediante controlador.
- * - Sección principal con título y subtítulo que introduce el propósito de los convenios.
- * - Carrusel interactivo de marcas:
- *      • Navegación mediante botones (anterior/siguiente).
- *      • Visualización de logoss de marcas reconocidas (Dell, Lenovo, HP, etc.).
- *      • Control dinámico mediante JavaScript externo (carousel.js).
- * - Sección de proveedores:
- *      • Tarjetas informativas con nombre de empresa y beneficios.
- *      • Presentación en formato de grid adaptable.
- * - Sección de alianzas estratégicas:
- *      • Tarjetas con beneficios como capacitaciones y eventos conjuntos.
- * - Sección de partners:
- *      • Visualización de empresas colaboradoras con integración de servicios.
- * - Sección de convenios educativos:
- *      • Tarjetas destacadas con diseño enriquecido (iconos, badges, descripción).
- *      • Información de instituciones (ej. Universidad de Guadalajara CUCosta).
- *      • Beneficios como prácticas profesionales y colaboraciones académicas.
- *      • Indicadores de estado (activo / próximamente).
- * - Uso de iconografía para reforzar la comunicación visual (graduación, ubicación, checks).
- * - Inclusión de footer dinámico mediante controlador.
- * - Organización modular del código para facilitar mantenimiento y escalabilidad.
-
+ * Vista que muestra alianzas, proveedores y convenios de As Tech Computer.
+ * Incluye diseño responsive con toolbar, footer y loader.
+ * Presenta:
+ * - Carrusel de marcas tecnológicas.
+ * - Tarjetas en grid de proveedores, partners y alianzas.
+ * - Convenios educativos con beneficios y estado (activo/próximo).
+ * Usa HTML, CSS, JavaScript, Font Awesome y Google Fonts.
  */
 ?>
 <!DOCTYPE html>
