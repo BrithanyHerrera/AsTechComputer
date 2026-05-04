@@ -13,20 +13,17 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="../../public/css/registros_crud.css?v=3.0">
+<link rel="stylesheet" href="../../public/css/registros_crud.css?v=4.0">
 
 <div class="contenedor-ingresos">
 
     <!-- ====================================================
          ENCABEZADO: Título + barra de filtros
-         Los filtros funcionan en el cliente (JavaScript),
-         no recargan la página.
     ==================================================== -->
     <div class="encabezado-crud">
         <h1><i class="fa-solid fa-microchip"></i> Dispositivos Ingresados</h1>
         <div class="barra-filtros">
 
-            <!-- Filtro por nombre del cliente o folio -->
             <div class="filtro-grupo">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" id="buscadorGlobal"
@@ -34,7 +31,6 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                        onkeyup="filtrarTabla()">
             </div>
 
-            <!-- Selector de cuántos registros mostrar por página -->
             <div class="filtro-grupo">
                 <label>Mostrar:</label>
                 <select id="filtroPaginacion" onchange="cambiarFilasPorPagina()">
@@ -45,7 +41,6 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                 </select>
             </div>
 
-            <!-- Filtro por estado de la orden -->
             <div class="filtro-grupo">
                 <label>Estado:</label>
                 <select id="filtroEstado" onchange="filtrarTabla()">
@@ -55,7 +50,6 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                 </select>
             </div>
 
-            <!-- Filtro por fecha de ingreso + botón para limpiar todos los filtros -->
             <div class="filtro-grupo">
                 <label>Fecha:</label>
                 <input type="date" id="filtroFecha" onchange="filtrarTabla()">
@@ -69,14 +63,12 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
 
     <!-- ====================================================
          TABLA PRINCIPAL
-         Cada fila tiene atributos data-* para que el JS
-         pueda filtrar y paginar sin recargar la página.
     ==================================================== -->
     <div class="tabla-responsiva">
         <table class="tabla-admin" id="tablaRegistros">
             <thead>
                 <tr>
-                    <th>Con.</th>       <!-- Contenedor/Gabinete -->
+                    <th>Con.</th>
                     <th>Folio</th>
                     <th>Cliente</th>
                     <th>Dispositivo</th>
@@ -84,7 +76,6 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                     <th>Fecha</th>
                     <th>Estado</th>
                     <?php if ($puesto_usuario != 1): ?>
-                        <!-- La columna "Entregado" se oculta a los técnicos (puesto 1) -->
                         <th>Entregado</th>
                     <?php endif; ?>
                     <th>Acciones</th>
@@ -92,16 +83,12 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
             </thead>
             <tbody>
                 <?php foreach ($lista_registros as $row):
-                    // Preparar fecha solo (sin hora) para el atributo data-fecha del filtro
                     $solo_fecha = date('Y-m-d', strtotime($row['fecha_ingreso']));
-
-                    // Los técnicos (puesto 1) ven datos de clientes limitados por privacidad
-                    $esTecnico = ($puesto_usuario == 1);
+                    $esTecnico  = ($puesto_usuario == 1);
                     $nombre_mostrar = $esTecnico
                         ? '<span style="color:red; font-weight:bold;">Confidencial</span>'
                         : "<strong>{$row['nombre']} {$row['apellido']}</strong>";
 
-                    // Preparar objeto para el JS: si es técnico, ocultamos datos sensibles
                     $datos_js = $row;
                     if ($esTecnico) {
                         $datos_js['nombre']   = 'Confidencial';
@@ -120,7 +107,7 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                     <td><?= $nombre_mostrar ?></td>
                     <td><?= $row['marca'] ?> <?= $row['modelo'] ?></td>
                     <td><span class="falla-txt"><?= $row['descripcion_problema'] ?></span></td>
-                    <td><?= date('d/m/Y', strtotime($row['fecha_ingreso'])) ?></td>
+                    <td style="white-space:nowrap;"><?= date('d/m/Y', strtotime($row['fecha_ingreso'])) ?></td>
                     <td>
                         <span class="status-pill <?= str_replace(' ', '-', $row['estado']) ?>">
                             <?= ucfirst($row['estado']) ?>
@@ -130,18 +117,15 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                     <?php if (!$esTecnico): ?>
                     <td style="text-align:center;">
                         <?php if ($row['estado'] != 'entregado'): ?>
-                            <!-- Checkbox que abre el modal de confirmación de entrega -->
                             <input type="checkbox" class="check-finalizar"
                                    onchange="abrirModalEntregar('<?= $row['folio'] ?>', '<?= $row['id_gabinete'] ?>', this)">
                         <?php else: ?>
-                            <!-- Ya entregado: solo ícono visual, no hay acción -->
                             <i class="fa-solid fa-check" style="color:green;"></i>
                         <?php endif; ?>
                     </td>
                     <?php endif; ?>
 
                     <td class="acciones">
-                        <!-- Botón Ver: abre modal de solo lectura con todos los detalles -->
                         <button class="btn-ver"
                                 onclick='verDetalles(<?= json_encode($datos_js) ?>)'
                                 title="Ver detalles">
@@ -149,10 +133,8 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                         </button>
 
                         <?php if (!$esTecnico && $row['estado'] != 'entregado'): ?>
-                            <!-- Botón Editar: redirige al formulario de ingreso en modo edición -->
                             <a href="administracion_controller.php?seccion=ingreso&editar=<?= $row['folio'] ?>"
-                               class="btn-editar" title="Editar"
-                               style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none;">
+                               class="btn-editar" title="Editar">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
                         <?php endif; ?>
@@ -163,36 +145,60 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
         </table>
     </div>
 
-    <!-- Contenedor donde el JS dibuja los botones de paginación -->
     <div id="controlesPaginacion" class="paginacion-crud"></div>
 </div>
 
 
 <!-- ========================================================
-     MODAL: VER DETALLES (solo lectura)
-     Se llena dinámicamente por verDetalles() en el JS
+     MODAL: VER DETALLES (COMPLETO)
 ======================================================== -->
 <div id="modalDetalles" class="modal-personalizado">
-    <div class="contenido-modal">
+    <div class="contenido-modal" style="width: 95%; max-width: 900px; max-height: 85vh; overflow-y: auto;"> 
         <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
-        <h2 id="det_folio">Detalles del Ingreso</h2>
-        <div class="grid-detalles">
-            <div class="seccion-det">
-                <h3><i class="fa-solid fa-user"></i> Información</h3>
+        <h2 id="det_folio" style="text-align: center; color: #4f46e5;">Detalles del Ingreso</h2>
+
+        <div class="grid-detalles" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+            <!-- DATOS DEL CLIENTE Y MERCADO -->
+            <div class="seccion-det" style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;"><i class="fa-solid fa-address-card"></i> Cliente y Mercado</h3>
                 <p><strong>Cliente:</strong> <span id="det_nombre"></span></p>
                 <p><strong>WhatsApp:</strong> <span id="det_wa"></span></p>
+                <p><strong>Correo:</strong> <span id="det_correo"></span></p>
+                <p><strong>Como se entero de nosotros:</strong> <span id="det_origen"></span></p>
+                <p><strong>¿Primera vez?:</strong> <span id="det_primera_vez"></span></p>
+                <p><strong>Uso del equipo:</strong> <span id="det_uso_equipo"></span></p>
+                <p><strong>Acepta Promociones:</strong> <span id="det_promociones"></span></p>
             </div>
-            <div class="seccion-det">
-                <h3><i class="fa-solid fa-laptop"></i> Equipo</h3>
-                <p><strong>Dispositivo:</strong> <span id="det_equipo"></span></p>
-                <p><strong>No. Serie:</strong>   <span id="det_serie"></span></p>
-                <p><strong>Falla:</strong>        <span id="det_falla"></span></p>
+
+            <!-- DATOS DEL INGRESO Y LEGALES -->
+            <div class="seccion-det" style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;"><i class="fa-solid fa-file-contract"></i> Ingreso y Condiciones</h3>
+                <p><strong>Estado:</strong> <span id="det_estado" style="text-transform: uppercase; font-weight: bold; color: #4f46e5;"></span></p>
+                <p><strong>Fecha y Hora:</strong> <span id="det_fecha"></span> a las <span id="det_hora"></span></p>
+                <p><strong>Técnico Asignado (ID):</strong> <span id="det_tecnico"></span></p>
+                <p><strong>Autoriza Revisión:</strong> <span id="det_autoriza" style="font-weight: bold; color: #d97706;"></span></p>
+                <p><strong>Tiempo Estimado:</strong> <span id="det_tiempo"></span> días</p>
+                <p><strong>Dudas del cliente:</strong> <span id="det_dudas"></span></p>
             </div>
-            <div class="seccion-det-full">
-                <h3><i class="fa-solid fa-clipboard-check"></i> Revisión Física</h3>
-                <p><strong>Condición:</strong>      <span id="det_condicion"></span></p>
-                <p><strong>Accesorios:</strong>     <span id="det_accesorios"></span></p>
-                <p><strong>Observaciones:</strong>  <span id="det_observaciones"></span></p>
+
+            <!-- DATOS DEL EQUIPO -->
+            <div class="seccion-det" style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;"><i class="fa-solid fa-laptop"></i> Equipo</h3>
+                <p><strong>Tipo:</strong> <span id="det_tipo"></span></p>
+                <p><strong>Marca / Modelo:</strong> <span id="det_equipo"></span></p>
+                <p><strong>No. Serie (SN):</strong> <span id="det_serie"></span></p>
+                <p><strong>Ubicación (Bodega):</strong> <span id="det_gabinete" style="font-weight:bold; color: #e74c3c;"></span></p>
+                <p><strong>Frecuencia de servicio:</strong> <span id="det_frecuencia"></span></p>
+            </div>
+
+            <!-- REVISIÓN FÍSICA -->
+            <div class="seccion-det" style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;"><i class="fa-solid fa-magnifying-glass"></i> Revisión Técnica</h3>
+                <p><strong>Motivo de ingreso:</strong> <span id="det_falla"></span></p>
+                <p><strong>Condición Física:</strong> <span id="det_condicion"></span></p>
+                <p><strong>Accesorios Extra:</strong> <span id="det_accesorios"></span></p>
+                <p><strong>Obs. Recepción:</strong> <span id="det_observaciones"></span></p>
+                <p><strong>Obs. del Equipo:</strong> <span id="det_obs_equipo"></span></p>
             </div>
         </div>
     </div>
@@ -201,21 +207,18 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
 
 <!-- ========================================================
      MODAL: EDITAR REGISTRO
-     Formulario que envía al controlador con accion=editar.
-     Se pre-llena por editarRegistro() en el JS.
 ======================================================== -->
-<div id="modalEditar" class="modal-personalizado" style="display: none;">
+<div id="modalEditar" class="modal-personalizado">
     <div class="contenido-modal">
         <span class="cerrar-modal" onclick="cerrarModalEditar()">&times;</span>
-        <h2 style="color: #e17203; margin-bottom: 20px;">
+        <h2 class="modal-titulo-editar">
             <i class="fa-solid fa-pen-to-square"></i> Editar Registro
         </h2>
         <form action="../controllers/dispositivos_ingresados_crud_controller.php?accion=editar" method="POST">
-            <!-- Campos ocultos de referencia (no visibles al usuario) -->
             <input type="hidden" name="folio"      id="edit_folio">
             <input type="hidden" name="id_cliente" id="edit_id_cliente">
 
-            <h3 style="color: #4a148c; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+            <h3 class="modal-subtitulo">
                 <i class="fa-solid fa-user-pen"></i> Datos del Cliente
             </h3>
             <div class="grid-detalles" style="margin-top: 10px;">
@@ -233,7 +236,7 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                 </div>
             </div>
 
-            <h3 style="color: #4a148c; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 10px;">
+            <h3 class="modal-subtitulo" style="margin-top: 10px;">
                 <i class="fa-solid fa-laptop-medical"></i> Datos del Ingreso
             </h3>
             <div class="grid-detalles" style="margin-top: 10px;">
@@ -258,7 +261,7 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                 </div>
             </div>
 
-            <button type="submit" style="width:100%; background:#e17203; color:white; padding:12px; border:none; border-radius:5px; cursor:pointer; font-weight:bold; margin-top:15px; font-size:1rem;">
+            <button type="submit" class="btn-modal-submit btn-submit-guardar">
                 Guardar Cambios
             </button>
         </form>
@@ -268,16 +271,14 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
 
 <!-- ========================================================
      MODAL: CONFIRMAR ENTREGA
-     Se activa al marcar el checkbox de la columna "Entregado".
-     Envía al controlador con accion=entregar.
 ======================================================== -->
 <div id="modalEntregar" class="modal-personalizado">
     <div class="contenido-modal">
         <span class="cerrar-modal" onclick="cerrarModalEntregar()">&times;</span>
-        <h2 style="color: #155724; border-bottom: 2px solid #d4edda; padding-bottom: 10px;">
+        <h2 class="modal-titulo-entrega">
             <i class="fa-solid fa-check-double"></i> Confirmar Entrega
         </h2>
-        <p style="margin-top: 15px; font-size: 1.1rem;">
+        <p class="texto-confirmar-entrega">
             ¿Estás seguro de marcar el folio
             <strong id="txt_folio_entregar" class="badge-folio"></strong>
             como ENTREGADO al cliente?
@@ -286,12 +287,11 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
         <form action="../controllers/dispositivos_ingresados_crud_controller.php?accion=entregar" method="POST">
             <input type="hidden" id="input_folio_entregar"    name="folio">
             <input type="hidden" id="input_gabinete_entregar" name="id_gabinete">
-            <button type="submit" style="width:100%; background:#28a745; color:white; padding:12px; border:none; border-radius:8px; font-weight:bold; font-size:1.1rem; cursor:pointer; margin-top:15px;">
-                Sí, Registrar Entrega
+            <button type="submit" class="btn-modal-submit btn-submit-entregar">
+                <i class="fa-solid fa-check"></i> Sí, Registrar Entrega
             </button>
         </form>
     </div>
 </div>
 
-<!-- JS externo: maneja filtros, paginación, modales y alertas -->
 <script src="../../public/js/registros_crud.js"></script>

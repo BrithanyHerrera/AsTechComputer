@@ -50,15 +50,44 @@ function cerrarModalEntregar() {
 // y los distribuye en los spans del modal.
 // ----------------------------------------------------------
 function verDetalles(datos) {
-    document.getElementById('det_folio').innerText        = "Folio: " + datos.folio;
-    document.getElementById('det_nombre').innerText       = datos.nombre + " " + datos.apellido;
-    document.getElementById('det_wa').innerText           = datos.whatsapp;
-    document.getElementById('det_equipo').innerText       = datos.marca + " " + datos.modelo;
-    document.getElementById('det_serie').innerText        = datos.numero_serie;
-    document.getElementById('det_falla').innerText        = datos.descripcion_problema;
-    document.getElementById('det_condicion').innerText    = datos.condicion_fisica;
-    document.getElementById('det_accesorios').innerText   = datos.accesorios_entregados;
-    document.getElementById('det_observaciones').innerText = datos.observaciones_recepcion;
+    // 1. Datos básicos e Identificación
+    document.getElementById('det_folio').textContent = "Folio: " + datos.folio;
+    document.getElementById('det_nombre').textContent = datos.nombre + " " + datos.apellido;
+    document.getElementById('det_wa').textContent = datos.whatsapp;
+    document.getElementById('det_correo').textContent = datos.correo_cliente || "No registrado";
+    
+    // 2. Ingreso y Tiempos
+    document.getElementById('det_fecha').textContent = datos.fecha_ingreso;
+    document.getElementById('det_hora').textContent = datos.hora_ingreso;
+    document.getElementById('det_estado').textContent = datos.estado;
+    document.getElementById('det_gabinete').textContent = "Espacio " + datos.id_gabinete;
+    document.getElementById('det_tecnico').textContent = datos.tecnico_asignado || "Sin asignar";
+    document.getElementById('det_tiempo').textContent = datos.tiempo_estimado || "No especificado";
+    
+    // 3. Condiciones Legales
+    document.getElementById('det_autoriza').textContent = datos.autoriza_revision ? datos.autoriza_revision.toUpperCase() : "N/A";
+    document.getElementById('det_dudas').textContent = datos.dudas_cliente || "Ninguna";
+    
+    // 4. Datos del Equipo
+    document.getElementById('det_tipo').textContent = datos.tipo;
+    document.getElementById('det_equipo').textContent = datos.marca + " " + datos.modelo;
+    document.getElementById('det_serie').textContent = datos.numero_serie || "N/A";
+    
+    // 5. Análisis de Mercado
+    document.getElementById('det_origen').textContent = (datos.origen || "N/A").replace(/_/g, ' ');
+    document.getElementById('det_primera_vez').textContent = datos.primera_vez ? datos.primera_vez.toUpperCase() : "N/A";
+    document.getElementById('det_uso_equipo').textContent = (datos.uso_equipo || "N/A").replace(/_/g, ' ');
+    document.getElementById('det_frecuencia').textContent = (datos.frecuencia || "N/A").replace(/_/g, ' ');
+    document.getElementById('det_promociones').textContent = datos.promociones || "N/A";
+
+    // 6. Revisión Física y Fallas
+    document.getElementById('det_falla').textContent = datos.descripcion_problema || "No especificado";
+    document.getElementById('det_condicion').textContent = datos.condicion_fisica || "Ninguna registrada";
+    document.getElementById('det_accesorios').textContent = datos.accesorios_entregados || "Ninguno";
+    document.getElementById('det_observaciones').textContent = datos.observaciones_recepcion || "Ninguna";
+    document.getElementById('det_obs_equipo').textContent = datos.observaciones_equipo || "Ninguna";
+
+    // Mostrar el modal
     document.getElementById('modalDetalles').style.display = 'flex';
 }
 
