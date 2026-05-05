@@ -86,25 +86,31 @@
                     <div class="astech-card">
                         <img src="<?= BASE_URL ?>public/img/diagnostico.JPG" alt="Diagnóstico">
                         <div class="astech-card-body">
-                            <h3>Diagnóstico</h3>
-                            <p>Revisión profunda para identificar el origen exacto de la falla en tu equipo.</p>
-                            <button class="btn-comprar">Solicitar</button>
+                            <h3>Reparación y reemplazo</h3>
+                            <p>Restauración técnica y cambio de componentes dañados con piezas de alta calidad</p>
+                             <a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#reparación-y-reemplazo">
+                            <button class="btn-comprar">Ver mas</button>
+                            </a>
                         </div>
                     </div>
                     <div class="astech-card">
                         <img src="<?= BASE_URL ?>public/img/manten.jpg" alt="Mantenimiento">
                         <div class="astech-card-body">
-                            <h3>Mantenimiento</h3>
-                            <p>Limpieza física y optimización de software para máxima velocidad.</p>
-                            <button class="btn-comprar">Solicitar</button>
+                            <h3>Mantenimiento </h3>
+                            <p>Limpieza física y optimización de software para máxima velocidad</p>
+                            <a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#mantenimiento-preventivo">
+                            <button class="btn-comprar">Ver mas</button>
+                            </a>
                         </div>
                     </div>
                     <div class="astech-card">
                         <img src="<?= BASE_URL ?>public/img/reparacion.jpg" alt="Reparación">
                         <div class="astech-card-body">
-                            <h3>Reparación</h3>
-                            <p>Sustitución de piezas y microelectrónica con garantía extendida.</p>
-                            <button class="btn-comprar">Solicitar</button>
+                            <h3>Servicios especializados</h3>
+                            <p>Asesoria profesional, diagnostico avanzado y asistencia remota, soluciones expertas a tu medida</p>
+                            <a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#servicios-especializados">
+                             <button class="btn-comprar">Ver mas</button>
+                            </a>
                         </div>
                     </div>
                 </div>

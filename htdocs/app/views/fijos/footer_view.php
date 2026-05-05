@@ -18,15 +18,15 @@
                 style="width: 160px; filter: brightness(0) invert(1);">
         </div>
         <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px;">
-            <div class="fila-links">
-                <h4>Servicios</h4>
-                <ul>
-                    <li><a href="#">Reparación y reemplazo</a></li>
-                    <li><a href="#">Mantenimiento preventivo</a></li>
-                    <li><a href="#">Instalación de software</a></li>
-                    <li><a href="#">Servicios especializados</a></li>
-                </ul>
-            </div>
+<div class="fila-links">
+    <h4>Servicios</h4>
+    <ul>
+        <li><a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#reparación-y-reemplazo">Reparación y reemplazo</a></li>
+        <li><a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#mantenimiento-preventivo">Mantenimiento preventivo</a></li>
+        <li><a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#instalación-de-software">Instalación de software</a></li>
+        <li><a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#servicios-especializados">Servicios especializados</a></li>
+    </ul>
+</div>
             <div class="fila-links">
                 <h4>Empresa</h4>
                 <ul>

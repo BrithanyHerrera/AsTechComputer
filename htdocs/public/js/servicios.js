@@ -10,6 +10,7 @@ const resultados = document.getElementById("resultadosBusqueda");
 const modal = document.getElementById("modalServicio");
 const contenidoModal = document.getElementById("contenidoModal");
 const cerrar = document.querySelector(".cerrar");
+const resultados = document.getElementById("resultados"); 
 
 // Abrir buscador
 function abrirBuscador() {
