@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $client->setAuthConfig(__DIR__ . '/../../credenciales.json');
         $client->addScope(Calendar::CALENDAR);
         $service = new Calendar($client);
-        $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@group.calendar.google.com';
+        $calendarId = 'c_83f4c54e847f15f4c1ddba6475de7fe171bfc5e77861406745d8a6f9be385293@group.calendar.google.com';
 
         $start_time = $fecha . 'T' . $hora . ':00-06:00';
         $end_time = date('Y-m-d\TH:i:sP', strtotime($start_time . ' + 1 hour'));

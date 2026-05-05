@@ -99,12 +99,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nombre_marca_cal = ($id_marca == "12") ? $marca_otro : $modeloCita->obtenerNombreMarca($id_marca);
             $nombre_tipo_cal = ($id_tipo_equipo == "7") ? $tipo_equipo_otro : $modeloCita->obtenerNombreTipo($id_tipo_equipo);
 
-            // Se inicializa el cliente de Google y se asocian las credenciales JSON de la cuenta de servicio.
+            // Se inicializa el cliente de Google y se asocian las credenciales JSON de la cuenta de servicio
             $client = new Client();
             $client->setAuthConfig(dirname(__DIR__, 2) . '/credenciales.json');
             $client->addScope(Calendar::CALENDAR);
             $service = new Calendar($client);
-            $calendarId = '4a33353b0ebaa41888fc4ea59bc85921899469a7c9e231d72d8a2887ea62eab5@group.calendar.google.com';
+            $calendarId = 'c_83f4c54e847f15f4c1ddba6475de7fe171bfc5e77861406745d8a6f9be385293@group.calendar.google.com';
 
             // Se calcula el tiempo de inicio y fin (asumiendo una duración estándar de 1 hora por cita).
             $start_time = $fecha . 'T' . $hora . ':00-06:00';
