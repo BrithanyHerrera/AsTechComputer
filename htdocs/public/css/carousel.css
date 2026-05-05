@@ -87,7 +87,6 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-
     color: var(--negro);
     border: none;
     width: 45px;

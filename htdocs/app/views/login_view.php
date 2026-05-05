@@ -1,5 +1,6 @@
 <?php
 /**
+ * 
  * PÁGINA: Login - Panel de Control As Tech Computer
  * PROPÓSITO: Permitir el acceso seguro de usuarios al sistema administrativo mediante autenticación.
  * FUNCIONALIDADES:
@@ -19,7 +20,8 @@
  * - Visualización dinámica de mensajes de error provenientes de PHP.
  * - Protección contra XSS mediante uso de htmlspecialchars en mensajes.
  * - Integración de archivo JavaScript (login.js) para manejo de interacciones adicionales.
- */
+ * 
+ **/
  ?>
 <!DOCTYPE html>
 <html lang="es">
