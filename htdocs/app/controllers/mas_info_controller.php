@@ -21,7 +21,7 @@
  * Posteriormente, construye la URL de petición solicitando campos específicos 
  * como nombre, calificación, reseñas y el total de opiniones en idioma español.
  */
-$api_key = "AIzaSyDOu5r3Nth7bsvBVYr3bwJ8doIH7N6gu24";
+$api_key = "AIzaSyAvPEP5YiCQD5cjxyA_4tb5_u4Lqelb4Tg";
 $place_id = "ChIJH_STTD9JIYQR0OFlsl6ga24";
 
 // Solicitud de campos específicos: nombre, calificación, reseñas y el total de opiniones

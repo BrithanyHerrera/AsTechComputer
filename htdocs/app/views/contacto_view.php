@@ -77,7 +77,8 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
             <div class="map-container">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.0610839695555!2d-105.2183891!3d20.707743999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8421493f4c93f41f%3A0x6e6ba05eb265e1d0!2sAsTech%20Computer!5e0!3m2!1ses!2smx!4v1773751032385!5m2!1ses!2smx"
-                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
             </div>
             <h3>Redes Sociales</h3>
          
