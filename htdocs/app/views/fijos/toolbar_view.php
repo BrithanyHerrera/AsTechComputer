@@ -20,12 +20,12 @@
 // explícito para el uso de cookies analíticas antes de incrustar el script.
 if ($permitirAnaliticas):
     ?>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-862PM8JVQD"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZJ3DCN18Q"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-862PM8JVQD');
+        gtag('config', 'G-QZJ3DCN18Q');
     </script>
 <?php endif; ?>
 
