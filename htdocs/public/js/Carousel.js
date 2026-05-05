@@ -8,46 +8,46 @@
  * - Implementación de animación suave (scroll) con efecto easing.
  * - Mejora de la experiencia de usuario al desplazar múltiples elementos por interacción.
  */
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
 
-    const track = document.getElementById("carouselTrack");
-    const next = document.querySelector(".next");
-    const prev = document.querySelector(".prev");
+    document.querySelectorAll(".carousel").forEach(carousel => {
 
-    function getScrollAmount() {
-        const logo = track.querySelector(".logos");
-        return (logo.offsetWidth + 20) * 3;
-    }
+        const track = carousel.querySelector(".carousel-track");
+        if (!track) return;
 
-    function smoothScroll(element, target, duration = 500) {
-        const start = element.scrollLeft;
-        const change = target - start;
-        const startTime = performance.now();
+        const next = carousel.querySelector(".next");
+        const prev = carousel.querySelector(".prev");
 
-        function animateScroll(currentTime) {
-            const timeElapsed = currentTime - startTime;
-            const progress = Math.min(timeElapsed / duration, 1);
-
-            const ease = progress < 0.5
-                ? 2 * progress * progress
-                : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-            element.scrollLeft = start + change * ease;
-
-            if (timeElapsed < duration) {
-                requestAnimationFrame(animateScroll);
-            }
+        if (!track.dataset.cloned) {
+            track.innerHTML += track.innerHTML;
+            track.dataset.cloned = "true";
         }
 
-        requestAnimationFrame(animateScroll);
-    }
+        let position = 0;
+        const speed = 1;
 
-    next.addEventListener("click", () => {
-        smoothScroll(track, track.scrollLeft + getScrollAmount(), 600);
-    });
+        const logosWidth = track.scrollWidth / 2;
 
-    prev.addEventListener("click", () => {
-        smoothScroll(track, track.scrollLeft - getScrollAmount(), 600);
+        function move() {
+            position += speed;
+
+            if (position >= logosWidth) {
+                position = 0;
+            }
+
+            track.style.transform = `translateX(${-position}px)`;
+        }
+
+        let auto = setInterval(move, 20);
+
+        carousel.addEventListener("mouseenter", () => clearInterval(auto));
+        carousel.addEventListener("mouseleave", () => {
+            auto = setInterval(move, 20);
+        });
+
+        next?.addEventListener("click", () => position += 200);
+        prev?.addEventListener("click", () => position -= 200);
+
     });
 
 });

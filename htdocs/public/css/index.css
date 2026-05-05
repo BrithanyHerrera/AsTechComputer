@@ -78,7 +78,7 @@ body {
     font-size: 2.8rem;
     font-weight: 900;
     margin-bottom: 40px;
-    color: var(--color-texto);
+    color: #2d2d31;
     letter-spacing: -0.8px;
 }
 
@@ -365,9 +365,9 @@ body {
 }
 
 .imagen-about img {
-    width: 100%;
+    width: auto;
     height: 450px;
-    object-fit: cover;
+   
     border-radius: var(--radio-borde);
     box-shadow: var(--sombra-hover);
 }
@@ -463,6 +463,13 @@ body {
     color: var(--color-texto);
     margin-bottom: 20px;
     line-height: 1.5;
+}
+.bloque{
+    width:90%;
+  margin-left: 90px;
+   margin-bottom: 100px;
+   
+
 }
 
 /* =========================================

@@ -1,13 +1,15 @@
 <?php
-//PAGINA:CONFIG.PHP
-//Se usa en los urls para dirijir a la raiz del proyecto:htdocs, en caso de que esten en otra pagina 
+// PAGINA: CONFIG.PHP
+
 $protocolo = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $host = $_SERVER['HTTP_HOST'];
 
-// Detecta solo la raíz del proyecto (htdocs)
+// Detecta solo la raíz del proyecto
 $base = dirname($_SERVER['SCRIPT_NAME']);
-$base = explode('/app', $base)[0]; // corta en /app
+$base = explode('/app', $base)[0];
+
+// Elimina slash final si existe
+$base = rtrim($base, '/');
 
 define('BASE_URL', $protocolo . '://' . $host . $base . '/');
-
 ?>

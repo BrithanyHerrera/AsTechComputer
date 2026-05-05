@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/convenios.css">
+    <link rel="stylesheet" href="../../public/css/carousel.css">
 </head>
 <body>
     <?php 
@@ -42,29 +43,8 @@
     </section>
 
     <div class="contenedor-convenios">
-
-        <div class="bloque">
-            <h2 class="titulo-bloque">Marcas</h2>
-
-            <div class="carousel">
-                <button class="btn prev">&#10094;</button>
-
-                <div class="carousel-track" id="carouselTrack">
-                    <div class="logos"><img src="../../public/img/dell.png" style="width:100%;"></div>
-                    <div class="logos"><img src="../../public/img/lenovo.png" style="width:100%;"></div>
-                    <div class="logos"><img src="../../public/img/hp.png" style="width:100%;"></div>
-                    <div class="logos"><img src="../../public/img/acer.png" style="width:100%;"></div>
-                    <div class="logos"><img src="../../public/img/samsung.png" style="width:100%;"></div>
-                    <div class="logos"><img src="../../public/img/asus.png" style="width:100%;"></div>
-                    <div class="logos"><img src="../../public/img/huawei.png" style="width:100%;"></div>
-                    <div class="logos"><img src="../../public/img/msi.png" style="width:100%;"></div>
-                    <div class="logos"><img src="../../public/img/kingston.png" style="width:100%;"></div>
-                    <div class="logos"><img src="../../public/img/xpg.jfif" style="width:100%;"></div>
-                </div>
-
-                <button class="btn next">&#10095;</button>
-            </div>
-        </div>
+          <h2 class="titulo-bloque">Marcas</h2>
+        <?php require_once __DIR__ . '/carousel_marcas.php'; ?>
 
         <div class="bloque">
             <h2 class="titulo-bloque">Proveedores</h2>

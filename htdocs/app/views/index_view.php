@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/toolbar.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/footer.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/index.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/carousel.css">
 </head>
 
 <body>
@@ -74,7 +75,7 @@
                     <p><?= htmlspecialchars($info['quienes_somos']) ?></p>
                 </div>
                 <div class="imagen-about">
-                    <img src="<?= BASE_URL ?>public/img/trabajado.JPG" alt="Trabajo en Astech">
+                    <img src="<?= BASE_URL ?>public/img/quienes_somos.JPG" alt="Trabajo en Astech">
                 </div>
             </div>
         </section>
@@ -176,14 +177,20 @@
                 </div>
             </div>
         </section>
-    </main>
 
+        
+
+    <h2 class="titulo-seccion">Marcas</h2>
+    <?php require_once __DIR__ . '/carousel_marcas.php'; ?>
+    </main>
     <?php
     $ruta_prefijo = "";
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>
 
     <script src="<?= BASE_URL ?>public/js/index.js"></script>
+    
+    <script src="<?= BASE_URL ?>public/js/Carousel.js"></script>
 </body>
 
 </html>

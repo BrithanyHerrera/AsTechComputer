@@ -14,8 +14,9 @@
 <footer class="pie-pagina">
     <div class="contenedor-pie">
         <div class="seccion-logo">
-            <img src="<?php echo BASE_URL; ?>public/img/logoATC.png" alt="AS TECH Logo"
-                style="width: 160px; filter: brightness(0) invert(1);">
+            <a href="<?php echo BASE_URL; ?>index.php">
+            <img src="<?php echo BASE_URL; ?>public/img/logoastech.png" alt="AS TECH Logo">
+                </a>
         </div>
         <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px;">
 <div class="fila-links">
