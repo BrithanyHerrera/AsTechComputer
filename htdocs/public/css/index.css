@@ -58,7 +58,7 @@ body {
 .contenedor-max {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 80px 20px;
+    padding: 60px 20px;
     animation: fadeInSection 1.2s ease-out;
 }
 
@@ -77,8 +77,8 @@ body {
     text-align: center;
     font-size: 2.8rem;
     font-weight: 900;
-    margin-bottom: 200px;
-    color: var(--color-texto);
+    margin-bottom: 40px;
+    color: #2d2d31;
     letter-spacing: -0.8px;
 }
 
@@ -280,6 +280,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
+
 }
 
 .astech-card {
@@ -290,6 +291,8 @@ body {
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     text-align: left;
     padding-bottom: 30px;
+        border:1px solid #c55a0218;
+   
 }
 
 .astech-card:hover {
@@ -336,7 +339,7 @@ body {
  */
 .seccion-about {
     background-color: var(--color-blanco);
-    padding: 100px 20px;
+    padding: 50px 20px;
 }
 
 .grid-about {
@@ -362,9 +365,9 @@ body {
 }
 
 .imagen-about img {
-    width: 100%;
+    width: auto;
     height: 450px;
-    object-fit: cover;
+   
     border-radius: var(--radio-borde);
     box-shadow: var(--sombra-hover);
 }
@@ -381,6 +384,15 @@ body {
     border-radius: var(--radio-borde);
     text-align: center;
     box-shadow: var(--sombra-suave);
+    border:1px solid #c55a0244;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+ 
+    
+}
+.valor-item:hover{
+ transform: translateY(-10px);
+
 }
 
 .valor-item i {
@@ -422,6 +434,11 @@ body {
     align-items: center;
     box-shadow: var(--sombra-suave);
     overflow: hidden;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        border:1px solid #c55a0223
+}
+.caja-ceo:hover{
+        transform: translateY(-10px);
 }
 
 .ceo-img {
@@ -446,6 +463,13 @@ body {
     color: var(--color-texto);
     margin-bottom: 20px;
     line-height: 1.5;
+}
+.bloque{
+    width:90%;
+  margin-left: 90px;
+   margin-bottom: 100px;
+   
+
 }
 
 /* =========================================

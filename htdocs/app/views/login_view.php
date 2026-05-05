@@ -1,5 +1,6 @@
 <?php
 /**
+ * 
  * PÁGINA: Login - Panel de Control As Tech Computer
  * PROPÓSITO: Permitir el acceso seguro de usuarios al sistema administrativo mediante autenticación.
  * FUNCIONALIDADES:
@@ -19,7 +20,8 @@
  * - Visualización dinámica de mensajes de error provenientes de PHP.
  * - Protección contra XSS mediante uso de htmlspecialchars en mensajes.
  * - Integración de archivo JavaScript (login.js) para manejo de interacciones adicionales.
- */
+ * 
+ **/
  ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -30,7 +32,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../public/css/login.css">
   <link rel="stylesheet" href="../../public/css/toolbar.css">
-  <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
+  <link rel="icon" href="../../public/img/astech_icon.ico" type="image/x-icon">  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>

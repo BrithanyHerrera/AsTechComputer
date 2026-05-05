@@ -64,26 +64,24 @@ $lista_servicios = $modeloServicios->obtenerServicios($id_tipo);
 // Obtener todos los servicios
 $todos_los_servicios = $modelo->obtenerServicios($id_tipo);
 
-// Agrupamos los servicios por su categoría
 $servicios_agrupados = [];
-foreach ($todos_los_servicios as $servicio) {
-    // Usamos el campo 'id_tipo_servicio' o si tuvieras el nombre de la categoría mejor
-    // Para este ejemplo asumiremos que quieres el nombre de la sección
-    $seccion = $servicio['id_tipo_servicio']; 
-    
-    // Mapeo amigable de nombres de sección según tu lógica de IDs
-    $nombres_secciones = [
-        1 => "Mantenimiento preventivo",
-        2 => "Reparación y Reemplazo",
-        3 => "Instalación de Software",
-        4 => "Servicios de entrega",
-        5 => "Servicios Especializados"
-    ];
-    
-    $nombre_final = $nombres_secciones[$seccion] ?? "Otros Servicios";
-    $servicios_agrupados[$nombre_final][] = $servicio;
-}
 
+if (!empty($todos_los_servicios)) {
+    foreach ($todos_los_servicios as $servicio) {
+        $seccion = $servicio['id_tipo_servicio']; 
+
+        $nombres_secciones = [
+            1 => "Mantenimiento preventivo",
+            2 => "Reparación y Reemplazo",
+            3 => "Instalación de Software",
+            4 => "Servicios de entrega",
+            5 => "Servicios Especializados"
+        ];
+
+        $nombre_final = $nombres_secciones[$seccion] ?? "Otros Servicios";
+        $servicios_agrupados[$nombre_final][] = $servicio;
+    }
+}
 // Ahora pasamos $servicios_agrupados a la vista
 require_once dirname(__DIR__) . '/views/servicios_view.php';
 ?>

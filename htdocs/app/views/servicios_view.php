@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../../public/css/servicios.css">
     <link rel="stylesheet" href="../../public/css/toolbar.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
-    <link rel="icon" href="../../public/img/Astech%20ICO.ico" type="image/x-icon">    
+    <link rel="icon" href="../../public/img/astech_icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
@@ -90,20 +90,18 @@
         // Definimos que los últimos 5 IDs registrados se consideren "Nuevos"
         $umbral_novedad = 4;
         ?>
-        <?php if (!empty($servicios_agrupados)): ?>
+<?php if (!empty($servicios_agrupados)): ?>
 
-            <?php foreach ($servicios_agrupados as $titulo_seccion => $lista_servicios): ?>
+    <?php foreach ($servicios_agrupados as $titulo_seccion => $lista_servicios): ?>
 
-                <!-- HEADER DE SECCIÓN -->
-                <div class="seccion-header">
-                    <h2 class="titulo-categoria"><?php echo $titulo_seccion; ?></h2>
-                    <hr class="linea-separadora">
-                </div>
+        <div class="seccion-header" id="<?php echo strtolower(str_replace(' ', '-', $titulo_seccion)); ?>">
+            <h2 class="titulo-categoria"><?php echo $titulo_seccion; ?></h2>
+            <hr class="linea-separadora">
+        </div>
 
                 <!-- GRID DE TARJETAS -->
                 <div class="servicios-grid">
                     <?php foreach ($lista_servicios as $servicio): ?>
-
                         <div class="card-servicio" onclick="verServicio(<?php echo $servicio['id_servicio']; ?>)">
                             <?php if ($servicio['id_servicio'] > ($max_id - $umbral_novedad)): ?>
                                 <span class="badge-nuevo">¡ N u e v o !</span>
@@ -251,7 +249,7 @@
         const modal = document.getElementById("modalServicio");
         const contenidoModal = document.getElementById("contenidoModal");
         const cerrar = document.querySelector(".cerrar");
-        const resultados = document.getElementById("resultados"); // <-- Esto evita el ReferenceError
+        // <-- Esto evita el ReferenceError
 
         // Manejar clics en los resultados de búsqueda (si existen)
         if (resultados) {

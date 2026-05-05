@@ -66,7 +66,7 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../public/css/administracion.css">
   <link rel="stylesheet" href="../../public/css/toolbar.css">
-  <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
+<link rel="icon" href="<?= BASE_URL ?>public/img/astech_icon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 

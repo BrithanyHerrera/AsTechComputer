@@ -110,6 +110,27 @@ html, body {
 .redes-sociales i:hover {
     color: var(--color-naranja, #e17203) !important;
 }
+.seccion-logo {
+    transition: transform 0.4s ease;
+}
+
+.seccion-logo:hover {
+    transform: translateY(-10px);
+}
+
+.seccion-logo img {
+    width: 160px;
+    filter: brightness(0) invert(1);
+    transition: all 0.4s ease;
+}
+
+.seccion-logo:hover img {
+    filter: brightness(1.5) invert(0);
+    transform: scale(1.1);
+
+}
+
+
 
 /* =========================================
    5. BARRA DE DERECHOS Y COPYRIGHT
@@ -146,7 +167,7 @@ html, body {
         margin: 0 auto;
         display: block;
     }
-
+   
     .redes-sociales ul {
         justify-content: center;
     }

@@ -30,10 +30,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" href="<?= BASE_URL ?>public/img/Astech ICO.ico" type="image/x-icon">
+    <link rel="icon" href="<?= BASE_URL ?>public/img/astech_icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/toolbar.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/footer.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/index.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>public/css/carousel.css">
 </head>
 
 <body>
@@ -74,7 +75,7 @@
                     <p><?= htmlspecialchars($info['quienes_somos']) ?></p>
                 </div>
                 <div class="imagen-about">
-                    <img src="<?= BASE_URL ?>public/img/trabajado.JPG" alt="Trabajo en Astech">
+                    <img src="<?= BASE_URL ?>public/img/quienes_somos.jpg" alt="Trabajo en Astech">
                 </div>
             </div>
         </section>
@@ -84,27 +85,33 @@
                 <h2 class="titulo-seccion">Nuestros Servicios</h2>
                 <div class="grid-cards">
                     <div class="astech-card">
-                        <img src="<?= BASE_URL ?>public/img/diagnostico.JPG" alt="Diagnóstico">
+                        <img src="<?= BASE_URL ?>public/img/diagnostico.jpg" alt="Diagnóstico">
                         <div class="astech-card-body">
-                            <h3>Diagnóstico</h3>
-                            <p>Revisión profunda para identificar el origen exacto de la falla en tu equipo.</p>
-                            <button class="btn-comprar">Solicitar</button>
+                            <h3>Reparación y reemplazo</h3>
+                            <p>Restauración técnica y cambio de componentes dañados con piezas de alta calidad</p>
+                             <a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#reparación-y-reemplazo">
+                            <button class="btn-comprar">Ver mas</button>
+                            </a>
                         </div>
                     </div>
                     <div class="astech-card">
                         <img src="<?= BASE_URL ?>public/img/manten.jpg" alt="Mantenimiento">
                         <div class="astech-card-body">
-                            <h3>Mantenimiento</h3>
-                            <p>Limpieza física y optimización de software para máxima velocidad.</p>
-                            <button class="btn-comprar">Solicitar</button>
+                            <h3>Mantenimiento </h3>
+                            <p>Limpieza física y optimización de software para máxima velocidad</p>
+                            <a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#mantenimiento-preventivo">
+                            <button class="btn-comprar">Ver mas</button>
+                            </a>
                         </div>
                     </div>
                     <div class="astech-card">
                         <img src="<?= BASE_URL ?>public/img/reparacion.jpg" alt="Reparación">
                         <div class="astech-card-body">
-                            <h3>Reparación</h3>
-                            <p>Sustitución de piezas y microelectrónica con garantía extendida.</p>
-                            <button class="btn-comprar">Solicitar</button>
+                            <h3>Servicios especializados</h3>
+                            <p>Asesoria profesional, diagnostico avanzado y asistencia remota, soluciones expertas a tu medida</p>
+                            <a href="<?php echo BASE_URL; ?>app/controllers/servicios_controller.php#servicios-especializados">
+                             <button class="btn-comprar">Ver mas</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -170,14 +177,20 @@
                 </div>
             </div>
         </section>
-    </main>
 
+        
+
+    <h2 class="titulo-seccion">Marcas</h2>
+    <?php require_once __DIR__ . '/carousel_marcas.php'; ?>
+    </main>
     <?php
     $ruta_prefijo = "";
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>
 
     <script src="<?= BASE_URL ?>public/js/index.js"></script>
+    
+    <script src="<?= BASE_URL ?>public/js/carousel.js"></script>
 </body>
 
 </html>

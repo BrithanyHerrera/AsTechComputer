@@ -7,9 +7,9 @@
 
 class ServicioModel {
     // 1. Usaremos "conexion" en toda la clase
-    private $conexion;
+    private mysqli $conexion;
 
-    public function __construct($conexion) {
+    public function __construct( mysqli $conexion) {
         $this->conexion = $conexion;
     }
 
@@ -30,7 +30,7 @@ class ServicioModel {
         }
     }
 
-    public function buscarServicios($termino) {
+    public function buscarServicios(string $termino) {
         $q = "%$termino%";
         $sql = "SELECT tipo_servicio, precio FROM servicios WHERE estado = 'activo' AND tipo_servicio LIKE ? LIMIT 5";
         // Ahora esto ya no dará error porque arriba definimos $this->conexion
@@ -40,13 +40,15 @@ class ServicioModel {
         return $stmt->get_result();
     }
 
-    public function guardarServicio($nombre, $descripcion, $precio, $id_tipo) {
+    public function guardarServicio(string $nombre, string $descripcion, string $precio, string $id_tipo) {
         $query = "INSERT INTO servicios (nombre, descripcion, precio, id_tipo_servicio) VALUES (?, ?, ?, ?)";
         // Cambiado de $this->db a $this->conexion
         $stmt = $this->conexion->prepare($query);
         $stmt->bind_param("ssdi", $nombre, $descripcion, $precio, $id_tipo);
         return $stmt->execute();
     }
+    
 }
+
 
 ?>
