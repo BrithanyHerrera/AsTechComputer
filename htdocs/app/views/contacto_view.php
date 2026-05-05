@@ -16,7 +16,7 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - Taller</title>
-    <link rel="icon" href="../../public/img/Astech ICO.ico" type="image/x-icon">
+<link rel="icon" href="<?= BASE_URL ?>public/img/astech_icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

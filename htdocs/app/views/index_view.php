@@ -30,7 +30,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" href="<?= BASE_URL ?>public/img/Astech ICO.ico" type="image/x-icon">
+    <link rel="icon" href="<?= BASE_URL ?>public/img/astech_icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/toolbar.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/footer.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>public/css/index.css">
@@ -75,7 +75,7 @@
                     <p><?= htmlspecialchars($info['quienes_somos']) ?></p>
                 </div>
                 <div class="imagen-about">
-                    <img src="<?= BASE_URL ?>public/img/quienes_somos.JPG" alt="Trabajo en Astech">
+                    <img src="<?= BASE_URL ?>public/img/quienes_somos.jpg" alt="Trabajo en Astech">
                 </div>
             </div>
         </section>
@@ -85,7 +85,7 @@
                 <h2 class="titulo-seccion">Nuestros Servicios</h2>
                 <div class="grid-cards">
                     <div class="astech-card">
-                        <img src="<?= BASE_URL ?>public/img/diagnostico.JPG" alt="Diagnóstico">
+                        <img src="<?= BASE_URL ?>public/img/diagnostico.jpg" alt="Diagnóstico">
                         <div class="astech-card-body">
                             <h3>Reparación y reemplazo</h3>
                             <p>Restauración técnica y cambio de componentes dañados con piezas de alta calidad</p>
@@ -190,7 +190,7 @@
 
     <script src="<?= BASE_URL ?>public/js/index.js"></script>
     
-    <script src="<?= BASE_URL ?>public/js/Carousel.js"></script>
+    <script src="<?= BASE_URL ?>public/js/carousel.js"></script>
 </body>
 
 </html>
