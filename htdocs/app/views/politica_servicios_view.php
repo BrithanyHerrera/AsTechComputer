@@ -1,9 +1,15 @@
-<script>
-    /* POLITICA_SERVICIOS_VIEW.PHP */
-    /*
-    Este archivo actúa como la Vista (View) encargada de desplegar la Política de Prestación de Servicios de AsTech Computer. Su objetivo es informar claramente a los clientes sobre los procesos operativos de la empresa: desde la recepción de los equipos y la emisión de diagnósticos/presupuestos, hasta las reglas sobre garantías, refacciones y abandono de dispositivos. Diseñado con una estructura modular, este archivo incorpora las hojas de estilo corporativas y se integra armónicamente con la barra de navegación (Toolbar) y el pie de página (Footer).
-    */
-</script>
+<?php
+/* POLITICA_SERVICIOS_VIEW.PHP */
+/*
+ * PÁGINA: Vista de la Política de Servicios (Service Policy View) - As Tech Computer
+ * PROPÓSITO: Desplegar el resumen de las políticas de prestación de servicios, informando a los clientes sobre los lineamientos operativos de la empresa y ofreciendo la descarga del documento legal completo.
+ * FUNCIONALIDADES:
+ * - Estructuración semántica del contenido normativo mediante un diseño modular y accesible.
+ * - Desglose resumido de los pilares del servicio técnico, estableciendo reglas claras sobre diagnóstico, pagos, garantías, responsabilidades del cliente y tiempos de almacenaje.
+ * - Integración de un botón interactivo para la descarga directa del documento oficial de políticas en formato PDF.
+ * - Inyección dinámica de los componentes fijos de la arquitectura MVC, incluyendo la barra de navegación (Toolbar) y el pie de página (Footer) con sus respectivas rutas relativas.
+ */
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -23,6 +29,8 @@
 
 <body style="background-color: #f4f4f4;">
     <?php
+    // El sistema define la profundidad del directorio actual ($ruta_prefijo)
+    // e invoca al controlador del Toolbar para renderizar el menú global de forma dinámica.
     require_once __DIR__ . "/../config/config.php";
     $ruta_prefijo = "../../../";
     include __DIR__ . "/../controllers/toolbar_controller.php";
@@ -91,6 +99,8 @@
     </main>
 
     <?php
+    // El sistema establece la ruta relativa hacia la raíz y delega 
+    // la renderización del pie de página al controlador correspondiente.
     $ruta_prefijo = "../../../";
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>
