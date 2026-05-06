@@ -75,7 +75,7 @@ function es_activo($actual, $objetivo) {
 
             <div class="seccion-guardado">
                 <input type="hidden" name="seccion_editada" id="seccion_editada" value="portada">
-                <button type="submit" class="boton-guardar">Actualizar Sección</button>
+                <button type="submit" class="boton-primario">Actualizar Sección</button>
             </div>
 
         </form>

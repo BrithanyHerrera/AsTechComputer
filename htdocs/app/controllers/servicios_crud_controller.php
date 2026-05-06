@@ -21,12 +21,19 @@ $id_tipo = isset($_GET['id_tipo_servicio']) ? $_GET['id_tipo_servicio'] : null;
 
 
 
-$busqueda = $_GET['busqueda'] ?? '';
+// Reemplaza la lógica de búsqueda actual por esta:
+$filtros = [
+    'busqueda'   => $_GET['busqueda'] ?? '',
+    'id_tipo'    => $_GET['filtro_tipo'] ?? '',
+    'precio_max' => $_GET['precio_max'] ?? ''
+];
 
-if (!empty($busqueda)) {
-    $servicios = $modelo->buscarServicios($busqueda);
+// Si hay cualquier filtro activo, usamos la búsqueda avanzada
+if (!empty($filtros['busqueda']) || !empty($filtros['id_tipo']) || !empty($filtros['precio_max'])) {
+    $resultado = $modelo->buscarServiciosAvanzado($filtros);
 } else {
-    $servicios = $modelo->obtenerServicios(); // tu método normal
+    // Si no hay filtros, podrías usar obtenerServicios() o el mismo avanzado vacío
+    $resultado = $modelo->buscarServiciosAvanzado([]); 
 }
 // --- PROCESAMIENTO DE ACCIONES ---
 
@@ -82,15 +89,7 @@ if ($accion == 'eliminar' && isset($_GET['id'])) {
     exit();
 }
 
-// BUSCAR
-if ($accion == 'buscar') {
-    $q = $_GET['q'] ?? '';
-    $resultado = $modelo->buscarServicios($q);
-    while ($row = $resultado->fetch_assoc()) {
-        echo "<div class='resultado-item'><strong>{$row['tipo_servicio']}</strong><br>$ {$row['precio']}</div>";
-    }
-    exit();
-}
+
 
 
 ?>

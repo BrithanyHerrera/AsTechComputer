@@ -47,7 +47,7 @@
                 <i class="fa-solid fa-shield-check" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 250px; color: rgba(225, 114, 3, 0.04); z-index: 0;"></i>
 
                 <div style="position: relative; z-index: 1;">
-                    <img src="../../public/img/logoATC.png" alt="Logo AsTech" style="max-width: 140px; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                    <img src="../../public/img/logoastech.png" alt="Logo AsTech" style="max-width: 140px; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
                     <h2 style="color: var(--purpura-oscuro, #52073a); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 35px; font-weight: 900;">AsTech Computer®</h2>
 
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; text-align: left; max-width: 600px; margin: 0 auto; background: #fbfbfd; padding: 30px; border-radius: 8px; border-left: 5px solid var(--naranja-principal, #e17203);">

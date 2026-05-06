@@ -46,7 +46,7 @@ html, body {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr; 
     gap: 40px;
-    align-items: start; 
+                align-items: start; 
 }
 
 /* =========================================
@@ -67,7 +67,7 @@ html, body {
 .fila-links ul {
     list-style: none;
     padding: 0;
-}
+                }
 
 .fila-links li {
     margin-bottom: 15px;

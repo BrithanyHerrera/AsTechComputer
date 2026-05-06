@@ -29,7 +29,7 @@ require_once __DIR__ . "/../../controllers/empleado_crud_controller.php";
         </button>
     </div>
 <!--formulario para registrar datos del empleado -->
-    <div id="formulario-empleado" class="modal-formulario" style="display: none;">
+    <div id="formulario-empleado" class="modal-formulario" style="display: none;" id="form-agregar">
         <div class="contenido-modal">
             <span class="cerrar" onclick="cerrarFormulario()">&times;</span>
             <h3>Registrar Nuevo Empleado</h3>

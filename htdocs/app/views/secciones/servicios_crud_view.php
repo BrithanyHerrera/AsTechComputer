@@ -21,21 +21,43 @@ if (!isset($conexion)) {
 
 
 <!-- BUSCADOR DE SERVICIOS -->
+
 <div class="contenedor-crud">
     <div class="buscador-container">
-<form method="GET" class="buscador-form">
-    <input type="hidden" name="seccion" value="servicios">
+        <form method="GET" class="buscador-form" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end;">
+            <input type="hidden" name="seccion" value="servicios">
 
-    <input 
-        type="text" 
-        name="busqueda" 
-        class="buscador-input"
-        placeholder="Buscar servicio..."
-        value="<?= htmlspecialchars($_GET['busqueda'] ?? '') ?>"
-    >
+            <div class="grupo-filtro">
+                <label><small>Palabra clave:</small></label>
+                <input type="text" name="busqueda" class="buscador-input" placeholder="Buscar..." value="<?= htmlspecialchars($_GET['busqueda'] ?? '') ?>">
+            </div>
 
-    <button type="submit" class="buscador-btn">Buscar</button>
+            <div class="grupo-filtro">
+                <label><small>Categoría:</small></label>
+                <select name="filtro_tipo" class="buscador-input">
+                    <option value="">Todos los tipos</option>
+                    <?php
+                    $tipos = $conexion->query("SELECT * FROM tipos_servicios");
+                    while($t = $tipos->fetch_assoc()): ?>
+                        <option value="<?= $t['id_tipo_servicio'] ?>" <?= (isset($_GET['filtro_tipo']) && $_GET['filtro_tipo'] == $t['id_tipo_servicio']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($t['nombre_tipo']) ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+
+            <div class="grupo-filtro">
+                <label><small>Precio Máx:</small></label>
+                <input type="number" name="precio_max" class="buscador-input" style="width: 100px;" placeholder="Max $" value="<?= htmlspecialchars($_GET['precio_max'] ?? '') ?>">
+            </div>
+
+            <button type="submit" class="buscador-btn">Filtrar</button>
+           <a href="?seccion=servicios" class="btn-limpiar">
+            <i class="fa-solid fa-eraser"></i> Limpiar
+        </a>
+        </form>
     </div>
+
 </form>
 
    <!-- FORMULARIO PARA AGREGAR UN NUEVO SERVICIO  -->
@@ -44,18 +66,18 @@ if (!isset($conexion)) {
             <i class="fa-solid fa-plus"></i> Nuevo Servicio
         </button>
     </div>
-<div id="formulario-servicio" class="modal-formulario" style="display: none;">
+<div id="formulario-servicio" class="modal-formulario" style="display: none;" >
     <div class="contenido-modal modal-purpura">
     
         <h3>Registrar Nuevo Servicio</h3>
-        <form action="../controllers/servicios_crud_controller.php?accion=agregar" method="POST">
+        <form action="../controllers/servicios_crud_controller.php?accion=agregar" method="POST" id="form-agregar">
             <div class="grupo-input">
                 <label>Nombre del Servicio:</label>
-                <input type="text" name="tipo_servicio" required placeholder="Ej. Reparación de Laptop">
+                <input type="text" name="tipo_servicio" required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$" placeholder="Ej. Reparación de Laptop">
             </div>
             <div class="grupo-input">
                 <label>Codigo</label>
-                <input type="text" name="codigo_servicio" required placeholder="Ej. AG-001">
+                <input type="text" name="codigo_servicio" required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$" placeholder="Ej. AG-001">
             </div>
             <div class="grupo-input">
     <label> Tipo de Servicio:</label>
@@ -73,23 +95,23 @@ if (!isset($conexion)) {
 </div>
             <div class="grupo-input">
                 <label>Descripción:</label>
-                <textarea name="descripcion" required></textarea>
+                <textarea name="descripcion"required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"></textarea>
             </div>
             <div class="grupo-input">
                 <label>Procedimiento:</label>
-                <textarea name="procedimiento" required></textarea>
+                <textarea name="procedimiento" required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"></textarea>
             </div>
              <div class="grupo-input">
                 <label>Beneficios:</label>
-                <textarea name="beneficios" required></textarea>
+                <textarea name="beneficios" required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"></textarea>
             </div>
              <div class="grupo-input">
                 <label>Indicaciones:</label>
-                <textarea name="indicaciones" required></textarea>
+                <textarea name="indicaciones" required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"></textarea>
             </div>
              <div class="grupo-input">
                 <label>Exclusiones:</label>
-                <textarea name="exclusiones" required></textarea>
+                <textarea name="exclusiones" required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"></textarea>
             </div>
           <div class="flex-form-ayuda">
     <div class="campos-principales">
@@ -147,63 +169,52 @@ if (!isset($conexion)) {
                 <tr>
                      <tr>
 <?php
-$busqueda = $_GET['busqueda'] ?? '';
+// 1. Capturamos los nuevos filtros del GET
+$busqueda   = $_GET['busqueda'] ?? '';
+$filtro_tipo = $_GET['filtro_tipo'] ?? '';
+$precio_max  = $_GET['precio_max'] ?? '';
 
+// 2. Base de la consulta
+$query = "SELECT 
+            s.*, 
+            t.nombre_tipo
+          FROM servicios s
+          LEFT JOIN tipos_servicios t ON s.id_tipo_servicio = t.id_tipo_servicio
+          WHERE 1=1"; // El 1=1 es para facilitar la concatenación de ANDs
+
+// 3. Filtro por palabra clave (Buscador original)
 if (!empty($busqueda)) {
-
     $like = "%" . $conexion->real_escape_string($busqueda) . "%";
-
-    $query = "SELECT 
-                s.id_servicio,
-                s.tipo_servicio,
-                s.descripcion,
-                s.procedimiento,
-                s.beneficios,
-                s.indicaciones,
-                s.exclusiones,
-                s.imagen_servicio,
-                s.tiempo_estimado,
-                s.precio,
-                s.estado,
-                t.nombre_tipo
-              FROM servicios s
-              LEFT JOIN tipos_servicios t 
-              ON s.id_tipo_servicio = t.id_tipo_servicio
-              WHERE s.tipo_servicio LIKE '$like'
-              OR s.codigo_servicio LIKE '$like'
-              OR s.descripcion LIKE '$like'
-              OR s.procedimiento LIKE '$like'
-              OR s.beneficios LIKE '$like'
-              OR s.indicaciones LIKE '$like'
-              OR s.exclusiones LIKE '$like'";
-
-} else {
-
-    $query = "SELECT 
-                s.id_servicio,
-                s.tipo_servicio,
-                s.descripcion,
-                s.procedimiento,
-                s.beneficios,
-                s.indicaciones,
-                s.exclusiones,
-                s.imagen_servicio,
-                s.tiempo_estimado,
-                s.precio,
-                s.estado,
-                t.nombre_tipo
-              FROM servicios s
-              LEFT JOIN tipos_servicios t 
-              ON s.id_tipo_servicio = t.id_tipo_servicio";
+    $query .= " AND (s.tipo_servicio LIKE '$like' 
+                OR s.codigo_servicio LIKE '$like' 
+                OR s.descripcion LIKE '$like'
+                OR s.procedimiento LIKE '$like')";
 }
+
+// 4. Filtro por Categoría (ID Tipo Servicio)
+if (!empty($filtro_tipo)) {
+    $tipo_id = (int)$filtro_tipo;
+    $query .= " AND s.id_tipo_servicio = $tipo_id";
+}
+
+// 5. Filtro por Precio Máximo
+if (!empty($precio_max)) {
+    $p_max = (float)$precio_max;
+    $query .= " AND s.precio <= $p_max";
+}
+
+// 6. Ejecutar la consulta
 $resultado = $conexion->query($query);
 
 if (!$resultado) {
-    echo "<tr><td colspan='7'>Error en la consulta: " . $conexion->error . "</td></tr>";
+    echo "<tr><td colspan='8'>Error en la consulta: " . $conexion->error . "</td></tr>";
 } else {
+    if ($resultado->num_rows == 0) {
+        echo "<tr><td colspan='8' style='text-align:center;'>No se encontraron servicios con esos filtros.</td></tr>";
+    }
     while ($row = $resultado->fetch_assoc()) {
-        // Preparar los datos para el modal de edición (escapando comillas)
         $datosJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
+
         
         echo "<tr>
                 <td>{$row['id_servicio']}</td>
@@ -238,7 +249,7 @@ if (!$resultado) {
     </div>
 </div>
 <!-- FORMULARIO PARA EDITAR SERVICIO -->
-<div id="modal-editar-servicio" class="modal-formulario" style="display: none;">
+<div id="modal-editar-servicio" class="modal-formulario" id="form-editar" style="display: none; ">
     <div class="contenido-modal modal-purpura">
  
         <h3><i class="fa-solid fa-pen-to-square"></i> Editar Servicio</h3>
@@ -248,7 +259,10 @@ if (!$resultado) {
 
             <div class="grupo-input">
                 <label>Nombre del Servicio:</label>
-                <input type="text" name="tipo_servicio" id="edit-tipo" required>
+                <input type="text" name="tipo_servicio" id="edit-tipo" required     
+           pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]+$" 
+           title="Solo se permiten letras, números y espacios." 
+           placeholder="Ej. Reparación de Laptop">
             </div>
             <div class="grupo-input">
     <label>Tipo de Servicio:</label>
@@ -265,23 +279,23 @@ if (!$resultado) {
 </div>
             <div class="grupo-input">
                 <label>Descripción:</label>
-                <textarea name="descripcion" id="edit-descripcion" required></textarea>
+                <textarea name="descripcion" id="edit-descripcion" required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$" title="No se permiten signos especiales."></textarea>
             </div>
             <div class="grupo-input">
                 <label>Procedimiento:</label>
-               <textarea name="procedimiento" id="edit-procedimiento"></textarea>
+               <textarea name="procedimiento" id="edit-procedimiento" required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"></textarea>
             </div>
             <div class="grupo-input">
                 <label>Beneficios:</label>
-               <textarea name="beneficios" id="edit-beneficios"></textarea>
+               <textarea name="beneficios" id="edit-beneficios"required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"></textarea>
             </div>
             <div class="grupo-input">
                 <label>Indicaciones:</label>
-                <textarea name="indicaciones" id="edit-indicaciones"></textarea>
+                <textarea name="indicaciones" id="edit-indicaciones" required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"></textarea>
             </div>
              <div class="grupo-input">
                 <label>Exclusiones:</label>
-               <textarea name="exclusiones" id="edit-exclusiones"></textarea>
+               <textarea name="exclusiones" id="edit-exclusiones"required pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"></textarea>
             </div>
             <div class="flex-form-ayuda">
     <div class="campos-principales">

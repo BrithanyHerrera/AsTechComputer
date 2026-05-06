@@ -20,7 +20,7 @@ require_once __DIR__ . "/../../controllers/contenedor_crud_controller.php";
             <span class="cerrar" onclick="cerrarFormulario()">&times;</span>
             <h3>Registrar Nuevo Gabinete</h3>
 
-<form action="../controllers/contenedor_crud_controller.php?accion=agregar" method="POST">
+<form action="../controllers/contenedor_crud_controller.php?accion=agregar" method="POST" id="form-agregar">
 
 <div class="grupo-input">
 <label>ID Gabinete:</label>

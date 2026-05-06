@@ -130,31 +130,45 @@ class ServicioCrudModel {
         return $stmt->execute();
     }
 
-    public function buscarServicios(string $busqueda): mysqli_result {
-        $sql = "SELECT * FROM servicios 
-                WHERE tipo_servicio LIKE ? 
-                OR codigo_servicio LIKE ?
-                OR descripcion LIKE ?
-                OR procedimiento LIKE ?
-                OR beneficios LIKE ?
-                OR indicaciones LIKE ?
-                OR exclusiones LIKE ?
-                OR tiempo_estimado LIKE ?
-                OR precio LIKE ?
-                OR estado LIKE ?";
+public function buscarServiciosAvanzado(array $filtros): mysqli_result {
+    $sql = "SELECT s.*, t.nombre_tipo 
+            FROM servicios s
+            LEFT JOIN tipos_servicios t ON s.id_tipo_servicio = t.id_tipo_servicio 
+            WHERE 1=1";
+    
+    $params = [];
+    $types = "";
 
-        $stmt = $this->conexion->prepare($sql);
-
-        $like = "%" . $busqueda . "%";
-
-        $stmt->bind_param(
-            "ssssssssss",
-            $like, $like, $like, $like, $like,
-            $like, $like, $like, $like, $like
-        );
-
-        $stmt->execute();
-        return $stmt->get_result();
+    // Filtro de texto (Buscador original)
+    if (!empty($filtros['busqueda'])) {
+        $sql .= " AND (s.tipo_servicio LIKE ? OR s.descripcion LIKE ? OR s.codigo_servicio LIKE ?)";
+        $like = "%" . $filtros['busqueda'] . "%";
+        $params[] = $like; $params[] = $like; $params[] = $like;
+        $types .= "sss";
     }
+
+    // Filtro por ID de Tipo
+    if (!empty($filtros['id_tipo'])) {
+        $sql .= " AND s.id_tipo_servicio = ?";
+        $params[] = (int)$filtros['id_tipo'];
+        $types .= "i";
+    }
+
+    // Filtro por Precio Máximo
+    if (!empty($filtros['precio_max'])) {
+        $sql .= " AND s.precio <= ?";
+        $params[] = (float)$filtros['precio_max'];
+        $types .= "d";
+    }
+
+    $stmt = $this->conexion->prepare($sql);
+    
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
+
+    $stmt->execute();
+    return $stmt->get_result();
+}
 }
 ?>

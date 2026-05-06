@@ -104,4 +104,30 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
     window.history.replaceState({}, document.title, window.location.pathname);
+
+    const formularios = ['form-agregar', 'form-editar'];
+    
+    formularios.forEach(id => {
+        const form = document.getElementById(id);
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Detiene el envío
+                
+                Swal.fire({
+                    title: '¿Confirmar cambios?',
+                    text: "¿Deseas realizar esta acción?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#52073a',
+                    cancelButtonText: 'No, revisar',
+                    confirmButtonText: 'Sí, continuar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit(); // Envía el formulario si acepta
+                    }
+                });
+            });
+        }
+    });
+
 });
