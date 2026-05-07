@@ -227,30 +227,30 @@
                     <label>Nombre(s):</label>
                     <input type="text" id="m_nombre" name="nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
                         title="Solo se permiten letras y espacios."
-                        oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
+                        oninput="this.value = this.value.trimStart().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
                 </div>
                 <div class="grupo-form">
                     <label>Apellido(s):</label>
                     <input type="text" id="m_apellido" name="apellido" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
                         title="Solo se permiten letras y espacios."
-                        oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
+                        oninput="this.value = this.value.trimStart().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
                 </div>
             </div>
 
             <div class="fila-form">
                 <div class="grupo-form">
                     <label>WhatsApp:</label>
-                    <input type="tel" id="m_wa" name="whatsapp" required>
+                    <input type="tel" id="m_wa" name="whatsapp" maxlength="10" minlength="10" pattern="[0-9]{10}" title="Por favor, ingresa exactamente 10 números." oninput="this.value = this.value.trimStart().replace(/[^0-9]/g, '' required>
                 </div>
                 <div class="grupo-form">
                     <label>No. Serie (Opcional):</label>
-                    <input type="text" id="m_serie" name="n_serie">
+                    <input type="text" id="m_serie" name="n_serie" oninput="this.value = this.value.trimStart();">
                 </div>
             </div>
 
             <div class="fila-form">
                 <div class="grupo-form">
-                    <label>Tipo:</label>
+                    <label>Tipo de dispositivo:</label>
                     <select id="m_tipo" name="id_tipo" required>
                         <?php $tipos_res->data_seek(0);
                         while ($t = $tipos_res->fetch_assoc()): ?>
@@ -271,7 +271,7 @@
 
             <div class="grupo-form">
                 <label>Modelo:</label>
-                <input type="text" id="m_modelo" name="modelo" required>
+                <input type="text" id="m_modelo" name="modelo" oninput="this.value = this.value.trimStart();" required>
             </div>
 
             <div class="grupo-form">
@@ -294,7 +294,7 @@
             <div class="grupo-form">
                 <label>Descripción detallada (Opcional):</label>
                 <textarea id="m_detalle" name="detalle_falla" rows="3"
-                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;" oninput="this.value = this.value.trimStart();"></textarea>
             </div>
 
             <div class="fila-form">

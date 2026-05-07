@@ -61,21 +61,22 @@
                     <input type="text" name="nombre_cliente" class="control" 
                            pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
                            title="Solo se permiten letras y espacios." 
-                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
+                           oninput="this.value = this.value.trimStart().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
                 </div>
                 <div class="grupo-campo">
                     <label>Apellido(s)</label>
                     <input type="text" name="apellido_cliente" class="control" 
                            pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" 
                            title="Solo se permiten letras y espacios." 
-                           oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
+                           oninput="this.value = this.value.trimStart().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
                 </div>
             </div>
 
             <div class="grupo-campo">
                 <label>WhatsApp de Contacto (Número de Teléfono)</label>
                 <input type="tel" name="whatsapp" id="whatsapp_input" class="control" maxlength="10" minlength="10"
-                    pattern="[0-9]{10}" title="Por favor, ingresa exactamente 10 números." required>
+                    pattern="[0-9]{10}" title="Por favor, ingresa exactamente 10 números." 
+                    oninput="this.value = this.value.trimStart().replace(/[^0-9]/g, '')" required>
             </div>
 
             <div class="fila-doble">
@@ -94,7 +95,7 @@
                         <option value="7">Otro...</option>
                     </select>
                     <div id="otro_tipo_box" class="campo-otro">
-                        <input type="text" name="otro_tipo_texto" class="control" placeholder="¿Qué equipo es?">
+                        <input type="text" name="otro_tipo_texto" class="control" placeholder="¿Qué equipo es?" oninput="this.value = this.value.trimStart();">
                     </div>
                 </div>
 
@@ -113,7 +114,7 @@
                         <option value="12">Otra marca...</option>
                     </select>
                     <div id="otra_marca_box" class="campo-otro">
-                        <input type="text" name="otra_marca_texto" class="control" placeholder="Escribe la marca">
+                         <input type="text" name="otra_marca_texto" class="control" placeholder="Escribe la marca" oninput="this.value = this.value.trimStart();">
                     </div>
                 </div>
             </div>
@@ -121,14 +122,14 @@
             <div class="fila-doble">
                 <div class="grupo-campo">
                     <label>Modelo<span class="ayuda-modelo">?</span></label>
-                    <input type="text" name="modelo" class="control" required>
+                    <input type="text" name="modelo" class="control" oninput="this.value = this.value.trimStart();" required>
                 </div>
                 <div class="grupo-campo">
                     <label>
                         No. Serie (Opcional)
                         <span class="ayuda-serie" tabindex="0" title="Click para ayuda">?</span>
                     </label>
-                    <input type="text" name="numero_serie" class="control">
+                    <input type="text" name="numero_serie" class="control" oninput="this.value = this.value.trimStart();">
                 </div>
             </div>
 
@@ -154,7 +155,7 @@
                 <div id="detalle_falla_box">
                     <label> Descripción de detalles (Opcional): </label>
                     <input type="text" name="problema_detalle" class="control"
-                        placeholder="(Marcas, ruidos, errores, etc.)">
+                        placeholder="(Marcas, ruidos, errores, etc.)" oninput="this.value = this.value.trimStart();">
                 </div>
             </div>
 

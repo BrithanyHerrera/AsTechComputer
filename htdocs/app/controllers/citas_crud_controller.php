@@ -137,13 +137,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     $id_marca      = $_POST['id_marca'];
     $id_tipo       = $_POST['id_tipo'];
     $falla         = $_POST['falla'];
-    $detalle_falla = $_POST['detalle_falla'] ?? '';
     $whatsapp      = $_POST['whatsapp'];
-    $modelo        = $_POST['modelo'];
-    $n_serie       = $_POST['n_serie'];
     $fecha         = $_POST['fecha'];
     $hora          = $_POST['hora'];
     $estado        = $_POST['estado'] ?? ''; 
+
+    // --- APLICACIÓN DE "N/V" A CAMPOS OPCIONALES ---
+    // Usamos trim() para borrar espacios vacíos. Si está vacío, asigna 'N/V'.
+    $detalle_falla = !empty(trim($_POST['detalle_falla'] ?? '')) ? trim($_POST['detalle_falla']) : 'N/V';
+    $modelo        = !empty(trim($_POST['modelo'] ?? '')) ? trim($_POST['modelo']) : 'N/V';
+    $n_serie       = !empty(trim($_POST['n_serie'] ?? '')) ? trim($_POST['n_serie']) : 'N/V';
 
     try {
         $m_nom = $modeloCitas->obtenerNombreMarca($id_marca);

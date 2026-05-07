@@ -52,23 +52,25 @@ $modeloCita = new CitaModel($conexion);
  * e inicia la captura y asignación de variables.
  */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre = $_POST['nombre_cliente'];
-    $apellido = $_POST['apellido_cliente'];
+    // Aplicamos trim() a los campos obligatorios
+    $nombre = trim($_POST['nombre_cliente'] ?? '');
+    $apellido = trim($_POST['apellido_cliente'] ?? '');
     $nombreCompleto = $nombre . " " . $apellido;
-    $whatsapp = $_POST['whatsapp'];
+    $whatsapp = trim($_POST['whatsapp'] ?? '');
 
     $id_tipo_equipo = $_POST['tipo_dispositivo'];
-    $tipo_equipo_otro = ($_POST['tipo_dispositivo'] == "7") ? $_POST['otro_tipo_texto'] : null;
+    $tipo_equipo_otro = ($_POST['tipo_dispositivo'] == "7") ? trim($_POST['otro_tipo_texto'] ?? '') : null;
 
     $id_marca = $_POST['marca'];
-    $marca_otro = ($_POST['marca'] == "12") ? $_POST['otra_marca_texto'] : null;
+    $marca_otro = ($_POST['marca'] == "12") ? trim($_POST['otra_marca_texto'] ?? '') : null;
 
-    $modelo = $_POST['modelo'];
-    $numero_serie = !empty($_POST['numero_serie']) ? $_POST['numero_serie'] : null;
+    // Aplicamos trim() a los campos opcionales y asignamos "N/V" si quedan vacíos
+    $modelo = !empty(trim($_POST['modelo'] ?? '')) ? trim($_POST['modelo']) : 'N/V';
+    $numero_serie = !empty(trim($_POST['numero_serie'] ?? '')) ? trim($_POST['numero_serie']) : 'N/V';
     
-    // Se extraen y separan correctamente los datos de la falla técnica sin concatenarlos
-    $falla_lista = $_POST['problema_lista'];
-    $falla_detalle = $_POST['problema_detalle'];
+    // Se extraen y separan correctamente los datos de la falla técnica
+    $falla_lista = $_POST['problema_lista']; // Este proviene de un <select>
+    $falla_detalle = !empty(trim($_POST['problema_detalle'] ?? '')) ? trim($_POST['problema_detalle']) : 'N/V';
     
     $problema = $falla_lista; 
     $detalle_falla = $falla_detalle; 
