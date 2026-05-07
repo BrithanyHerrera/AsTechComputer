@@ -178,41 +178,97 @@
 </div>
 
 <div id="modalVer" class="modal-personalizado">
-    <div class="contenido-modal">
+    <div class="contenido-modal modal-ficha">
         <span class="cerrar-modal" onclick="cerrarModalVer()">&times;</span>
-        <h2><i class="fa-solid fa-address-card"></i> Detalles del Servicio</h2>
-        <div class="grid-detalles">
-            <div class="detalle-item"><span>Cliente</span>
-                <p id="v_cliente"></p>
+        
+        <div class="ficha-header">
+            <h2><i class="fa-solid fa-clipboard-list"></i> Ficha de Servicio</h2>
+            <span id="v_estado_pill" class="ficha-estado"></span>
+        </div>
+
+        <div class="ficha-grid">
+            <div class="ficha-tarjeta">
+                <h3><i class="fa-solid fa-user"></i> Cliente</h3>
+                <div class="ficha-linea">
+                    <i class="fa-solid fa-id-badge icono-dato"></i>
+                    <div class="dato-texto">
+                        <small>Nombre Completo</small>
+                        <p id="v_cliente"></p>
+                    </div>
+                </div>
+                <div class="ficha-linea">
+                    <i class="fa-brands fa-whatsapp icono-dato wa-color"></i>
+                    <div class="dato-texto">
+                        <small>WhatsApp</small>
+                        <p id="v_wa"></p>
+                    </div>
+                </div>
             </div>
-            <div class="detalle-item"><span>WhatsApp</span>
-                <p id="v_wa"></p>
-            </div>
-            <div class="detalle-item"><span>Dispositivo</span>
-                <p id="v_dispositivo"></p>
-            </div>
-            <div class="detalle-item"><span>Marca y Modelo</span>
-                <p id="v_marca_modelo"></p>
-            </div>
-            <div class="detalle-item"><span>No. Serie</span>
-                <p id="v_serie"></p>
-            </div>
-            <div class="detalle-item"><span>Falla Reportada</span>
-                <p id="v_falla"></p>
-            </div>
-            <div class="detalle-item"><span>Detalles Adicionales</span>
-                <p id="v_detalle"></p>
-            </div>
-            <div class="detalle-item"><span>Estado</span>
-                <p id="v_estado"></p>
-            </div>
-            <div class="detalle-item"><span>Fecha</span>
-                <p id="v_fecha"></p>
-            </div>
-            <div class="detalle-item"><span>Hora</span>
-                <p id="v_hora"></p>
+
+            <div class="ficha-tarjeta">
+                <h3><i class="fa-solid fa-laptop-medical"></i> Equipo</h3>
+                <div class="ficha-linea">
+                    <i class="fa-solid fa-desktop icono-dato"></i>
+                    <div class="dato-texto">
+                        <small>Dispositivo</small>
+                        <p id="v_dispositivo"></p>
+                    </div>
+                </div>
+                <div class="ficha-linea">
+                    <i class="fa-solid fa-tag icono-dato"></i>
+                    <div class="dato-texto">
+                        <small>Marca y Modelo</small>
+                        <p id="v_marca_modelo"></p>
+                    </div>
+                </div>
+                <div class="ficha-linea">
+                    <i class="fa-solid fa-barcode icono-dato"></i>
+                    <div class="dato-texto">
+                        <small>No. Serie</small>
+                        <p id="v_serie"></p>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="ficha-tarjeta tarjeta-full">
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> Reporte Técnico</h3>
+            <div class="ficha-linea">
+                <i class="fa-solid fa-comment-dots icono-dato"></i>
+                <div class="dato-texto">
+                    <small>Falla Reportada</small>
+                    <p id="v_falla" class="falla-destacada"></p>
+                </div>
+            </div>
+            <div class="ficha-linea">
+                <i class="fa-solid fa-align-left icono-dato"></i>
+                <div class="dato-texto">
+                    <small>Detalles Adicionales</small>
+                    <p id="v_detalle"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="ficha-tarjeta tarjeta-full">
+            <h3><i class="fa-regular fa-calendar-days"></i> Agendamiento</h3>
+            <div class="agendamiento-flex">
+                <div class="ficha-linea">
+                    <i class="fa-solid fa-calendar-day icono-dato"></i>
+                    <div class="dato-texto">
+                        <small>Fecha</small>
+                        <p id="v_fecha"></p>
+                    </div>
+                </div>
+                <div class="ficha-linea">
+                    <i class="fa-solid fa-clock icono-dato"></i>
+                    <div class="dato-texto">
+                        <small>Hora</small>
+                        <p id="v_hora"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 

@@ -116,6 +116,7 @@ function abrirModalVer(boton) {
     try {
         let datos = JSON.parse(boton.getAttribute('data-cita'));
         document.getElementById('modalVer').style.display = 'flex';
+        
         document.getElementById('v_cliente').innerText = `${datos.nombre} ${datos.apellido}`;
         document.getElementById('v_wa').innerText = datos.whatsapp || 'No registrado';
         document.getElementById('v_dispositivo').innerText = datos.tipoTxt || 'N/A';
@@ -123,9 +124,19 @@ function abrirModalVer(boton) {
         document.getElementById('v_serie').innerText = datos.serie || 'N/A';
         document.getElementById('v_falla').innerText = datos.falla || 'N/A';
         document.getElementById('v_detalle').innerText = datos.detalle || 'Ninguno'; 
-        document.getElementById('v_estado').textContent = datos.estado || "No definido";
         document.getElementById('v_fecha').innerText = datos.fecha || 'N/A';
         document.getElementById('v_hora').innerText = datos.hora || 'N/A';
+
+        const estadoPill = document.getElementById('v_estado_pill');
+        estadoPill.textContent = datos.estado || "No definido";
+        
+        estadoPill.className = 'ficha-estado'; 
+        
+        let estadoLimpio = (datos.estado || '').toLowerCase();
+        if(estadoLimpio === 'pendiente') estadoPill.classList.add('f-pendiente');
+        else if(estadoLimpio === 'atendida') estadoPill.classList.add('f-atendida');
+        else if(estadoLimpio === 'cancelada') estadoPill.classList.add('f-cancelada');
+
     } catch (error) { console.error("Error modal detalles:", error); }
 }
 
