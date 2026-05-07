@@ -26,7 +26,8 @@ class ContenedorModel {
                 FROM gabinetes g 
                 LEFT JOIN ordenes_ingreso o 
                     ON g.id_gabinete = o.id_gabinete 
-                    AND o.estado != 'entregado'";
+                    AND o.estado != 'entregado'
+                ORDER BY (g.id_gabinete + 0) = 0, (g.id_gabinete + 0) ASC, g.id_gabinete ASC";
 
         return $this->db->query($sql);
     }

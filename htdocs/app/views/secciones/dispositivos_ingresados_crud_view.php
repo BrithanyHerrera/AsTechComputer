@@ -132,7 +132,7 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                             <i class="fa-solid fa-eye"></i>
                         </button>
 
-                        <?php if (!$esTecnico && $row['estado'] != 'entregado'): ?>
+                        <?php if (!$esTecnico): ?>
                             <a href="administracion_controller.php?seccion=ingreso&editar=<?= $row['folio'] ?>"
                                class="btn-editar" title="Editar">
                                 <i class="fa-solid fa-pen-to-square"></i>

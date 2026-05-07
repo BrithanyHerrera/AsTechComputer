@@ -174,8 +174,8 @@ if (isset($_POST['finalizar_registro'])) {
             );
             unset($_SESSION['memoria_ingreso'], $_SESSION['modo_edicion'], $_SESSION['id_cliente_edicion'], $_SESSION['id_equipo_edicion'], $_SESSION['gabinete_original']);
             
-            header("Location: administracion_controller.php?seccion=registrosCRUD&status=success_edit");
-            exit;
+           header("Location: administracion_controller.php?seccion=registros_ingresados_crud_view&status=success_edit");
+           exit;
 
         } else {
             // El sistema ejecuta la creación de nuevos registros, limpia la memoria y levanta la bandera de éxito.

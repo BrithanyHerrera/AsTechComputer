@@ -30,37 +30,40 @@ class EstadisticasModel {
 
     // ----------------------------------------------------------
     // Gráfica 2: Cómo supieron del lugar (medios de contacto)
-    // Retorna: etiqueta (medio) + total (cantidad de clientes)
     // ----------------------------------------------------------
     public function obtenerMedios() {
-        $sql = "SELECT m.medio AS etiqueta, COUNT(mk.id_encuesta) AS total 
+        $sql = "SELECT 
+                    IF(mk.medio_contacto_otro IS NOT NULL AND mk.medio_contacto_otro != '', mk.medio_contacto_otro, m.medio) AS etiqueta, 
+                    COUNT(mk.id_encuesta) AS total 
                 FROM marketing mk 
                 JOIN medios_contacto m ON mk.id_medio_contacto = m.id_medio 
-                GROUP BY m.id_medio";
+                GROUP BY etiqueta";
         return $this->conexion->query($sql);
     }
 
     // ----------------------------------------------------------
     // Gráfica 3: Con qué frecuencia los clientes hacen servicio
-    // Retorna: etiqueta (frecuencia) + total (cantidad)
     // ----------------------------------------------------------
     public function obtenerFrecuencia() {
-        $sql = "SELECT f.frecuencia AS etiqueta, COUNT(mk.id_encuesta) AS total 
+        $sql = "SELECT 
+                    IF(mk.frecuencia_servicio_otro IS NOT NULL AND mk.frecuencia_servicio_otro != '', mk.frecuencia_servicio_otro, f.frecuencia) AS etiqueta, 
+                    COUNT(mk.id_encuesta) AS total 
                 FROM marketing mk 
                 JOIN frecuencias_servicio f ON mk.id_frecuencia_servicio = f.id_frecuencia 
-                GROUP BY f.id_frecuencia";
+                GROUP BY etiqueta";
         return $this->conexion->query($sql);
     }
 
     // ----------------------------------------------------------
     // Gráfica 4: Para qué usan sus equipos (Gaming, Trabajo, etc.)
-    // Retorna: etiqueta (tipo de uso) + total (cantidad)
     // ----------------------------------------------------------
     public function obtenerUso() {
-        $sql = "SELECT u.uso AS etiqueta, COUNT(mk.id_encuesta) AS total 
+        $sql = "SELECT 
+                    IF(mk.tipo_uso_otro IS NOT NULL AND mk.tipo_uso_otro != '', mk.tipo_uso_otro, u.uso) AS etiqueta, 
+                    COUNT(mk.id_encuesta) AS total 
                 FROM marketing mk 
                 JOIN tipos_uso u ON mk.id_tipo_uso = u.id_tipo_uso 
-                GROUP BY u.id_tipo_uso";
+                GROUP BY etiqueta";
         return $this->conexion->query($sql);
     }
 
