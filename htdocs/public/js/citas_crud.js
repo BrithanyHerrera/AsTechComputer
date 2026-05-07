@@ -153,15 +153,29 @@ function abrirModalEditar(boton) {
         asignar('m_serie', datos.serie);
         asignar('m_modelo', datos.modelo);
         asignar('m_detalle', datos.detalle);
-        asignar('m_estado', datos.estado); 
+        asignar('m_estado', datos.estado);
+
+        let elTipo = document.getElementById('m_tipo');
+        let inputTipoOtro = document.getElementById('m_tipo_otro');
+        if (elTipo) {
+            elTipo.value = datos.idTipo || '';
+            if (inputTipoOtro) inputTipoOtro.value = datos.tipoOtro || '';
+            verificarTipoOtro(elTipo);
+        }
+
+        let elMarca = document.getElementById('m_marca');
+        let inputMarcaOtro = document.getElementById('m_marca_otro');
+        if (elMarca) {
+            elMarca.value = datos.idMarca || '';
+            if (inputMarcaOtro) inputMarcaOtro.value = datos.marcaOtro || '';
+            verificarMarcaOtra(elMarca);
+        }
 
         let elFecha = document.getElementById('m_fecha');
         if (elFecha) {
             elFecha.value = datos.fecha || '';
             elFecha.setAttribute('data-fecha-orig', datos.fecha || '');
         }
-        if (document.getElementById('m_tipo')) document.getElementById('m_tipo').value = datos.idTipo || '';
-        if (document.getElementById('m_marca')) document.getElementById('m_marca').value = datos.idMarca || '';
 
         let selectFalla = document.getElementById('m_falla');
         if (selectFalla && datos.falla) {
@@ -305,4 +319,29 @@ function confirmarEliminacion(event, urlDestino) {
             window.location.href = urlDestino;
         }
     });
+}
+
+// Función para mostrar/ocultar el input de texto si eligen "Otro"
+function verificarTipoOtro(select) {
+    const inputOtro = document.getElementById('m_tipo_otro');
+    if (select.value === '7' || select.options[select.selectedIndex].text.includes('Otro')) {
+        inputOtro.style.display = 'block';
+        inputOtro.required = true;
+    } else {
+        inputOtro.style.display = 'none';
+        inputOtro.required = false;
+        inputOtro.value = '';
+    }
+}
+
+function verificarMarcaOtra(select) {
+    const inputOtra = document.getElementById('m_marca_otro'); // CORREGIDO AQUÍ
+    if (select.value === '12' || select.options[select.selectedIndex].text.includes('Otr')) {
+        inputOtra.style.display = 'block';
+        inputOtra.required = true;
+    } else {
+        inputOtra.style.display = 'none';
+        inputOtra.required = false;
+        inputOtra.value = '';
+    }
 }

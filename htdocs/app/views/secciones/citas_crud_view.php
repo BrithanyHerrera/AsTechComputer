@@ -72,10 +72,7 @@
                     $id_evento = $event->getId();
                     $datos_db = $mapa_db[$id_evento] ?? null;
 
-                    $summary_clean = str_replace("SERVICIO: ", "", $event->getSummary());
-                    $nombre_google = explode(' - ', $summary_clean)[0];
-
-                    $nombre_mostrar = isset($datos_db) ? $datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] : $nombre_google;
+                    $nombre_mostrar = isset($datos_db) ? $datos_db['nombre_cliente'] . " " . $datos_db['apellido_cliente'] : $event->getSummary();
                     $estado_actual = strtolower($datos_db['estado'] ?? 'pendiente');
                     $clase_estado = str_replace(' ', '-', $estado_actual);
                     $fecha_formato_filtro = date('Y-m-d', strtotime($start_dt));
@@ -83,6 +80,12 @@
                     $partes_nombre = explode(' ', $nombre_mostrar);
                     $nombre_f = $datos_db['nombre_cliente'] ?? array_shift($partes_nombre);
                     $apellido_f = $datos_db['apellido_cliente'] ?? implode(' ', $partes_nombre);
+
+                    $id_t = $datos_db['id_tipo_equipo'] ?? null;
+                    $id_m = $datos_db['id_marca'] ?? null;
+
+                    $tipo_mostrar = ($id_t == "7") ? ($datos_db['tipo_equipo_otro'] ?? 'Otro (No especificado)') : ($datos_db['tipo'] ?? 'N/A');
+                    $marca_mostrar = ($id_m == "12") ? ($datos_db['marca_otro'] ?? 'Otra (No especificada)') : ($datos_db['marca'] ?? 'N/A');
                     ?>
 
                     <tr class="fila-registro" data-nombre="<?= strtolower(htmlspecialchars($nombre_mostrar)) ?>"
@@ -99,8 +102,8 @@
                         </td>
                         <td><?= date('d/m/Y', strtotime($start_dt)) ?></td>
                         <td><?= date('H:i', strtotime($start_dt)) ?></td>
-                        <td><?= htmlspecialchars($datos_db['tipo'] ?? 'N/A') ?></td>
-                        <td><?= htmlspecialchars($datos_db['marca'] ?? 'N/A') ?></td>
+                        <td><?= htmlspecialchars($tipo_mostrar ?? 'N/A') ?></td>
+                        <td><?= htmlspecialchars($marca_mostrar ?? 'N/A') ?></td>
                         <td><?= htmlspecialchars($datos_db['modelo'] ?? 'N/A') ?></td>
                         <td><small><?= htmlspecialchars($datos_db['numero_serie'] ?? 'N/V') ?></small></td>
 
@@ -127,8 +130,8 @@
                             <button class="btn-ver" type="button" title="Ver Detalles" data-cita='<?= htmlspecialchars(json_encode([
                                 "nombre" => $nombre_f,
                                 "apellido" => $apellido_f,
-                                "tipoTxt" => $datos_db['tipo'] ?? "N/A",
-                                "marcaTxt" => $datos_db['marca'] ?? "N/A",
+                                "tipoTxt" => $tipo_mostrar ?? "N/A",
+                                "marcaTxt" => $marca_mostrar ?? "N/A",
                                 "modelo" => $datos_db['modelo'] ?? "N/A",
                                 "serie" => $datos_db['numero_serie'] ?? "N/V",
                                 "falla" => $datos_db['problema_reportado'] ?? "N/A",
@@ -148,6 +151,8 @@
                                 "apellido" => $apellido_f,
                                 "idMarca" => $datos_db['id_marca'] ?? "",
                                 "idTipo" => $datos_db['id_tipo_equipo'] ?? "",
+                                "tipoOtro"  => $datos_db['tipo_equipo_otro'] ?? "",
+                                "marcaOtro" => $datos_db['marca_otro'] ?? "",
                                 "modelo" => $datos_db['modelo'] ?? "",
                                 "serie" => $datos_db['numero_serie'] ?? "",
                                 "falla" => $datos_db['problema_reportado'] ?? "",
@@ -251,21 +256,28 @@
             <div class="fila-form">
                 <div class="grupo-form">
                     <label>Tipo de dispositivo:</label>
-                    <select id="m_tipo" name="id_tipo" required>
+                    <select id="m_tipo" name="id_tipo" onchange="verificarTipoOtro(this)" required>
                         <?php $tipos_res->data_seek(0);
                         while ($t = $tipos_res->fetch_assoc()): ?>
                             <option value="<?= $t['id_tipo_equipo'] ?>"><?= $t['tipo'] ?></option>
                         <?php endwhile; ?>
                     </select>
+                    <input type="text" id="m_tipo_otro" name="tipo_otro" placeholder="Especifique dispositivo..." 
+                        style="display:none; margin-top: 10px; width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;" 
+                        oninput="this.value = this.value.trimStart();">
                 </div>
+                
                 <div class="grupo-form">
                     <label>Marca:</label>
-                    <select id="m_marca" name="id_marca" required>
+                    <select id="m_marca" name="id_marca" onchange="verificarMarcaOtra(this)" required>
                         <?php $marcas_res->data_seek(0);
                         while ($m = $marcas_res->fetch_assoc()): ?>
                             <option value="<?= $m['id_marca'] ?>"><?= $m['marca'] ?></option>
                         <?php endwhile; ?>
                     </select>
+                    <input type="text" id="m_marca_otro" name="marca_otra" placeholder="Especifique marca..." 
+                        style="display:none; margin-top: 10px; width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;" 
+                        oninput="this.value = this.value.trimStart();">
                 </div>
             </div>
 

@@ -104,12 +104,12 @@ class CitasAdminModel {
      * y sanitizando de forma estricta los 13 campos de información enviados 
      * desde el formulario modal de edición.
      */
-    public function actualizarCitaCompleta($id_cita, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado) {
+    public function actualizarCitaCompleta($id_cita, $nombre, $apellido, $id_tipo, $tipo_otro, $id_marca, $marca_otra, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado) {
         
-        $stmt = $this->conexion->prepare("UPDATE citas_web SET nombre_cliente=?, apellido_cliente=?, id_tipo_equipo=?, id_marca=?, modelo=?, numero_serie=?, problema_reportado=?, detalle_falla=?, fecha_cita=?, hora_cita=?, whatsapp=?, estado=? WHERE id_cita=?");
+        $stmt = $this->conexion->prepare("UPDATE citas_web SET nombre_cliente=?, apellido_cliente=?, id_tipo_equipo=?, tipo_equipo_otro=?, id_marca=?, marca_otro=?, modelo=?, numero_serie=?, problema_reportado=?, detalle_falla=?, fecha_cita=?, hora_cita=?, whatsapp=?, estado=? WHERE id_cita=?");
         
-        // El sistema parametriza exactamente las 13 variables (ssiissssssssi)
-        $stmt->bind_param("ssiissssssssi", $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado, $id_cita);
+        // El sistema parametriza exactamente las 15 variables (ssisisssssssssi)
+        $stmt->bind_param("ssisisssssssssi", $nombre, $apellido, $id_tipo, $tipo_otro, $id_marca, $marca_otra, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado, $id_cita);
         
         return $stmt->execute();
     }

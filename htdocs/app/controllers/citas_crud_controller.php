@@ -143,14 +143,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
     $estado        = $_POST['estado'] ?? ''; 
 
     // --- APLICACIÓN DE "N/V" A CAMPOS OPCIONALES ---
-    // Usamos trim() para borrar espacios vacíos. Si está vacío, asigna 'N/V'.
     $detalle_falla = !empty(trim($_POST['detalle_falla'] ?? '')) ? trim($_POST['detalle_falla']) : 'N/V';
     $modelo        = !empty(trim($_POST['modelo'] ?? '')) ? trim($_POST['modelo']) : 'N/V';
     $n_serie       = !empty(trim($_POST['n_serie'] ?? '')) ? trim($_POST['n_serie']) : 'N/V';
 
     try {
-        $m_nom = $modeloCitas->obtenerNombreMarca($id_marca);
-        $t_nom = $modeloCitas->obtenerNombreTipo($id_tipo);
+        // --- EXTRACCIÓN DE NOMBRES CON SOPORTE PARA "OTRO" ---
+        // Si es 12 (Otra marca), usamos el texto tecleado. Si no, consultamos la DB.
+        $m_nom = ($id_marca == "12") ? trim($_POST['marca_otra'] ?? 'Otra no especificada') : $modeloCitas->obtenerNombreMarca($id_marca);
+        
+        // Si es 7 (Otro dispositivo), usamos el texto tecleado. Si no, consultamos la DB.
+        $t_nom = ($id_tipo == "7") ? trim($_POST['tipo_otro'] ?? 'Otro no especificado') : $modeloCitas->obtenerNombreTipo($id_tipo);
 
         $nuevo_resumen = "SERVICIO: $nombre $apellido - $t_nom";
         
@@ -168,7 +171,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['a
         $service->events->update($calendarId, $id_google, $evento);
 
         if (!empty($id_db)) {
-            $modeloCitas->actualizarCitaCompleta($id_db, $nombre, $apellido, $id_tipo, $id_marca, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado);
+            // Evaluamos si el ID es de "Otro", y si sí, enviamos el texto. Si no, enviamos nulo.
+            $db_tipo_otro = ($id_tipo == "7") ? $t_nom : null;
+            $db_marca_otra = ($id_marca == "12") ? $m_nom : null;
+
+            // Enviamos las 15 variables al modelo
+            $modeloCitas->actualizarCitaCompleta($id_db, $nombre, $apellido, $id_tipo, $db_tipo_otro, $id_marca, $db_marca_otra, $modelo, $n_serie, $falla, $detalle_falla, $fecha, $hora, $whatsapp, $estado);
         }
         
         $alerta_script = "Swal.fire('Actualizado', 'Información actualizada en todo el sistema', 'success').then(() => { window.location.href='?seccion=citas'; });";
