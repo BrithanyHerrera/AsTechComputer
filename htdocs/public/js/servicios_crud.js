@@ -146,7 +146,9 @@ window.onclick = function(event) {
     const modalForm = document.getElementById('formulario-servicio');
     const modalEdit = document.getElementById('modal-editar-servicio');
 
-    if (event.target == modalVer) cerrarModalVerServicio();
-    if (event.target == modalForm) cerrarFormulario();
-    if (event.target == modalEdit) cerrarModalEditar();
+if (event.target.classList.contains('modal-formulario')) {
+        cerrarModalVerServicio();
+        cerrarFormulario();
+        cerrarModalEditar();
+    }
 };

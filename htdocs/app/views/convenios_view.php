@@ -43,7 +43,7 @@
     </section>
 
     <div class="contenedor-convenios">
-          <h2 class="titulo-bloque">Marcas</h2>
+          <h2 class="titulo-bloque">Nuestras marcas favoritas</h2>
         <?php require_once __DIR__ . '/carousel_marcas.php'; ?>
 
         <div class="bloque">

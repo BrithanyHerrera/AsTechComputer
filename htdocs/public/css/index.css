@@ -260,16 +260,14 @@ body {
     display: flex;
     margin-top: 60px;
     animation: fadeIn 1.5s ease forwards;
-    margin-left: 140px;
-    margin-bottom: 30px;
+    justify-content: center;
+    align-items: center;
 }
 
 .hero-imagen img {
-    width: 100%;
-    max-width: 600px;
+    width: 70%;
     filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.08));
     transition: transform 0.5s ease;
-    margin-bottom: -10px;
 }
 
 .hero-imagen img:hover {
@@ -519,7 +517,7 @@ body {
     }
     .hero-botones {
         justify-content: center;
-        margin-top: -80px;
+      
     }
     .grid-about,
     .caja-ceo,
@@ -534,4 +532,215 @@ body {
     .ceo-texto {
         padding: 30px;
     }
+}
+@media screen and (max-width: 768px) {
+
+    /* =========================
+        HERO
+    ========================= */
+
+    .hero-wrapper {
+        padding: 20px 15px;
+    }
+
+    .hero-astech {
+        width: 100%;
+        padding: 20px 10px;
+    }
+
+    
+
+    .hero-imagen {
+        width: 100%;
+        margin-top: 20px;
+        padding: 0 15px;
+    }
+
+    .hero-imagen img {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .destacado {
+        font-size: 1rem;
+        line-height: 1.5;
+        padding: 0 10px;
+        margin-top: 20px;
+    }
+
+
+    /* =========================
+        ABOUT
+    ========================= */
+
+    .grid-about {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .texto-about {
+        width: 100%;
+        text-align: center;
+    }
+
+    .texto-about h2 {
+        font-size: 1.8rem;
+    }
+
+    .texto-about p {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .imagen-about {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .imagen-about img {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        border-radius: 12px;
+    }
+
+    /* =========================
+        CARDS SERVICIOS
+    ========================= */
+
+    .grid-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .astech-card {
+        width: 100%;
+        padding:20px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .astech-card img {
+        width: 98%;
+        height: auto;
+        justify-content: center;
+        align-self: center;
+        
+    }
+
+    .astech-card-body {
+        padding: 20px;
+        text-align: center;
+    }
+    .contenedor-max{
+        margin:0!important;
+        margin-top: -20px;
+    }
+
+    .astech-card-body h3 {
+        font-size: 1.2rem;
+    }
+
+    .astech-card-body p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    /* =========================
+        FILOSOFÍA / VALORES
+    ========================= */
+
+    .grid-valores {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .valor-item {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .valor-item i {
+        font-size: 2rem;
+    }
+
+    /* =========================
+        CEO
+    ========================= */
+
+    .caja-ceo {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 25px 15px;
+        text-align: center;
+    }
+
+    .ceo-texto {
+        width: 100%;
+    }
+
+    .ceo-texto blockquote {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .ceo-img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .ceo-img img {
+        width: 70%;
+        height: auto;
+    }
+
+    /* =========================
+        TITULOS
+    ========================= */
+
+    .titulo-seccion {
+        font-size: 1.8rem;
+        text-align: center;
+        padding: 0 10px;
+    }
+ 
+    /* =========================
+        CONTENEDORES GENERALES
+    ========================= */
+
+    .contenedor-max,
+    .seccion-about,
+    .seccion-valores,
+    .seccion-ceo {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+        margin:0;
+        padding:1%;
+    }
+
+    /* =========================
+        TEXTO GENERAL
+    ========================= */
+
+    p {
+        word-break: break-word;
+    }
+
+    /* =========================
+        BOTONES
+    ========================= */
+
+    .btn-comprar {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
 }

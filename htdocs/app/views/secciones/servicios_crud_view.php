@@ -53,12 +53,8 @@ if (!empty($precio_max)) {
 
 // 6. Ejecutar la consulta
 $resultado = $conexion->query($query);
-
-
 ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 <!-- BUSCADOR DE SERVICIOS -->
 
 <div class="contenedor-crud" id="contenedor-principal-servicios">
@@ -98,7 +94,6 @@ $resultado = $conexion->query($query);
     </div>
 
 </form>
-
    <!-- FORMULARIO PARA AGREGAR UN NUEVO SERVICIO  -->
     <div class="encabezado-seccion">
         <button class="boton-primario" onclick="abrirFormulario()">
@@ -107,7 +102,7 @@ $resultado = $conexion->query($query);
     </div>
 <div id="formulario-servicio" class="modal-formulario" style="display: none;" >
     <div class="contenido-modal modal-purpura">
-    
+     <span class="cerrar-modal" onclick="cerrarFormulario()" >&times;</span>
         <h3>Registrar Nuevo Servicio</h3>
         <form action="../controllers/servicios_crud_controller.php?accion=agregar" method="POST" id="form-agregar">
             <div class="grupo-input">
@@ -255,7 +250,7 @@ $resultado = $conexion->query($query);
 <!-- FORMULARIO PARA EDITAR SERVICIO -->
 <div id="modal-editar-servicio" class="modal-formulario" id="form-editar" style="display: none; ">
     <div class="contenido-modal modal-purpura">
- 
+  <span class="cerrar-modal" onclick="cerrarModalEditar()" >&times;</span>
         <h3><i class="fa-solid fa-pen-to-square"></i> Editar Servicio</h3>
         
         <form action="../controllers/servicios_crud_controller.php?accion=editar" method="POST" id="form-editar">
@@ -342,7 +337,7 @@ $resultado = $conexion->query($query);
 <!-- MODAL PARA VER INFRORMACION EXTRA DEL SERVICIO -->
   <div id="modalVerServicio" class="modal-formulario" style="display: none;">
     <div class="contenido-modal modal-purpura" style="max-height: 90vh; overflow-y: auto; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-        <span class="cerrar-modal" onclick="cerrarModalVerServicio()" style="float:right; cursor:pointer; font-size:28px;">&times;</span>
+        <span class="cerrar-modal" onclick="cerrarModalVerServicio()" >&times;</span>
         <h3><i class="fa-solid fa-circle-info"></i> Detalles del Servicio</h3>
         
         <div style="text-align:center; margin: 20px 0;">

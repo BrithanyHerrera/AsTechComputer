@@ -180,7 +180,7 @@
 
         
 
-    <h2 class="titulo-seccion">Marcas</h2>
+    <h2 class="titulo-seccion">Nuestras marcas</h2>
     <?php require_once __DIR__ . '/carousel_marcas.php'; ?>
     </main>
     <?php
