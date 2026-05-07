@@ -17,7 +17,7 @@ function confirmarEliminacion(id) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = `../controllers/contenedor_controller.php?accion=eliminar&id=${id}`;
+            window.location.href = `../controllers/contenedor_crud_controller.php?accion=eliminar&id=${id}`;
         }
     })
 }

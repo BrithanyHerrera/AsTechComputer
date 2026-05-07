@@ -28,6 +28,7 @@ body {
 
 .carousel {
     overflow: hidden;
+    margin-bottom:40px;
 }
 
 .carousel-track {
@@ -107,34 +108,6 @@ body {
 .btn:hover {
     background: var(--naranja);
     transform: translateY(-50%) scale(1.1);
-}
-.titulo-bloque {
-    font-size: 1.6rem;
-    color: var(--gris-oscuro);
-    position: relative;
-    padding-bottom: 15px;
-    margin-bottom: 40px;
-    font-weight: 700;
-}
-
-.titulo-bloque {
-    font-size: 1.6rem;
-    color: var(--gris-oscuro);
-    position: relative;
-    padding-bottom: 15px;
-    margin-bottom: 40px;
-    font-weight: 700;
-}
-
-.titulo-bloque::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 90%;
-    height: 2px;
-    background: linear-gradient(to right, var(--naranja), rgba(225, 114, 3, 0.1), transparent);
-    border-radius: 2px;
 }
 
 .bloque-logos .titulo-bloque {

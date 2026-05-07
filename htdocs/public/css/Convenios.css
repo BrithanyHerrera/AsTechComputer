@@ -19,17 +19,7 @@
  * consistencia de la paleta de colores y sombreados en toda la página.
  * Además, se resetean los estilos base del cuerpo (body).
  */
-:root {
-    --naranja: #e17203;
-    --purpura-oscuro: #52073a;
-    --naranja-hover: #c56502;
-    --gris-oscuro: #333333;
-    --gris-medio: #666666;
-    --gris-claro: #f4f4f4;
-    --blanco: #ffffff;
-    --borde: #dddddd;
-    --sombra-suave: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
+
 
 body {
     background-color: var(--blanco);
@@ -54,37 +44,53 @@ header-convenio{
  * pseudo-elemento (::after) debajo del título principal.
  */
 .seccion-convenios {
-    padding: 100px 20px 80px;
+    padding: 80px 20px 80px;
     text-align: center;
     background: var(--gris-claro);
     border-bottom: 1px solid var(--borde);
 }
+#dark{
+    background-color: #99999967;
+}
 
 .titulo-convenios {
-    font-size: 2.5rem;
+    font-size: 3.2rem;
     font-weight: 900;
-    color: var(--purpura-oscuro);
+    color: #52073a;
     text-transform: uppercase;
     margin-bottom: 15px;
     position: relative;
+}
+/* =========================
+   VARIABLES DE TEMAS
+========================= */
+
+.tema-naranja{
+    --color-principal:#e17203;
+    --color-secundario: #e1720327;
+}
+
+.tema-morado{
+     --color-principal: #52073a;
+    --color-secundario: #52073a3f;
 }
 
 .titulo-convenios::after {
     content: "";
     position: absolute;
-    bottom: -10px;
+    bottom: -5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
+    width: 250px;
     height: 3px;
-    background-color: var(--naranja);
+    background-color: var(--color-principal);
 }
 
 .subtitulo-convenios {
-    max-width: 700px;
+    max-width: 1000px;
     margin: 35px auto 0;
     color: var(--gris-medio);
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     line-height: 1.8;
     letter-spacing: 0.5px;
 }
@@ -110,12 +116,13 @@ header-convenio{
 }
 
 .titulo-bloque {
-    font-size: 1.6rem;
-    color: var(--gris-oscuro);
+    font-size: 2.3rem;
+    color: #52073a;
     position: relative;
     padding-bottom: 15px;
-    margin-bottom: 200px;
+    margin-bottom: 80px;
     font-weight: 700;
+    margin-top:80px;
 }
 
 .titulo-bloque::after {
@@ -125,7 +132,7 @@ header-convenio{
     left: 0;
     width: 90%;
     height: 2px;
-    background: linear-gradient(to right, var(--naranja), rgba(225, 114, 3, 0.1), transparent);
+    background: linear-gradient(to right, #e17203, rgba(225, 114, 3, 0.1), transparent);
     border-radius: 2px;
 }
 
@@ -152,88 +159,332 @@ header-convenio{
     gap: 30px;
 }
 
-.card-convenio {
-    background: var(--blanco);
-    border-radius: 10px;
-    padding: 30px;
-    border: 1px solid var(--borde);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    border-top-color: #ccc; opacity: 0.7;
-}
-
-.card-convenio:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--sombra-suave);
-    border-color: var(--naranja);
-}
-
-.card-convenio h3 {
-    margin: 0 0 15px 0;
-    color: var(--purpura-oscuro);
-    font-size: 1.4rem;
-}
-
-.badge-convenio {
-    background: var(--gris-claro);
-    color: var(--naranja);
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 15px;
-}
-
-.beneficios-lista {
-    list-style: none;
-    padding: 0;
-    margin: 15px 0 0;
-}
-
-.beneficios-lista li {
-    font-size: 0.95rem;
-    color: var(--gris-medio);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.beneficios-lista li::before {
-    content: "•";
-    color: var(--naranja);
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-
-
-.logo-empresa {
+/* TARJETA */
+.card-convenio{
     width: 100%;
-    height: 100px;
+    max-width: 520px;
+    background: var(--blanco);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--borde);
+    position: relative;
+    transition: 0.3s ease;
+    display:flex;
+    flex-direction: column;
+    height:100%;
+}
+
+.card-convenio:hover{
+    transform: translateY(-4px);
+}
+
+/* BADGE */
+.badge-convenio{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background:var(--color-principal);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 1.0rem;
+    font-weight: 600;
+}
+
+/* LOGO GRANDE */
+.logo-empresa{
+    width: 100%;
+    height: 230px;
+    background: #eeeeee88;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
-    padding: 10px;
+ 
+    border-bottom: 1px solid var(--borde);
 }
 
-.logo-empresa img {
-    max-width: 100%;
-    max-height: 250px; 
+.logo-empresa img{
+
+    height: 100%;
     object-fit: contain;
-    transition: transform 0.3s ease;
 }
 
-.card-convenio:hover .logo-empresa img {
-    transform: scale(1.1);
+/* CONTENIDO */
+.contenido-card{
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex:1;
 }
 
-.card-convenio {
-    opacity: 1 !important; /* Forzamos a que sea visible */
-    border-top: 1px solid var(--borde);
+/* TITULOS */
+.card-convenio h3{
+    color: var(--color-principal);
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align:center;
+}
+.texto-beneficios{
+    text-align: center;
+    padding: 5px;
+    background-color:var(--gris-claro);
+    border-radius: 5px;
+    font-size: 0.95rem;;
+}
+.texto-naranja{
+    color: var(--color-principal);
+    font-weight: 600;
+    text-align: center;
+    margin-right:5px;
+}
+
+.card-convenio h2{
+    color: var(--gris-medio);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-weight: 400;
+     text-align:center;
+}
+
+/* TITULO SECCION */
+.titulo-seccion{
+    color: var(--color-principal);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* BENEFICIOS */
+.beneficios-lista{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 18px;
+}
+
+.beneficios-lista li{
+    color: var(--gris-oscuro);
+    line-height: 1.5;
+    font-size: 0.93rem;
+}
+.beneficios-lista li::marker{
+    color: var(--color-principal);
+    font-size: 1.2rem;
+}
+
+
+
+.info-item{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label{
+    color: var(--color-principal);
+    font-size: 0.88rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-value{
+    color: var(--gris-oscuro);
+    font-size: 0.92rem;
+}
+
+/* PALABRAS CLAVE */
+.palabras-clave{
+    margin-top: auto;
+    padding-top: 5px;
+    gap: 10px;
+    text-align: center;
+}
+
+.tag-palabra{
+    background: var(--color-secundario);
+    color: var(--color-principal);
+    padding: 7px 14px;
+    border-radius: 30px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+/* CONTENEDOR DE BENEFICIOS + INFO */
+.detalles-convenio{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 18px;
+    align-items: start;
+}
+
+/* BENEFICIOS */
+.seccion-card{
+   
+    border-radius: 14px;
+    padding: 16px;
+    height: 100%;
+}
+
+/* INFO EMPRESA */
+.info-empresa{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: var(--gris-claro);
+    border-radius: 14px;
+    padding: 16px;
+    height: 100%;
+}
+/* Contenedor de la sección Educativa */
+.bloque-educativo {
+    width: 100%;
+    margin-top: 50px;
+    padding: 20px 0;
+}
+
+/* Forzar que el grid ocupe todo el ancho y sea flexible */
+.grid-convenios-full {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    width: 100%;
+}
+
+/* Estilo de la Tarjeta Educativa */
+.card-educativa {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 5px solid #e17203; /* Color institucional naranja */
+}
+
+.card-educativa:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+/* Imagen de la institución */
+.imagen-institucion {
+    width: 100%;
+    overflow: hidden;
+
+
+}
+
+.imagen-institucion img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen sin deformarla */
+    transition: scale 0.5s ease;
+}
+
+.card-educativa:hover .imagen-institucion img {
+    scale: 1.1;
+}
+
+/* Cuerpo de la tarjeta */
+.body-convenio-edu {
+    padding: 25px;
+    flex-grow: 1;
+}
+
+.body-convenio-edu h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.body-convenio-edu small {
+    color: #666;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.beneficios-lista-edu {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.beneficios-lista-edu li {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    color: #444;
+}
+
+.beneficios-lista-edu li i {
+    color: #e17203;
+    margin-right: 10px;
+}
+
+/* Badge de estado */
+.badge-edu {
+    background: #e17203;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.footer-convenio{
+    padding: 15px; 
+    border-top: 1px solid #eee;
+     font-size: 0.85rem;
+    color: #777;
+
+}
+.card-educativa-prox{
+    background-color: #afababc2;
+    border-radius: 20px;
+    border-top-color: #ccc; opacity: 0.8;
+}
+#proximamente{
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    text-align: center;
+     height: 100%; 
+    min-height: 300px;
+
+.fa-handshake-angle{
+    font-size: 4rem; color: #000000; margin-bottom: 20px;
+
+}
+
+/* RESPONSIVE */
+@media(max-width: 700px){
+
+    .detalles-convenio{
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px){
+
+    .contenedor-convenios{
+        grid-template-columns: 1fr;
+    }
+
+    .card-convenio{
+        max-width: 100%;
+    }
+
 }
 
 /* =========================================
@@ -255,4 +506,5 @@ header-convenio{
 
     .prev { left: 0; }
     .next { right: 0; }
+}
 }

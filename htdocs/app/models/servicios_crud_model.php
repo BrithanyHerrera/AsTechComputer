@@ -1,7 +1,8 @@
 <?php
 // ========================================================
 // MODELO: servicios_model.php
-// UBICACIÓN: app/models/servicios_model.php
+// UBICACIÓN: app/models/servicios_crud_model.php
+// CONTROLADOR: servicios_crud_controller.php
 // ========================================================
 
 class ServicioCrudModel {

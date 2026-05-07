@@ -49,96 +49,388 @@
         <div class="bloque">
             <h2 class="titulo-bloque">Proveedores</h2>
             <div class="grid-convenios">
-       <div class="card-convenio">
-          <span class="badge-convenio">Proveedor</span>
+<div class="card-convenio tema-naranja">
+    <span class="badge-convenio">Activo</span>
+    <div class="logo-empresa" id="dark">
+        <img src="../../public/img/powe.png" alt="Logo CCS">
+    </div>
+
+    <div class="contenido-card">
+
+        <h3 >POWE</h3>
+
+        <h2>
+            Proveedor de cargadores y baterías compatible de calidad premium con garantía
+        </h2>
+        <p class="texto-beneficios"><span class="texto-naranja">Beneficios:</span>
+       Equipos confiables con tiempos de entrega eficientes.
+ </p>
+<div class="detalles-convenio">
+        <div class="seccion-card">
+
+            <p class="titulo-seccion">Aportaciones:</p>
+
+            <ul class="beneficios-lista">
+                <li>Suministro de refacciones</li>
+                <li>Disponibilidad de componentes</li>
+                <li>Soporte en adquisición</li>
+            </ul>
+
+        </div>
+        <div class="info-empresa">
+
+            <div class="info-item">
+                <span class="info-label" >Convenio</span>
+                <span class="info-value"></span>3+ Años</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Ubicación
+                </span>
+
+                <span class="info-value">Tlaquepaque, Jalisco</span>
+            </div>
+
+        </div>
+        </div>
+        <div class="palabras-clave">
+            <span class="tag-palabra">Suministro</span>
+            <span class="tag-palabra">Hardware</span>
+            <span class="tag-palabra">Tecnologia</span>
+        </div>
+    </div>
+</div>
+ <div class="card-convenio tema-naranja">
+    <span class="badge-convenio">Activo</span>
+    <div class="logo-empresa" id="dark">
+        <img src="../../public/img/rumbafierro.png" alt="Logo CCS">
+    </div>
+
+    <div class="contenido-card">
+
+        <h3 >Recicladora Rumba Fierro</h3>
+        <h2>
+          Empresa especializada en reciclaje y gestión responsable de residuos.
+        </h2>
+   <p class="texto-beneficios"><span class="texto-naranja">Beneficios:</span>
+Servicios responsables con el medio ambiente.
+</p>
+
+<div class="detalles-convenio">
+        <div class="seccion-card">
+
+            <p class="titulo-seccion">Aportaciones:</p>
+
+            <ul class="beneficios-lista">
+                <li>Manejo de residuos electronivos</li>
+                <li>Procesos sustentables</li>
+                <li>Apoyo en reciclaje</li>
+            </ul>
+
+        </div>
+        <div class="info-empresa">
+
+            <div class="info-item">
+                <span class="info-label" >Convenio</span>
+                <span class="info-value">1+ Año</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label" >
+                    <i class="fa-solid fa-location-dot"></i>
+                    Ubicación
+                </span>
+
+                <span class="info-value">Puerto Vallarta, Jalisco</span>
+            </div>
+     
+
+        </div>
+        </div>
+        <div class="palabras-clave">
+            <span class="tag-palabra">Sustenabilidad</span>
+            <span class="tag-palabra">Reciclaje</span>
+            <span class="tag-palabra">Responsabilidad ambiental</span>
+
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+
+
+        <div class="bloque">
+            <h2 class="titulo-bloque">Alianzas estrategicas</h2>
+            <div class="grid-convenios">
+<div class="card-convenio tema-morado">
+    <span class="badge-convenio">Activo</span>
     <div class="logo-empresa">
         <img src="../../public/img/ccs_logo.png" alt="Logo CCS">
     </div>
 
-  
-    <h3>Centro de Copiadoras y Servicios</h3>
-    <ul class="beneficios-lista">
-        <li>Soporte rápido en equipos de copiado y digitalización.</li>
-        <li>Soluciones integrales para manejo de documentos empresariales.</li>
-      
-    </ul>
+    <div class="contenido-card">
+
+        <h3>Centro de Copiadoras y Servicios</h3>
+
+        <h2>
+            Empresa especializada en renta de equipos de copiado,
+            mantenimiento y suministro de consumibles para entornos empresariales.
+        </h2>
+        <p class="texto-beneficios"><span class="texto-naranja">Beneficios:</span> Soluciones más completas e integradas.
+ </p>
+<div class="detalles-convenio">
+        <div class="seccion-card">
+
+            <p class="titulo-seccion">Aportaciones:</p>
+
+            <ul class="beneficios-lista">
+                <li>Renta de equipos de copiado</li>
+                <li>Mantenimiento técnico especializado</li>
+                <li>Suministro de consumibles</li>
+            </ul>
+
+        </div>
+        <div class="info-empresa">
+
+            <div class="info-item">
+                <span class="info-label">Convenio</span>
+                <span class="info-value">3+ Años</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Ubicación
+                </span>
+
+                <span class="info-value">Puerto Vallarta, Jalisco</span>
+            </div>
+
+        </div>
+        </div>
+        <div class="palabras-clave">
+            <span class="tag-palabra">Copiadoras</span>
+            <span class="tag-palabra">Mantenimiento</span>
+            <span class="tag-palabra">Consumibles</span>
+            <span class="tag-palabra">Soporte técnico</span>
+
+        </div>
+    </div>
 </div>
+ <div class="card-convenio tema-morado">
+    <span class="badge-convenio">Activo</span>
+    <div class="logo-empresa">
+        <img src="../../public/img/dr_game_pad.png" alt="Logo CCS">
+    </div>
 
-                <div class="card-convenio">
-                    <span class="badge-convenio">Proveedor</span>
-                    <h3>Empresa Y</h3>
-                    <ul class="beneficios-lista">
-                        <li>Soporte técnico</li>
-                        <li>Garantía extendida</li>
-                    </ul>
-                </div>
+    <div class="contenido-card">
+
+        <h3>Dr. Gamepad</h3>
+        <h2>
+          Especialistas en reparación de controles y videoconsolas
+        </h2>
+   <p class="texto-beneficios"><span >Beneficios:</span>
+   Atención especializada para equipos y accesorios gaming.</p>
+
+<div class="detalles-convenio">
+        <div class="seccion-card">
+
+            <p class="titulo-seccion">Aportaciones:</p>
+
+            <ul class="beneficios-lista">
+                <li>Reparación de video consolas</li>
+                <li>Reparación de perifericos</li>
+                <li>Servicios técnicos especificos</li>
+            </ul>
+
+        </div>
+        <div class="info-empresa">
+
+            <div class="info-item">
+                <span class="info-label">Convenio</span>
+                <span class="info-value">3+ Años</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Ubicación
+                </span>
+
+                <span class="info-value">Puerto Vallarta, Jalisco</span>
+            </div>
+     
+
+        </div>
+        </div>
+        <div class="palabras-clave">
+            <span class="tag-palabra">Gaming</span>
+            <span class="tag-palabra">Reparación</span>
+            <span class="tag-palabra">Especializado</span>
+        </div>
+    </div>
+</div>
             </div>
         </div>
-
-        <div class="bloque">
-            <h2 class="titulo-bloque">Alianzas Estratégicas</h2>
-            <div class="grid-convenios">
-                <div class="card-convenio">
-                    <span class="badge-convenio">Alianza</span>
-                    <h3>Organización A</h3>
-                    <ul class="beneficios-lista">
-                        <li>Capacitaciones</li>
-                        <li>Eventos conjuntos</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="bloque">
+                <div class="bloque">
             <h2 class="titulo-bloque">Partners</h2>
             <div class="grid-convenios">
-                <div class="card-convenio">
-                    <span class="badge-convenio">Partner</span>
-                    <h3>Empresa Partner</h3>
-                    <ul class="beneficios-lista">
-                        <li>Integración de servicios</li>
-                        <li>Soporte dedicado</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <div class="card-convenio tema-naranja">
+    <span class="badge-convenio">Activo</span>
+    <div class="logo-empresa" id="dark">
+        <img src="../../public/img/hey.png" alt="Logo CCS">
+    </div>
+    <div class="contenido-card">
+        <h3>Hey Network</h3>
+        <h2>
+Agencia creativa enfocada en marketing estratégico, desarrollo de identidad visual y crecimiento en redes sociales.
+        </h2>
+   <p class="texto-beneficios"><span >Beneficios:</span>
+   Servicios fortalecidos mediante conexiones y colaboración empresarial.
+</p>
 
-        <div class="bloque">
-            <h2 class="titulo-bloque">Convenios Educativos</h2>
-            <div class="grid-convenios">
+
+<div class="detalles-convenio">
+        <div class="seccion-card">
+
+            <p class="titulo-seccion">Aportaciones:</p>
+
+            <ul class="beneficios-lista">
+                <li>Desarrollo de estrategias de marketing</li>
+                <li>Diseño y fortalecimiento de identidad visual</li>
+                <li>Gestión y crecimiento en redes sociales</li>
+            </ul>
+
+        </div>
+        <div class="info-empresa">
+
+            <div class="info-item">
+                <span class="info-label">Convenio</span>
+                <span class="info-value">1+ Año</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Ubicación
+                </span>
+
+                <span class="info-value">Puerto Vallarta, Jalisco</span>
+            </div>
+     
+
+        </div>
+        </div>
+        <div class="palabras-clave">
+            <span class="tag-palabra">Consultorias</span>
+            <span class="tag-palabra">Marca</span>
+            <span class="tag-palabra">Diseño</span>
+        </div>
+    </div>
+</div>
+        <div class="card-convenio tema-naranja">
+    <span class="badge-convenio">Activo</span>
+    <div class="logo-empresa" id="dark">
+        <img src="../../public/img/syscom.png" alt="Logo CCS">
+    </div>
+    <div class="contenido-card">
+        <h3>SYSCOM</h3>
+        <h2>
+Distribuidor líder en tecnología, especializado en telecomunicaciones, seguridad y redes.
+        </h2>
+   <p class="texto-beneficios"><span >Beneficios:</span>
+Acceso a tecnología de nivel empresarial con mayor disponibilidad y confiabilidad.
+
+</p>
+
+
+<div class="detalles-convenio">
+        <div class="seccion-card">
+
+            <p class="titulo-seccion">Aportaciones:</p>
+
+            <ul class="beneficios-lista">
+                <li>Acceso a catálogo empresarial</li>
+                <li>Equipamiento profesional</li>
+                <li>Soporte técnico y capacitación</li>
+            </ul>
+
+        </div>
+        <div class="info-empresa">
+
+            <div class="info-item">
+                <span class="info-label">Convenio</span>
+                <span class="info-value">1+ Año</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Ubicación
+                </span>
+
+                <span class="info-value">México</span>
+            </div>
+     
+
+        </div>
+        </div>
+        <div class="palabras-clave">
+            <span class="tag-palabra">Tecnologia</span>
+            <span class="tag-palabra">Infraestructura</span>
+            <span class="tag-palabra">Redes</span>
+            <span class="tag-palabra">Seguridad</span>
+        </div>
+    </div>
+</div>
+            </div>
+    </div>
+
+           
+  
+
+<div class="bloque bloque-educativo">
+    <h2 class="titulo-bloque">Convenios Educativos</h2>
+    <div class="grid-convenios-full">
+        
+        <article class="card-educativa">
+            <div class="imagen-institucion">
+                <img src="../../public/img/cucosta.png" alt="Centro Universitario de la Costa">
+            </div>
+            
+            <div class="body-convenio-edu">
+                <span class="badge-edu">Activo</span>
+                <h3>Universidad de Guadalajara</h3>
+                <small>Centro Universitario de la Costa (CUCosta)</small>
                 
-                <article class="card-convenio">
-                    <div class="header-convenio">
-                        <i class="fa-solid fa-graduation-cap" style="font-size: 4rem; color: #e17203;"></i>
-                    </div>
-                    <div class="body-convenio">
-                        <span class="badge-convenio">Activo</span>
-                        <h3>Universidad de Guadalajara <br><small>CUCosta</small></h3>
-                        <p>Convenio de colaboración académica y beneficios en servicios tecnológicos para la comunidad universitaria.</p>
-                        <ul class="beneficios-lista">
-                            <li><i class="fa-solid fa-circle-check"></i> Practicas profesionales.</li>
-                            <li><i class="fa-solid fa-circle-check"></i> .....</li>
-                            <li><i class="fa-solid fa-circle-check"></i> .....</li>
-                            <li><i class="fa-solid fa-circle-check"></i> .....</li>
-                        </ul>
-                    </div>
-                    <div class="footer-convenio">
-                        <i class="fa-solid fa-location-dot"></i> Puerto Vallarta, Jalisco.
-                    </div>
-                </article>
-
-                <article class="card-convenio" >
-                    <div class="header-convenio" >
-                        <i class="fa-solid fa-handshake" ></i>
-                    </div>
-                    <div class="body-convenio">
-                        <h3>Próximamente</h3>
-                        <p>Estamos trabajando para expandir nuestras alianzas con más instituciones de la región.</p>
-                        <div style="height: 120px;"></div> 
-                    </div>
-                </article>
+                <p>Colaboración académica para el desarrollo de talento mediante proyecto y practicas profesionales
+</p>
+                
+                <ul class="beneficios-lista-edu">
+                    <li><i class="fa-solid fa-circle-check"></i>Prácticas Profesionales</li>
+                    <li><i class="fa-solid fa-circle-check"></i>Formación</li>
+                    <li><i class="fa-solid fa-circle-check"></i>Vinculación academica</li>
+                </ul>
             </div>
-        </div>
+            
+            <div class="footer-convenio">
+                <i class="fa-solid fa-location-dot"></i> Av. Universidad 203, Puerto Vallarta, Jal.
+            </div>
+        </article>
+
+        <article class="card-educativa-prox">
+            <div class="body-convenio-edu" id="proximamente" >
+                <i class="fa-solid fa-handshake-angle" ></i>
+                <h3>Próximamente</h3>
+                <p>Estamos gestionando nuevas alianzas con el sector educativo para seguir impulsando el talento local.</p>
+            </div>
+        </article>
+
+    </div>
+</div>
+       
         
     </div>
 
