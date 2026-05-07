@@ -46,6 +46,15 @@
           WHERE estado = 'activo'";
 
     $resultado = mysqli_query($conexion, $query);
+    $servicios_agrupados = [];
+
+while ($fila = mysqli_fetch_assoc($resultado)) {
+
+    // Agrupar por tipo de servicio
+    $categoria = $fila['tipo_servicio'];
+
+    $servicios_agrupados[$categoria][] = $fila;
+}
     ?>
     <?php
     // Preparamos los datos para el carousel basándonos en tus categorías

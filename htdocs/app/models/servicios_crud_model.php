@@ -3,6 +3,8 @@
 // MODELO: servicios_model.php
 // UBICACIÓN: app/models/servicios_crud_model.php
 // CONTROLADOR: servicios_crud_controller.php
+// pagina que se encarga de controlar las funciones de la pagina de servicios dentro de el panel administrativo,
+// en la cual se pueden agregar, eliminar y editarlos servicios
 // ========================================================
 
 class ServicioCrudModel {
@@ -11,7 +13,7 @@ class ServicioCrudModel {
     public function __construct(mysqli $conexion) {
         $this->conexion = $conexion;
     }
-
+//funcion para obtener servicios y mostrarlos
     public function obtenerServicios(?int $id_tipo = null): array {
         if ($id_tipo !== null) {
             $sql = "SELECT tipo_servicio, codigo_servicio, descripcion, precio, imagen_servicio, procedimiento, beneficios, indicaciones, exclusiones 
@@ -37,7 +39,7 @@ class ServicioCrudModel {
         $stmt->close();
         return $servicios;
     }
-
+//funcion para el formulario agregar servicio
     public function agregarServicio(array $datos): bool {
         $sql = "INSERT INTO servicios 
                 (tipo_servicio, codigo_servicio, id_tipo_servicio, descripcion, imagen_servicio, tiempo_estimado, precio, estado, procedimiento, beneficios, indicaciones, exclusiones)
@@ -68,7 +70,7 @@ class ServicioCrudModel {
 
         return $stmt->execute();
     }
-
+//funcion para editar la informacion de los servicios
     public function editarServicio(array $datos): bool {
         $id_tipo = (int)$datos['id_tipo_servicio'];
         $tiempo = (float)$datos['tiempo_estimado'];
@@ -124,13 +126,13 @@ class ServicioCrudModel {
 
         return $stmt->execute();
     }
-
+//funcion para eliminar servicios
     public function eliminarServicio(int $id): bool {
         $stmt = $this->conexion->prepare("DELETE FROM servicios WHERE id_servicio = ?");
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
-
+//funcion para el buscador de servicios dentro del panel (funciona con filtros)
 public function buscarServiciosAvanzado(array $filtros): mysqli_result {
     $sql = "SELECT s.*, t.nombre_tipo 
             FROM servicios s

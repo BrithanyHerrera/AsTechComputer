@@ -15,13 +15,14 @@ require_once __DIR__ . "/../../controllers/contenedor_crud_controller.php";
             <i class="fa-solid fa-plus"></i> Nuevo contenedor
         </button>
     </div>
+<!--formulario para agregar un nuevo contenedor-->
     <div id="formulario-gabinete" class="modal-formulario" style="display: none;">
         <div class="contenido-modal">
             <span class="cerrar" onclick="cerrarFormulario()">&times;</span>
             <h3>Registrar Nuevo Gabinete</h3>
 
 <form action="../controllers/contenedor_crud_controller.php?accion=agregar" method="POST" id="form-agregar">
-
+<!--espacios para agregar la informaciondel contenedor nuevo-->
 <div class="grupo-input">
 <label>ID Gabinete:</label>
 <input type="text" name="id_gabinete" required placeholder="Ej. G01">
@@ -49,7 +50,7 @@ require_once __DIR__ . "/../../controllers/contenedor_crud_controller.php";
 <button type="submit" class="btn-guardar">Guardar Gabinete</button>
 <button type="button" class="btn-cancelar" onclick="cerrarFormulario()">Cancelar</button>
 </div>
-
+<!--tabla para ver contenedor con todos los contenedores de la bd-->
 </form>
         </div>
     </div>
@@ -135,4 +136,5 @@ require_once __DIR__ . "/../../controllers/contenedor_crud_controller.php";
         </form>
     </div>
 </div>
+<!--js para los contenedores-->
 <script src="../../public/js/contenedor_crud.js"></script>

@@ -522,14 +522,10 @@
         transition: background 0.3s;
         display: flex;
         align-items:flex-start;
-       
     }
-
     .buscador-btn:hover {
         background-color: #3d052b;
     }
-
-    /* Botón Limpiar / Cancelar */
     .btn-limpiar {
         background-color: #e9ecef;
         color: #495057;
@@ -549,8 +545,6 @@
         background-color: #dee2e6;
         color: #212529;
     }
-
-    /* Responsive: en pantallas pequeñas el botón ocupa todo el ancho */
     @media (max-width: 600px) {
         .grupo-filtro {
             min-width: 100%;
@@ -594,3 +588,204 @@
             margin-left: 70px;
         }
     }
+#contenedor-principal-servicios {
+    width: 100%;
+    box-sizing: border-box;
+}
+#buscador-form-servicios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    align-items: flex-end;
+}
+
+#buscador-container-servicios {
+    padding: 20px;
+    background: #fdfdfd;
+    border-radius: 8px;
+    border-left: 5px solid #52073a;
+}
+@media screen and (max-width: 768px) {
+    #tabla-listado-servicios thead {
+        display: none;
+    }
+
+    #tabla-listado-servicios, 
+    #tabla-listado-servicios tbody, 
+    #tabla-listado-servicios tr, 
+    #tabla-listado-servicios td {
+        display: block;
+        width: 100%;
+    }
+
+    #tabla-listado-servicios tr {
+    border-bottom: 2px solid #eee; /* Solo un borde al final de cada 'tarjeta' */
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+      
+    }
+
+    #tabla-listado-servicios td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+
+    #tabla-listado-servicios td:last-child {
+        border-bottom: none;
+    }
+
+    /* Insertamos el nombre de la columna antes del valor */
+    #tabla-listado-servicios td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: #52073a;
+    }
+
+    /* Centrar acciones en móvil */
+    #tabla-listado-servicios td.acciones {
+        padding-left: 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+}
+
+/* Modales Responsivos */
+.contenido-modal.modal-purpura {
+    width: 95% !important; /* Casi todo el ancho en móvil */
+    max-width: 600px;      /* Pero no más de 600px en PC */
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+#formulario-servicio {
+    padding-left: 0 !important; /* Quitamos ese 40% que tenías */
+}
+/* Ejemplo de distribución de anchos */
+#tabla-listado-servicios th:nth-child(1) { width: 5%; }  /* ID */
+#tabla-listado-servicios th:nth-child(2) { width: 20%; } /* Nombre */
+#tabla-listado-servicios th:nth-child(4) { width: 100%; } /* Descripción (más grande) */
+#tabla-listado-servicios th:nth-child(6) { width: 10%; } /* Precio */
+/* --- ESTILO PARA ESCRITORIO (FLUIDO) --- */
+#tabla-listado-servicios {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto; 
+    font-size: clamp(0.7rem, 1vw, 0.9rem); 
+}
+
+#tabla-listado-servicios th, 
+#tabla-listado-servicios td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #eee;
+    text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+    #tabla-listado-servicios td[data-label="Descripcion"],
+    #tabla-listado-servicios td:nth-of-type(4) {
+        flex-direction: column;  
+        min-height: 150px;        
+        height: auto;           
+        gap: 8px;                 
+    }
+
+    #tabla-listado-servicios td[data-label="Descripcion"]::before,
+    #tabla-listado-servicios td:nth-of-type(4)::before {
+                 /* El título ocupa todo el ancho superior */
+        margin-bottom: 5px;       /* Separación extra */
+        border-bottom: 1px dashed #eee; /* Opcional: una línea sutil divisoria */
+        padding-bottom: 4px;
+    }
+
+    /* Para que el texto de la descripción use todo el ancho y no se pegue a la derecha */
+    #tabla-listado-servicios td[data-label="Descripcion"] strong,
+    #tabla-listado-servicios td:nth-of-type(4) strong {
+        text-align: right;         /* En descripción larga, leer a la izquierda es mejor */
+        margin-left: -20;         
+        width: 80%;
+        display: block;           /* Se comporta como bloque para usar todo el ancho */
+        font-size: 0.85rem;
+        line-height: 1.4;         /* Mejorar legibilidad */
+    }
+    /* Ocultamos el encabezado original (thead) */
+    #tabla-listado-servicios thead {
+        display: none;
+    }
+
+    /* Convertimos cada fila en una "tarjeta" independiente */
+    #tabla-listado-servicios tr {
+        display: block;
+        margin-bottom: 20px;
+        border: 1px solid #52073a;
+        border-radius: 8px;
+        background: #fff;
+        padding: 5px;
+        text-align: right;
+    }
+    #tabla-listado-servicios td::after {
+        content: ""; /* No borres esto, es para asegurar el flujo flex */
+        display: none;
+    }
+
+    /* Convertimos cada celda en una línea con el título al lado */
+    #tabla-listado-servicios td {
+        display: flex; /* Alinea título y contenido */
+        justify-content: space-between;
+        text-align:right;
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+        width: 100%;
+        box-sizing: border-box;
+        align-items: center;
+        flex-direction: row;
+    }
+    #tabla-listado-servicios td > * {
+        text-align: right;
+        margin-left: auto; 
+    }
+    #tabla-listado-servicios td:last-child {
+        border-bottom: none;
+        justify-content: center;
+    }
+    #tabla-listado-servicios td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #52073a;
+        font-size: 0.8rem;
+        padding-right: 15px;
+        text-align: left;
+        flex-shrink: 0; 
+
+    }
+    #tabla-listado-servicios td {
+        word-break: break-word;
+    }
+}
+@media screen and (max-width: 768px) {
+    #tabla-listado-servicios td::before {
+        content: attr(data-label);
+        text-align: left;
+        flex: 1; /* El título ocupa el espacio necesario a la izquierda */
+        font-weight: bold;
+    }
+
+    /* El contenido real del TD */
+    #tabla-listado-servicios td {
+        justify-content: flex-end; /* Alinea todo al final (derecha) */
+    }
+
+    /* Para que el texto interno también se alinee a la derecha */
+    #tabla-listado-servicios td {
+        display: flex;
+        gap: 10px;
+    }
+}

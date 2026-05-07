@@ -16,15 +16,54 @@ include __DIR__ . "/../../config/conexion.db.php";
 if (!isset($conexion)) {
     die("Error: No se pudo cargar la variable de conexión \$pdo. Verifica el archivo conexion.db.php");
 }
+
+// 1. Capturamos los nuevos filtros del GET
+$busqueda   = $_GET['busqueda'] ?? '';
+$filtro_tipo = $_GET['filtro_tipo'] ?? '';
+$precio_max  = $_GET['precio_max'] ?? '';
+
+// 2. Base de la consulta
+$query = "SELECT 
+            s.*, 
+            t.nombre_tipo
+          FROM servicios s
+          LEFT JOIN tipos_servicios t ON s.id_tipo_servicio = t.id_tipo_servicio
+          WHERE 1=1"; // El 1=1 es para facilitar la concatenación de ANDs
+
+// 3. Filtro por palabra clave (Buscador original)
+if (!empty($busqueda)) {
+    $like = "%" . $conexion->real_escape_string($busqueda) . "%";
+    $query .= " AND (s.tipo_servicio LIKE '$like' 
+                OR s.codigo_servicio LIKE '$like' 
+                OR s.descripcion LIKE '$like'
+                OR s.procedimiento LIKE '$like')";
+}
+
+// 4. Filtro por Categoría (ID Tipo Servicio)
+if (!empty($filtro_tipo)) {
+    $tipo_id = (int)$filtro_tipo;
+    $query .= " AND s.id_tipo_servicio = $tipo_id";
+}
+
+// 5. Filtro por Precio Máximo
+if (!empty($precio_max)) {
+    $p_max = (float)$precio_max;
+    $query .= " AND s.precio <= $p_max";
+}
+
+// 6. Ejecutar la consulta
+$resultado = $conexion->query($query);
+
+
 ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 <!-- BUSCADOR DE SERVICIOS -->
 
-<div class="contenedor-crud">
-    <div class="buscador-container">
-        <form method="GET" class="buscador-form" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end;">
+<div class="contenedor-crud" id="contenedor-principal-servicios">
+    <div class="buscador-container" id="buscador-container-servicios">
+        <form method="GET" class="buscador-form" id="buscador-form-servicios" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end;">
             <input type="hidden" name="seccion" value="servicios">
 
             <div class="grupo-filtro">
@@ -152,100 +191,65 @@ if (!isset($conexion)) {
 </div>
 <!-- Tabla que muestra los servicios -->
     <div >
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                     <th>Nombre del servicio</th>
-                    <th>Tipo de servicio</th>
-                    <th>Descripcion</th>
-                    <th>Tiempo estimado del servicio</th>
-                    <th>Precio</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                     <tr>
-<?php
-// 1. Capturamos los nuevos filtros del GET
-$busqueda   = $_GET['busqueda'] ?? '';
-$filtro_tipo = $_GET['filtro_tipo'] ?? '';
-$precio_max  = $_GET['precio_max'] ?? '';
-
-// 2. Base de la consulta
-$query = "SELECT 
-            s.*, 
-            t.nombre_tipo
-          FROM servicios s
-          LEFT JOIN tipos_servicios t ON s.id_tipo_servicio = t.id_tipo_servicio
-          WHERE 1=1"; // El 1=1 es para facilitar la concatenación de ANDs
-
-// 3. Filtro por palabra clave (Buscador original)
-if (!empty($busqueda)) {
-    $like = "%" . $conexion->real_escape_string($busqueda) . "%";
-    $query .= " AND (s.tipo_servicio LIKE '$like' 
-                OR s.codigo_servicio LIKE '$like' 
-                OR s.descripcion LIKE '$like'
-                OR s.procedimiento LIKE '$like')";
-}
-
-// 4. Filtro por Categoría (ID Tipo Servicio)
-if (!empty($filtro_tipo)) {
-    $tipo_id = (int)$filtro_tipo;
-    $query .= " AND s.id_tipo_servicio = $tipo_id";
-}
-
-// 5. Filtro por Precio Máximo
-if (!empty($precio_max)) {
-    $p_max = (float)$precio_max;
-    $query .= " AND s.precio <= $p_max";
-}
-
-// 6. Ejecutar la consulta
-$resultado = $conexion->query($query);
-
-if (!$resultado) {
-    echo "<tr><td colspan='8'>Error en la consulta: " . $conexion->error . "</td></tr>";
-} else {
-    if ($resultado->num_rows == 0) {
-        echo "<tr><td colspan='8' style='text-align:center;'>No se encontraron servicios con esos filtros.</td></tr>";
-    }
-    while ($row = $resultado->fetch_assoc()) {
-        $datosJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
-
-        
-        echo "<tr>
-                <td>{$row['id_servicio']}</td>
-                <td>" . htmlspecialchars($row['tipo_servicio']) . "</td>
-                <td>{$row['nombre_tipo']}</td>
-                <td><strong>" . htmlspecialchars($row['descripcion']) . "</strong></td>
-                 
-                <td>{$row['tiempo_estimado']}</td>
-                <td>$" . number_format($row['precio'], 2) . "</td>
-                <td>
-                    <span style='padding: 4px 8px; border-radius: 12px; font-size: 0.8em; background: " . ($row['estado'] == 'activo' ? '#d4edda' : '#f8d7da') . "; color: " . ($row['estado'] == 'activo' ? '#155724' : '#721c24') . ";'>
-                        " . ucfirst($row['estado']) . "
-                    </span>
-                </td>
-                <td class='acciones'>
-                    <button class='btn-editar' title='Editar' onclick='abrirEditarServicio(event, $datosJson)'>
-                        <i class='fa-solid fa-pen-to-square'></i>
-                    </button>
-                      <button class='btn-eliminar' onclick='confirmarEliminacion({$row['id_servicio']})'>
-    <i class='fa-solid fa-trash'></i>
-</button>
-              <button class='btn-ver' type='button' onclick='abrirModalVerServicio($datosJson)'>
-    <i class='fa-solid fa-eye'></i>
-</button>
-                </td>
-              </tr>";
-    }
-}
-?>
+<div class="tabla-contenedor" id="tabla-servicios-wrapper">
+    <table id="tabla-listado-servicios">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre del servicio</th>
+                <th>Tipo de servicio</th>
+                <th>Descripcion</th>
+                <th>Tiempo estimado</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <?php
+            if (!$resultado) {
+                echo "<tr><td colspan='8'>Error en la consulta: " . $conexion->error . "</td></tr>";
+            } else {
+                if ($resultado->num_rows == 0) {
+                    echo "<tr><td colspan='8' style='text-align:center;'>No se encontraron servicios con esos filtros.</td></tr>";
+                }
+                
+                // UN SOLO BUCLE: Limpio y responsivo
+                while ($row = $resultado->fetch_assoc()) {
+                    $datosJson = htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8');
+                    ?>
+                    <tr>
+                        <td data-label="ID"><?= $row['id_servicio'] ?></td>
+                        <td data-label="Nombre del servicio"><?= htmlspecialchars($row['tipo_servicio']) ?></td>
+                        <td data-label="Tipo de servicio"><?= $row['nombre_tipo'] ?></td>
+                        <td data-label="Descripcion"><strong><?= htmlspecialchars($row['descripcion']) ?></strong></td>
+                        <td data-label="Tiempo estimado"><?= $row['tiempo_estimado'] ?></td>
+                        <td data-label="Precio">$<?= number_format($row['precio'], 2) ?></td>
+                        <td data-label="Estado">
+                            <span class="badge-status" style="padding: 4px 8px; border-radius: 12px; font-size: 0.8em; background: <?= ($row['estado'] == 'activo' ? '#d4edda' : '#f8d7da') ?>; color: <?= ($row['estado'] == 'activo' ? '#155724' : '#721c24') ?>;">
+                                <?= ucfirst($row['estado']) ?>
+                            </span>
+                        </td>
+                        <td data-label="Acciones" class="acciones">
+                            <button class="btn-editar" title="Editar" onclick="abrirEditarServicio(event, <?= $datosJson ?>)">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn-eliminar" title="Eliminar" onclick="confirmarEliminacion(<?= $row['id_servicio'] ?>)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="btn-ver" type="button" title="Ver detalles" onclick="abrirModalVerServicio(<?= $datosJson ?>)">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
             </tbody>
         </table>
+        
     </div>
 </div>
 <!-- FORMULARIO PARA EDITAR SERVICIO -->
@@ -357,4 +361,3 @@ if (!$resultado) {
 </div>
 <!-- SCRIPT DE JAVASCRIPT -->
 <script src="../../public/js/servicios_crud.js"></script>
-
