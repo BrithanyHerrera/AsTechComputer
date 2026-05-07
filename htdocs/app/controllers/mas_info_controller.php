@@ -13,6 +13,16 @@
  * - Renderización de la vista consolidada inyectando la información procesada.
  */
 
+/* ========================================================
+   0. CARGA DE DEPENDENCIAS Y VARIABLES DE ENTORNO
+   ======================================================== */
+// 1. Cargamos el autoload de Composer (necesario para usar Dotenv)
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
+
+// 2. Inicializamos y cargamos el archivo .env
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
+$dotenv->load();
+
 /* ==========================================
    1. CONFIGURACIÓN DE LA API DE GOOGLE PLACES
    ========================================== */
@@ -21,8 +31,9 @@
  * Posteriormente, construye la URL de petición solicitando campos específicos 
  * como nombre, calificación, reseñas y el total de opiniones en idioma español.
  */
-$api_key = "AIzaSyAvPEP5YiCQD5cjxyA_4tb5_u4Lqelb4Tg";
-$place_id = "ChIJH_STTD9JIYQR0OFlsl6ga24";
+// Usando la superglobal $_ENV o getenv()
+$api_key = $_ENV['API_KEY'];
+$place_id = $_ENV['PLACE_ID'];
 
 // Solicitud de campos específicos: nombre, calificación, reseñas y el total de opiniones
 $url = "https://maps.googleapis.com/maps/api/place/details/json?place_id={$place_id}&fields=name,rating,reviews,user_ratings_total&key={$api_key}&language=es";

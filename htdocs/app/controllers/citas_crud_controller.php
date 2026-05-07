@@ -14,6 +14,16 @@
  */
 
 /* ========================================================
+   0. CARGA DE DEPENDENCIAS Y VARIABLES DE ENTORNO
+   ======================================================== */
+// 1. Cargamos el autoload de Composer (necesario para usar Dotenv)
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
+
+// 2. Inicializamos y cargamos el archivo .env
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2));
+$dotenv->load();
+
+/* ========================================================
    1. INICIALIZACIÓN Y CARGA DE DEPENDENCIAS
    ======================================================== */
 /**
@@ -49,7 +59,7 @@ $ruta_credenciales = dirname(__DIR__, 2) . '/credenciales.json';
 $client->setAuthConfig($ruta_credenciales);
 $client->addScope(Calendar::CALENDAR);
 $service = new Calendar($client);
-$calendarId = 'c_83f4c54e847f15f4c1ddba6475de7fe171bfc5e77861406745d8a6f9be385293@group.calendar.google.com';
+$calendarId = $_ENV['CALENDAR_ID'];
 
 /* ==========================================================
    3. ACTUALIZACIÓN DE ESTADO RÁPIDA VÍA AJAX

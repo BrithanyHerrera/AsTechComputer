@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $client->setAuthConfig(dirname(__DIR__, 2) . '/credenciales.json');
             $client->addScope(Calendar::CALENDAR);
             $service = new Calendar($client);
-            $calendarId = 'c_83f4c54e847f15f4c1ddba6475de7fe171bfc5e77861406745d8a6f9be385293@group.calendar.google.com';
+            $calendarId = $_ENV['CALENDAR_ID'];
 
             // Se calcula el tiempo de inicio y fin (asumiendo una duración estándar de 1 hora por cita).
             $start_time = $fecha . 'T' . $hora . ':00-06:00';
