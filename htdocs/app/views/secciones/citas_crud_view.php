@@ -13,7 +13,6 @@
 ?>
 
 <link rel="stylesheet" href="../../public/css/citas_crud.css">
-
 <div class="contenedor-ingresos">
     <div class="encabezado-crud">
         <h1><i class="fa-solid fa-calendar-check"></i> Gestión de Citas</h1>

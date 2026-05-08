@@ -1,0 +1,271 @@
+  @media (max-width: 600px) {
+      .grupo-filtro {
+          min-width: 100%;
+      }
+
+      .buscador-btn,
+      .btn-limpiar {
+          width: 100%;
+      }
+  }
+
+  @media (max-width: 600px) {
+      .fila-input {
+          flex-direction: column;
+          gap: 0;
+      }
+  }
+
+  @keyframes slideIn {
+      from {
+          opacity: 0;
+          transform: translateX(-10px);
+      }
+
+      to {
+          opacity: 1;
+          transform: translateX(0);
+      }
+  }
+
+  @media (max-width: 768px) {
+      .barra-lateral {
+          width: 70px;
+      }
+
+      .barra-lateral a span,
+      .contenedor-logo,
+      .boton-salir {
+          display: none;
+      }
+
+      .contenido-principal {
+          margin-left: 70px;
+      }
+  }
+
+  #contenedor-principal-servicios {
+      width: 100%;
+      box-sizing: border-box;
+  }
+
+  #buscador-form-servicios {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      align-items: flex-end;
+  }
+
+  #buscador-container-servicios {
+      padding: 20px;
+      background: #fdfdfd;
+      border-radius: 8px;
+      border-left: 5px solid #52073a;
+  }
+
+  @media screen and (max-width: 768px) {
+      #tabla-listado-servicios thead {
+          display: none;
+      }
+
+      #tabla-listado-servicios,
+      #tabla-listado-servicios tbody,
+      #tabla-listado-servicios tr,
+      #tabla-listado-servicios td {
+          display: block;
+          width: 100%;
+      }
+
+      #tabla-listado-servicios tr {
+          border-bottom: 2px solid #eee;
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+
+      }
+
+      #tabla-listado-servicios td {
+          text-align: right;
+          padding-left: 50%;
+          position: relative;
+          border-bottom: 1px solid #eee;
+      }
+
+      #tabla-listado-servicios td:last-child {
+          border-bottom: none;
+      }
+
+      #tabla-listado-servicios td::before {
+          content: attr(data-label);
+          position: absolute;
+          left: 10px;
+          width: 45%;
+          text-align: left;
+          font-weight: bold;
+          color: #52073a;
+          pointer-events: none;
+      }
+
+      #tabla-listado-servicios td.acciones {
+          padding-left: 0;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+      }
+  }
+
+  .contenido-modal.modal-purpura {
+      width: 95% !important;
+      max-width: 600px;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+  }
+
+  #formulario-servicio {
+      padding-left: 0 !important;
+  }
+
+  #tabla-listado-servicios th:nth-child(1) {
+      width: 5%;
+  }
+
+  #tabla-listado-servicios th:nth-child(2) {
+      width: 20%;
+  }
+
+  #tabla-listado-servicios th:nth-child(4) {
+      width: 100%;
+  }
+
+  #tabla-listado-servicios th:nth-child(6) {
+      width: 10%;
+  }
+
+  #tabla-listado-servicios {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: auto;
+      font-size: clamp(0.7rem, 1vw, 0.9rem);
+  }
+
+  #tabla-listado-servicios th,
+  #tabla-listado-servicios td {
+      padding: 12px 8px;
+      border-bottom: 1px solid #eee;
+      text-align: right;
+  }
+
+  @media screen and (max-width: 768px) {
+
+      #tabla-listado-servicios td[data-label="Descripcion"],
+      #tabla-listado-servicios td:nth-of-type(4) {
+          flex-direction: column;
+          min-height: 150px;
+          height: auto;
+          gap: 8px;
+      }
+
+      #tabla-listado-servicios td[data-label="Descripcion"]::before,
+      #tabla-listado-servicios td:nth-of-type(4)::before {
+          margin-bottom: 5px;
+          border-bottom: 1px dashed #eee;
+          padding-bottom: 4px;
+      }
+
+      #tabla-listado-servicios td[data-label="Descripcion"] strong,
+      #tabla-listado-servicios td:nth-of-type(4) strong {
+          text-align: right;
+          margin-left: -20;
+          width: 80%;
+          display: block;
+          font-size: 0.85rem;
+          line-height: 1.4;
+      }
+
+      #tabla-listado-servicios thead {
+          display: none;
+      }
+
+      #tabla-listado-servicios tr {
+          display: block;
+          margin-bottom: 20px;
+          border: 1px solid #52073a;
+          border-radius: 8px;
+          background: #fff;
+          padding: 5px;
+          text-align: right;
+      }
+
+      #tabla-listado-servicios td::after {
+          content: "";
+          display: none;
+      }
+
+      #tabla-listado-servicios td {
+          display: flex;
+          justify-content: space-between;
+          text-align: right;
+          padding: 10px;
+          border-bottom: 1px solid #f0f0f0;
+          width: 100%;
+          box-sizing: border-box;
+          align-items: center;
+          flex-direction: row;
+      }
+
+      #tabla-listado-servicios td>* {
+          text-align: right;
+          margin-left: auto;
+      }
+
+      #tabla-listado-servicios td:last-child {
+          border-bottom: none;
+          justify-content: center;
+      }
+
+      #tabla-listado-servicios td::before {
+          content: attr(data-label);
+          font-weight: bold;
+          color: #52073a;
+          font-size: 0.8rem;
+          padding-right: 15px;
+          text-align: left;
+          flex-shrink: 0;
+
+      }
+
+      #tabla-listado-servicios td {
+          word-break: break-word;
+      }
+
+      #tabla-listado-servicios td::before {
+          content: attr(data-label);
+          text-align: left;
+          flex: 1;
+          font-weight: bold;
+      }
+
+      #tabla-listado-servicios td {
+          justify-content: flex-end;
+      }
+
+      #tabla-listado-servicios td {
+          display: flex;
+          gap: 10px;
+      }
+
+      .contenido-modal {
+          top: 0;
+          transform: none;
+          height: 100%;
+          width: 100%;
+          background: white;
+          backdrop-filter: none;
+      }
+
+      #formulario-servicio {
+          padding: 0;
+      }
+      
+  }

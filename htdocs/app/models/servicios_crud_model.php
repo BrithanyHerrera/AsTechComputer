@@ -173,5 +173,14 @@ public function buscarServiciosAvanzado(array $filtros): mysqli_result {
     $stmt->execute();
     return $stmt->get_result();
 }
+ public function guardarServicio(string $nombre, string $descripcion, string $precio, string $id_tipo) {
+        $query = "INSERT INTO servicios (nombre, descripcion, precio, id_tipo_servicio) VALUES (?, ?, ?, ?)";
+        // Cambiado de $this->db a $this->conexion
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bind_param("ssdi", $nombre, $descripcion, $precio, $id_tipo);
+        return $stmt->execute();
+    }
+    
+
 }
 ?>

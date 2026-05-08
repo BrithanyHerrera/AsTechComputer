@@ -41,19 +41,38 @@
     </div>
     <?php
     require_once('../../app/config/conexion.db.php');
-    $query = "SELECT id_servicio, codigo_servicio, tipo_servicio, descripcion, precio, imagen_servicio
-          FROM servicios 
-          WHERE estado = 'activo'";
+   $query = "SELECT 
+            s.id_servicio,
+            s.codigo_servicio,
+            s.id_tipo_servicio,
+            s.tipo_servicio,
+            ts.nombre_tipo,
+            s.descripcion,
+            s.precio,
+            s.imagen_servicio
+          FROM servicios s
+          INNER JOIN tipos_servicios ts
+              ON s.id_tipo_servicio = ts.id_tipo_servicio
+          WHERE s.estado = 'activo'";
 
     $resultado = mysqli_query($conexion, $query);
     $servicios_agrupados = [];
 
 while ($fila = mysqli_fetch_assoc($resultado)) {
 
-    // Agrupar por tipo de servicio
-    $categoria = $fila['tipo_servicio'];
+    $id_categoria = $fila['id_tipo_servicio'];
 
-    $servicios_agrupados[$categoria][] = $fila;
+    // Crear grupo si no existe
+    if (!isset($servicios_agrupados[$id_categoria])) {
+
+        $servicios_agrupados[$id_categoria] = [
+            'nombre' => $fila['nombre_tipo'],
+            'servicios' => []
+        ];
+    }
+
+    // Agregar servicio al grupo
+    $servicios_agrupados[$id_categoria]['servicios'][] = $fila;
 }
     ?>
     <?php
@@ -87,23 +106,33 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
         </div>
     </div>
     <div class="contenedor-servicios">
-        <?php
-        // Obtenemos el ID más alto de todos los servicios para tener una referencia
-        $max_id = 0;
-        foreach ($servicios_agrupados as $seccion) {
-            foreach ($seccion as $s) {
-                if ($s['id_servicio'] > $max_id)
-                    $max_id = $s['id_servicio'];
-            }
+<?php
+// Obtenemos el ID más alto de todos los servicios
+$max_id = 0;
+
+foreach ($servicios_agrupados as $grupo) {
+
+    foreach ($grupo['servicios'] as $s) {
+
+        if ($s['id_servicio'] > $max_id) {
+
+            $max_id = $s['id_servicio'];
         }
-        // Definimos que los últimos 5 IDs registrados se consideren "Nuevos"
-        $umbral_novedad = 4;
-        ?>
+    }
+}
+
+// Definimos que los últimos 5 IDs registrados se consideren "Nuevos"
+$umbral_novedad = 4;
+?>
 <?php if (!empty($servicios_agrupados)): ?>
 
-    <?php foreach ($servicios_agrupados as $titulo_seccion => $lista_servicios): ?>
+    <?php foreach ($servicios_agrupados as $id_tipo => $grupo):
 
-        <div class="seccion-header" id="<?php echo strtolower(str_replace(' ', '-', $titulo_seccion)); ?>">
+        $titulo_seccion = $grupo['nombre'];
+        $lista_servicios = $grupo['servicios'];
+
+    ?>
+      <div class="seccion-header" id="<?php echo strtolower(str_replace(' ', '-', $titulo_seccion)); ?>">
             <h2 class="titulo-categoria"><?php echo $titulo_seccion; ?></h2>
             <hr class="linea-separadora">
         </div>

@@ -9,8 +9,8 @@
    EL LOGIN.
    ========================================= */
 
-    /* estilo de pantalla */
-  .pantalla-login {
+/* estilo de pantalla */
+.pantalla-login {
   background-color: #f0f2f5;
   height: 100vh;
   display: flex;
@@ -26,7 +26,7 @@
   display: flex;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 /* Lado Izquierdo - Imagen */
@@ -107,7 +107,8 @@ form {
 .boton-ingresar {
   width: 100%;
   padding: 14px;
-  background-color: #52073a; /* Tu color secundario */
+  background-color: #52073a;
+  /* Tu color secundario */
   color: white;
   border: none;
   border-radius: 8px;
@@ -119,23 +120,25 @@ form {
 
 .boton-ingresar:hover {
   background-color: #220118;
-  color:#ff891b; 
-  transform:scale(1.1);
-  transition : all 0.3s ease;
+  color: #ff891b;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
 }
-.boton-regresar{
-    position: absolute;
-    margin: 20px;
-    background-color: transparent;
-    border: none;
-    font-size: large;
-    color:#ddd;
-    cursor: pointer;
-    width:100px;
+
+.boton-regresar {
+  position: absolute;
+  margin: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: large;
+  color: #ddd;
+  cursor: pointer;
+  width: 100px;
 }
-.boton-regresar:hover{
-      font-size: larger;
-      color:#ff891b;
+
+.boton-regresar:hover {
+  font-size: larger;
+  color: #ff891b;
 }
 
 .link-olvido {
@@ -145,12 +148,13 @@ form {
   color: #52073a;
   text-decoration: none;
   font-size: 0.85rem;
-  border:none;
+  border: none;
 }
+
 .link-olvido:hover {
   text-decoration: underline;
-  color:#ff891b;
-  transform:scale(1.1)
+  color: #ff891b;
+  transform: scale(1.1)
 }
 
 /* Responsivo básico */
@@ -160,8 +164,10 @@ form {
     flex-direction: column;
     height: auto;
   }
+
   .lado-imagen {
-    display: none; /* Ocultamos imagen en móviles para ahorrar espacio */
+    display: none;
+    /* Ocultamos imagen en móviles para ahorrar espacio */
 
   }
 }

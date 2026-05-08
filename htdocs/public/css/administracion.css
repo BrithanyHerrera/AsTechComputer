@@ -32,7 +32,7 @@ body {
   display: flex;
   flex-direction: column;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
+  z-index: 99999!important;
   transition: transform var(--transition-sidebar);
   overflow-y: auto;
   overflow-x: hidden;

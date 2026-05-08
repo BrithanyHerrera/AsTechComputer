@@ -172,6 +172,7 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
     switch ($seccion_actual) {
       case 'dashboard':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+                echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         echo "<h1>Bienvenido al panel principal</h1>";
         if (file_exists($ruta_secciones . "panel_info_view.php")) { include $ruta_secciones . "panel_info_view.php"; }
         break;
