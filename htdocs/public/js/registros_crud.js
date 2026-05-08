@@ -60,6 +60,18 @@ function verDetalles(datos) {
     document.getElementById('det_fecha').textContent = datos.fecha_ingreso;
     document.getElementById('det_hora').textContent = datos.hora_ingreso;
     document.getElementById('det_estado').textContent = datos.estado;
+    // Lógica para mostrar la fecha de finalización
+    const contenedorFechaListo = document.getElementById('contenedor_fecha_listo');
+    const spanFechaListo = document.getElementById('det_fecha_listo');
+
+    if (datos.fecha_listo && datos.fecha_listo !== '0000-00-00 00:00:00') {
+        // Formatear la fecha para que se vea bien (opcional)
+        const fecha = new Date(datos.fecha_listo);
+        spanFechaListo.textContent = fecha.toLocaleString(); // Muestra fecha y hora local
+        contenedorFechaListo.style.display = 'block'; // Mostrar el renglón
+    } else {
+        contenedorFechaListo.style.display = 'none'; // Ocultar si no está listo
+    }
     document.getElementById('det_gabinete').textContent = "Espacio " + datos.id_gabinete;
     document.getElementById('det_tecnico').textContent = datos.tecnico_asignado || "Sin asignar";
     document.getElementById('det_tiempo').textContent = datos.tiempo_estimado || "No especificado";
@@ -282,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
 
-    // Alerta de edición exitosa (viene del controlador tras guardar cambios)
+    // 1. Alerta de edición exitosa
     if (urlParams.get('status') === 'success_edit') {
         Swal.fire({
             icon: 'success',
@@ -291,11 +303,60 @@ document.addEventListener('DOMContentLoaded', function () {
             confirmButtonColor: '#4f46e5',
             allowOutsideClick: false
         }).then(() => {
-            // Limpiar el parámetro ?status de la URL para no repetir la alerta al recargar
             window.history.replaceState(
                 {}, document.title,
                 window.location.pathname + '?seccion=registros_ingresados_crud_view'
             );
         });
     }
-});
+
+    // 2. Alerta de éxito al marcar como Listo
+    if (urlParams.get('status') === 'success_listo') {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Equipo Listo!',
+            text: 'El equipo ha sido marcado como reparado. El contador de 7 días ha iniciado.',
+            confirmButtonColor: '#f59e0b',
+            allowOutsideClick: false
+        }).then(() => {
+            window.history.replaceState(
+                {}, document.title, 
+                window.location.pathname + '?seccion=registros_ingresados_crud_view'
+            );
+        });
+    }
+}); // Cierre del DOMContentLoaded
+
+
+// ----------------------------------------------------------
+// MARCAR COMO LISTO (SweetAlert dinámico)
+// (Debe ir afuera para que el HTML pueda llamarla)
+// ----------------------------------------------------------
+function confirmarListo(folio) {
+    Swal.fire({
+        title: '¿Marcar como Listo?',
+        text: "El cliente tendrá 7 días para recogerlo. Después generará cobro por resguardo.",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#f59e0b',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: '<i class="fa-solid fa-check"></i> Sí, está reparado',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Creamos un formulario virtual y lo enviamos
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '../controllers/dispositivos_ingresados_crud_controller.php?accion=listo';
+            
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'folio';
+            input.value = folio;
+            
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
