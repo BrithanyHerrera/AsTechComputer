@@ -46,6 +46,7 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                 <select id="filtroEstado" onchange="filtrarTabla()">
                     <option value="todos">Todos los estados</option>
                     <option value="recibido">Recibido</option>
+                    <option value="listo">Listo</option>
                     <option value="entregado">Entregado</option>
                 </select>
             </div>
@@ -85,6 +86,23 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                 <?php foreach ($lista_registros as $row):
                     $solo_fecha = date('Y-m-d', strtotime($row['fecha_ingreso']));
                     $esTecnico  = ($puesto_usuario == 1);
+                    // Lógica para calcular resguardo de 7 días
+                    $alerta_resguardo = "";
+                    if ($row['estado'] == 'listo' && !empty($row['fecha_listo'])) {
+                        $fecha_listo = strtotime($row['fecha_listo']);
+                        $hoy = time();
+                        $diferencia_segundos = $hoy - $fecha_listo;
+                        $dias_transcurridos = floor($diferencia_segundos / (60 * 60 * 24));
+                        $dias_restantes = 7 - $dias_transcurridos;
+
+                        if ($dias_restantes < 0) {
+                            $dias_vencidos = abs($dias_restantes);
+                            // Ahora le decimos exactamente cuántos días cobrar
+                            $alerta_resguardo = "<div style='margin-top:5px; font-size:11px; color:#dc2626; font-weight:bold;'><i class='fa-solid fa-money-bill-wave'></i> Cobrar: $dias_vencidos días extra</div>";
+                        } else {
+                            $alerta_resguardo = "<div style='margin-top:5px; font-size:11px; color:#d97706;'><i class='fa-regular fa-clock'></i> Quedan $dias_restantes días</div>";
+                        }
+                    }
                     $nombre_mostrar = $esTecnico
                         ? '<span style="color:red; font-weight:bold;">Confidencial</span>'
                         : "<strong>{$row['nombre']} {$row['apellido']}</strong>";
@@ -107,11 +125,28 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                     <td><?= $nombre_mostrar ?></td>
                     <td><?= $row['marca'] ?> <?= $row['modelo'] ?></td>
                     <td><span class="falla-txt"><?= $row['descripcion_problema'] ?></span></td>
-                    <td style="white-space:nowrap;"><?= date('d/m/Y', strtotime($row['fecha_ingreso'])) ?></td>
+                    <td style="white-space:nowrap; font-size: 13px;">
+                        <div style="color: #475569;" title="Fecha de Ingreso">
+                            <i class="fa-solid fa-arrow-right-to-bracket" style="width:15px;"></i> <?= date('d/m/Y', strtotime($row['fecha_ingreso'])) ?>
+                        </div>
+                        
+                        <?php if (!empty($row['fecha_listo']) && $row['fecha_listo'] !== '0000-00-00 00:00:00'): ?>
+                        <div style="color: #059669; margin-top: 4px;" title="Reparación Terminada">
+                            <i class="fa-solid fa-wrench" style="width:15px;"></i> <?= date('d/m/Y', strtotime($row['fecha_listo'])) ?>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if ($row['estado'] == 'entregado' && !empty($row['fecha_entrega']) && $row['fecha_entrega'] !== '0000-00-00 00:00:00'): ?>
+                        <div style="color: #2563eb; margin-top: 4px;" title="Entregado al Cliente">
+                            <i class="fa-solid fa-check-double" style="width:15px;"></i> <?= date('d/m/Y', strtotime($row['fecha_entrega'])) ?>
+                        </div>
+                        <?php endif; ?>
+                    </td>
                     <td>
                         <span class="status-pill <?= str_replace(' ', '-', $row['estado']) ?>">
                             <?= ucfirst($row['estado']) ?>
                         </span>
+                        <?= $alerta_resguardo ?>
                     </td>
 
                     <?php if (!$esTecnico): ?>
@@ -131,6 +166,15 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                                 title="Ver detalles">
                             <i class="fa-solid fa-eye"></i>
                         </button>
+
+                        <?php if ($row['estado'] == 'recibido'): ?>
+                            <button class="btn-editar" 
+                                    style="background-color: #f59e0b; color: white;"
+                                    onclick="confirmarListo('<?= $row['folio'] ?>')" 
+                                    title="Marcar como Listo">
+                                <i class="fa-solid fa-bell"></i>
+                            </button>
+                        <?php endif; ?>
 
                         <?php if (!$esTecnico): ?>
                             <a href="administracion_controller.php?seccion=ingreso&editar=<?= $row['folio'] ?>"
@@ -174,13 +218,16 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
             <div class="seccion-det" style="background: #f8fafc; padding: 15px; border-radius: 8px;">
                 <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;"><i class="fa-solid fa-file-contract"></i> Ingreso y Condiciones</h3>
                 <p><strong>Estado:</strong> <span id="det_estado" style="text-transform: uppercase; font-weight: bold; color: #4f46e5;"></span></p>
-                <p><strong>Fecha y Hora:</strong> <span id="det_fecha"></span> a las <span id="det_hora"></span></p>
+                <p><strong>Fecha Ingreso:</strong> <span id="det_fecha"></span> a las <span id="det_hora"></span></p>
+                <p id="contenedor_fecha_listo" style="display:none; color: #059669; font-weight: bold;">
+                    <i class="fa-solid fa-calendar-check"></i> Finalizado el: <span id="det_fecha_listo"></span>
+                </p>
                 <p><strong>Técnico Asignado (ID):</strong> <span id="det_tecnico"></span></p>
                 <p><strong>Autoriza Revisión:</strong> <span id="det_autoriza" style="font-weight: bold; color: #d97706;"></span></p>
                 <p><strong>Tiempo Estimado:</strong> <span id="det_tiempo"></span> días</p>
                 <p><strong>Dudas del cliente:</strong> <span id="det_dudas"></span></p>
             </div>
-
+            
             <!-- DATOS DEL EQUIPO -->
             <div class="seccion-det" style="background: #f8fafc; padding: 15px; border-radius: 8px;">
                 <h3 style="color: #334155; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px;"><i class="fa-solid fa-laptop"></i> Equipo</h3>
@@ -244,6 +291,7 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                     <label>Estado de la Orden:</label>
                     <select name="estado" id="edit_estado" required>
                         <option value="recibido">Recibido</option>
+                        <option value="listo">Listo</option>
                         <option value="entregado">Entregado</option>
                     </select>
                 </div>

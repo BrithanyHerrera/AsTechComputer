@@ -84,9 +84,11 @@ h3 {
 
 .form-group label {
     display: block;
+    font-size: 12px;
+
     font-weight: 700;
     margin-bottom: 8px;
-    color: var(--gris-medio);
+    color: var(--naranja-principal);
 }
 
 .form-group input, 
@@ -94,7 +96,6 @@ h3 {
     width: 100%;
     padding: 12px;
     border: 1px solid var(--borde);
-    border-radius: 5px;
     font-size: 1rem;
     font-family: 'Lato', sans-serif;
     transition: all 0.3s ease;
@@ -109,17 +110,22 @@ h3 {
 
 /* Botón de envío */
 .boton-submit {
-    width: 100%;
-    background-color: var(--naranja);
-    color: var(--blanco);
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
+    background-color: var(--naranja-principal);
+    color: white;
+    padding: 12px 24px; 
+    border-radius: 12px;
+    border: none; 
+    outline: none;
+    font-size: 12px;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-  
-    transition: background 0.3s ease, transform 0.2s ease;
+    transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin-top: 20px;
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
 }
 
 .boton-submit:hover {

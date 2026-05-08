@@ -42,6 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
+    // ACCIÓN: Marcar equipo como listo (reparado)
+    if ($accion == 'listo' && isset($_POST['folio'])) {
+        $modeloRegistros->marcarComoListo($_POST['folio']);
+        header("Location: administracion_controller.php?seccion=registros_ingresados_crud_view&status=success_listo");
+        exit;
+    }
+
     // ACCIÓN: Editar datos de la orden y del cliente
     if ($accion == 'editar') {
         $modeloRegistros->actualizarRegistro(

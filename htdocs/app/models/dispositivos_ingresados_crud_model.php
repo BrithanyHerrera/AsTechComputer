@@ -26,8 +26,8 @@ class RegistrosModel {
     // ----------------------------------------------------------
     public function obtenerRegistros() {
         $sql = "SELECT 
-                    o.folio, o.id_gabinete, o.estado,
-                    DATE(o.fecha_ingreso) AS fecha_ingreso, 
+                    o.folio, o.id_gabinete, o.estado, o.fecha_listo, o.fecha_entrega,
+                    DATE(o.fecha_ingreso) AS fecha_ingreso,
                     TIME(o.fecha_ingreso) AS hora_ingreso,
                     o.descripcion_problema, o.condicion_fisica, 
                     o.accesorios_entregados, o.observaciones_recepcion,
@@ -65,6 +65,14 @@ class RegistrosModel {
             }
         }
         return $registros;
+    }
+
+    // ESCRITURA: Marca un equipo como listo y registra la fecha de finalización
+    public function marcarComoListo($folio) {
+        $sql = "UPDATE ordenes_ingreso SET estado = 'listo', fecha_listo = NOW() WHERE folio = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $folio);
+        return $stmt->execute();
     }
 
     // ----------------------------------------------------------

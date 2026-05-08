@@ -16,7 +16,7 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - Taller</title>
-<link rel="icon" href="<?= BASE_URL ?>public/img/astech_icon.ico" type="image/x-icon">
+    <link rel="icon" href="<?= BASE_URL ?>public/img/astech_icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -40,7 +40,7 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
 
             <form action="" method="POST">
                 <div class="form-group">
-                    <label>Nombre Completo</label>
+                    <label>NOMBRE COMPLETO</label>
                    <input type="text" name="nombre" id="nombre" required 
                maxlength="100"
                pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" 
@@ -48,26 +48,26 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
                placeholder="Ej. Juan Pérez">
                 </div>
                 <div class="form-group">
-        <label>Correo Electrónico</label>
+        <label>CORREO ELECTRÓNICO</label>
         <input type="email" name="email" id="email" required 
                maxlength="150"
                placeholder="correo@ejemplo.com">
     </div>
                 <div class="form-group">
-            <label>Asunto</label>
+            <label>ASUNTO</label>
             <textarea name="asunto" id="asunto" rows="1" required 
                       maxlength="100"
                       oninput="this.value = this.value.replace(/[<>{}[\];]/g, '')"
                       placeholder="Motivo de tu mensaje"></textarea>
         </div>
                 <div class="form-group">
-            <label>Mensaje</label>
+            <label>MENSAJE</label>
             <textarea name="mensaje" id="mensaje" rows="2" required 
                       maxlength="500"
                       oninput="this.value = this.value.replace(/[<>{}[\];]/g, '')"
                       placeholder="Escribe tu mensaje aquí..."></textarea>
         </div>
-                <button type="submit" class="boton-submit">Enviar Mensaje</button>
+                <button type="submit" class="boton-submit">EMVIAR MENSAJE</button>
             </form>
         </section>
 
