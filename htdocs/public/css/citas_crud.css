@@ -27,11 +27,9 @@
 
 .encabezado-crud h1 {
     color: #52073a;
-    /* Púrpura corporativo */
     margin-bottom: 20px;
     font-size: 1.6rem;
     border-left: 5px solid #e17203;
-    /* Acento naranja corporativo */
     padding-left: 15px;
 }
 
@@ -73,7 +71,7 @@
 }
 
 .btn-limpiar {
-    background: #666;
+    background: #808080;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -83,7 +81,23 @@
 }
 
 .btn-limpiar:hover {
-    background: #333;
+    background: #555454;
+}
+
+.btn-citas {
+    background: #52073a;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none; 
+    display: inline-block;
+}
+
+.btn-citas:hover {
+    background: #350526;
 }
 
 /* =========================================

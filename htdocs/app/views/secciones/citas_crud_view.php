@@ -42,6 +42,7 @@
                 <button type="button" class="btn-limpiar" onclick="limpiarFiltros()" title="Limpiar filtros">
                     <i class="fa-solid fa-rotate-left"></i> Limpiar
                 </button>
+                <a class="btn-citas" href="<?= BASE_URL ?>app/controllers/citas_cliente_controller.php"> Agendar cita </a>
             </div>
         </div>
     </div>

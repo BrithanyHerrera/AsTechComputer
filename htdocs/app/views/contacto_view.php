@@ -40,7 +40,7 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
 
             <form action="" method="POST">
                 <div class="form-group">
-                    <label>Nombre Completo</label>
+                    <label>NOMBRE COMPLETO</label>
                    <input type="text" name="nombre" id="nombre" required 
                maxlength="100"
                pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" 
@@ -48,26 +48,26 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
                placeholder="Ej. Juan Pérez">
                 </div>
                 <div class="form-group">
-        <label>Correo Electrónico</label>
+        <label>CORREO ELECTRÓNICO</label>
         <input type="email" name="email" id="email" required 
                maxlength="150"
                placeholder="correo@ejemplo.com">
     </div>
                 <div class="form-group">
-            <label>Asunto</label>
+            <label>ASUNTO</label>
             <textarea name="asunto" id="asunto" rows="1" required 
                       maxlength="100"
                       oninput="this.value = this.value.replace(/[<>{}[\];]/g, '')"
                       placeholder="Motivo de tu mensaje"></textarea>
         </div>
                 <div class="form-group">
-            <label>Mensaje</label>
+            <label>MENSAJE</label>
             <textarea name="mensaje" id="mensaje" rows="2" required 
                       maxlength="500"
                       oninput="this.value = this.value.replace(/[<>{}[\];]/g, '')"
                       placeholder="Escribe tu mensaje aquí..."></textarea>
         </div>
-                <button type="submit" class="boton-submit">Enviar Mensaje</button>
+                <button type="submit" class="boton-submit">EMVIAR MENSAJE</button>
             </form>
         </section>
 

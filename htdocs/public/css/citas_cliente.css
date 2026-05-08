@@ -54,10 +54,10 @@ body {
     width: 50%;
     max-width: 1200px;
     min-height: 500px; 
-    margin: 30px auto 80px auto; 
+    margin: 50px auto; 
     padding: 50px;
-    border-radius: 20px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.288);
+    border-radius: 20px;    
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.425);
 }
 
 /* ==========================================
@@ -357,7 +357,7 @@ label {
 /* ==========================================
    11. DISEÑO RESPONSIVO (MÓVILES)
    ========================================== */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .fila-doble {
         grid-template-columns: 1fr;
     }
