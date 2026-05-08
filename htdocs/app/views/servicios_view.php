@@ -196,146 +196,42 @@ $umbral_novedad = 4;
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // --- LÓGICA DEL CAROUSEL ---
+        // 1. LÓGICA DEL CAROUSEL (Simplificada)
         const slides = document.querySelectorAll(".carousel-slide");
         let currentSlide = 0;
 
         function nextSlide() {
             if (slides.length === 0) return;
-
             slides[currentSlide].classList.remove("active");
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add("active");
         }
-
-        // Cambia cada 5 segundos
         setInterval(nextSlide, 7000);
 
-        // --- LÓGICA DEL BUSCADOR Y MODAL ---
+        // 2. LÓGICA DEL BUSCADOR (Redirección directa, NO Modal)
         const resultados = document.getElementById("resultadosBusqueda");
-        const modal = document.getElementById("modalServicio");
-        const contenidoModal = document.getElementById("contenidoModal");
-        const cerrar = document.querySelector(".cerrar");
-
+        
         if (resultados) {
             resultados.addEventListener("click", (e) => {
                 const item = e.target.closest(".resultado-item");
                 if (item) {
                     let id = item.getAttribute("data-id");
-                    fetch("acciones/obtener_servicio.php?id=" + id)
-                        .then(res => res.text())
-                        .then(data => {
-                            contenidoModal.innerHTML = data;
-                            modal.style.display = "block";
-                        })
-                        .catch(err => console.error("Error al cargar servicio:", err));
+                    if (id && id !== "null") {
+                        // Llamamos a la función de redirección
+                        verServicio(id);
+                    }
                 }
             });
-        }
-
-        if (cerrar) {
-            cerrar.addEventListener("click", () => {
-                modal.style.display = "none";
-            });
-        }
-
-
-    });
-
-    // Función global para las cards
-    function verServicio(id) {
-        window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
-    }
-    resultados.addEventListener("click", (e) => {
-        if (e.target.closest(".resultado-item")) {
-            let texto = e.target.innerText;
-            const modal = document.getElementById("modalServicio");
-            const contenidoModal = document.getElementById("contenidoModal");
-            const cerrar = document.querySelector(".cerrar");
-
-            resultados.addEventListener("click", (e) => {
-                const item = e.target.closest(".resultado-item");
-
-                if (item) {
-                    let id = item.getAttribute("data-id");
-
-                    fetch("acciones/obtener_servicio.php?id=" + id)
-                        .then(res => res.text())
-                        .then(data => {
-                            contenidoModal.innerHTML = data;
-                            modal.style.display = "block";
-                        });
-                }
-            });
-
-            // cerrar modal
-            cerrar.addEventListener("click", () => {
-                modal.style.display = "none";
-            });
-
-            // cerrar dando click afuera
-
         }
     });
 
+    // 3. FUNCIÓN GLOBAL DE REDIRECCIÓN (Pantalla Completa)
+    // Se usa tanto para las cards (onclick) como para el buscador
     function verServicio(id) {
-
-        window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("modalServicio");
-        const contenidoModal = document.getElementById("contenidoModal");
-        const cerrar = document.querySelector(".cerrar");
-        // <-- Esto evita el ReferenceError
-
-        // Manejar clics en los resultados de búsqueda (si existen)
-        if (resultados) {
-            resultados.addEventListener("click", (e) => {
-                const item = e.target.closest(".resultado-item");
-                if (item) {
-                    let id = item.getAttribute("data-id");
-                    cargarDetalleServicio(id);
-                }
-            });
+        if(id) {
+            window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
         }
-
-        // Cerrar modal
-        if (cerrar) {
-            cerrar.addEventListener("click", () => {
-                modal.style.display = "none";
-            });
-        }
-
-        // Cerrar modal al hacer clic fuera
-        window.addEventListener("click", (event) => {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        });
-    });
-
-    // Función global para cargar el servicio (usada por las cards y el buscador)
-    function cargarDetalleServicio(id) {
-        const modal = document.getElementById("modalServicio");
-        const contenidoModal = document.getElementById("contenidoModal");
-
-        fetch("acciones/obtener_servicio.php?id=" + id)
-            .then(res => res.text())
-            .then(data => {
-                if (contenidoModal && modal) {
-                    contenidoModal.innerHTML = data;
-                    modal.style.display = "block";
-                }
-            })
-            .catch(err => console.error("Error al cargar servicio:", err));
     }
-
-    // Función para redirección de cards (si prefieres ir a otra página en lugar de modal)
-    function verServicio(id) {
-        window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
-    }
-
 </script>
 
 </html>

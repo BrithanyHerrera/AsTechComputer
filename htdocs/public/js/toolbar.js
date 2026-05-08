@@ -112,21 +112,20 @@
     /* ========================================================
        5. NAVEGACIÓN Y CIERRE DE ELEMENTOS
        ======================================================== */
-    // 5.1. Redirección al seleccionar un resultado
-    // El sistema utiliza delegación de eventos para capturar los clics en los elementos
-    // generados dinámicamente, extrayendo su ID y redirigiendo al detalle del servicio.
-    if (resultadosDiv) {
-        resultadosDiv.addEventListener("click", (e) => {
-            const item = e.target.closest(".resultado-item");
-            if (item) {
-                let id = item.getAttribute("data-id");
-                if (id) {
-                    window.location.href = APP_BASE_URL + "detalle_servicio.php?id=" + id;
-                }
-            }
-        });
-    }
 
+// Busca esta parte y déjala exactamente así:
+if (resultados) {
+    resultados.addEventListener("click", (e) => {
+        const item = e.target.closest(".resultado-item");
+        if (item) {
+            let id = item.getAttribute("data-id");
+            if (id && id !== "null") {
+                // REDIRECCIÓN DIRECTA A LA PANTALLA COMPLETA
+                window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
+            }
+        }
+    });
+}
     // 5.2. Animación de los submenús (Acordeones del Mega Menú)
     document.querySelectorAll('.titulo-tipo-btn').forEach(button => {
         button.addEventListener('click', (e) => {

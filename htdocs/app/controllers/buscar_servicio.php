@@ -1,26 +1,27 @@
-
 <?php
-//PAGINA:Buscar servicio
-//se usa en todas las paginas principales: index, contacto, servicios y citas
-//esta dentro de el toolbar
-//busca los servicios segun su tipo de servicio
-        require_once __DIR__ . "/../config/config.php"; 
-include __DIR__ . "../../config/conexion.db.php";
+require_once "../config/conexion.db.php";
 
-$q = isset($_GET['q']) ? $_GET['q'] : '';
+$q = $_GET['q'];
 
-$query = "SELECT tipo_servicio, precio 
-          FROM servicios 
-          WHERE estado = 'activo' 
-          AND tipo_servicio LIKE '%$q%' 
-          LIMIT 5";
+// 1. ASEGÚRATE DE PEDIR id_servicio EN EL SELECT
+$query = "SELECT id_servicio, tipo_servicio FROM servicios 
+          WHERE tipo_servicio LIKE ? AND estado = 'activo' LIMIT 5";
 
-$resultado = mysqli_query($conexion, $query);
+$stmt = $conexion->prepare($query);
+$buscar = "%$q%";
+$stmt->bind_param("s", $buscar);
+$stmt->execute();
+$resultado = $stmt->get_result();
 
-while ($row = mysqli_fetch_assoc($resultado)) {
-    echo "<div class='resultado-item'>
-            <strong>{$row['tipo_servicio']}</strong><br>
-            $ {$row['precio']}
-          </div>";
+if ($resultado->num_rows > 0) {
+    while ($row = $resultado->fetch_assoc()) {
+        // 2. AQUÍ ESTABA EL ERROR (Línea 22): 
+        // Asegúrate de que el nombre coincida con el SELECT de arriba
+        echo '<div class="resultado-item" data-id="' . $row['id_servicio'] . '">';
+        echo '   ' . htmlspecialchars($row['tipo_servicio']);
+        echo '</div>';
+    }
+} else {
+    echo '<div class="no-resultados">No se encontraron servicios</div>';
 }
 ?>
