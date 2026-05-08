@@ -1,5 +1,8 @@
 <?php
 // UBICACIÓN: app/controllers/verificar_2fa_controller.php
+require_once dirname(__DIR__) . '/config/config.php'; 
+
+
 session_start();
 
 // Si no hay sesión temporal, lo regresamos al login
