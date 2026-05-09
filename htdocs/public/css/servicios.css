@@ -331,8 +331,10 @@ a{
 .carousel-container {
     position: relative;
     width: 100%;
-    height: 450px;
+    height: 60vh; /* 60% de la altura de la pantalla actual */
+    min-height: 100px; /* Evita que se haga diminuto en pantallas muy pequeñas */
     overflow: hidden;
+
    
 }
 
@@ -359,6 +361,31 @@ a{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    .carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: ease-in-out, transform 1.2s ease-in-out;
+    transform: scale(1.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+   object-position:right;
+}
    
 }
 .codigo-tag {
@@ -466,4 +493,221 @@ a{
 .link-info:hover {
     transform: scale(1.1);
     color: #383838;
+}
+/* =========================================
+   RESPONSIVE DESIGN - AS TECH COMPUTER
+   ========================================= */
+/* Para Tablets: 2 columnas */
+@media (max-width: 992px) {
+    .servicios-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 654px) {
+      .carousel-container{
+        width:100%;
+        height:100px;
+    }
+    .carousel-container img{
+        width:100%;
+        heigh:100%;
+    }
+ .servicios-grid {
+        display: grid;
+        /* Esto fuerza exactamente 2 columnas de igual tamaño */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 10px; /* Espacio reducido entre tarjetas */
+        padding: 10px;
+    }
+
+    .card-servicio {
+        width: 100%; /* Que ocupe el ancho de su columna */
+        max-width: none;
+        min-height: auto;
+        /* Reducimos la altura máxima para que no se vea infinita */
+        max-height: 350px; 
+    }
+}
+
+/* --- AJUSTE PARA DISPOSITIVOS MÓVILES (2 por fila) --- */
+@media (max-width: 600px) {
+    .carousel-container{
+        width:100%;
+        height:80px;
+    }
+    .servicios-grid {
+        display: grid;
+        /* Esto fuerza exactamente 2 columnas de igual tamaño */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 10px; /* Espacio reducido entre tarjetas */
+        padding: 10px;
+    }
+
+    .card-servicio {
+        width: 100%; /* Que ocupe el ancho de su columna */
+        max-width: none;
+        min-height: auto;
+        /* Reducimos la altura máxima para que no se vea infinita */
+        max-height: 350px; 
+    }
+
+    .imagen-url {
+        height: 130px; /* Imagen más pequeña para dejar espacio al texto */
+        width: 100%;
+        object-fit: cover;
+    }
+
+    /* Ajuste de textos para que no se encimen */
+    .info-basica {
+        padding: 8px;
+    }
+
+    .info-basica h3 {
+        font-size: 0.85rem; /* Título más pequeño */
+        margin-bottom: 4px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .info-basica .precio {
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+    .codigo-tag {
+        font-size: 0.6rem;
+        padding: 2px 4px;
+    }
+
+    /* Ocultamos o reducimos elementos que estorban en móvil */
+    .btn-ver-mas {
+        display: none; /* En móvil el usuario ya sabe que debe tocar la card */
+    }
+
+    .badge-nuevo {
+        font-size: 0.6rem;
+        padding: 3px 6px;
+        top: 5px;
+        left: 5px;
+        border: 2px solid white;
+    }
+
+    /* Ajuste del Overlay para que sea legible al tocar */
+    .overlay-descripcion {
+        padding: 10px;
+    }
+    
+    .overlay-descripcion p {
+        font-size: 0.7rem;
+        line-height: 1.2;
+    }
+}
+/* Tablets y Laptops pequeñas (Menos de 1024px) */
+@media (max-width: 1024px) {
+    .contenido-imagen {
+        left: 50%; /* Centramos el contenido del carrusel */
+        width: 90%;
+    }
+
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    
+    .resultado-item {
+        width: 90%; /* El buscador se adapta */
+    }
+     .servicios-grid {
+        display: grid;
+        /* Esto fuerza exactamente 2 columnas de igual tamaño */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 10px; /* Espacio reducido entre tarjetas */
+        padding: 10px;
+    }
+
+    .card-servicio {
+        width: 100%; /* Que ocupe el ancho de su columna */
+        max-width: none;
+        min-height: auto;
+        /* Reducimos la altura máxima para que no se vea infinita */
+        max-height: 350px; 
+    }
+}
+
+/* Dispositivos Móviles Grandes (Menos de 768px) */
+@media (max-width: 768px) {
+    .carousel-container {
+        height: 500px; /* Un poco más alto para que quepa el texto */
+        width:100%;
+
+    }
+
+    .contenido-imagen {
+        top: 45%;
+    }
+
+    h1 { font-size: 1.8rem; margin-top: 10%; }
+    h2 { font-size: 1.4rem; }
+    p { 
+        margin-right: 0; /* Centramos el texto del precio */
+        text-align: center;
+        font-size: 1.1rem;
+    }
+
+    .seccion-header {
+        text-align: center;
+    }
+
+    .linea-separadora {
+        background: linear-gradient(to right, transparent, var(--naranja-principal), transparent);
+    }
+
+    .servicios-grid {
+        gap: 20px; /* Reducimos espacio entre tarjetas */
+    }
+
+    .card-servicio {
+        width: 90%; /* Tarjetas casi a pantalla completa */
+        max-width: 350px;
+    }
+
+    .imagen-url {
+        width: 100%; /* La imagen se ajusta a la tarjeta */
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    /* En móviles, el efecto hover es difícil, 
+       hacemos que la descripción sea un poco más visible */
+    .card-servicio:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Móviles Pequeños (Menos de 480px) */
+@media (max-width: 480px) {
+    .carousel-container {
+        height: 400px;
+    }
+
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.1rem; }
+
+    .boton-servicio {
+        width: 130px;
+        font-size: 0.9rem;
+    }
+
+    .link-info {
+        display: block;
+        margin-left: 0;
+        margin-top: 15px;
+    }
+
+    .contenedor-servicios {
+        padding: 20px 10px;
+    }
+
+    #inputBuscador {
+        width: 90%;
+    }
 }
