@@ -17,6 +17,26 @@
 ?>
 <?php
 /** @var array $info Contiene 'quienes_somos', 'mision', 'vision', 'frase_fundador' */
+/**
+ * Convierte un texto largo en párrafos HTML basados en los puntos seguidos.
+ * * @param string|null $texto El texto crudo de la base de datos.
+ * @return void Imprime directamente los párrafos envueltos en etiquetas <p>.
+ */
+function imprimirComoParrafos($texto) {
+    if (empty($texto)) return;
+
+    // Dividimos el texto por el punto
+    $partes = explode(".", $texto); 
+
+    foreach ($partes as $fragmento) {
+        $parrafoLimpio = trim($fragmento);
+        
+        if (!empty($parrafoLimpio)) {
+            // Imprimimos el párrafo con su punto al final
+            echo "<p>" . htmlspecialchars($parrafoLimpio) . ".</p>";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,17 +58,18 @@
 </head>
 
 <body>
-
+<!--vista de carga de pagina-->
     <?php include_once __DIR__ . "/fijos/loader_view.php"; ?>
 
     <?php
     $ruta_prefijo = "";
     $ruta_img = "../../public/img/servicios/";
-
+//incluye el toolbar
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
 
     <main>
+        <!--imagen inicial de la primera pagina(index), apoarece el logo, y dos botones para agendar cita o mas informacion de la [pagina-->
         <section class="hero-wrapper">
             <div class="hero-astech">
                 <div class="hero-texto">
@@ -67,22 +88,22 @@
 
             </div>
         </section>
-
+<!--seccion de quienes somos? informacion e  imagen -->
         <section class="seccion-about">
             <div class="grid-about">
                 <div class="texto-about">
                     <h2>¿Quiénes somos?</h2>
-                    <p><?= htmlspecialchars($info['quienes_somos']) ?></p>
+                   <?php imprimirComoParrafos($info['quienes_somos']); ?>
                 </div>
                 <div class="imagen-about">
                     <img src="<?= BASE_URL ?>public/img/quienes_somos.jpg" alt="Trabajo en Astech">
                 </div>
             </div>
         </section>
-
+<!--los principales servicios que ofrecemos-->
         <section id="servicios" class="seccion-valores">
             <div class="contenedor-max">
-                <h2 class="titulo-seccion">Nuestros Servicios</h2>
+                <h2 class="titulo-seccion">Nuestros principales servicios</h2>
                 <div class="grid-cards">
                     <div class="astech-card">
                         <img src="<?= BASE_URL ?>public/img/diagnostico.jpg" alt="Diagnóstico">
@@ -117,7 +138,7 @@
                 </div>
             </div>
         </section>
-
+<!--seccion mision y visio con imagen y texto -->
         <section class="seccion-about">
             <div class="contenedor-max">
                 <h2 class="titulo-seccion">Filosofía Empresarial</h2>
@@ -127,18 +148,19 @@
                         <img src="<?= BASE_URL ?>public/img/mision.png" alt="Misión">
                         <div class="astech-card-body">
                             <h3>Nuestra Misión</h3>
-                            <p><?= htmlspecialchars($info['mision']) ?></p>
+                     <?php imprimirComoParrafos($info['mision']); ?>
                         </div>
+                        
                     </div>
                     <div class="astech-card">
                         <img src="<?= BASE_URL ?>public/img/vision.png" alt="Visión">
                         <div class="astech-card-body">
                             <h3>Nuestra Visión</h3>
-                            <p><?= htmlspecialchars($info['vision']) ?></p>
+                           <?php imprimirComoParrafos($info['vision']); ?>
                         </div>
                     </div>
                 </div>
-
+<!--valores de la empresa-->
                 <div class="grid-valores">
                     <div class="valor-item">
                         <i class="fa-solid fa-shield-halved"></i>
@@ -163,12 +185,12 @@
                 </div>
             </div>
         </section>
-
+<!--frase del ceo de la empresa-->
         <section class="seccion-ceo">
             <div class="caja-ceo">
                 <div class="ceo-texto">
                     <img src="<?= BASE_URL ?>public/img/isologotipo.png" alt="Logo" style="width: 60px; margin-bottom: 20px;">
-                    <blockquote><?= htmlspecialchars($info['frase_fundador']) ?></blockquote>
+                    <blockquote><?php imprimirComoParrafos($info['frase_fundador']); ?></blockquote>
                     <p style="font-weight: 700; font-size: 1.2rem;">Ferdán Garrigos</p>
                     <p style="color: var(--color-texto-secundario);">Fundador & CEO</p>
                 </div>
@@ -179,15 +201,16 @@
         </section>
 
         
-
-    <h2 class="titulo-seccion">Nuestras marcas</h2>
+<!--carousel imagenes de las marcas favoritas de la empresa-->
+    <h2 class="titulo-seccion">Nuestras marcas favoritas</h2>
     <?php require_once __DIR__ . '/carousel_marcas.php'; ?>
     </main>
     <?php
     $ruta_prefijo = "";
+//footer (muestra la parte de abajo de la pagina con botones que dirigen a distintas paginas relevantes )
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>
-
+<!--scripts de javascript para funcionalidades-->
     <script src="<?= BASE_URL ?>public/js/index.js"></script>
     
     <script src="<?= BASE_URL ?>public/js/carousel.js"></script>

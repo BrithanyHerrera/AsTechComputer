@@ -23,20 +23,18 @@ function es_activo($actual, $objetivo) {
     return $actual == $objetivo ? 'activo' : '';
 }
 ?>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="contenedor-crud">
 
-    <!-- MENÚ -->
     <div class="menu-interno-secciones">
-        <button type="button" class="btn-tab activo" onclick="cambiarSeccion('portada')">Portada</button>
-        <button type="button" class="btn-tab" onclick="cambiarSeccion('mision')">Misión / Visión</button>
-        <button type="button" class="btn-tab" onclick="cambiarSeccion('ceo')">Sección CEO</button>
+        <button type="button" class="btn-tab activo" onclick="cambiarSeccion(event, 'portada')">Portada</button>
+        <button type="button" class="btn-tab" onclick="cambiarSeccion(event, 'mision')">Misión / Visión</button>
+        <button type="button" class="btn-tab" onclick="cambiarSeccion(event, 'ceo')">Sección CEO</button>
     </div>
 
     <div class="caja-formulario-edit">
-        <form action="../controllers/inicio_crud_controller.php" method="POST">
+        <form id="form-inicio" action="../controllers/inicio_crud_controller.php" method="POST">
 
-            <!-- PORTADA -->
             <div id="seccion-portada" class="seccion-form activa">
                 <div class="animacion-entrada">
                     <h3>Configuración de Portada</h3>
@@ -47,7 +45,6 @@ function es_activo($actual, $objetivo) {
                 </div>
             </div>
 
-            <!-- MISION -->
             <div id="seccion-mision" class="seccion-form">
                 <div class="animacion-entrada">
                     <h3>Misión y Visión</h3>
@@ -62,7 +59,6 @@ function es_activo($actual, $objetivo) {
                 </div>
             </div>
 
-            <!-- CEO -->
             <div id="seccion-ceo" class="seccion-form">
                 <div class="animacion-entrada">
                     <h3>Datos del Fundador</h3>
@@ -75,23 +71,37 @@ function es_activo($actual, $objetivo) {
 
             <div class="seccion-guardado">
                 <input type="hidden" name="seccion_editada" id="seccion_editada" value="portada">
-                <button type="submit" class="boton-primario">Actualizar Sección</button>
+                <button type="button" class="boton-primario" onclick="confirmarGuardado()">Actualizar Sección</button>
             </div>
 
         </form>
     </div>
 </div>
-<script>
-    //funcion para cambiar el texto de la pagina index
-   function cambiarSeccion(seccion) {
-    document.querySelectorAll('.seccion-form').forEach(div => {
-        div.classList.remove('activa');
-    });
-    document.getElementById('seccion-' + seccion).classList.add('activa');
-    document.querySelectorAll('.btn-tab').forEach(btn => {
-        btn.classList.remove('activo');
-    });
-    event.target.classList.add('activo');
-    document.getElementById('seccion_editada').value = seccion;
-} 
-</script>
+<div class="bloque-informativo">
+    <div class="info-header">
+        <i class="fas fa-info-circle"></i> 
+        <h4>Guía de Formato de Texto</h4>
+    </div>
+    <div class="info-cuerpo">
+        <p>Este panel utiliza un sistema de <strong>auto-párrafos</strong> para mejorar la lectura en la página principal:</p>
+        
+        <ul>
+            <li>
+                <strong>¿Cómo crear un párrafo?</strong> 
+                Cada vez que escribas un punto <code>.</code> y sigas escribiendo, el sistema creará automáticamente un salto de línea en la web.
+            </li>
+            <li>
+                <strong>El punto final:</strong> No te preocupes por poner punto al final del último enunciado; el sistema lo agregará automáticamente en la vista pública.
+            </li>
+            <li>
+                <strong>Evita errores:</strong> No utilices el formato <code>."</code> (punto y comillas pegadas sin espacio), ya que el sistema podría interpretar mal la separación. Siempre deja un espacio después del punto si vas a continuar.
+            </li>
+        </ul>
+        
+        <div class="info-ejemplo">
+            <span>Ejemplo:</span>
+            <code>Texto primer párrafo. Texto segundo párrafo</code>
+        </div>
+    </div>
+</div>
+<script src="../../public/js/inicio_crud.js"></script>

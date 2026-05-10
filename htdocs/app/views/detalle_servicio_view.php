@@ -23,23 +23,26 @@ $ruta_img = "../../public/img/servicios/";
 </head>
 
 <body>
-
+<!--ruta para el controlador detalle_servicio_controller-->
 <?php $ruta_prefijo = "../../";   include __DIR__ . '/../controllers/toolbar_controller.php';  $ruta_img = "../../public/img/servicios/";?>
+<!--contenedor de la informacion especifica de el servicio-->
 <div class="detalle-container">
 
     <div class="detalle-header">
+        <!--imagen de el servicio-->
         <img src="<?php echo $ruta_img . $servicio['imagen_servicio']; ?>" class="detalle-img">
-
+<!--nombre, precio y descripcion-->
         <div class="detalle-info">
             <h1><?php echo $servicio['tipo_servicio']; ?></h1>
             <p class="precio">$<?php echo $servicio['precio']; ?></p>
             <p class="descripcion"><?php echo $servicio['descripcion']; ?></p>
-
+<!--boton que redirige al formulario para agendar cita-->
             <a href="citas_cliente_controller.php" class="btn-agendar">
   Agendar cita
 </a>
         </div>
     </div>
+ <!--texto procedimiento,beneficios, indicaciones y excliusiones-->  
 <div class="detalle-flex-row"> 
     <div class="detalle-seccion">
         <h2><i class="fa-solid fa-gears"></i> Procedimiento</h2>
@@ -63,6 +66,7 @@ $ruta_img = "../../public/img/servicios/";
 
     <div class="detalle-seccion full-width"> <h2><i class="fa-solid fa-credit-card"></i> Métodos de pago disponibles</h2>
         </div>
+        <!--para mostrar los metodos de pago disponibles-->
 </div>
         <div class="detalle-seccion">
             <?php if ($metodos_pago && mysqli_num_rows($metodos_pago) > 0): ?>

@@ -85,7 +85,7 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
         ["img" => "../../public/img/DomicilioGranFond.png", "t" => "Servicios a domicilio", "s" => "Atención profesional en tu hogar", "p" => "Desde: $500 pesos"]
     ];
     ?>
-
+<!--carousel(imagenes que van cambiando) que muestra informacion de distintas categorias de servicios-->
     <div class="carousel-container">
         <div class="carousel-track">
             <?php foreach ($slides as $index => $slide): ?>
@@ -178,7 +178,9 @@ $umbral_novedad = 4;
                 </div>
 
             <?php endforeach; ?>
+            
         <?php else: ?>
+            <!--en caso de que no se encuentre ningun servicio aparece un mensaje-->
             <p>No se encontraron servicios disponibles.</p>
         <?php endif; ?>
     </div>

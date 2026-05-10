@@ -1,5 +1,5 @@
 <script>
-/* CONTACTO_VIEW.PHP */
+/* contacto_view.php */
 /*
 Este archivo representa la Vista (View) exclusiva para la sección de contacto de la plataforma. 
 Su función es estructurar la interfaz gráfica mediante la cual los usuarios pueden enviar mensajes directos al taller. 
@@ -15,7 +15,7 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto - Taller</title>
+    <title>Contacto - AstechComputer</title>
     <link rel="icon" href="<?= BASE_URL ?>public/img/astech_icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
     require_once __DIR__ . "/../config/config.php"; 
     include __DIR__ . "/../controllers/toolbar_controller.php";
     ?>
-    
+ <!--formulario para que el usuario mande mensajes-->   
     <div class="main-container">
         <section class="form-section">
             <center>
@@ -82,7 +82,7 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
             </div>
             <h3>Redes Sociales</h3>
          
-   
+    <!--iconos que redirigen a las redes sociales al hacer click--> 
     <div class="social-icons">
         <a href="https://wa.me/523222362505" target="_blank"><i class="fa-brands fa-square-whatsapp"></i></a>
         <a href="https://www.instagram.com/AsTechComputer" target="_blank"><i class="fa-brands fa-square-instagram"></i></a>
@@ -108,5 +108,5 @@ integrándose finalmente con las secciones globales de navegación y pie de pág
 
 </html>
 
-
+ <!--script (aqui se controlan las funciones para los inputs y para mandar lso mensajes a la bd)--> 
 <script src="../../public/js/contacto.js"></script>
