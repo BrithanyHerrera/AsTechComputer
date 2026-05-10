@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+//funcion para abrir el formulario
 function abrirModalVerServicio(datos) {
     const modal = document.getElementById('modalVerServicio');
     const rutaImg = "../../public/img/servicios/";

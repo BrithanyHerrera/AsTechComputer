@@ -1,5 +1,9 @@
     /* =========================================
-    SECCIONES.CSS
+    SECCIONES.CSS 
+    esta pagina controla todas las secciones de administracion_view.css
+    hay varias secciones que reutilizan el codigo que hay aqui
+    se separa por: secciones.css y secciones_responsivo.css, 
+    el cual se encarga de la responsibidad de las paginas
     ========================================= */
     body {
         height: 100vh;

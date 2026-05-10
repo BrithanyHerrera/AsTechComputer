@@ -19,21 +19,30 @@ $modeloContacto = new ContactoModel($conexion);
 $status = ""; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre  = $_POST['nombre'];
-    $email   = $_POST['email'];
-    $asunto  = $_POST['asunto'];
-    $mensaje = $_POST['mensaje'];
+    // Trim elimina espacios al inicio y final
+    $nombre  = trim($_POST['nombre']);
+    $email   = trim($_POST['email']);
+    $asunto  = trim($_POST['asunto']);
+    $mensaje = trim($_POST['mensaje']);
 
-    try {
-        if ($modeloContacto->guardarMensaje($nombre, $email, $asunto, $mensaje)) {
-            $status = "success";
+    // Validación de campos vacíos y formato de email
+    if (empty($nombre) || empty($mensaje) || empty($asunto)) {
+        $status = "No se permiten campos vacíos.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $status = "El formato del correo es inválido.";
+    } elseif (preg_match('/^[^a-zA-Z0-9]+$/', $mensaje)) {
+        // Verifica si el mensaje contiene SOLO símbolos
+        $status = "El mensaje no puede contener solo símbolos.";
+    } else {
+        try {
+            if ($modeloContacto->guardarMensaje($nombre, $email, $asunto, $mensaje)) {
+                $status = "success";
+            }
+        } catch (Exception $e) {
+            $status = $e->getMessage(); 
         }
-    } catch (Exception $e) {
-   
-        $status = $e->getMessage(); 
     }
 }
-
 
 require_once dirname(__DIR__) . '/views/contacto_view.php';
 ?>

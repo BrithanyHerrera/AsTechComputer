@@ -1,6 +1,9 @@
 // ========================================================
 // SCRIPT: servicios.js
 // UBICACIÓN: public/js/servicios.js
+//se encarga de las funciones de la pagina servicios como el buscador, funcion
+//  para abrir la pagina que muestra informacion
+//  especifica de cada servicio, etc.
 // ========================================================
 
 const btn = document.getElementById("btnBuscador");

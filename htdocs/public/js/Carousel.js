@@ -1,15 +1,11 @@
 /**
  * SCRIPT: carousel.js
  * PROPÓSITO: Controlar el desplazamiento horizontal de un carrusel de elementos en la interfaz. de convenios
- * FUNCIONALIDADES:
- * - Inicialización al cargar el DOM.
- * - Cálculo dinámico del desplazamiento según el tamaño de los elementos.
- * - Navegación mediante botones "next" y "prev".
- * - Implementación de animación suave (scroll) con efecto easing.
- * - Mejora de la experiencia de usuario al desplazar múltiples elementos por interacción.
+ * esto se usa en la pagina index y convenios
  */
 window.addEventListener("load", () => {
-
+   //funciones para que el carousel se mueva de manera infinita con sus imagenes 
+   // y se pare cuando hagas hover en una imagen
     document.querySelectorAll(".carousel").forEach(carousel => {
 
         const track = carousel.querySelector(".carousel-track");
