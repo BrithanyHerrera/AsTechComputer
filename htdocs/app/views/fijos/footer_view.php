@@ -68,7 +68,8 @@
         </a>
     </div>
     <div class="barra-derechos">
-        <c>&copy; 2026 AS TECH COMPUTER. Todos los derechos reservados.</c>
+        <c>&copy; 2026 AS TECH COMPUTER. Todos los derechos reservados.</c><br></br>
+              <c style="font-size:0.9rem;">Sitio web desarrollado por <strong  style="font-size:1.0rem;">Joceline De la Torre , Brithany Herrera y Jose Eduardo Flores</strong> para AsTech Computer <br></br>como parte del programa de vinculación académica con la Universidad de Guadalajara mediante el convenio No. 108-2025.</c>
     </div>
 </footer>
 
