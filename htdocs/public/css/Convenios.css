@@ -257,22 +257,7 @@ header-convenio{
 }
 
 /* BENEFICIOS */
-.beneficios-lista{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-left: 18px;
-}
 
-.beneficios-lista li{
-    color: var(--gris-oscuro);
-    line-height: 1.5;
-    font-size: 0.93rem;
-}
-.beneficios-lista li::marker{
-    color: var(--color-principal);
-    font-size: 1.2rem;
-}
 
 
 
@@ -299,8 +284,8 @@ header-convenio{
 /* PALABRAS CLAVE */
 .palabras-clave{
     margin-top: auto;
-    padding-top: 5px;
-    gap: 10px;
+    padding-top: 15px;
+    gap: 50px;
     text-align: center;
 }
 
@@ -308,8 +293,9 @@ header-convenio{
     background: var(--color-secundario);
     color: var(--color-principal);
     padding: 7px 14px;
+    margin-top: 10px;
     border-radius: 30px;
-    font-size: 0.82rem;
+    font-size: 0.79rem;
     font-weight: 600;
 }
 /* CONTENEDOR DE BENEFICIOS + INFO */
@@ -464,7 +450,142 @@ header-convenio{
     font-size: 4rem; color: #000000; margin-bottom: 20px;
 
 }
+/* =========================================
+   7. DISEÑO RESPONSIVO (OPTIMIZADO)
+   ========================================= */
 
+/* --- TABLETS (Menos de 1024px) --- */
+@media (max-width: 1024px) {
+    .contenedor-convenios {
+        padding: 0 30px;
+    }
+    
+    .grid-convenios, .grid-convenios-full {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .titulo-convenios {
+        font-size: 2.5rem;
+    }
+}
+
+/* --- MÓVILES GRANDES / PHABLETS (Menos de 768px) --- */
+@media (max-width: 768px) {
+    /* Ajustes de Cabecera */
+    .seccion-convenios {
+        padding: 50px 15px;
+    }
+
+    .titulo-convenios {
+        font-size: 2rem;
+    }
+
+    .titulo-convenios::after {
+        width: 150px;
+    }
+
+    .subtitulo-convenios {
+        font-size: 1rem;
+        margin-top: 20px;
+    }
+
+    .titulo-bloque {
+        font-size: 1.8rem;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .titulo-bloque::after {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+    }
+
+    /* Ajuste de Tarjetas de Convenio */
+    .detalles-convenio {
+        grid-template-columns: 1fr; /* Apila beneficios e info empresa */
+        gap: 10px;
+    }
+
+    .seccion-card, .info-empresa {
+        padding: 15px;
+    }
+
+    /* Ajuste de Tarjetas Educativas */
+    .grid-convenios-full {
+        grid-template-columns: 1fr; /* Una sola columna en móvil */
+    }
+
+    .card-educativa {
+        max-width: 100%;
+    }
+
+    .logo-empresa {
+        height: 180px;
+    }
+}
+
+/* --- MÓVILES PEQUEÑOS (Menos de 480px) --- */
+@media (max-width: 480px) {
+    .titulo-convenios {
+        font-size: 1.6rem;
+    }
+
+    .badge-convenio {
+        font-size: 0.8rem;
+        padding: 4px 10px;
+    }
+
+    .card-convenio h3 {
+        font-size: 1.3rem;
+    }
+
+    /* Hacemos que los tags de palabras clave no se amontonen */
+    .palabras-clave {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tag-palabra {
+        font-size: 0.50rem;
+        padding: 5px 10px;
+
+    }
+
+    /* Reducimos el padding general para ganar espacio horizontal */
+    .contenedor-convenios {
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+
+    .info-label {
+        font-size: 0.8rem;
+    }
+
+    .info-value {
+        font-size: 0.85rem;
+    }
+}
+
+/* --- SOLUCIÓN A ERRORES DE SINTAXIS EN TU CÓDIGO --- */
+/* Asegúrate de borrar la última llave de tu código anterior o reemplazarlo con esto */
+#proximamente {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    text-align: center;
+    height: 100%; 
+    min-height: 300px;
+}
+
+.fa-handshake-angle {
+    font-size: 4rem; 
+    color: #000000; 
+    margin-bottom: 20px;
+}
 /* RESPONSIVE */
 @media(max-width: 700px){
 

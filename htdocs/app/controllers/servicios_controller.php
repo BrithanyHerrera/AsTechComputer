@@ -62,26 +62,65 @@ $lista_servicios = $modeloServicios->obtenerServicios($id_tipo);
 // ... (código anterior de carga de modelos)
 
 // Obtener todos los servicios
-$todos_los_servicios = $modelo->obtenerServicios($id_tipo);
 
-$servicios_agrupados = [];
+$servicios_agrupados = $modelo->obtenerServiciosAgrupados();
 
-if (!empty($todos_los_servicios)) {
-    foreach ($todos_los_servicios as $servicio) {
-        $seccion = $servicio['id_tipo_servicio']; 
+ $slides = [
+        ["img" => "../../public/img/ReparacionGranFond.png", "t" => "Reparación y reemplazo", "s" => "Soluciones rápidas para tu equipo", "p" => "Desde: $800 pesos"],
+        ["img" => "../../public/img/principalAdv.png", "t" => "Mantenimiento preventivo", "s" => "Para equipos portátiles de alto rendimiento", "p" => "Desde: $1350 pesos"],
+        ["img" => "../../public/img/SoftwareGranFond.png", "t" => "Instalación de software", "s" => "Optimiza el rendimiento de tu equipo", "p" => "Desde: $300 pesos"],
+        ["img" => "../../public/img/EspecialGranFond.png", "t" => "Servicios especializados", "s" => "Soluciones avanzadas para casos complejos", "p" => "Desde: $300 pesos"],
+        ["img" => "../../public/img/DomicilioGranFond.png", "t" => "Servicios a domicilio", "s" => "Atención profesional en tu hogar", "p" => "Desde: $500 pesos"]
+    ];
 
-        $nombres_secciones = [
-            1 => "Mantenimiento preventivo",
-            2 => "Reparación y Reemplazo",
-            3 => "Instalación de Software",
-            4 => "Servicios de entrega",
-            5 => "Servicios Especializados"
-        ];
+$max_id = 0;
 
-        $nombre_final = $nombres_secciones[$seccion] ?? "Otros Servicios";
-        $servicios_agrupados[$nombre_final][] = $servicio;
+foreach ($servicios_agrupados as $grupo) {
+
+    foreach ($grupo['servicios'] as $servicio) {
+
+        if ($servicio['id_servicio'] > $max_id) {
+
+            $max_id = $servicio['id_servicio'];
+        }
     }
 }
+
+$umbral_novedad = 4;
+ $query = "SELECT 
+            s.id_servicio,
+            s.codigo_servicio,
+            s.id_tipo_servicio,
+            s.tipo_servicio,
+            ts.nombre_tipo,
+            s.descripcion,
+            s.precio,
+            s.imagen_servicio
+          FROM servicios s
+          INNER JOIN tipos_servicios ts
+              ON s.id_tipo_servicio = ts.id_tipo_servicio
+          WHERE s.estado = 'activo'";
+
+    $resultado = mysqli_query($conexion, $query);
+    $servicios_agrupados = [];
+
+while ($fila = mysqli_fetch_assoc($resultado)) {
+
+    $id_categoria = $fila['id_tipo_servicio'];
+
+    // Crear grupo si no existe
+    if (!isset($servicios_agrupados[$id_categoria])) {
+
+        $servicios_agrupados[$id_categoria] = [
+            'nombre' => $fila['nombre_tipo'],
+            'servicios' => []
+        ];
+    }
+
+    // Agregar servicio al grupo
+    $servicios_agrupados[$id_categoria]['servicios'][] = $fila;
+}
+
 // Ahora pasamos $servicios_agrupados a la vista
-require_once dirname(__DIR__) . '/views/servicios_view.php';
+require_once dirname(__DIR__) . '../views/servicios_view.php';
 ?>

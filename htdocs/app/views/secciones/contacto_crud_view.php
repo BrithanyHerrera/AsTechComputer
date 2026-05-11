@@ -31,6 +31,7 @@ $resultado = $conexion->query($query);
 ?>
 
 <div class="contenedor-crud">
+    
     <div class="tabla-responsiva">
         <table>
             <thead>
@@ -60,7 +61,7 @@ $resultado = $conexion->query($query);
                     <td><?= htmlspecialchars($row['asunto']); ?></td>
 
                     <td>
-                        <div style="max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"
+                        <div class="mensaje-contenedor"
                              title="<?= htmlspecialchars($row['mensaje']); ?>">
                             <?= htmlspecialchars($row['mensaje']); ?>
                         </div>
@@ -92,7 +93,7 @@ $resultado = $conexion->query($query);
                         </button>
 
                         <button class="btn-eliminar"
-                            onclick="confirmarEliminarMensaje(<?= $row['id_mensaje']; ?>)">
+                            onclick="confirmarEliminar(<?= $row['id_mensaje']; ?>)">
                             <i class="fa-solid fa-trash"></i>
                         </button>
 
@@ -142,118 +143,41 @@ $resultado = $conexion->query($query);
         </form>
     </div>
 </div> 
+
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
 
-function verMensaje(datos) {
-    Swal.fire({
-        title: 'Asunto: ' + datos.asunto,
-        html: `
-            <div style="text-align: left;">
-                <p><strong>De:</strong> ${datos.nombre} (${datos.correo})</p>
-                <p><strong>Mensaje:</strong></p>
-                <p style="background: #f9f9f9; padding: 10px; border-radius: 5px;">${datos.mensaje}</p>
-            </div>
-        `,
-        confirmButtonColor: '#52073a'
-    });
-}
-function enviarCorreo(datos) {
+<script src="../../public/js/contacto_crud.js"></script>
 
-    const correo = datos.correo;
-    const asunto = "Respuesta a tu mensaje: " + datos.asunto;
-
-    const mensaje = `Hola ${datos.nombre},
-
-Gracias por contactarnos.
-
-Respecto a tu mensaje:
-"${datos.mensaje}"
-
-Aquí puedes escribir tu respuesta...
-
-Saludos.`;
-
-    const url = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(correo)}&su=${encodeURIComponent(asunto)}&body=${encodeURIComponent(mensaje)}`;
-
-
-    window.open(url, '_blank');
-}
-
-function confirmarEliminarMensaje(id) {
-    Swal.fire({
-        title: '¿Eliminar mensaje?',
-        text: "Esta acción no se puede deshacer",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, borrar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = "../views/acciones/eliminar_mensaje.php?id=" + id;
-        }
-    });
-}
-
-
-function cambiarEstado(id, estadoActual) {
-    if (typeof Swal === 'undefined') {
-        console.error("SweetAlert2 no está cargado");
-        return;
-    }
-
-    Swal.fire({
-        title: 'Actualizar Estado del Mensaje',
-        icon: 'info',
-        html: `
-            <select id="nuevo-estado-select" class="swal2-input" style="width: 80%;">
-                <option value="nuevo" ${estadoActual === 'nuevo' ? 'selected' : ''}>Nuevo</option>
-                <option value="pendiente" ${estadoActual === 'pendiente' ? 'selected' : ''}>Pendiente de respuesta</option>
-                <option value="respondido" ${estadoActual === 'respondido' ? 'selected' : ''}>Respondido</option>
-                <option value="finalizado" ${estadoActual === 'finalizado' ? 'selected' : ''}>Finalizado</option>
-            </select>
-        `,
-        showCancelButton: true,
-        confirmButtonText: 'Guardar Cambios',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#52073a',
-        preConfirm: () => {
-            const select = document.getElementById('nuevo-estado-select');
-            return select.value;
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            const nuevoEstado = result.value;
-
-window.location.href = `../controllers/mensaje_controller.php?id=${id}&estado=${nuevoEstado}`;        }
-    });
-
-
-}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php if (isset($_GET['status'])): ?>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    let status = "<?php echo $_GET['status']; ?>";
-
-    if (status === "success") {
-        Swal.fire({
-            icon: "success",
-            title: "¡Éxito!",
-            text: "El estado del mensaje se actualizó correctamente",
-            confirmButtonColor: "#6a0dad"
-        });
-    } else if (status === "error") {
-        Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "No se pudo actualizar el estado",
-            confirmButtonColor: "#6a0dad"
-        });
-    }
-});
+    document.addEventListener("DOMContentLoaded", function() {
+        let status = "<?php echo $_GET['status']; ?>";
+        
+        if (status === "success") {
+            Swal.fire({
+                icon: "success",
+                title: "¡Éxito!",
+                text: "Operación realizada correctamente",
+                confirmButtonColor: "#52073a"
+            });
+        } else if (status === "error") {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No se pudo completar la operación",
+                confirmButtonColor: "#52073a"
+            });
+        }
+        else if (status === "deleted") {
+            Swal.fire({
+                icon: "success",
+                title: "Mensaje Eliminado!",
+                text: "este mensaje a sido eliminado",
+                confirmButtonColor: "#52073a"
+            });
+        }
+    });
 </script>
+
 <?php endif; ?>

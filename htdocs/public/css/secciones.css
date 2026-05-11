@@ -62,7 +62,18 @@
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
-
+   .tabla-responsiva {
+    width: 100%;
+    overflow-x: auto; /* Scroll horizontal si es necesario */
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
     .encabezado-seccion {
         display: flex;
         justify-content: space-between;
@@ -70,11 +81,18 @@
         margin-bottom: 25px;
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
+.b {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.statusnuevo { background: #e3f2fd; color: #1976d2; }      /* Azul */
+.statuspendiente { background: #fff3e0; color: #f57c00; }  /* Naranja */
+.statusrespondido { background: #e8f5e9; color: #388e3c; } /* Verde */
+.statusfinalizado { background: #f5f5f5; color: #616161; } /* Gris */
 
     table th {
         background-color: #f8f9fa;
@@ -638,4 +656,14 @@
     margin-bottom: 5px;
     color: #666666;
     font-size: 12px;
+}
+
+
+/* En móviles, permitimos que crezca un poco más */
+@media screen and (max-width: 768px) {
+    .mensaje-contenedor {
+        max-width: 100%;
+        max-height: 120px; /* Más espacio en móvil para leer cómodo */
+        text-align: left;
+    }
 }

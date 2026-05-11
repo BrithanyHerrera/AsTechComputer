@@ -107,11 +107,14 @@ if ($permitirAnaliticas):
 </header>
 
 <div id="contenedorBuscador" class="buscador-oculto">
-    <div class="buscador-content">
-        <input type="text" id="inputBuscador" placeholder="Buscar servicios...">
-        <div id="resultadosBusqueda"></div>
-    </div>
+    <span id="cerrarBuscador" class="btn-cerrar-buscador">
+        <i class="fa-solid fa-xmark"></i>
+    </span>
+    
+    <input type="text" id="inputBuscador" placeholder="Buscar servicios...">
+    <div id="resultadosBusqueda"></div>
 </div>
+
 
 <script>
     // Se define la ruta base de la aplicación de manera global para que el JS pueda utilizarla

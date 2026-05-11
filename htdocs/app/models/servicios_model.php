@@ -42,7 +42,43 @@ class ServicioModel {
         $stmt->execute();
         return $stmt->get_result();
     }
+  public function obtenerServiciosAgrupados() {
 
+        $query = "SELECT 
+                    s.id_servicio,
+                    s.codigo_servicio,
+                    s.id_tipo_servicio,
+                    s.tipo_servicio,
+                    ts.nombre_tipo,
+                    s.descripcion,
+                    s.precio,
+                    s.imagen_servicio
+                FROM servicios s
+                INNER JOIN tipos_servicios ts
+                    ON s.id_tipo_servicio = ts.id_tipo_servicio
+                WHERE s.estado = 'activo'";
+
+        $resultado = mysqli_query($this->conexion, $query);
+
+        $servicios_agrupados = [];
+
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+
+            $id_categoria = $fila['id_tipo_servicio'];
+
+            if (!isset($servicios_agrupados[$id_categoria])) {
+
+                $servicios_agrupados[$id_categoria] = [
+                    'nombre' => $fila['nombre_tipo'],
+                    'servicios' => []
+                ];
+            }
+
+            $servicios_agrupados[$id_categoria]['servicios'][] = $fila;
+        }
+
+        return $servicios_agrupados;
+  }
   
     
 }

@@ -186,3 +186,211 @@ body{
         height: auto;
     }
 }
+/* ==========================================================================
+   RESPONSIVE DESIGN - DETALLE SERVICIO
+   ========================================================================== */
+
+/* =========================
+   TABLETS GRANDES
+   ========================= */
+@media (max-width: 1024px){
+
+    .detalle-container{
+        padding: 25px;
+        margin: 60px auto;
+    }
+
+    .detalle-header{
+        gap: 20px;
+    }
+
+    .detalle-img{
+        width: 320px;
+        height: 230px;
+    }
+
+    .detalle-info h1{
+        font-size: 28px;
+    }
+
+    .detalle-info .precio{
+        font-size: 20px;
+    }
+
+    .detalle-info .descripcion{
+        font-size: 15px;
+    }
+}
+
+
+/* =========================
+   TABLETS Y MOVILES
+   ========================= */
+@media (max-width: 768px){
+
+    .detalle-container{
+        width: 100%;
+        padding: 15px;
+        margin: 40px auto;
+    }
+
+    /* HEADER */
+    .detalle-header{
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .detalle-img{
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        border-radius: 12px;
+    }
+
+    .detalle-info{
+        width: 100%;
+    }
+
+    .detalle-info h1{
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 10px;
+    }
+
+    .detalle-info .precio{
+        font-size: 1.3rem;
+    }
+
+    .detalle-info .descripcion{
+        font-size: 0.95rem;
+        line-height: 1.7;
+        text-align: justify;
+    }
+
+    /* GRID FLEX */
+    .detalle-flex-row{
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .detalle-seccion{
+        width: 100%;
+        min-width: unset;
+        flex: 1 1 100%;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .detalle-seccion h2{
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .detalle-seccion p{
+        font-size: 0.92rem;
+        line-height: 1.6;
+    }
+
+    .detalle-seccion li{
+        font-size: 0.9rem;
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+
+    .btn-agendar{
+        width: 100%;
+        text-align: center;
+        padding: 14px;
+        font-size: 1rem;
+        border-radius: 12px;
+    }
+}
+
+
+/* =========================
+   MOVILES PEQUEÑOS
+   ========================= */
+@media (max-width: 480px){
+
+    body{
+        overflow-x: hidden;
+    }
+
+    .detalle-container{
+        padding: 10px;
+        margin-top: 25px;
+    }
+
+    .detalle-header{
+        gap: 15px;
+    }
+
+    .detalle-img{
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .detalle-info h1{
+        font-size: 1.5rem;
+    }
+
+    .detalle-info .precio{
+        font-size: 1.1rem;
+    }
+
+    .detalle-info .descripcion{
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .detalle-seccion{
+        padding: 15px;
+    }
+
+    .detalle-seccion h2{
+        font-size: 1rem;
+    }
+
+    .detalle-seccion p{
+        font-size: 0.82rem;
+    }
+
+    .detalle-seccion li{
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+
+    .btn-agendar{
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+}
+
+
+/* =========================
+   EXTRA PEQUEÑOS
+   ========================= */
+@media (max-width: 320px){
+
+    .detalle-info h1{
+        font-size: 1.3rem;
+    }
+
+    .detalle-info .precio{
+        font-size: 1rem;
+    }
+
+    .detalle-seccion{
+        padding: 12px;
+    }
+
+    .detalle-seccion p{
+        font-size: 0.75rem;
+    }
+
+    .btn-agendar{
+        font-size: 0.8rem;
+    }
+}

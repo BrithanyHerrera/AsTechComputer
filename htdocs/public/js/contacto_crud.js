@@ -1,6 +1,42 @@
 /**
  * Funciones para el CRUD de Contacto
  */
+function verMensaje(datos) {
+    Swal.fire({
+        title: 'Asunto: ' + datos.asunto,
+        html: `
+            <div style="text-align: left;">
+                <p><strong>De:</strong> ${datos.nombre} (${datos.correo})</p>
+                <p><strong>Mensaje:</strong></p>
+                <p style="background: #f9f9f9; padding: 10px; border-radius: 5px;">${datos.mensaje}</p>
+            </div>
+        `,
+        confirmButtonColor: '#52073a'
+    });
+}
+function enviarCorreo(datos) {
+
+    const correo = datos.correo;
+    const asunto = "Respuesta a tu mensaje: " + datos.asunto;
+
+    const mensaje = `Hola ${datos.nombre},
+
+Gracias por contactarnos.
+
+Respecto a tu mensaje:
+"${datos.mensaje}"
+
+Aquí puedes escribir tu respuesta...
+
+Saludos.`;
+
+    const url = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(correo)}&su=${encodeURIComponent(asunto)}&body=${encodeURIComponent(mensaje)}`;
+
+
+    window.open(url, '_blank');
+}
+
+
 
 // 1. Abrir Gmail con respuesta predefinida
 function enviarCorreo(datos) {
@@ -10,6 +46,19 @@ function enviarCorreo(datos) {
 
     const url = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(correo)}&su=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
     window.open(url, '_blank');
+}
+function verMensaje(datos) {
+    Swal.fire({
+        title: 'Asunto: ' + datos.asunto,
+        html: `
+            <div style="text-align: left;">
+                <p><strong>De:</strong> ${datos.nombre} (${datos.correo})</p>
+                <p><strong>Mensaje:</strong></p>
+                <p style="background: #f9f9f9; padding: 10px; border-radius: 5px;">${datos.mensaje}</p>
+            </div>
+        `,
+        confirmButtonColor: '#52073a'
+    });
 }
 
 // 2. Confirmación para eliminar con SweetAlert2
@@ -30,6 +79,29 @@ function confirmarEliminar(id) {
         }
     });
 }
+
+function enviarCorreo(datos) {
+    const correo = datos.correo;
+    const asunto = "Respuesta a tu mensaje: " + datos.asunto;
+
+    const mensaje = `Hola ${datos.nombre},
+
+Gracias por contactarnos.
+
+Respecto a tu mensaje:
+"${datos.mensaje}"
+
+Aquí puedes escribir tu respuesta...
+
+Saludos.`;
+
+    const url = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(correo)}&su=${encodeURIComponent(asunto)}&body=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, '_blank');
+}
+
+
+
 
 // 3. Modal dinámico para cambiar estado
 function cambiarEstado(id, estadoActual) {

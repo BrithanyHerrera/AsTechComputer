@@ -27,6 +27,7 @@
 </head>
 
 <body>
+    
 
     <?php
     require_once __DIR__ . "/../config/config.php"; // Carga el config
@@ -34,57 +35,13 @@
     $ruta_prefijo = "../../";
     include_once __DIR__ . "/fijos/loader_view.php";
     include __DIR__ . "/../controllers/toolbar_controller.php";
+$slides = $slides ?? [];
+$max_id = $max_id ?? 0;
+$umbral_novedad = $umbral_novedad ?? 0;
+
     ?>
-    <div id="contenedorBuscador" class="buscador-oculto">
-        <input type="text" id="inputBuscador" placeholder="Buscar servicios...">
-        <div id="resultadosBusqueda"></div>
-    </div>
-    <?php
-    require_once('../../app/config/conexion.db.php');
-   $query = "SELECT 
-            s.id_servicio,
-            s.codigo_servicio,
-            s.id_tipo_servicio,
-            s.tipo_servicio,
-            ts.nombre_tipo,
-            s.descripcion,
-            s.precio,
-            s.imagen_servicio
-          FROM servicios s
-          INNER JOIN tipos_servicios ts
-              ON s.id_tipo_servicio = ts.id_tipo_servicio
-          WHERE s.estado = 'activo'";
 
-    $resultado = mysqli_query($conexion, $query);
-    $servicios_agrupados = [];
 
-while ($fila = mysqli_fetch_assoc($resultado)) {
-
-    $id_categoria = $fila['id_tipo_servicio'];
-
-    // Crear grupo si no existe
-    if (!isset($servicios_agrupados[$id_categoria])) {
-
-        $servicios_agrupados[$id_categoria] = [
-            'nombre' => $fila['nombre_tipo'],
-            'servicios' => []
-        ];
-    }
-
-    // Agregar servicio al grupo
-    $servicios_agrupados[$id_categoria]['servicios'][] = $fila;
-}
-    ?>
-    <?php
-    // Preparamos los datos para el carousel basándonos en tus categorías
-    $slides = [
-        ["img" => "../../public/img/ReparacionGranFond.png", "t" => "Reparación y reemplazo", "s" => "Soluciones rápidas para tu equipo", "p" => "Desde: $800 pesos"],
-        ["img" => "../../public/img/principalAdv.png", "t" => "Mantenimiento preventivo", "s" => "Para equipos portátiles de alto rendimiento", "p" => "Desde: $1350 pesos"],
-        ["img" => "../../public/img/SoftwareGranFond.png", "t" => "Instalación de software", "s" => "Optimiza el rendimiento de tu equipo", "p" => "Desde: $300 pesos"],
-        ["img" => "../../public/img/EspecialGranFond.png", "t" => "Servicios especializados", "s" => "Soluciones avanzadas para casos complejos", "p" => "Desde: $300 pesos"],
-        ["img" => "../../public/img/DomicilioGranFond.png", "t" => "Servicios a domicilio", "s" => "Atención profesional en tu hogar", "p" => "Desde: $500 pesos"]
-    ];
-    ?>
 <!--carousel(imagenes que van cambiando) que muestra informacion de distintas categorias de servicios-->
     <div class="carousel-container">
         <div class="carousel-track">
@@ -106,24 +63,7 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
         </div>
     </div>
     <div class="contenedor-servicios">
-<?php
-// Obtenemos el ID más alto de todos los servicios
-$max_id = 0;
 
-foreach ($servicios_agrupados as $grupo) {
-
-    foreach ($grupo['servicios'] as $s) {
-
-        if ($s['id_servicio'] > $max_id) {
-
-            $max_id = $s['id_servicio'];
-        }
-    }
-}
-
-// Definimos que los últimos 5 IDs registrados se consideren "Nuevos"
-$umbral_novedad = 4;
-?>
 <?php if (!empty($servicios_agrupados)): ?>
 
     <?php foreach ($servicios_agrupados as $id_tipo => $grupo):
@@ -180,7 +120,7 @@ $umbral_novedad = 4;
             <?php endforeach; ?>
             
         <?php else: ?>
-            <!--en caso de que no se encuentre ningun servicio aparece un mensaje-->
+            <!--en caso de que no se muestre ningun servicio-->
             <p>No se encontraron servicios disponibles.</p>
         <?php endif; ?>
     </div>
@@ -196,44 +136,6 @@ $umbral_novedad = 4;
     include __DIR__ . "/../controllers/footer_controller.php";
     ?>
 </body>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // 1. LÓGICA DEL CAROUSEL (Simplificada)
-        const slides = document.querySelectorAll(".carousel-slide");
-        let currentSlide = 0;
-
-        function nextSlide() {
-            if (slides.length === 0) return;
-            slides[currentSlide].classList.remove("active");
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add("active");
-        }
-        setInterval(nextSlide, 7000);
-
-        // 2. LÓGICA DEL BUSCADOR (Redirección directa, NO Modal)
-        const resultados = document.getElementById("resultadosBusqueda");
-        
-        if (resultados) {
-            resultados.addEventListener("click", (e) => {
-                const item = e.target.closest(".resultado-item");
-                if (item) {
-                    let id = item.getAttribute("data-id");
-                    if (id && id !== "null") {
-                        // Llamamos a la función de redirección
-                        verServicio(id);
-                    }
-                }
-            });
-        }
-    });
-
-    // 3. FUNCIÓN GLOBAL DE REDIRECCIÓN (Pantalla Completa)
-    // Se usa tanto para las cards (onclick) como para el buscador
-    function verServicio(id) {
-        if(id) {
-            window.location.href = "../../app/controllers/detalle_servicio_controller.php?id=" + id;
-        }
-    }
-</script>
+<script src="../../public/js/servicios.js"></script>
 
 </html>

@@ -16,7 +16,7 @@
  */
 ?>
 <?php
-require_once __DIR__ . "/../../config/conexion.db.php";
+require_once __DIR__ . "/../config/conexion.db.php";
 require_once __DIR__ . "/../models/contacto_crud_model.php";
 require_once dirname(__DIR__) . '/config/config.php'; // o como se llame tu archivo
 
@@ -28,18 +28,18 @@ if (isset($_GET['action'])) {
     
     if ($_GET['action'] === 'eliminar' && $id) {
         if ($modelo->eliminarMensaje($id)) {
-            header("Location: " . BASE_URL . "app/views/contacto_crud_view.php?status=deleted");
+header("Location: " . BASE_URL . "app/controllers/administracion_controller.php?seccion=contacto&status=deleted");
         } else {
-            header("Location: " . BASE_URL . "app/views/contacto_crud_view.php?status=error");
+            header("Location: " . BASE_URL . "app/controllers/administracion_controller.php?seccion=contacto&status=error");
         }
         exit();
     }
 
     if ($_GET['action'] === 'actualizar' && $id && isset($_GET['estado'])) {
         if ($modelo->actualizarEstado($id, $_GET['estado'])) {
-            header("Location: " . BASE_URL . "app/views/contacto_crud_view.php?status=success");
+            header("Location: " . BASE_URL . "app/controllers/administracion_controller.php?seccion=contacto&status=success");
         } else {
-            header("Location: " . BASE_URL . "app/views/contacto_crud_view.php?status=error");
+           header("Location: " . BASE_URL . "app/controllers/administracion_controller.php?seccion=contacto&status=error");
         }
         exit();
     }

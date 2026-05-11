@@ -172,6 +172,7 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
     switch ($seccion_actual) {
       case 'dashboard':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+            echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
                 echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         echo "<h1>Bienvenido al panel principal</h1>";
         if (file_exists($ruta_secciones . "panel_info_view.php")) { include $ruta_secciones . "panel_info_view.php"; }
@@ -179,46 +180,55 @@ if (!isset($_SESSION['ultima_seccion']) || $_SESSION['ultima_seccion'] != $secci
 
       case 'estadisticas':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+              echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         if (file_exists($ruta_secciones . "estadisticas.php")) { include $ruta_secciones . "estadisticas.php"; }
         break;
 
       case 'servicios':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+              echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         if (file_exists($ruta_secciones . "servicios_crud_view.php")) { include $ruta_secciones . "servicios_crud_view.php"; }
         break;
 
       case 'inicio':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+              echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         if (file_exists($ruta_secciones . "inicio_crud_view.php")) { include $ruta_secciones . "inicio_crud_view.php"; }
         break;
 
       case 'citas':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+              echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         if (file_exists($ruta_secciones . "citas_crud_view.php")) { include $ruta_secciones . "citas_crud_view.php"; }
         break;
 
       case 'contacto':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+              echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         if (file_exists($ruta_secciones . "contacto_crud_view.php")) { include $ruta_secciones . "contacto_crud_view.php"; }
         break;
 
       case 'ingreso':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+              echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         if (file_exists($ruta_secciones . "ingresar_dispositivo_view.php")) { include $ruta_secciones . "ingresar_dispositivo_view.php"; }
         break;
 
       case 'registros_ingresados_crud_view':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+              echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         if (file_exists($ruta_secciones . "dispositivos_ingresados_crud_view.php")) { include $ruta_secciones . "dispositivos_ingresados_crud_view.php"; }
         break;
 
       case 'empleado':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+              echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         if (file_exists($ruta_secciones . "empleado_crud_view.php")) { include $ruta_secciones . "empleado_crud_view.php"; }
         break;
 
       case 'contenedor':
         echo '<link rel="stylesheet" href="../../public/css/secciones.css">';
+              echo '<link rel="stylesheet" href="../../public/css/secciones_responsivo.css">';
         if (file_exists($ruta_secciones . "contenedor_crud_view.php")) { include $ruta_secciones . "contenedor_crud_view.php"; }
         break;
 

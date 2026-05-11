@@ -63,6 +63,57 @@
   }
 
   @media screen and (max-width: 768px) {
+    /* Ocultamos el header de la tabla original */
+    table thead {
+        display: none;
+    }
+
+    table, table tbody, table tr, table td {
+        display: block;
+        width: 100%;
+    }
+
+    table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
+    }
+
+    /* Creamos etiquetas para cada celda usando el pseudo-elemento :before */
+    table td:before {
+        content: attr(data-label); /* Necesitarás agregar data-label en el HTML */
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #52073a;
+    }
+
+    /* Ajuste para los botones en móvil */
+    .acciones {
+        justify-content: flex-end;
+    }
+
+    /* Ajuste para el texto largo del mensaje */
+    table td div {
+        max-width: 100% !important;
+        text-align: right;
+    }
       #tabla-listado-servicios thead {
           display: none;
       }

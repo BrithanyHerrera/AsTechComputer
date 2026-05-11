@@ -120,10 +120,8 @@ a{
     overflow: hidden;
     background-color: #fff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.397);
-
     display: flex;
     flex-direction: column;
-
     transition: 
         max-height 0.7s cubic-bezier(0.25, 0.8, 0.25, 1),
         transform 0.4s ease,
@@ -203,11 +201,12 @@ a{
         padding 0.4s ease;
 
 }
+/* DESKTOP */
 .card-servicio:hover .overlay-descripcion {
     opacity: 1;
     transform: translateY(0);
-      padding: 10px 16px 16px;
-
+    max-height: 400px;
+    padding: 10px 16px 16px;
     border-top: 2px solid #66666686;
 }
 
@@ -232,47 +231,72 @@ a{
         font-size: 1rem;
     }
 
+/* 1. Ajuste del contenedor padre */
+.buscador-oculto {
   
-    /*servicios */
-   .buscador-oculto {
-    display: flex; /* Cambiamos a flex permanentemente */
+    display: flex; 
     flex-direction: column;
     align-items: center;
-    
     background: rgb(236, 235, 235);
     width: 100%;
-    height: 80%;
-    padding: 20px;
-    position: absolute;
-    top: 70px;
-    z-index: 1000;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    height: auto; /* Cambiado a auto para que crezca con el contenido */
+    min-height: 200px; /* Altura mínima suficiente */
+    padding: 60px 20px 20px 20px; /* Padding arriba para dejar espacio a la X */
+    /* Muy importante: FIXED para que flote sobre todo */
+    position: fixed; 
 
-    /* --- ESTADO INICIAL (Oculto arriba) --- */
+    left: 0;
+    z-index: 999; /* Un número muy alto */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Estado inicial */
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-80px); /* Empieza 20px más arriba */
-    transition: all 0.3s ease-out; /* Controla la velocidad aquí */
+    transform: translateY(-100%); 
+    transition: all 0.4s ease-in-out; 
 }
 
-/* --- ESTADO ACTIVO (Cuando se muestra) --- */
 .buscador-oculto.active {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0); /* Baja a su posición original */
+    transform: translateY(0); 
 }
 
+/* 2. Ajuste del botón de cerrar */
+.btn-cerrar-buscador {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem; /* Aumentado para que se vea bien */
+    color: #cc0808;
+    cursor: pointer;
+    z-index: 1000 !important;
+    padding: 10px;
+    background: rgba(255,255,255,0.8); /* Fondo blanco semi-transparente */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.btn-cerrar-buscador:hover {
+    color: #ff6811;
+    transform: scale(1.1);
+}
+
+/* 3. Ajuste del input para que no tape nada */
 #inputBuscador {
-    width: 70%;
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid #dfdfdf;
-    outline: none;
-    margin-bottom: 10px;
+    width: 90%;
+    max-width: 800px;
+    padding: 15px 20px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    margin-top: 10px; /* Espacio extra */
 }
 #inputBuscador:focus{
      outline: 3px solid #ff6811;
-
 }
 .resultado-item {
     padding: 10px;
@@ -282,10 +306,7 @@ a{
     border-bottom: 2px solid #7574747a;
     cursor: pointer;
     width: 900px;
-   
-
 }
-
 .resultado-item:hover {
     background: #acacac49;
     transform: scale(1.1);
@@ -448,14 +469,7 @@ a{
 .btn-ver-mas:hover i {
     transform: translateX(4px);
 }
-.overlay-descripcion {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-}
+
 
 .seccion-header {
     width: 100%;
@@ -505,6 +519,179 @@ a{
         grid-template-columns: repeat(2, 1fr);
     }
 }
+/* Ajuste dentro de tu Media Query de móviles (max-width: 768px o 600px) */
+/* =========================================
+   RESPONSIVE TARJETAS SERVICIOS
+   ========================================= */
+
+@media (max-width: 768px) {
+    .carousel-container {
+        height: 500px; /* Un poco más alto para que quepa el texto */
+        width:100%;
+     
+
+    }
+    .contenido-imagen {
+        top: 45%;
+    }
+    .boton-servicio{
+        margin-left:40%;
+    }
+
+    h1 { font-size: 1.8rem; margin-top: 10%;   text-align: right;}
+    h2 { font-size: 1.4rem;   text-align: right;}
+    p { 
+        margin-right: 0; /* Centramos el texto del precio */
+        text-align: right;
+        font-size: 1.1rem;
+    }
+    .seccion-header {
+        text-align: center;
+    }
+
+    .linea-separadora {
+        background: linear-gradient(to right, transparent, var(--naranja-principal), transparent);
+    }
+
+    .servicios-grid {
+        gap: 20px; /* Reducimos espacio entre tarjetas */
+    }
+
+    .imagen-url {
+        width: 100%; /* La imagen se ajusta a la tarjeta */
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    /* En móviles, el efecto hover es difícil, 
+       hacemos que la descripción sea un poco más visible */
+    .card-servicio:active {
+        transform: scale(0.98);
+    }
+    .servicios-grid{
+        display:grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap:12px;
+        padding:10px;
+    }
+
+    .card-servicio{
+        width:100%;
+        max-width:none;
+        height:auto;
+        min-height:auto;
+        max-height:600px;
+        overflow:hidden;
+
+        transition: all 0.4s ease;
+    }
+
+    .imagen-url{
+        width:100%;
+        height:250px;
+        object-fit:cover;
+    }
+
+    .info-basica{
+        padding:10px;
+    }
+
+    .info-basica h3{
+        font-size:0.9rem;
+        line-height:1.2;
+        margin-bottom:4px;
+    }
+
+    .info-basica .precio{
+        font-size:0.85rem;
+    }
+
+    .codigo-tag{
+        font-size:0.65rem;
+    }
+
+    /* =========================================
+       OVERLAY RESPONSIVO
+       ========================================= */
+
+    .overlay-descripcion{
+
+        opacity:0;
+
+        max-height:0;
+
+        overflow:hidden;
+
+        padding:0 10px;
+
+        transform:translateY(-10px);
+
+        transition:
+            opacity 0.4s ease,
+            max-height 0.5s ease,
+            transform 0.4s ease,
+            padding 0.4s ease;
+
+        background:#fff;
+
+    }
+
+    /* AL TOCAR O HOVER */
+    .card-servicio:hover .overlay-descripcion,
+    .card-servicio:active .overlay-descripcion,
+    .card-servicio:focus-within .overlay-descripcion{
+
+        opacity:1;
+
+        max-height:300px;
+
+        padding:10px;
+
+        transform:translateY(0);
+
+        border-top:1px solid #ddd;
+    }
+
+    .overlay-descripcion h3{
+        display:block;
+        font-size:0.8rem;
+        margin-bottom:5px;
+        color:var(--purpura-oscuro);
+    }
+
+    .overlay-descripcion p{
+        font-size:0.72rem;
+        line-height:1.4;
+        color:#555;
+        margin:0;
+    }
+
+    .btn-ver-mas{
+        width:100%;
+        padding:8px;
+        font-size:0.75rem;
+    }
+}
+
+
+/* =========================================
+   MOVILES MUY PEQUEÑOS
+   ========================================= */
+
+@media (max-width: 480px){
+
+    .servicios-grid{
+        grid-template-columns:1fr;
+    }
+
+    .imagen-url{
+        height:180px;
+    }
+
+    .overlay-descripcion p{
+        font-size:0.75rem;
+    }
+}
 @media (max-width: 654px) {
       .carousel-container{
         width:100%;
@@ -548,17 +735,21 @@ a{
     .card-servicio {
         width: 100%; /* Que ocupe el ancho de su columna */
         max-width: none;
-        min-height: auto;
-        /* Reducimos la altura máxima para que no se vea infinita */
-        max-height: 350px; 
+ 
+     
     }
-
     .imagen-url {
         height: 130px; /* Imagen más pequeña para dejar espacio al texto */
         width: 100%;
         object-fit: cover;
     }
-
+.contenido-imagen h1, 
+.contenido-imagen h2, 
+.contenido-imagen p, 
+.contenido-imagen a, 
+.contenido-imagen button {
+    pointer-events: auto; /* ...pero reactiva los clics en los elementos internos */
+}
     /* Ajuste de textos para que no se encimen */
     .info-basica {
         padding: 8px;
@@ -629,59 +820,9 @@ a{
     .card-servicio {
         width: 100%; /* Que ocupe el ancho de su columna */
         max-width: none;
-        min-height: auto;
+        min-height: 100px;
         /* Reducimos la altura máxima para que no se vea infinita */
         max-height: 350px; 
-    }
-}
-
-/* Dispositivos Móviles Grandes (Menos de 768px) */
-@media (max-width: 768px) {
-    .carousel-container {
-        height: 500px; /* Un poco más alto para que quepa el texto */
-        width:100%;
-
-    }
-
-    .contenido-imagen {
-        top: 45%;
-    }
-
-    h1 { font-size: 1.8rem; margin-top: 10%; }
-    h2 { font-size: 1.4rem; }
-    p { 
-        margin-right: 0; /* Centramos el texto del precio */
-        text-align: center;
-        font-size: 1.1rem;
-    }
-
-    .seccion-header {
-        text-align: center;
-    }
-
-    .linea-separadora {
-        background: linear-gradient(to right, transparent, var(--naranja-principal), transparent);
-    }
-
-    .servicios-grid {
-        gap: 20px; /* Reducimos espacio entre tarjetas */
-    }
-
-    .card-servicio {
-        width: 90%; /* Tarjetas casi a pantalla completa */
-        max-width: 350px;
-    }
-
-    .imagen-url {
-        width: 100%; /* La imagen se ajusta a la tarjeta */
-        height: auto;
-        aspect-ratio: 1 / 1;
-    }
-
-    /* En móviles, el efecto hover es difícil, 
-       hacemos que la descripción sea un poco más visible */
-    .card-servicio:active {
-        transform: scale(0.98);
     }
 }
 
@@ -713,3 +854,4 @@ a{
         width: 90%;
     }
 }
+
