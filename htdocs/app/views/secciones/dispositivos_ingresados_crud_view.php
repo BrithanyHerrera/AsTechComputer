@@ -113,6 +113,11 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                         $datos_js['apellido'] = '';
                         $datos_js['whatsapp'] = '***';
                     }
+
+                    $telefono_limpio = preg_replace('/[^0-9]/', '', $row['whatsapp']);
+                    $telefono_wa = (strlen($telefono_limpio) == 10) ? '52' . $telefono_limpio : $telefono_limpio;
+                    $mensaje_wa = "Hola *" . trim($row['nombre']) . "*, te contactamos de Astech Computer. Te informamos que tu equipo *" . $row['marca'] . " " . $row['modelo'] . "* (Folio: " . $row['folio'] . ") ya está *LISTO* para ser recogido. Recuerda que a partir de hoy tienes 7 días para pasar por él. ¡Te esperamos!";
+                    $enlace_whatsapp = "https://wa.me/" . $telefono_wa . "?text=" . urlencode($mensaje_wa);
                 ?>
                 <tr class="fila-registro"
                     data-nombre="<?= strtolower($row['nombre'] . ' ' . $row['apellido']) ?>"
@@ -174,6 +179,16 @@ require_once __DIR__ . "/../../controllers/dispositivos_ingresados_crud_controll
                                     title="Marcar como Listo">
                                 <i class="fa-solid fa-bell"></i>
                             </button>
+                        <?php endif; ?>
+
+                        <?php if ($row['estado'] == 'listo' && !$esTecnico): ?>
+                            <a href="<?= $enlace_whatsapp ?>" 
+                                target="_blank" 
+                                class="btn-editar" 
+                                style="background-color: #25d366; color: white; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;"
+                                title="Avisar al cliente por WhatsApp">
+                                 <i class="fa-brands fa-whatsapp"></i>
+                            </a>
                         <?php endif; ?>
 
                         <?php if (!$esTecnico): ?>
