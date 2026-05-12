@@ -122,5 +122,5 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
 }
 
 // Ahora pasamos $servicios_agrupados a la vista
-require_once dirname(__DIR__) . '../views/servicios_view.php';
+require_once dirname(__DIR__) . '/views/servicios_view.php';
 ?>

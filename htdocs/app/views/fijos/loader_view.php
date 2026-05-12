@@ -53,6 +53,8 @@
 
 .texto-carga {
     margin-top: clamp(15px, 4vh, 25px);
+    margin-right: 0 !important;
+    margin-left: 0 !important;
     font-weight: 700;
     color: #4a148c;
     letter-spacing: 2px;

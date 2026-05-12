@@ -12,7 +12,7 @@ if (!isset($_SESSION['temp_empleado']) || !isset($_POST['codigo_ingresado'])) {
 }
 
 // 2. Importar las librerías necesarias y la base de datos
-require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/config/conexion.db.php';
 require_once dirname(__DIR__) . '/models/login_model.php'; // Recuperamos tu modelo para la bitácora
 

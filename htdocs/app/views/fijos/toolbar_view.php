@@ -79,7 +79,7 @@ if ($permitirAnaliticas):
                             <p class="label-recientes">Lo más reciente</p>
                             <div class="grid-recientes">
                                 <?php foreach ($serviciosRecientes  ?? [] as $reciente): ?>
-                                    <a href="<?= BASE_URL ?>detalle_servicio.php?id=<?php echo $reciente['id_servicio']; ?>"
+                                    <a href="<?= BASE_URL ?>app/controllers/detalle_servicio_controller.php?id=<?php echo $reciente['id_servicio']; ?>"
                                         style="text-decoration: none; color: inherit;">
                                         <div class="tarjeta">
                                             <span class="badge">Nuevo</span>
