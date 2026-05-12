@@ -8,7 +8,27 @@
  * - Maneja el diseño tipo cuadrícula (Grid) para acomodar los checkboxes, radio buttons y campos agrupados en dos columnas.
  * - Define las transiciones y animaciones (hover, focus) de los botones de acción ("Anterior", "Siguiente", "Finalizar") y campos de texto para mejorar la experiencia de usuario (UX).
  * - Adapta automáticamente el layout para pantallas móviles (Media Queries), colapsando las columnas y expandiendo los botones al 100% del ancho.
+ *
+ * NOTA SOBRE CONFLICTOS CSS:
+ * Este archivo es cargado por ingresar_dispositivo_view.php dentro del <body> del layout padre
+ * (administracion_view.php), el cual ya carga secciones.css. Los navegadores procesan el <link>
+ * aunque esté en el body. El conflicto principal identificado es:
+ *   - secciones.css define `body { height: 100vh; }` — esto bloquea el scroll en formularios largos.
+ *   - Se sobreescribe aquí con `min-height` para permitir scroll vertical.
  */
+
+/* ========================================================
+   0. CORRECCIÓN DE CONFLICTO CON SECCIONES.CSS
+   ======================================================== */
+/**
+ * secciones.css fija `body { height: 100vh; }` lo que impide el scroll en pasos
+ * con mucho contenido (paso 2 especialmente). Se sobreescribe localmente.
+ * Sólo aplica cuando este CSS está activo (sección de ingreso).
+ */
+body {
+  min-height: 100vh;
+  height: auto !important;
+}
 
 /* ========================================================
    1. VARIABLES GLOBALES Y RESET DE ESTILOS BASE
@@ -51,6 +71,7 @@
   justify-content: center;
   max-width: 900px;
   margin: 0 auto;
+  padding: 0 15px;
 }
 
 .paso {
@@ -75,6 +96,7 @@
   color: var(--gris-suave);
   transition: all 0.3s ease;
   margin-bottom: 10px;
+  flex-shrink: 0;
 }
 
 /* 2.2 Textos descriptivos debajo de los círculos */
@@ -194,6 +216,13 @@ textarea.campo-texto {
 }
 
 /* 4.2 Contenedor tipo Grid para mostrar dos inputs lado a lado */
+/*
+ * CORRECCIÓN: Se eliminó max-height: 300px. Sin overflow: hidden explícito, los
+ * navegadores renderizan el contenido desbordado visualmente (overflow: visible
+ * por defecto) pero los eventos de puntero/toque quedan clippeados al box real del
+ * elemento, haciendo que los inputs del fondo se vean pero no respondan al click/tap.
+ * El paso 2 ya forzaba max-height: none vía inline-style, confirmando el bug.
+ */
 .fila-doble {
   background-color: #ffffff46;
   border-radius: 20px;
@@ -206,7 +235,7 @@ textarea.campo-texto {
   width: 100%;
   align-self: center;
   justify-items: center;
-  max-height: 300px;
+  overflow: visible; /* explícito: garantiza pointer-events en todo el contenido */
 }
 
 /* 4.3 Campos de texto con íconos integrados a la izquierda */
@@ -375,20 +404,173 @@ textarea.campo-texto {
 }
 
 /* ========================================================
-   8. DISEÑO RESPONSIVO PREMIUM (MÓVILES)
+   8. DISEÑO RESPONSIVO — TABLET (max-width: 900px)
    ======================================================== */
 /**
- * En resoluciones menores a 600px, el sistema apila los botones de navegación 
- * verticalmente y los obliga a ocupar el 100% del ancho de la pantalla 
- * para facilitar la pulsación (tap) en dispositivos táctiles.
+ * En tablets y pantallas medianas se reduce el padding lateral del formulario
+ * y se ajustan las etiquetas del wizard para que no desborden.
  */
-@media (max-width: 600px) {
-    .form-acciones {
-        flex-direction: column;
-        align-items: center;
-    }
-    .boton-anterior, .boton-sig, .boton-siguiente {
-        width: 100%;
-        margin-left: 0 !important;
-    }
+@media (max-width: 900px) {
+  .formulario {
+    padding-left: 8%;
+    padding-right: 8%;
+  }
+
+  .etiqueta-paso {
+    font-size: 11px;
+  }
+
+  .step-line {
+    margin: 0 6px;
+  }
+}
+
+/* ========================================================
+   9. DISEÑO RESPONSIVO — MÓVIL GRANDE (max-width: 768px)
+   ======================================================== */
+/**
+ * En pantallas <= 768px el wizard oculta las etiquetas de texto y solo muestra 
+ * los círculos numerados para ahorrar espacio horizontal. El formulario reduce 
+ * su padding y la fila doble colapsa a una sola columna.
+ */
+@media (max-width: 768px) {
+
+  /* --- Wizard: ocultar etiquetas, mostrar solo círculos --- */
+  .etiqueta-paso {
+    display: none;
+  }
+
+  .icono-paso {
+    margin-bottom: 0;
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .step-line {
+    transform: translateY(0);  /* Ya no hay etiqueta que desplace la línea */
+    margin: 0 4px;
+  }
+
+  .contenedorPorPasos {
+    padding: 14px 0;
+  }
+
+  /* --- Formulario: padding reducido --- */
+  .formulario {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 4%;
+  }
+
+  /* --- Títulos h1 dentro del formulario --- */
+  .formulario h1 {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+  }
+
+  /* --- Fila doble: colapsar a columna única --- */
+  .fila-doble {
+    grid-template-columns: 1fr;
+    /* max-height: none ya no hace falta: el valor base fue eliminado del selector principal */
+    padding: 20px;
+    gap: 16px;
+    margin-top: 5%;
+  }
+
+  /* --- Checkboxes: colapsar a columna única cuando el texto es largo --- */
+  .plano-checkboxs {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* --- Botones de navegación: full width y sin margin-left forzado --- */
+  .form-acciones {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 28px;
+    margin-bottom: 36px;
+  }
+
+  .boton-anterior,
+  .boton-sig,
+  .boton-siguiente {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    height: 46px;            /* Área táctil más cómoda */
+    font-size: 15px;
+  }
+
+  /* Desactivar hover de scale en móvil (genera saltos al tocar) */
+  .boton-anterior:hover,
+  .boton-sig:hover,
+  .boton-siguiente:hover {
+    transform: none;
+    width: 100% !important;
+  }
+
+  /* --- input-icon-wrapper: ajustar altura al campo-texto --- */
+  .input-icon-wrapper input {
+    height: 46px;
+    font-size: 15px;
+  }
+
+  .input-icon-wrapper i {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* ========================================================
+   10. DISEÑO RESPONSIVO — MÓVIL PEQUEÑO (max-width: 480px)
+   ======================================================== */
+/**
+ * En teléfonos pequeños (<480px) se reduce aún más el padding y el tamaño
+ * de fuente de labels y notas para que el formulario sea cómodo de rellenar.
+ */
+@media (max-width: 480px) {
+
+  .formulario {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
+  .formulario h1 {
+    font-size: 1.15rem;
+  }
+
+  .etiqueta-formulario {
+    font-size: 14px;
+  }
+
+  .nota-formulario {
+    font-size: 12px;
+  }
+
+  .campo-texto {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .fila-doble {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .check-item {
+    font-size: 13px;
+  }
+
+  /* Círculos del wizard más pequeños en pantallas muy estrechas */
+  .icono-paso {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .step-line {
+    margin: 0 2px;
+  }
 }

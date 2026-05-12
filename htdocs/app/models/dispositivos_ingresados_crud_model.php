@@ -17,6 +17,20 @@ class RegistrosModel {
     public function __construct($conexion) {
         $this->conexion = $conexion;
     }
+// Obtiene los datos específicos de un folio para enviar notificaciones
+    public function obtenerDatosParaWhatsApp($folio) {
+        $sql = "SELECT c.nombre, c.telefono AS whatsapp, m.marca, e.modelo 
+                FROM ordenes_ingreso o 
+                INNER JOIN equipos e ON o.id_equipo = e.id_equipo 
+                INNER JOIN clientes c ON e.id_cliente = c.id_cliente
+                INNER JOIN marcas m ON e.id_marca = m.id_marca 
+                WHERE o.folio = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $folio);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        return $resultado->fetch_assoc();
+    }
 
     // ----------------------------------------------------------
     // LECTURA: Trae todos los registros del sistema con sus

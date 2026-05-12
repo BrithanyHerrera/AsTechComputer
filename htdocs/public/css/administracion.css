@@ -243,9 +243,11 @@ body {
     transform: translateX(0);
   }
 
-  /* El overlay aparece cuando el sidebar está abierto */
-  .sidebar-overlay {
+  /* El overlay aparece SOLO cuando el sidebar está abierto (.activo lo pone el JS) */
+  /* CORRECCIÓN: display:block sin .activo bloqueaba toda interacción en móvil */
+  .sidebar-overlay.activo {
     display: block;
+    opacity: 1;
   }
 
   /* El contenido ocupa todo el ancho */

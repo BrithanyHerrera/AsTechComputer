@@ -43,8 +43,66 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // ACCIÓN: Marcar equipo como listo (reparado)
+    // ACCIÓN: Marcar equipo como listo (reparado) y notificar por WhatsApp
     if ($accion == 'listo' && isset($_POST['folio'])) {
-        $modeloRegistros->marcarComoListo($_POST['folio']);
+        $folio = $_POST['folio'];
+        
+        // 1. Actualizamos el estado en la base de datos
+        $modeloRegistros->marcarComoListo($folio);
+        
+        // 2. Traemos los datos del cliente para el mensaje
+        $datosWA = $modeloRegistros->obtenerDatosParaWhatsApp($folio);
+        
+        // 3. Disparamos la API de Meta si hay un número registrado
+        if ($datosWA && !empty($datosWA['whatsapp'])) {
+            try {
+                $ruta_env = dirname(__DIR__, 2) . '/.env';
+                $env = parse_ini_file($ruta_env);
+                
+                $token = $env['META_WA_TOKEN'];
+                $phone_id = $env['META_PHONE_ID'];
+                $telefono_destino = "52" . preg_replace('/[^0-9]/', '', $datosWA['whatsapp']);
+                $nombre_equipo = $datosWA['marca'] . " " . $datosWA['modelo'];
+
+                $url = "https://graph.facebook.com/v25.0/" . $phone_id . "/messages";
+                $data = [
+                    "messaging_product" => "whatsapp",
+                    "to" => $telefono_destino,
+                    "type" => "template",
+                    "template" => [
+                        "name" => "aviso_equipo_listo",
+                        "language" => [ "code" => "es_MX" ],  
+                        "components" => [
+                            [
+                                "type" => "body",
+                                "parameters" => [
+                                    [ "type" => "text", "text" => trim($datosWA['nombre']) ],      
+                                    [ "type" => "text", "text" => $nombre_equipo ],       
+                                    [ "type" => "text", "text" => $folio ]         
+                                ]
+                            ]
+                        ]
+                    ]
+                ];
+
+                $options = [
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => json_encode($data),
+                    CURLOPT_HTTPHEADER => [
+                        "Authorization: Bearer " . $token,
+                        "Content-Type: application/json"
+                    ]
+                ];
+
+                $curl = curl_init();
+                curl_setopt_array($curl, $options);
+                curl_exec($curl);
+                curl_close($curl);
+            } catch (Exception $e) { 
+            }
+        }
         header("Location: administracion_controller.php?seccion=registros_ingresados_crud_view&status=success_listo");
         exit;
     }

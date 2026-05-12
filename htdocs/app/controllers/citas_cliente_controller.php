@@ -149,8 +149,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $token = $_ENV['META_WA_TOKEN'];
                 $phone_id = $_ENV['META_PHONE_ID'];
                 
-                // Se formatea el número añadiendo la lada de México (52) y retirando símbolos '+'.
-                $telefono_destino = "52" . ltrim($whatsapp, '+'); 
+                // Se limpia cualquier espacio o guion extra
+                $numero_limpio = preg_replace('/[^0-9]/', '', $whatsapp);
+
+                // Si el usuario ingresó sus 10 dígitos locales, le agregamos 521 (Formato Meta para México)
+                if (strlen($numero_limpio) == 10) {
+                    $telefono_destino = "521" . $numero_limpio;
+                } else {
+                    // Si metió más números (por si ya traía el 52 o es extranjero), lo dejamos pasar tal cual
+                    $telefono_destino = $numero_limpio; 
+                }
 
                 $url = "https://graph.facebook.com/v25.0/" . $phone_id . "/messages";
 
@@ -160,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     "to" => $telefono_destino,
                     "type" => "template",
                     "template" => [
-                        "name" => "confirmacion_cita_astech", 
+                        "name" => "confirmacion_cita_v2", 
                         "language" => [ "code" => "es_MX" ],  
                         "components" => [
                             [

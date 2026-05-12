@@ -1,4 +1,4 @@
-    /* =========================================
+/* =========================================
     SECCIONES.CSS 
     esta pagina controla todas las secciones de administracion_view.css
     hay varias secciones que reutilizan el codigo que hay aqui
@@ -7,6 +7,26 @@
     ========================================= */
     body {
         height: 100vh;
+    }
+
+
+    /* =========================================
+       SIDEBAR OVERLAY — Estado base
+       El overlay debe estar OCULTO por defecto.
+       Sin esta regla el div existe en el DOM siempre
+       visible, bloqueando todos los clics/toques
+       del contenido principal (bug confirmado en DevTools).
+       El JS lo activa añadiendo la clase .activo
+       al abrir el menú hamburguesa en móvil.
+    ========================================= */
+    .sidebar-overlay {
+        display: none;
+        pointer-events: none; /* seguro extra */
+    }
+
+    .sidebar-overlay.activo {
+        display: block;
+        pointer-events: auto;
     }
 
     .usuario {
